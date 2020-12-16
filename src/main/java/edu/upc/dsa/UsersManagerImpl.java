@@ -30,6 +30,7 @@ public class UsersManagerImpl implements UsersManager {
         return ret;
     }
 
+    //asdf
     public User addUser(User t) {
         logger.info("new user to add: " + t);
 
