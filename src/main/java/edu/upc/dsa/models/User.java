@@ -4,14 +4,14 @@ import edu.upc.dsa.util.RandomUtils;
 
 public class User {
 
-    String id;
+    String id_user;
     String username;
     String pwd;
     int score;
     static int lastId;
 
     public User() {
-        this.id = RandomUtils.getId();
+        this.id_user = RandomUtils.getId();
         this.score = 0;
     }
 
@@ -22,11 +22,11 @@ public class User {
     }
 
     public String getId() {
-        return this.id;
+        return this.id_user;
     }
 
     public void setId(String id) {
-        this.id=id;
+        this.id_user =id;
     }
 
 
@@ -56,7 +56,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User [id = "+id+", username = " + username + ", pwd = " + pwd +"]";
+        return "User [id_user = "+ id_user +", username = " + username + ", pwd = " + pwd +"]";
     }
 
 }
