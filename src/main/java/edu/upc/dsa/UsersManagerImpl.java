@@ -30,11 +30,11 @@ public class UsersManagerImpl implements UsersManager {
         return ret;
     }
 
-    public User addUser(String username, String pwd) {
+    public User addUser(String username, String pwd) { //Afegeix el user com a obejcte
         return this.addUser(new User(username, pwd));
     }
 
-    public User addUser(User t) {
+    public User addUser(User t) { //Afegeix el objecte user a la llista
         logger.info("new user to add: " + t);
 
         this.users.add (t);

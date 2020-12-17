@@ -18,6 +18,7 @@ public class Enemy1 {
         this.speed = 10;
     }
     public Enemy1(int posX, int posY) {
+        this();
         this.posX = posX;
         this.posY = posY;
     }
@@ -44,13 +45,5 @@ public class Enemy1 {
 
     public void setPosY(int posY) {
         this.posY = posY;
-    }
-
-    public int getDamage() {
-        return damage;
-    }
-
-    public void setDamage(int damage) {
-        this.damage = damage;
     }
 }
