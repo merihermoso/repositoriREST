@@ -1,8 +1,8 @@
-package edu.upc.dsa.models;
+package edu.upc.dsa.models.Enemy;
 
 import edu.upc.dsa.util.RandomUtils;
 
-public class Enemy1 {
+public class Enemy2 extends Enemy {
     String id; //Enemy's id
     int posX; //Enemy's "X" position
     int posY; //Enemy's "Y" position
@@ -10,14 +10,15 @@ public class Enemy1 {
     int damage; //Enemy's damage per hit
     int speed; //Enemy's speedd
 
-    public Enemy1(){
+    public Enemy2() {
         this.id = RandomUtils.getId();
         //Ejemplo
         this.health = 100;
         this.damage = 5;
         this.speed = 10;
     }
-    public Enemy1(int posX, int posY) {
+
+    public Enemy2(int posX, int posY) {
         this();
         this.posX = posX;
         this.posY = posY;
