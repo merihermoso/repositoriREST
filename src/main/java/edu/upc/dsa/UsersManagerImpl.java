@@ -30,16 +30,16 @@ public class UsersManagerImpl implements UsersManager {
         return ret;
     }
 
+    public User addUser(String username, String pwd) {
+        return this.addUser(new User(username, pwd));
+    }
+
     public User addUser(User t) {
         logger.info("new user to add: " + t);
 
         this.users.add (t);
         logger.info("new User added");
         return t;
-    }
-
-    public User addUser(String username, String pwd) {
-        return this.addUser(new User(username, pwd));
     }
 
     public User getUser(String id) {

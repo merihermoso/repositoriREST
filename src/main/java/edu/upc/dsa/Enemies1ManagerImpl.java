@@ -6,19 +6,19 @@ import java.util.List;
 import edu.upc.dsa.models.Enemy1;
 import org.apache.log4j.Logger;
 
-public class Enemy1ImplManager implements Enemy1Manager {
-    private static Enemy1Manager instance;
+public class Enemies1ManagerImpl implements Enemies1Manager {
+    private static Enemies1Manager instance;
 
     protected List<Enemy1> enemies1; //Creamos la lista de enemigos de tipo 1
 
     final static Logger logger = Logger.getLogger(UsersManagerImpl.class);
 
-    private Enemy1ImplManager() { //Constructor
+    private Enemies1ManagerImpl() { //Constructor
         this.enemies1 = new LinkedList<>();
     }
 
-    public static Enemy1Manager getInstance() {
-        if (instance==null) instance = new Enemy1ImplManager();
+    public static Enemies1Manager getInstance() {
+        if (instance==null) instance = new Enemies1ManagerImpl();
         return instance;
     }
 
@@ -27,6 +27,18 @@ public class Enemy1ImplManager implements Enemy1Manager {
         logger.info("size users =" + ret);
 
         return ret;
+    }
+
+    public Enemy1 addEnemy1(int x, int y) {
+        return this.addEnemy1(new Enemy1(x, y));
+    }
+
+    public Enemy1 addEnemy1(Enemy1 t) {
+        logger.info("new user to add: " + t);
+
+        this.enemies1.add (t);
+        logger.info("new Enemy1 added");
+        return t;
     }
 
     public Enemy1 getEnemy1(String id) { //Recogemos el objeto "Enemy1" atraves del "id"
@@ -40,8 +52,12 @@ public class Enemy1ImplManager implements Enemy1Manager {
             }
         }
 
-        logger.warn("user not found with this id: " + id);
+        logger.warn("enemy not found with this id: " + id);
         return null;
+    }
+
+    public List<Enemy1> findAll() {
+        return this.enemies1;
     }
 
     public void deleteEnemy1(String id) { //Matamos a un enemigo tipo 1

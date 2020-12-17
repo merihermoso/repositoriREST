@@ -1,5 +1,7 @@
 package edu.upc.dsa.models;
 
+import edu.upc.dsa.util.RandomUtils;
+
 public class Enemy1 {
     String id; //Enemy's id
     int posX; //Enemy's "X" position
@@ -8,13 +10,16 @@ public class Enemy1 {
     int damage; //Enemy's damage per hit
     int speed; //Enemy's speed
 
-    public Enemy1(String id, int posX, int posY, int health, int damage, int speed) {
-        this.id = id;
+    public Enemy1(){
+        this.id = RandomUtils.getId();
+        //Ejemplo
+        this.health = 100;
+        this.damage = 5;
+        this.speed = 10;
+    }
+    public Enemy1(int posX, int posY) {
         this.posX = posX;
         this.posY = posY;
-        this.health = health;
-        this.damage = damage;
-        this.speed = speed;
     }
 
     public String getId() {
