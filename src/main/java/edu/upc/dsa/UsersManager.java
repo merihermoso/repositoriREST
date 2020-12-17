@@ -8,7 +8,7 @@ public interface UsersManager {
 
     public int size();
 
-    public User addUser(String username, String pwd);
+    public User addUser(String username, String pwd); //Registramos un usuario
     public User addUser(User u);
     public User getUser(String id);
     public List<User> findAll();
