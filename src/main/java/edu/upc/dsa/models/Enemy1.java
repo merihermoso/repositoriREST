@@ -8,7 +8,7 @@ public class Enemy1 {
     int posY; //Enemy's "Y" position
     int health; //Enemy's health
     int damage; //Enemy's damage per hit
-    int speed; //Enemy's speed
+    int speed; //Enemy's speedd
 
     public Enemy1(){
         this.id = RandomUtils.getId();
