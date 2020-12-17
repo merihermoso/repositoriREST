@@ -4,6 +4,10 @@ package edu.upc.dsa.services;
 import edu.upc.dsa.UsersManager;
 import edu.upc.dsa.UsersManagerImpl;
 import edu.upc.dsa.models.User;
+import edu.upc.dsa.UsersManager;
+import edu.upc.dsa.UsersManagerImpl;
+import edu.upc.dsa.models.User;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -22,6 +26,7 @@ public class UsersService {
     private UsersManager tm;
 
     public UsersService() {
+
         this.tm = UsersManagerImpl.getInstance();
         if (tm.size()==0) {
             this.tm.addUser("Meri", "Meri123");
