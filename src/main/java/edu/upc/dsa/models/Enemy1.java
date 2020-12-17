@@ -2,7 +2,7 @@ package edu.upc.dsa.models;
 
 import edu.upc.dsa.util.RandomUtils;
 
-public class Enemy1 {
+public class Enemy1 extends Enemy{
     String id; //Enemy's id
     int posX; //Enemy's "X" position
     int posY; //Enemy's "Y" position
