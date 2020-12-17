@@ -1,6 +1,8 @@
 package edu.upc.dsa.services;
 
 
+import edu.upc.dsa.PartidasManager;
+import edu.upc.dsa.PartidasManagerImpl;
 import edu.upc.dsa.UsersManager;
 import edu.upc.dsa.UsersManagerImpl;
 import edu.upc.dsa.models.Partida;
@@ -20,17 +22,17 @@ import java.util.List;
 @Path("/partidas")
 public class PartidasService {
 
-    private UsersManager tm;
+    private PartidasManager pm;
 
     public PartidasService() {
-        this.tm = UsersManagerImpl.getInstance();
-        if (tm.size()==0) {
-            this.tm.addPartida(10000);
-            this.tm.addPartida(60000);
-            this.tm.addPartida(90000);
 
+        this.pm = PartidasManagerImpl.getInstance();
+        if (pm.size()==0) {
+            this.pm.addPartida( 20000);
+            this.pm.addPartida(30000);
+            this.pm.addPartida(80000);
+            this.pm.addPartida(70000);
         }
-
     }
 
     @GET
@@ -40,9 +42,9 @@ public class PartidasService {
     })
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPartida() {
+    public Response getPartidas() {
 
-        List<Partida> partidas = this.tm.findAllp();
+        List<Partida> partidas = this.pm.findAll();
 
         GenericEntity<List<Partida>> entity = new GenericEntity<List<Partida>>(partidas) {};
         return Response.status(201).entity(entity).build()  ;
@@ -72,49 +74,51 @@ public class PartidasService {
             @ApiResponse(code = 404, message = "Partida not found")
     })
     @Path("/{id}")
-    public Response deletePartida(@PathParam("id_partida") String id_partida) {
-        Partida t = this.tm.getPartida(id_partida);
-        if (t == null) return Response.status(404).build();
-        else this.tm.deletePartida(id_partida);
+    public Response deletePartida(@PathParam("id") String id_partida) {
+        Partida p = this.pm.getPartida(id_partida);
+        if (p == null) return Response.status(404).build();
+        else this.pm.deletePartida(id_partida);
         return Response.status(201).build();
     }
 
     @PUT
-    @ApiOperation(value = "Update a Partida", notes = "Update a partida")
+    @ApiOperation(value = "Update a User", notes = "Update a user")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Partida found"),
-            @ApiResponse(code = 404, message = "Partida not found")
+            @ApiResponse(code = 201, message = "User found"),
+            @ApiResponse(code = 404, message = "User not found")
     })
     @Path("/")
     public Response updatePartida(Partida partida) {
 
-        Partida p = this.tm.updatePartida(partida);
+        Partida p = this.pm.updatePartida(partida);
 
         if (p == null) return Response.status(404).build();
 
         return Response.status(201).build();
     }
-
+/*
     @POST
-    @ApiOperation(value = "Register a new Partida", notes = "Register a partida")
+    @ApiOperation(value = "Register a new Partida", notes = "Register a Partida")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful! Partida registered"),
             @ApiResponse(code = 600, message = "Need to fill in score field"),
-            @ApiResponse(code = 250, message = "Partida already exists")
+          //  @ApiResponse(code = 601, message = "Need to fill in password field"),
+            @ApiResponse(code = 250, message = "User already exists")
 
     })
-    @Path("/register/{score_partida}")
+
+    @Path("/register/{id_partida}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response newUser(@PathParam("score_partida") int score_partida) {
+    public Response newUser(@PathParam("id_partida") String id_partida) {
 
-        if (score_partida==0) return Response.status(600).build();
+        if (id_partida==null) return Response.status(600).build();
 
-     //   if (this.tm.partidaExists(id_partida)) return Response.status(250).build();
+        if (this.pm.partidaExists(id_partida)) return Response.status(250).build();
 
-        Partida pa = this.tm.addPartida(score_partida);
+        Partida pa = this.pm.addPartida(id_partida);
         return Response.status(201).build();
     }
-/*                                                          //Adaptar para saber usuario-partida
+
     @GET
     @ApiOperation(value = "A user tries to login", notes = "Login")
     @ApiResponses(value = {
@@ -127,12 +131,12 @@ public class PartidasService {
     })
     @Path("/login/{username}/{password}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response userLogin(@PathParam("username") String username, @PathParam("password") String password) {
+    public Response partidaLogin(@PathParam("username") String username, @PathParam("password") String password) {
 
         if (username==null) return Response.status(601).build();
         if (password==null) return Response.status(602).build();
-        if (!this.tm.userExists(username)) return Response.status(250).build();
-        if (!this.tm.checkPassword(username, password)) return Response.status(603).build();
+        if (!this.pm.partidaExists(username)) return Response.status(250).build();
+       // if (!this.pm.checkPassword(username, password)) return Response.status(603).build();
 
         return Response.status(201).build();
     }*/
