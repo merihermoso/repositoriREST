@@ -8,6 +8,15 @@ public class Enemy1 {
     int damage; //Enemy's damage per hit
     int speed; //Enemy's speed
 
+    public Enemy1(String id, int posX, int posY, int health, int damage, int speed) {
+        this.id = id;
+        this.posX = posX;
+        this.posY = posY;
+        this.health = health;
+        this.damage = damage;
+        this.speed = speed;
+    }
+
     public String getId() {
         return id;
     }

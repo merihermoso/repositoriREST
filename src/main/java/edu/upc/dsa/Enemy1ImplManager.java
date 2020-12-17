@@ -3,19 +3,30 @@ package edu.upc.dsa;
 import java.util.LinkedList;
 import java.util.List;
 
-import edu.upc.dsa.models.User;
 import edu.upc.dsa.models.Enemy1;
 import org.apache.log4j.Logger;
 
-public class EnemyManagerImpl implements EnemyManager{
-    private static UsersManager instance;
+public class Enemy1ImplManager implements Enemy1Manager {
+    private static Enemy1Manager instance;
 
     protected List<Enemy1> enemies1; //Creamos la lista de enemigos de tipo 1
 
     final static Logger logger = Logger.getLogger(UsersManagerImpl.class);
 
-    private EnemyManagerImpl() { //Constructor
+    private Enemy1ImplManager() { //Constructor
         this.enemies1 = new LinkedList<>();
+    }
+
+    public static Enemy1Manager getInstance() {
+        if (instance==null) instance = new Enemy1ImplManager();
+        return instance;
+    }
+
+    public int size() {
+        int ret = this.enemies1.size();
+        logger.info("size users =" + ret);
+
+        return ret;
     }
 
     public Enemy1 getEnemy1(String id) { //Recogemos el objeto "Enemy1" atraves del "id"
