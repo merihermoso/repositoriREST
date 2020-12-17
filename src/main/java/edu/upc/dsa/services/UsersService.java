@@ -52,8 +52,7 @@ public class UsersService {
 
     }
 
-    //prueba commit
-/*
+
     @GET
     @ApiOperation(value = "Get a User", notes = "Get a user from DNI")
     @ApiResponses(value = {
@@ -66,7 +65,7 @@ public class UsersService {
         User u = this.tm.getUser(id);
         if (u == null) return Response.status(404).build();
         else  return Response.status(201).entity(u).build();
-    }*/
+    }
 
     @DELETE
     @ApiOperation(value = "Delete a User", notes = "Delete a user")

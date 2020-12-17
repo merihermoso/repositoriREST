@@ -19,14 +19,6 @@ public interface UsersManager {
     public boolean userExists(String username);
     public boolean checkPassword(String username, String password);
 
-    public Partida addPartida(int score_partida);
-    public Partida addPartida(Partida p);
-    public Partida getPartida(String id_partida);
-    public List<Partida> findAllp();
-    public void deletePartida(String id_partida);
-    public Partida updatePartida(Partida p);
-
-    public boolean partidaExists(int id_partida);
 
 
 
