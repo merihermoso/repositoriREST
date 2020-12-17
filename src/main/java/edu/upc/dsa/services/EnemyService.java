@@ -1,9 +1,9 @@
 package edu.upc.dsa.services;
 
 
-import edu.upc.dsa.Enemies1Manager;
-import edu.upc.dsa.Enemies1ManagerImpl;
-import edu.upc.dsa.models.Enemy1;
+import edu.upc.dsa.EnemiesManager;
+import edu.upc.dsa.EnemiesManagerImpl;
+import edu.upc.dsa.models.Enemy.Enemy1;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,17 +18,17 @@ import java.util.List;
 
 @Api(value = "/enemies1")
 @Path("/enemies1")
-public class Enemy1Service {
+public class EnemyService {
 
-    private Enemies1Manager tm;
+    private EnemiesManager tm;
 
-    public Enemy1Service() {
+    public EnemyService() {
 
-        this.tm = Enemies1ManagerImpl.getInstance();
+        this.tm = EnemiesManagerImpl.getInstance();
         if (tm.size()==0) {
-            this.tm.addEnemy1(5, 3);
-            this.tm.addEnemy1(17, 2);
-            this.tm.addEnemy1(31, 12);
+            this.tm.addEnemy(5, 3);
+            this.tm.addEnemy(17, 2);
+            this.tm.addEnemy(31, 12);
         }
 
     }
