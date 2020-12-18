@@ -1,8 +1,8 @@
 package edu.upc.dsa.services;
 
 
-import edu.upc.dsa.EnemiesManager;
-import edu.upc.dsa.EnemiesManagerImpl;
+import edu.upc.dsa.EnemyManager;
+import edu.upc.dsa.EnemyManagerImpl;
 import edu.upc.dsa.models.Enemy.Enemy;
 
 import io.swagger.annotations.Api;
@@ -20,11 +20,11 @@ import java.util.List;
 @Path("/enemies")
 public class EnemyService {
 
-    private EnemiesManager tm;
+    private EnemyManager tm;
 
     public EnemyService() {
 
-        this.tm = EnemiesManagerImpl.getInstance();
+        this.tm = EnemyManagerImpl.getInstance();
         if (tm.size()==0) {
             this.tm.addEnemy1(5, 3);
             this.tm.addEnemy2(17, 2);

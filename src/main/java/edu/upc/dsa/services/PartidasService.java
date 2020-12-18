@@ -2,11 +2,8 @@ package edu.upc.dsa.services;
 
 
 import edu.upc.dsa.models.Partida;
-import edu.upc.dsa.PartidasManager;
-import edu.upc.dsa.PartidasManagerImpl;
-import edu.upc.dsa.models.User;
-import edu.upc.dsa.UsersManager;
-import edu.upc.dsa.UsersManagerImpl;
+import edu.upc.dsa.PartidaManager;
+import edu.upc.dsa.PartidaManagerImpl;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,11 +20,11 @@ import java.util.List;
 @Path("/partidas")
 public class PartidasService {
 
-    private PartidasManager pm;
+    private PartidaManager pm;
 
     public PartidasService() {
 
-        this.pm = PartidasManagerImpl.getInstance();
+        this.pm = PartidaManagerImpl.getInstance();
         if (pm.size()==0) {
             this.pm.addPartida(20000);
             this.pm.addPartida(30000);

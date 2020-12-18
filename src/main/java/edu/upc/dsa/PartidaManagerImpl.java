@@ -1,26 +1,25 @@
 package edu.upc.dsa;
 
 import edu.upc.dsa.models.Partida;
-import edu.upc.dsa.models.User;
 import org.apache.log4j.Logger;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class PartidasManagerImpl implements PartidasManager {
-    private static PartidasManager instance;
+public class PartidaManagerImpl implements PartidaManager {
+    private static PartidaManager instance;
 
     protected List<Partida> partidas;
 
 
-    final static Logger logger = Logger.getLogger(PartidasManagerImpl.class);
+    final static Logger logger = Logger.getLogger(PartidaManagerImpl.class);
 
-    private PartidasManagerImpl() {
+    private PartidaManagerImpl() {
         this.partidas = new LinkedList<>();
     }
 
-    public static PartidasManager getInstance() {
-        if (instance==null) instance = new PartidasManagerImpl();
+    public static PartidaManager getInstance() {
+        if (instance==null) instance = new PartidaManagerImpl();
         return instance;
     }
 

@@ -7,20 +7,20 @@ import java.util.LinkedList;
 import java.util.List;
 import org.apache.log4j.Logger;
 
-public class UsersManagerImpl implements UsersManager {
-    private static UsersManager instance;
+public class UserManagerImpl implements UserManager {
+    private static UserManager instance;
 
     protected List<User> users;
 
-    final static Logger logger = Logger.getLogger(UsersManagerImpl.class);
+    final static Logger logger = Logger.getLogger(UserManagerImpl.class);
 
-    private UsersManagerImpl() {
+    private UserManagerImpl() {
         this.users = new LinkedList<>();
 
     }
 
-    public static UsersManager getInstance() {
-        if (instance==null) instance = new UsersManagerImpl();
+    public static UserManager getInstance() {
+        if (instance==null) instance = new UserManagerImpl();
         return instance;
     }
 

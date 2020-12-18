@@ -5,7 +5,7 @@ import edu.upc.dsa.models.User;
 
 import java.util.List;
 
-public interface UsersManager {
+public interface UserManager {
 
     int size();
 

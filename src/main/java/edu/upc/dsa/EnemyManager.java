@@ -1,10 +1,10 @@
 package edu.upc.dsa;
 
-import edu.upc.dsa.models.Enemy.Enemy;
 
+import edu.upc.dsa.models.Enemy.Enemy;
 import java.util.List;
 
-public interface EnemiesManager {
+public interface EnemyManager {
 
     int size();
 

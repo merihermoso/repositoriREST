@@ -5,7 +5,7 @@ import edu.upc.dsa.models.User;
 
 import java.util.List;
 
-public interface PartidasManager {
+public interface PartidaManager {
 
     int size();
 

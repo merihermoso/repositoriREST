@@ -1,11 +1,8 @@
 package edu.upc.dsa.services;
 
 
-import edu.upc.dsa.UsersManager;
-import edu.upc.dsa.UsersManagerImpl;
-import edu.upc.dsa.models.User;
-import edu.upc.dsa.UsersManager;
-import edu.upc.dsa.UsersManagerImpl;
+import edu.upc.dsa.UserManager;
+import edu.upc.dsa.UserManagerImpl;
 import edu.upc.dsa.models.User;
 
 import io.swagger.annotations.Api;
@@ -23,11 +20,11 @@ import java.util.List;
 @Path("/users")
 public class UsersService {
 
-    private UsersManager tm;
+    private UserManager tm;
 
     public UsersService() {
 
-        this.tm = UsersManagerImpl.getInstance();
+        this.tm = UserManagerImpl.getInstance();
         if (tm.size()==0) {
             this.tm.addUser("Meri", "Meri123");
             this.tm.addUser("Pedro", "Pedro123");

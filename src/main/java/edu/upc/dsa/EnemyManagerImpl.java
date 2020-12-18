@@ -1,24 +1,25 @@
 package edu.upc.dsa;
 
+
 import java.util.LinkedList;
 import java.util.List;
 
 import edu.upc.dsa.models.Enemy.*;
 import org.apache.log4j.Logger;
 
-public class EnemiesManagerImpl implements EnemiesManager {
-    private static EnemiesManager instance;
+public class EnemyManagerImpl implements EnemyManager {
+    private static EnemyManager instance;
 
     protected List<Enemy> enemies; //Creamos la lista de enemigos de tipo 1
 
-    final static Logger logger = Logger.getLogger(UsersManagerImpl.class);
+    final static Logger logger = Logger.getLogger(EnemyManagerImpl.class);
 
-    private EnemiesManagerImpl() { //Constructor
+    private EnemyManagerImpl() { //Constructor
         this.enemies = new LinkedList<>();
     }
 
-    public static EnemiesManager getInstance() {
-        if (instance==null) instance = new EnemiesManagerImpl();
+    public static EnemyManager getInstance() {
+        if (instance==null) instance = new EnemyManagerImpl();
         return instance;
     }
 
