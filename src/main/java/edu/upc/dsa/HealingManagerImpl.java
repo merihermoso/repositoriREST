@@ -33,18 +33,18 @@ public class HealingManagerImpl implements HealingManager{
     }
 
     @Override
-    public Healing addHealing1(int hit, int force) {
-        return this.addHealing(new Healing1(hit, force));
+    public Healing addHealing1(int hit, int healing) {
+        return this.addHealing(new Healing1(hit, healing));
     }
 
     @Override
-    public Healing addHealing2(int hit, int force) {
-        return this.addHealing(new Healing2(hit, force));
+    public Healing addHealing2(int hit, int healing) {
+        return this.addHealing(new Healing2(hit, healing));
     }
 
     @Override
-    public Healing addHealing3(int hit, int force) {
-        return this.addHealing(new Healing3(hit, force));
+    public Healing addHealing3(int hit, int healing) {
+        return this.addHealing(new Healing3(hit, healing));
     }
 
     @Override
@@ -57,7 +57,7 @@ public class HealingManagerImpl implements HealingManager{
     }
 
     @Override
-    public Healing getHelaing(String id) {
+    public Healing getHealing(String id) {
         logger.info("getHealing(" + id + ")");
 
         for (Healing t: this.healings) {
@@ -80,7 +80,7 @@ public class HealingManagerImpl implements HealingManager{
     @Override
     public void deleteHealing(String id) {
         logger.info("Want to delete healing with this id: " + id);
-        Healing t = this.getHelaing(id);
+        Healing t = this.getHealing(id);
 
         if (t==null) { //Comprobamos que el healing existe
             logger.warn("healing not found " + t); //No creo que pueda pasar

@@ -4,9 +4,9 @@ import edu.upc.dsa.util.RandomUtils;
 
 public class Defense3 extends Defense{
 
-    public Defense3(int hit, int defence) {
+    public Defense3() {
         this.id = RandomUtils.getId();
-        this.hit = hit;
-        this.defense = defence;
+        this.hit = 10;
+        this.defense = 2;
     }
 }

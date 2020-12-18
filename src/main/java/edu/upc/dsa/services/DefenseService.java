@@ -16,8 +16,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Api(value = "/Defences")
-@Path("/defences")
+@Api(value = "/Defenses")
+@Path("/defenses")
 public class DefenseService {
 
     private DefenseManager tm;
@@ -26,9 +26,9 @@ public class DefenseService {
 
         this.tm = DefenseManagerImpl.getInstance();
         if (tm.size()==0) {
-            this.tm.addDefense1(5, 3);
-            this.tm.addDefense2(17, 2);
-            this.tm.addDefense3(31, 12);
+            this.tm.addDefense1();
+            this.tm.addDefense2();
+            this.tm.addDefense3();
         }
 
     }
@@ -43,15 +43,15 @@ public class DefenseService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getDefense() {
 
-        List<Defense> defences = this.tm.findAll();
+        List<Defense> defenses = this.tm.findAll();
 
-        GenericEntity<List<Defense>> entity = new GenericEntity<List<Defense>>(defences) {};
+        GenericEntity<List<Defense>> entity = new GenericEntity<List<Defense>>(defenses) {};
         return Response.status(201).entity(entity).build()  ;
 
     }
 
     @POST
-    @ApiOperation(value = "Add a new defence", notes = "")
+    @ApiOperation(value = "Add a new defense", notes = "")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful! User registered"),
             @ApiResponse(code = 250, message = "User already exists"),
@@ -59,16 +59,16 @@ public class DefenseService {
             @ApiResponse(code = 601, message = "Need to fill in password field")
 
     })
-    @Path("/AddDefense/{hit}/{force}")
+    @Path("/AddDefense/")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response AddDefense1(@PathParam("hit") int hit, @PathParam("force") int force) {
+    public Response AddDefense1() {
 
         //if (x==null) return Response.status(600).build();
         //if (y==null) return Response.status(601).build();
 
         //if (this.tm.userExists(username)) return Response.status(250).build();
 
-        Defense Defense = this.tm.addDefense1(hit, force);
+        Defense Defense = this.tm.addDefense1();
         return Response.status(201).build();
     }
 

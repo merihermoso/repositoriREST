@@ -6,7 +6,7 @@ public abstract class Healing {
 
     String id; //Asignamos un id al objeto creado
     int hit; //Asignamos un numero maximo de usos
-    int force; //Asignamos lo util que sera el objeto
+    int healing; //Asignamos lo util que sera el objeto
 
 
     public String getId() {
@@ -25,11 +25,11 @@ public abstract class Healing {
         this.hit = hit;
     }
 
-    public int getForce() {
-        return force;
+    public int getHealing() {
+        return healing;
     }
 
-    public void setForce(int force) {
-        this.force = force;
+    public void setHealing(int healing) {
+        this.healing = healing;
     }
 }

@@ -32,18 +32,18 @@ public class DefenseManagerImpl implements DefenseManager {
     }
 
     @Override
-    public Defense addDefense1(int hit, int force) {
-        return this.addDefense(new Defense1(hit, force));
+    public Defense addDefense1() {
+        return this.addDefense(new Defense1());
     }
 
     @Override
-    public Defense addDefense2(int hit, int force) {
-        return this.addDefense(new Defense2(hit, force));
+    public Defense addDefense2() {
+        return this.addDefense(new Defense2());
     }
 
     @Override
-    public Defense addDefense3(int hit, int force) {
-        return this.addDefense(new Defense3(hit, force));
+    public Defense addDefense3() {
+        return this.addDefense(new Defense3());
     }
 
     @Override

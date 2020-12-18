@@ -8,12 +8,12 @@ public interface HealingManager {
 
     int size();
 
-    Healing addHealing1(int hit, int force); //Creamos un healing tipo 1
-    Healing addHealing2(int hit, int force); //Creamos un healing tipo 2
-    Healing addHealing3(int hit, int force); //Creamos un healing tipo 3
+    Healing addHealing1(int hit, int healing); //Creamos un healing tipo 1
+    Healing addHealing2(int hit, int healing); //Creamos un healing tipo 2
+    Healing addHealing3(int hit, int healing); //Creamos un healing tipo 3
     Healing addHealing(Healing p); //Creamos un healing
 
-    Healing getHelaing(String id);
+    Healing getHealing(String id);
 
     List<Healing> findAll();
 
