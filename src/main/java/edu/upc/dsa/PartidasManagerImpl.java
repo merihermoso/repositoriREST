@@ -74,6 +74,20 @@ public class PartidasManagerImpl implements PartidasManager {
     }
 
     @Override
+    public boolean partidaExists(int id_partida) {
+        for (Partida t: this.partidas) {
+
+            if (t.getId_partida().equals(id_partida)) {
+
+                return true;
+
+            }
+
+        }
+        return false;
+    }
+
+    @Override
     public Partida updatePartida(Partida p) {
         Partida u = this.getPartida(p.getId_partida());
 

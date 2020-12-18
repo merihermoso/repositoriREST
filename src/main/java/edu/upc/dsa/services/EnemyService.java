@@ -3,7 +3,7 @@ package edu.upc.dsa.services;
 
 import edu.upc.dsa.EnemiesManager;
 import edu.upc.dsa.EnemiesManagerImpl;
-import edu.upc.dsa.models.Enemy.Enemy1;
+import edu.upc.dsa.models.Enemy.Enemy;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -16,8 +16,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-@Api(value = "/enemies1")
-@Path("/enemies1")
+@Api(value = "/enemies")
+@Path("/enemies")
 public class EnemyService {
 
     private EnemiesManager tm;
@@ -26,9 +26,9 @@ public class EnemyService {
 
         this.tm = EnemiesManagerImpl.getInstance();
         if (tm.size()==0) {
-            this.tm.addEnemy(5, 3);
-            this.tm.addEnemy(17, 2);
-            this.tm.addEnemy(31, 12);
+            this.tm.addEnemy1(5, 3);
+            this.tm.addEnemy2(17, 2);
+            this.tm.addEnemy3(31, 12);
         }
 
     }
@@ -36,16 +36,16 @@ public class EnemyService {
     @GET
     @ApiOperation(value = "Get all Enemies1", notes = "Get all enemies from BBDD")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Enemy1.class, responseContainer="List"),
+            @ApiResponse(code = 201, message = "Successful", response = Enemy.class, responseContainer="List"),
     })
 
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEnemies1() {
 
-        List<Enemy1> enemies1 = this.tm.findAll();
+        List<Enemy> enemies = this.tm.findAll();
 
-        GenericEntity<List<Enemy1>> entity = new GenericEntity<List<Enemy1>>(enemies1) {};
+        GenericEntity<List<Enemy>> entity = new GenericEntity<List<Enemy>>(enemies) {};
         return Response.status(201).entity(entity).build()  ;
 
     }

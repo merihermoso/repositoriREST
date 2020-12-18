@@ -9,7 +9,7 @@ public class Partida {
 
     public Partida() {
         this.id_partida = RandomUtils.getId();
-        this.score_partida=0;
+        this.score_partida = 0;
     }
 
     public Partida(int score_partida) {
@@ -22,7 +22,7 @@ public class Partida {
     }
 
     public void setId_partida(String id) {
-        this.id_partida=id_partida;
+        this.id_partida = id;
     }
 
     public int getScore_partida() {

@@ -1,33 +1,22 @@
-package edu.upc.dsa.models.Object;
+package edu.upc.dsa.models.Healing;
 
-import edu.upc.dsa.util.RandomUtils;
+public abstract class Healing {
 
-public class Object1 extends Object {
+    //Cuando cogemos un objeto debemos añadirlo a la lista de objects
+
     String id; //Asignamos un id al objeto creado
     int hit; //Asignamos un numero maximo de usos
     int force; //Asignamos lo util que sera el objeto
 
-    public Object1() {
-        this.id = RandomUtils.getId();
-    }
 
-    public Object1(int hit, int force) {
-        this();
-        this.hit = hit;
-        this.force = force;
-    }
-
-    @Override
     public String getId() {
         return id;
     }
 
-    @Override
     public void setId(String id) {
         this.id = id;
     }
 
-    @Override
     public int getHit() {
         return hit;
     }
@@ -36,7 +25,6 @@ public class Object1 extends Object {
         this.hit = hit;
     }
 
-    @Override
     public int getForce() {
         return force;
     }

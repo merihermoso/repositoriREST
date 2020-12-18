@@ -8,7 +8,7 @@ public class User {
     String username;
     String pwd;
     int score;
-    static int lastId;
+    //static int lastId;
 
     public User() {
         this.id_user = RandomUtils.getId();

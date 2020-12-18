@@ -6,15 +6,16 @@ import java.util.List;
 
 public interface EnemiesManager {
 
-    public int size();
+    int size();
 
-    public Enemy addEnemy(int x, int y); //Creamos un enemigo
-    public Enemy addEnemy(Enemy p);
+    Enemy addEnemy1(int x, int y); //Creamos un enemigo tipo 1
+    Enemy addEnemy2(int x, int y); //Creamos un enemigo tipo 2
+    Enemy addEnemy3(int x, int y); //Creamos un enemigo tipo 3
+    Enemy addEnemy(Enemy p); //Creamos un enemigo
 
-    public Enemy getEnemy(String id);
+    Enemy getEnemy(String id);
 
-    //public User getUser(String id);
-    public List<Enemy> findAll();
+    List<Enemy> findAll();
 
-    public void deleteEnemy(String id);
+    void deleteEnemy(String id);
 }

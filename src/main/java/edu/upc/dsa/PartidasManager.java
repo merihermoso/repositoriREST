@@ -7,17 +7,15 @@ import java.util.List;
 
 public interface PartidasManager {
 
-    public int size();
+    int size();
 
-    public Partida addPartida(int score_partida);
-    public Partida addPartida(Partida p);
-    public Partida getPartida(String id_partida);
-    public List<Partida> findAll();
-    public void deletePartida(String id_partida);
-    public Partida updatePartida(Partida p);
+    Partida addPartida(int score_partida);
+    Partida addPartida(Partida p);
 
- //   public boolean partidaExists(int id_partida);
+    Partida getPartida(String id_partida);
+    List<Partida> findAll();
+    Partida updatePartida(Partida p);
 
-
-
+    void deletePartida(String id_partida);
+    boolean partidaExists(int id_partida);
 }

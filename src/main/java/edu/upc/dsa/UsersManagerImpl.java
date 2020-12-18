@@ -1,6 +1,6 @@
 package edu.upc.dsa;
 
-import edu.upc.dsa.models.Partida;
+
 import edu.upc.dsa.models.User;
 
 import java.util.LinkedList;
@@ -11,7 +11,6 @@ public class UsersManagerImpl implements UsersManager {
     private static UsersManager instance;
 
     protected List<User> users;
-
 
     final static Logger logger = Logger.getLogger(UsersManagerImpl.class);
 
@@ -59,59 +58,8 @@ public class UsersManagerImpl implements UsersManager {
         return null;
     }
 
-    public boolean userExists(String username) {
-
-        for (User t: this.users) {
-
-            if (t.getUsername().equals(username)) {
-
-                return true;
-
-            }
-
-        }
-
-        return false;
-    }
-
-    public boolean checkPassword(String username, String password) {
-
-        for (User t : this.users) {
-
-            if (t.getUsername().equals(username)) {
-
-                if (t.getPwd().equals(password)) {
-
-                    return true;
-
-                } else {
-
-                    return false;
-                }
-
-            }
-
-        }
-
-        return false;
-
-    }
-
     public List<User> findAll() {
         return this.users;
-    }
-
-    @Override
-    public void deleteUser(String id) {
-        logger.info("Want to delete user with this id: " +id);
-        User t = this.getUser(id);
-        if (t==null) {
-            logger.warn("user not found " +t);
-        }
-        else logger.info(t+"User deleted ");
-
-        this.users.remove(t);
-
     }
 
     @Override
@@ -131,6 +79,49 @@ public class UsersManagerImpl implements UsersManager {
         return u;
     }
 
+    @Override
+    public void deleteUser(String id) {
+        logger.info("Want to delete user with this id: " +id);
+        User t = this.getUser(id);
+        if (t==null) {
+            logger.warn("user not found " + t);
+        }
+        else logger.info(t+"User deleted ");
 
+        this.users.remove(t);
 
+    }
+
+    public boolean userExists(String username) {
+        for (User t: this.users) {
+
+            if (t.getUsername().equals(username)) {
+
+                return true;
+
+            }
+
+        }
+        return false;
+    }
+
+    public boolean checkPassword(String username, String password) {
+
+        for (User t : this.users) {
+
+            if (t.getUsername().equals(username)) {
+
+                if (t.getPwd().equals(password)) {
+                    return true;
+                } else {
+                    return false;
+                }
+
+            }
+
+        }
+
+        return false;
+
+    }
 }
