@@ -3,7 +3,7 @@ package edu.upc.dsa.services;
 
 import edu.upc.dsa.EnemyManager;
 import edu.upc.dsa.EnemyManagerImpl;
-import edu.upc.dsa.models.Enemy.Enemy;
+import edu.upc.dsa.models.Enemy.*;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -34,19 +34,55 @@ public class EnemyService {
     }
 
     @GET
-    @ApiOperation(value = "Get all Enemies1", notes = "Get all enemies from BBDD")
+    @ApiOperation(value = "Get all Enemies", notes = "Get all enemies from BBDD")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Enemy.class, responseContainer="List"),
     })
 
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getEnemies1() {
+    public Response getEnemies() {
 
         List<Enemy> enemies = this.tm.findAll();
 
         GenericEntity<List<Enemy>> entity = new GenericEntity<List<Enemy>>(enemies) {};
         return Response.status(201).entity(entity).build()  ;
 
+    }
+
+    @POST
+    @ApiOperation(value = "Add a new enemy", notes = "")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful! User registered"),
+            @ApiResponse(code = 250, message = "User already exists"),
+            @ApiResponse(code = 600, message = "Need to fill in username field"),
+            @ApiResponse(code = 601, message = "Need to fill in password field")
+
+    })
+    @Path("/AddEnemy/{x}/{y}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response AddEnemy1(@PathParam("x") int x, @PathParam("y") int y) {
+
+        //if (x==null) return Response.status(600).build();
+        //if (y==null) return Response.status(601).build();
+
+        //if (this.tm.userExists(username)) return Response.status(250).build();
+
+        Enemy enemy = this.tm.addEnemy1(x, y);
+        return Response.status(201).build();
+    }
+
+    @DELETE
+    @ApiOperation(value = "Delete a Enemy", notes = "Delete a enemy")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Enemy found and deleted"),
+            @ApiResponse(code = 404, message = "Enemy not found")
+    })
+    @Path("/{id}")
+    public Response deleteUser(@PathParam("id") String id) {
+        Enemy t = this.tm.getEnemy(id);
+        if (t == null) return Response.status(404).build();
+        else this.tm.deleteEnemy(id);
+        return Response.status(201).build();
     }
 }
