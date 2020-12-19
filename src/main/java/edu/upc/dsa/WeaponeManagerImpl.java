@@ -33,18 +33,18 @@ public class WeaponeManagerImpl implements WeaponeManager{
     }
 
     @Override
-    public Weapone addWeapone1(int hit, int damage) {
-        return this.addWeapone(new Weapone1(hit, damage));
+    public Weapone addWeapone1() {
+        return this.addWeapone(new Weapone1());
     }
 
     @Override
-    public Weapone addWeapone2(int hit, int damage) {
-        return this.addWeapone(new Weapone2(hit, damage));
+    public Weapone addWeapone2() {
+        return this.addWeapone(new Weapone2());
     }
 
     @Override
-    public Weapone addWeapone3(int hit, int damage) {
-        return this.addWeapone(new Weapone3(hit, damage));
+    public Weapone addWeapone3() {
+        return this.addWeapone(new Weapone3());
     }
 
     @Override

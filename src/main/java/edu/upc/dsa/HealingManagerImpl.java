@@ -33,18 +33,18 @@ public class HealingManagerImpl implements HealingManager{
     }
 
     @Override
-    public Healing addHealing1(int hit, int healing) {
-        return this.addHealing(new Healing1(hit, healing));
+    public Healing addHealing1() {
+        return this.addHealing(new Healing1());
     }
 
     @Override
-    public Healing addHealing2(int hit, int healing) {
-        return this.addHealing(new Healing2(hit, healing));
+    public Healing addHealing2() {
+        return this.addHealing(new Healing2());
     }
 
     @Override
-    public Healing addHealing3(int hit, int healing) {
-        return this.addHealing(new Healing3(hit, healing));
+    public Healing addHealing3() {
+        return this.addHealing(new Healing3());
     }
 
     @Override

@@ -26,9 +26,9 @@ public class WeaponeService {
 
         this.tm = WeaponeManagerImpl.getInstance();
         if (tm.size()==0) {
-            this.tm.addWeapone1(5, 3);
-            this.tm.addWeapone2(17, 2);
-            this.tm.addWeapone3(31, 12);
+            this.tm.addWeapone1();
+            this.tm.addWeapone2();
+            this.tm.addWeapone3();
         }
 
     }
@@ -59,16 +59,16 @@ public class WeaponeService {
             @ApiResponse(code = 601, message = "Need to fill in damage field")
 
     })
-    @Path("/AddWeapone/{hit}/{damage}")
+    @Path("/AddWeapone/")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response AddWeapone1(@PathParam("hit") int hit, @PathParam("damage") int damage) {
+    public Response AddWeapone1() {
 
         //if (x==null) return Response.status(600).build();
         //if (y==null) return Response.status(601).build();
 
         //if (this.tm.WeaponeExists(username)) return Response.status(250).build();
 
-        Weapone Weapone = this.tm.addWeapone1(hit, damage);
+        Weapone Weapone = this.tm.addWeapone1();
         return Response.status(201).build();
     }
 

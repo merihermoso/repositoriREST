@@ -4,9 +4,9 @@ import edu.upc.dsa.util.RandomUtils;
 
 public class Weapone3 extends Weapone{
 
-    public Weapone3(int hit, int damage) {
+    public Weapone3() {
         this.id = RandomUtils.getId();
-        this.hit = hit;
-        this.damage = damage;
+        this.hit = 1;
+        this.damage = 50;
     }
 }

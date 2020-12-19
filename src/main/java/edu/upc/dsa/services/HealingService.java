@@ -25,9 +25,9 @@ public class HealingService {
 
         this.tm = HealingManagerImpl.getInstance();
         if (tm.size()==0) {
-            this.tm.addHealing1(5, 3);
-            this.tm.addHealing2(17, 2);
-            this.tm.addHealing3(31, 12);
+            this.tm.addHealing1();
+            this.tm.addHealing2();
+            this.tm.addHealing3();
         }
 
     }
@@ -58,16 +58,16 @@ public class HealingService {
             @ApiResponse(code = 601, message = "Need to fill in healing field")
 
     })
-    @Path("/AddHealing/{hit}/{healing}")
+    @Path("/AddHealing/")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response AddHealing1(@PathParam("hit") int hit, @PathParam("healing") int healing) {
+    public Response AddHealing1() {
 
         //if (x==null) return Response.status(600).build();
         //if (y==null) return Response.status(601).build();
 
         //if (this.tm.userExists(username)) return Response.status(250).build();
 
-        Healing Healing = this.tm.addHealing1(hit, healing);
+        Healing Healing = this.tm.addHealing1();
         return Response.status(201).build();
     }
 
