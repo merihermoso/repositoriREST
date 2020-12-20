@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tienda</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Boostrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="shortcut icon" href="Media/logofuego.png"/>
+    <link rel="stylesheet" href="CSS/shop.css" type="text/css">
+    <!-- FONT AWESOME, para poner los simbolos en nuestra web -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+          integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="JavaScript/shop.js"></script>
+</head>
+<body>
+<!-- Cabecera -->
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #EB984E;">
+    <div class="container">
+        <a class="navbar-brand" href="home.html">
+            <img src="Media/logocabecera.png" style="width: 30%;">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="home.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Store</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="ranking.html">Ranking</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!---------------------------->
+<!-- Cartas de los productos -->
+<section class="products text-center">
+    <div class="container p-3">
+        <h1 class="text-white">Firefighter store</h1>
+        <p class="text-white">¡Obtén estos productos para avanzar de una manera más divertida en el juego!</p>
+        <p class="text-white">¡Puedes comprarlos ahora mismo con tus diamantes actuales: <label id="m"></label> !</p>
+        <div class="row">
+            <!-- Miembros-->
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="Media/1.png" class="img-fluid rounded-circle w-50"   alt="ALOEVERA">
+                        <h3>Aloe vera</h3>
+                        <p>Cura tus quemaduras y obtén +25px <br> Precio: 5 <i class="fas fa-gem"></i> </p>
+                        <button id="r1" type="button" class="btn-xs btn-outline-danger">~</button>
+                        <label id="numero1">1</label>
+                        <button id="s1" type="button"  class="btn-xs btn-outline-danger">+</button>
+                        <div class="d-flex flex row justify-content-center">
+                            <div class="p-4">
+                                <button type="button" style="margin-left: 5px" name="button" id="aloevera" class="btn btn-danger">Comprar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="Media/2.png" class="img-fluid rounded-circle w-50"   alt="HACHA">
+                        <h3>Hacha</h3>
+                        <p>Mata a tus enemigos de un golpe<br>Precio: 150 <i class="fas fa-gem"></i></p>
+                        <button id="r2" type="button"  class="btn-xs btn-outline-danger">~</button>
+                        <label id="numero2">1</label>
+                        <button id="s2" type="button"  class="btn-xs btn-outline-danger">+</button>
+                        <div class="d-flex flex row justify-content-center">
+                            <div class="p-4">
+                                <button type="button" style="margin-left: 15px" name="button" id="hacha" class="btn btn-danger">Comprar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="Media/3.png" class="img-fluid rounded-circle w-50"   alt="VACUNA">
+                        <h3>Desparalizante</h3>
+                        <p>Librate de la parálisis inmediatamente<br> Precio: 10 <i class="fas fa-gem"></i> </p>
+                        <button id="r3" type="button"  class="btn-xs btn-outline-danger">~</button>
+                        <label id="numero3">1</label>
+                        <button id="s3" type="button"  class="btn-xs btn-outline-danger">+</button>
+                        <div class="d-flex flex row justify-content-center">
+                            <div class="p-4">
+                                <button type="button" style="margin-left: 15px" name="button" id="vacuna" class="btn btn-danger">Comprar</button>                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="Media/4.png" class="img-fluid rounded-circle w-50"   alt="CUERDA">
+                        <h3>Cuerda huida</h3>
+                        <p>Vuelve al punto de inicio al perderte<br> Precio: 20 <i class="fas fa-gem"></i> </p>
+                        <button id="r4" type="button"  class="btn-xs btn-outline-danger">~</button>
+                        <label id="numero4">1</label>
+                        <button id="s4" type="button"  class="btn-xs btn-outline-danger">+</button>
+                        <div class="d-flex flex row justify-content-center">
+                            <div class="p-4">
+                                <button type="button" style="margin-left: 15px" name="button" id="cuerda" class="btn btn-danger">Comprar</button>                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="Media/5.png" class="img-fluid rounded-circle w-50"   alt="CASCO">
+                        <h3>Casco invisible</h3>
+                        <p>Hazte invisible 30s frente a tus enemigos <br> Precio: 100 <i class="fas fa-gem"></i> </p>
+                        <button id="r5" type="button"  class="btn-xs btn-outline-danger">~</button>
+                        <label id="numero5">1</label>
+                        <button id="s5" type="button"  class="btn-xs btn-outline-danger">+</button>
+                        <div class="d-flex flex row justify-content-center">
+                            <div class="p-4">
+                                <button type="button" style="margin-left: 15px" name="button" id="casco" class="btn btn-danger">Comprar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="Media/6.png" class="img-fluid rounded-circle w-50"   alt="PASTILLA">
+                        <h3>Pastilla mágica</h3>
+                        <p>Aumenta la capacidad de vida <br> Precio: 75 <i class="fas fa-gem"></i></p>
+                        <button id="r6" type="button"  class="btn-xs btn-outline-danger">~</button>
+                        <label id="numero6">1</label>
+                        <button id="s6" type="button"  class="btn-xs btn-outline-danger">+</button>
+                        <div class="d-flex flex row justify-content-center">
+                            <div class="p-4">
+                                <button type="button" name="button" id="pastilla" class="btn btn-danger">Comprar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<!---------------------------->
+</body>
+</html>
