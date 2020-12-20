@@ -5,17 +5,19 @@ import edu.upc.dsa.models.Item;
 
 public abstract class Defense extends Item {
 
-    String item =  "Defense";
+    String objeto =  "Defense";
     String id; //Asignamos un id al objeto creado
     int hit; //Asignamos un numero maximo de usos
     int defense; //Asignamos la cantidad de daño que protege
 
-    public String getItem() {
-        return item;
+    @Override
+    public String getObjeto() {
+        return objeto;
     }
 
-    public void setItem(String item) {
-        this.item = item;
+    @Override
+    public void setObjeto(String objeto) {
+        this.objeto = objeto;
     }
 
     @Override

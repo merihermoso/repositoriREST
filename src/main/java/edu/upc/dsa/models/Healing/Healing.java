@@ -1,22 +1,23 @@
 package edu.upc.dsa.models.Healing;
 
+
 import edu.upc.dsa.models.Item;
 
 public abstract class Healing extends Item {
 
-    //Cuando cogemos un objeto debemos añadirlo a la lista de objects
-
-    String item =  "Healing";
+    String objeto=  "Healing";
     String id; //Asignamos un id al objeto creado
     int hit; //Asignamos un numero maximo de usos
     int healing; //Asignamos lo util que sera el objeto
 
-    public String getItem() {
-        return item;
+    @Override
+    public String getObjeto() {
+        return objeto;
     }
 
-    public void setItem(String item) {
-        this.item = item;
+    @Override
+    public void setObjeto(String objeto) {
+        this.objeto = objeto;
     }
 
     @Override

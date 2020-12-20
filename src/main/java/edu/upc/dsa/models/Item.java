@@ -15,7 +15,7 @@ public class Item {
     }
 
     public void setObjeto(String item) {
-        this.id = item;
+        this.item = item;
     }
 
     public String getId() {
@@ -57,6 +57,5 @@ public class Item {
     public void setDamage(int damage) {
         this.damage = damage;
     }
-
 
 }
