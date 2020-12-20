@@ -14,6 +14,6 @@ public interface JugadorManager {
     void Damage(int damage, int defense); //El jugador pierde vida
     void Health(int health); //El jugador recupera vida
 
-    List<Item> findAll();
+    //List<Item> findAll();
 
 }

@@ -31,13 +31,15 @@ public class JugadorManagerImpl implements JugadorManager{
     }
 
     @Override
-    /*public Jugador CreateJugador(Jugador p) {
-        logger.info("new jugador to add: " + t);
+    public Jugador CreateJugador(Jugador p) {
+        /*logger.info("new jugador to add: " + t);
 
         this.enemies.add (t);
         logger.info("new Jugador added");
-        return t;
-    }*/
+        return t;*/
+
+        return p;
+    }
 
     @Override
     public void Disparo(Weapone weapone) {
