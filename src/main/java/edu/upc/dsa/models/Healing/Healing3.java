@@ -7,7 +7,7 @@ public class Healing3 extends Healing {
 
     public Healing3() {
         this.id = RandomUtils.getId();
-        this.hit = 2;
+        this.hit = 3;
         this.healing = 5;
     }
 }

@@ -3,6 +3,9 @@ package edu.upc.dsa.services;
 
 import edu.upc.dsa.ItemManager;
 import edu.upc.dsa.ItemManagerImpl;
+import edu.upc.dsa.models.Healing.Healing;
+import edu.upc.dsa.models.Weapone.Weapone;
+import edu.upc.dsa.models.Defense.Defense;
 import edu.upc.dsa.models.Item;
 
 import io.swagger.annotations.Api;
@@ -49,5 +52,228 @@ public class ItemService {
         GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(items) {};
         return Response.status(201).entity(entity).build()  ;
 
+    }
+
+
+    @POST
+    @ApiOperation(value = "Add a new Weapone1", notes = "")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful! Healing registered"),
+            @ApiResponse(code = 250, message = "Healing already exists"),
+            @ApiResponse(code = 600, message = "Need to fill in hita field"),
+            @ApiResponse(code = 601, message = "Need to fill in healing field")
+
+    })
+    @Path("/addWeapone1/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addWeapone1() {
+
+        //if (x==null) return Response.status(600).build();
+        //if (y==null) return Response.status(601).build();
+
+        //if (this.tm.userExists(username)) return Response.status(250).build();
+
+        Weapone Weapone = this.tm.addWeapone1();
+        return Response.status(201).build();
+    }
+
+    @POST
+    @ApiOperation(value = "Add a new Weapone2", notes = "")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful! Healing registered"),
+            @ApiResponse(code = 250, message = "Healing already exists"),
+            @ApiResponse(code = 600, message = "Need to fill in hita field"),
+            @ApiResponse(code = 601, message = "Need to fill in healing field")
+
+    })
+    @Path("/addWeapone2/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addWeapone2() {
+
+        //if (x==null) return Response.status(600).build();
+        //if (y==null) return Response.status(601).build();
+
+        //if (this.tm.userExists(username)) return Response.status(250).build();
+
+        Weapone Weapone = this.tm.addWeapone2();
+        return Response.status(201).build();
+    }
+
+    @POST
+    @ApiOperation(value = "Add a new Weapone3", notes = "")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful! Healing registered"),
+            @ApiResponse(code = 250, message = "Healing already exists"),
+            @ApiResponse(code = 600, message = "Need to fill in hita field"),
+            @ApiResponse(code = 601, message = "Need to fill in healing field")
+
+    })
+    @Path("/addWeapone3/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addWeapone3() {
+
+        //if (x==null) return Response.status(600).build();
+        //if (y==null) return Response.status(601).build();
+
+        //if (this.tm.userExists(username)) return Response.status(250).build();
+
+        Weapone Weapone = this.tm.addWeapone3();
+        return Response.status(201).build();
+    }
+
+
+
+    @POST
+    @ApiOperation(value = "Add a new Healing1", notes = "")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful! Healing registered"),
+            @ApiResponse(code = 250, message = "Healing already exists"),
+            @ApiResponse(code = 600, message = "Need to fill in hita field"),
+            @ApiResponse(code = 601, message = "Need to fill in healing field")
+
+    })
+    @Path("/addHealing1/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addHealing1() {
+
+        //if (x==null) return Response.status(600).build();
+        //if (y==null) return Response.status(601).build();
+
+        //if (this.tm.userExists(username)) return Response.status(250).build();
+
+        Healing Healing = this.tm.addHealing1();
+        return Response.status(201).build();
+    }
+
+
+    @POST
+    @ApiOperation(value = "Add a new Healing2", notes = "")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful! Healing registered"),
+            @ApiResponse(code = 250, message = "Healing already exists"),
+            @ApiResponse(code = 600, message = "Need to fill in hita field"),
+            @ApiResponse(code = 601, message = "Need to fill in healing field")
+
+    })
+    @Path("/addHealing2/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addHealing2() {
+
+        //if (x==null) return Response.status(600).build();
+        //if (y==null) return Response.status(601).build();
+
+        //if (this.tm.userExists(username)) return Response.status(250).build();
+
+        Healing Healing = this.tm.addHealing2();
+        return Response.status(201).build();
+    }
+
+
+    @POST
+    @ApiOperation(value = "Add a new Healing3", notes = "")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful! Healing registered"),
+            @ApiResponse(code = 250, message = "Healing already exists"),
+            @ApiResponse(code = 600, message = "Need to fill in hita field"),
+            @ApiResponse(code = 601, message = "Need to fill in healing field")
+
+    })
+    @Path("/addHealing3/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addHealing3() {
+
+        //if (x==null) return Response.status(600).build();
+        //if (y==null) return Response.status(601).build();
+
+        //if (this.tm.userExists(username)) return Response.status(250).build();
+
+        Healing Healing = this.tm.addHealing3();
+        return Response.status(201).build();
+    }
+
+
+
+    @POST
+    @ApiOperation(value = "Add a new Defense1", notes = "")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful! Defense registered"),
+            @ApiResponse(code = 250, message = "Defense already exists"),
+            @ApiResponse(code = 600, message = "Need to fill in hita field"),
+            @ApiResponse(code = 601, message = "Need to fill in healing field")
+
+    })
+    @Path("/addDefense1/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addDefense1() {
+
+        //if (x==null) return Response.status(600).build();
+        //if (y==null) return Response.status(601).build();
+
+        //if (this.tm.userExists(username)) return Response.status(250).build();
+
+        Defense Defense = this.tm.addDefense1();
+        return Response.status(201).build();
+    }
+
+
+    @POST
+    @ApiOperation(value = "Add a new Defense2", notes = "")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful! Defense registered"),
+            @ApiResponse(code = 250, message = "Defense already exists"),
+            @ApiResponse(code = 600, message = "Need to fill in hita field"),
+            @ApiResponse(code = 601, message = "Need to fill in healing field")
+
+    })
+    @Path("/addDefense2/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addDefense2() {
+
+        //if (x==null) return Response.status(600).build();
+        //if (y==null) return Response.status(601).build();
+
+        //if (this.tm.userExists(username)) return Response.status(250).build();
+
+        Defense Defense = this.tm.addDefense2();
+        return Response.status(201).build();
+    }
+
+
+    @POST
+    @ApiOperation(value = "Add a new Defense3", notes = "")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful! Defense registered"),
+            @ApiResponse(code = 250, message = "Defense already exists"),
+            @ApiResponse(code = 600, message = "Need to fill in hita field"),
+            @ApiResponse(code = 601, message = "Need to fill in healing field")
+
+    })
+    @Path("/addDefense3/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response addDefense3() {
+
+        //if (x==null) return Response.status(600).build();
+        //if (y==null) return Response.status(601).build();
+
+        //if (this.tm.userExists(username)) return Response.status(250).build();
+
+        Defense Defense = this.tm.addDefense3();
+        return Response.status(201).build();
+    }
+
+
+
+    @DELETE
+    @ApiOperation(value = "Delete an Item", notes = "Item")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Item found and deleted"),
+            @ApiResponse(code = 404, message = "Item not found")
+    })
+    @Path("/{id}")
+    public Response deleteItem(@PathParam("id") String id) {
+        Item t = this.tm.getItem(id);
+        if (t == null) return Response.status(404).build();
+        else this.tm.deleteItem(id);
+        return Response.status(201).build();
     }
 }

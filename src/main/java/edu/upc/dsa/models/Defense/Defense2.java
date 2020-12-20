@@ -6,7 +6,7 @@ public class Defense2 extends Defense{
 
     public Defense2() {
         this.id = RandomUtils.getId();
-        this.hit = 10;
+        this.hit = 2;
         this.defense = 2;
     }
 }

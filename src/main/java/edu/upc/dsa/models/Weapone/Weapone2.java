@@ -7,7 +7,7 @@ public class Weapone2 extends Weapone{
 
     public Weapone2() {
         this.id = RandomUtils.getId();
-        this.hit = 1;
+        this.hit = 2;
         this.damage = 50;
     }
 }
