@@ -1,5 +1,6 @@
 package edu.upc.dsa.models.Weapone;
 
+
 import edu.upc.dsa.util.RandomUtils;
 
 public class Weapone1 extends Weapone{

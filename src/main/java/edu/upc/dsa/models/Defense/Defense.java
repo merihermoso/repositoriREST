@@ -1,19 +1,14 @@
 package edu.upc.dsa.models.Defense;
 
 
-public abstract class Defense {
+import edu.upc.dsa.models.Item;
+
+public abstract class Defense extends Item {
 
     String id; //Asignamos un id al objeto creado
     int hit; //Asignamos un numero maximo de usos
     int defense; //Asignamos la cantidad de daño que protege
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public int getHit() {
         return hit;

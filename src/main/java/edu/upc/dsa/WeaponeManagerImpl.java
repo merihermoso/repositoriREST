@@ -53,7 +53,8 @@ public class WeaponeManagerImpl implements WeaponeManager{
 
         this.weapones.add (t);
         logger.info("new weapone added");
-        return t;    }
+        return t;
+    }
 
     @Override
     public Weapone getWeapone(String id) {

@@ -1,6 +1,8 @@
 package edu.upc.dsa.models.Healing;
 
-public abstract class Healing {
+import edu.upc.dsa.models.Item;
+
+public abstract class Healing extends Item {
 
     //Cuando cogemos un objeto debemos añadirlo a la lista de objects
 
@@ -8,14 +10,6 @@ public abstract class Healing {
     int hit; //Asignamos un numero maximo de usos
     int healing; //Asignamos lo util que sera el objeto
 
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public int getHit() {
         return hit;

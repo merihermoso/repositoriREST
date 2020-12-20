@@ -1,5 +1,6 @@
 package edu.upc.dsa.models.Healing;
 
+
 import edu.upc.dsa.util.RandomUtils;
 
 public class Healing2 extends Healing {
