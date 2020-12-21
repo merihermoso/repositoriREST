@@ -1,8 +1,8 @@
 package edu.upc.dsa.services;
 
 
-import edu.upc.dsa.ItemManager;
-import edu.upc.dsa.ItemManagerImpl;
+import edu.upc.dsa.InventoryManager;
+import edu.upc.dsa.InventoryManagerImpl;
 import edu.upc.dsa.models.Healing.Healing;
 import edu.upc.dsa.models.Weapone.Weapone;
 import edu.upc.dsa.models.Defense.Defense;
@@ -21,13 +21,13 @@ import java.util.List;
 
 @Api(value = "/Items")
 @Path("/items")
-public class ItemService {
+public class InventoryService {
 
-    private ItemManager tm;
+    private InventoryManager tm;
 
-    public ItemService() {
+    public InventoryService() {
 
-        this.tm = ItemManagerImpl.getInstance();
+        this.tm = InventoryManagerImpl.getInstance();
         if (tm.size() == 0) {
             this.tm.addDefense2();
             this.tm.addDefense3();

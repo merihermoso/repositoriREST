@@ -7,7 +7,7 @@ import edu.upc.dsa.models.Weapone.Weapone;
 
 import java.util.List;
 
-public interface ItemManager {
+public interface InventoryManager {
 
     int size();
 
