@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
+<title>Firefighter Adventure</title>
+<link rel="icon" type="image/png" href="/favicon.png"/>
 <head>
     <meta charset="UTF-8">
     <title>website</title>
@@ -14,15 +16,17 @@
             <button type="button" class="toggle-btn" onclick="register()">Register</button>
         </div>
         <form id="login" class="input-group">
-            <input type="text" class="input-field" placeholder="Id Usuario" required>
-            <input type="text" class="input-field" placeholder="Introduce contraseña" required>
+            <input type="text" class="input-field" placeholder="Username" required>
+            <input type="password" class="input-field" placeholder="Password" required>
             <input type="checkbox" class="check-box"><span>Recordar contraseña</span>
             <button type="submit" class="submit-btn">Log in</button>
         </form>
         <form id="register" class="input-group">
             <input type="text" class="input-field" placeholder="Username" required>
             <input type="email" class="input-field" placeholder="Email" required>
-            <input type="text" class="input-field" placeholder="Password" required>
+            <input type="password" class="input-field" placeholder="Password" required>
+            <input type="password" class="input-field" placeholder="Confirm password" required>
+            <input type="text" class="input-field" placeholder="Birthdate" required>
             <input type="checkbox" class="check-box"><span>Estoy de acuerdo con los términos & condiciones</span>
             <button type="submit" class="submit-btn">Register</button>
         </form>
@@ -43,6 +47,8 @@
       y.style.left = "450px";
       z.style.left = "0px";
     }
+
+
   </script>
 </body>
 </html>

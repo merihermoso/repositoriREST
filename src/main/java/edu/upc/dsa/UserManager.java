@@ -9,7 +9,7 @@ public interface UserManager {
 
     int size();
 
-    User addUser(String username, String pwd); //Registramos un usuario
+    User addUser(String username, String pwd, String email, String birthdate); //Registramos un usuario
     User addUser(User u);
 
     User getUser(String id_user);

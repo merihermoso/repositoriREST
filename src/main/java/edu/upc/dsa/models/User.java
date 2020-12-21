@@ -6,19 +6,22 @@ public class User {
 
     String id_user;
     String username;
+    String email;
+    String birthdate;
     String pwd;
     int score;
-    //static int lastId;
 
     public User() {
         this.id_user = RandomUtils.getId();
         this.score = 0;
     }
 
-    public User(String username, String pwd) {
+    public User(String username, String pwd, String email, String birthdate) {
         this();
         this.setPwd(pwd);
         this.setUsername(username);
+        this.setEmail(email);
+        this.setBirthdate(birthdate);
     }
 
     public String getId() {
@@ -53,6 +56,14 @@ public class User {
     public int getScore(){
         return this.score;
     }
+
+    public String getBirthdate() { return this.birthdate; }
+
+    public String getEmail() { return this.email; }
+
+    public void setBirthdate(String birthdate) { this.birthdate = birthdate; }
+
+    public void setEmail(String email) { this.email = email; }
 
     @Override
     public String toString() {
