@@ -11,14 +11,14 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.joda.time.LocalDate;
+import org.joda.time.Period;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -140,7 +140,7 @@ public class UsersService {
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-        try {
+        /*try {
             Date d = sdf.parse(registerCredentials.getBirthdate().toString());
             Calendar c = Calendar.getInstance();
             c.setTime(d);
@@ -155,7 +155,7 @@ public class UsersService {
 
         } catch (Exception e){
 
-        }
+        }*/
 
         User us = this.tm.addUser(registerCredentials.getUsername(), registerCredentials.getPassword(), registerCredentials.getEmail(), registerCredentials.getBirthdate());
         return Response.status(201).build();
