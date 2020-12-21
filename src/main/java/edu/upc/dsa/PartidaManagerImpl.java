@@ -11,7 +11,6 @@ public class PartidaManagerImpl implements PartidaManager {
 
     protected List<Partida> partidas;
 
-
     final static Logger logger = Logger.getLogger(PartidaManagerImpl.class);
 
     private PartidaManagerImpl() {
@@ -22,8 +21,6 @@ public class PartidaManagerImpl implements PartidaManager {
         if (instance==null) instance = new PartidaManagerImpl();
         return instance;
     }
-
-
 
     public int size() {
         int ret = this.partidas.size();

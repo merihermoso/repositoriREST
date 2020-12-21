@@ -18,7 +18,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.text.SimpleDateFormat;
+//mvn comimport java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -138,7 +138,7 @@ public class UsersService {
         if (registerCredentials.getPassword().length() < this.password_min_length || registerCredentials.getPassword().length() > this.password_max_length) return Response.status(605).build();
         if (registerCredentials.getEmail().length() < this.email_min_length || registerCredentials.getEmail().length() > this.email_max_length) return Response.status(606).build();
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
         /*try {
             Date d = sdf.parse(registerCredentials.getBirthdate().toString());
