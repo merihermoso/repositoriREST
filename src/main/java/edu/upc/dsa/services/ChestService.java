@@ -41,7 +41,7 @@ public class ChestService {
         }
     }
 
-    @GET
+    /*@GET
     @ApiOperation(value = "Get all Enemies", notes = "Get all enemies from BBDD")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Chest.class, responseContainer="List"),
@@ -56,5 +56,5 @@ public class ChestService {
         GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(items) {};
         return Response.status(201).entity(entity).build();
 
-    }
+    }*/
 }
