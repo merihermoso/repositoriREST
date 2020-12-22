@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ranking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Boostrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="shortcut icon" href="Media/logofuego.png"/>
+    <link rel="stylesheet" href="CSS/ranking.css" type="text/css">
+    <!-- FONT AWESOME, para poner los simbolos en nuestra web -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+          integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="JavaScript/shop.js"></script>
+</head>
+<body>
+<!-- Cabecera -->
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #EB984E;">
+    <div class="container">
+        <a class="navbar-brand" href="home.html">
+            <img src="Media/logocabecera.png" style="width: 30%;">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="home.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="shop.html">Store</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Ranking</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="settings.html">Settings</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!---------------------------->
+<!-- Cartas de los productos -->
+<section class="products text-center">
+    <div class="container p-3">
+        <h1 class="text-white">Firefighter ranking</h1>
+        <p class="text-white">¡Las mejores puntuaciones de Firefighter!</p>
+        <div class="row">
+            <!-- Miembros-->
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="Media/trofeo1.png" class="img-fluid rounded-circle w-50"   alt="ALOEVERA">
+                        <h3>Top 10 jugadores</h3>
+                        <p>Jugadores con más puntuación<br> <i class="fas fa-gem"></i></p>
+                        <div class="d-flex flex row justify-content-center">
+                            <div class="p-4">
+                                <button type="button" style="margin-left: 5px" name="button" id="topjugadores" class="btn btn-danger">Ver</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="Media/trofeo2.png" class="img-fluid rounded-circle w-50"   alt="topPartidas">
+                        <h3>Top 10 partidas</h3>
+                        <p>Partidas con más puntuación<br> <i class="fas fa-gem"></i></p>
+                        <div class="d-flex flex row justify-content-center">
+                            <div class="p-4">
+                                <button type="button" style="margin-left: 15px" name="button" id="topPartidas" class="btn btn-danger">Ver</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="Media/trofeo3.png" class="img-fluid rounded-circle w-50"   alt="miposicion">
+                        <h3>Mi posición</h3>
+                        <p>Ver qué posicion ocupo en el ranking<br>  <i class="fas fa-gem"></i> </p>
+                        <div class="d-flex flex row justify-content-center">
+                            <div class="p-4">
+                                <button type="button" style="margin-left: 15px" name="button" id="miposicion" class="btn btn-danger">ver</button>                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<!---------------------------->
+</body>
+</html>

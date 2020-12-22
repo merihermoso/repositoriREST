@@ -1,0 +1,25 @@
+.navbar{
+    box-shadow: 2px 2px 5px #000000;
+    background-color: #E68088;
+}
+
+.navbar .nav-item .nav-link{
+    color: white;
+}
+.products{
+    background: url("../Media/fondo.jpg") no-repeat;
+    background-size:cover;
+    position: relative;
+}
+
+.comprar-btn{
+    width: 130px;
+    background-color: rgba(25, 42, 86,1.0);
+    color: white;
+}
+
+.card{
+    margin-bottom: 10px;
+    margin-top: 10px;
+    height: 90%;
+}

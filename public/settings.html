@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Settings</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Boostrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="shortcut icon" href="Media/logofuego.png"/>
+    <link rel="stylesheet" href="CSS/settings.css" type="text/css">
+    <!-- FONT AWESOME, para poner los simbolos en nuestra web -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+          integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="JavaScript/shop.js"></script>
+</head>
+<body>
+<!-- Cabecera -->
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #EB984E;">
+    <div class="container">
+        <a class="navbar-brand" href="home.html">
+            <img src="Media/logocabecera.png" style="width: 30%;">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="home.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="shop.html">Store</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="ranking.html">Ranking</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Settings</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!---------------------------->
+<!-- Cartas de los productos -->
+<section class="products text-center">
+    <div class="container p-3">
+        <h1 class="text-white">Firefighter settings</h1>
+        <p class="text-white">¡Configura tus datos!</p>
+        <p class="text-white">¡Tu id de usuario es : <label id="m"></label> !</p>
+        <div class="row">
+            <!-- Miembros-->
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Username</h3>
+                        <form>
+                            <label for="oldusername">OldUsername</label>
+                            <input type="text" id="oldusername" name="oldusername">
+                            <label for="newusername">NewUsername</label>
+                            <input type="text" id="newusername" name="newusername">
+                        </form>
+                        <div class="d-flex flex row justify-content-center">
+                            <div class="p-4">
+                                <button type="button" style="margin-left: 5px" name="button" id="username" class="btn btn-danger">Modificar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Contraseña</h3>
+                        <form>
+                            <label for="newpwd">OldPassword</label>
+                            <input type="text" id="oldpwd" name="oldpwd">
+                            <label for="newpwd">NewPassword</label>
+                            <input type="text" id="newpwd" name="newpwd">
+                        </form>
+                        <div class="d-flex flex row justify-content-center">
+                            <div class="p-4">
+                                <button type="button" style="margin-left: 5px" name="button" id="pwd" class="btn btn-danger">Modificar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Email</h3>
+                        <form>
+                            <label for="newemail">OldEmail</label>
+                            <input type="text" id="oldemail" name="oldemail">
+                            <label for="newemail">NewEmail</label>
+                            <input type="text" id="newemail" name="newemail">
+                        </form>
+                        <div class="d-flex flex row justify-content-center">
+                            <div class="p-4">
+                                <button type="button" style="margin-left: 5px" name="button" id="email" class="btn btn-danger">Modificar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Mis partidas</h3>
+                        <div class="d-flex flex row justify-content-center">
+                            <div class="p-4">
+                                <button type="button" style="margin-left: 5px" name="button" id="partidas" class="btn btn-danger">Ver</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Mis pedidos</h3>
+                        <div class="d-flex flex row justify-content-center">
+                            <div class="p-4">
+                                <button type="button" style="margin-left: 5px" name="button" id="pedidos" class="btn btn-danger">Ver</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Eliminar cuenta</h3>
+                        <div class="d-flex flex row justify-content-center">
+                            <div class="p-4">
+                                <button type="button" style="margin-left: 5px" name="button" id="delete" class="btn btn-danger">Eliminar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<!---------------------------->
+</body>
+</html>
