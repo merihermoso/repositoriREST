@@ -16,6 +16,19 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="JavaScript/shop.js"></script>
+    <!-- link a hoja de estilo de google fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Faster One' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
+    <!-- link a hoja de estilo de bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- link a cosas de bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
 </head>
 <body>
 <!-- Cabecera -->
@@ -54,100 +67,102 @@
         <p class="text-white">¡Tu id de usuario es : <label id="m"></label> !</p>
         <div class="row">
             <!-- Miembros-->
-            <div class="col-lg-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h3>Username</h3>
-                        <form>
-                            <label for="oldusername">OldUsername</label>
-                            <input type="text" id="oldusername" name="oldusername">
-                            <label for="newusername">NewUsername</label>
-                            <input type="text" id="newusername" name="newusername">
-                        </form>
-                        <div class="d-flex flex row justify-content-center">
-                            <div class="p-4">
-                                <button type="button" style="margin-left: 5px" name="button" id="username" class="btn btn-danger">Modificar</button>
+            <div class="container">
+
+                <div class="row justify-content-start">
+
+                    <div class="col-lg-12 rounded-lg" id="container-login">
+                        <!-- ESPACIO -->
+                        <div class="accordion" id="accordionExample">
+
+                            <div class="card">
+                                <div class="card-header" id="headingTwo">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-block text-left collapsed" id="fuente-mod" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                            MODIFICAR O CONSULTAR
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <div class="alert alert-info" role="alert">
+                                            <form action="@{findAllPartidasByUser()}" method="get">
+                                                <button type="submit" class="btn btn-info boton-consulta">Consulta lista de partidas</button>
+                                            </form>
+                                            <br>
+                                            <form action="@{findAllPedidosByUser()}" method="get">
+                                                <button type="submit" class="btn btn-info boton-consulta">Consulta lista de pedidos</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="headingThree">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-block text-left collapsed" id="fuente-eli" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                            ELIMINAR
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                    <div class="card-body">
+
+                                        <div class="alert alert-danger" id="card-panel-control2" role="alert">
+                                            <div>
+                                                <p id="eliminar2">Eliminar usuario</p>
+
+                                                <form action="@{DeleteUser()}" method="get">
+
+                                                    <p>Escribe el ID del usuario a eliminar:</p>
+
+                                                    <div class="form-group col-md-5">
+                                                        <label for="userID3" class="mr-sm-2" id="familia">ID del usuario a eliminar:</label>
+                                                        <input type="text" class="form-control" placeholder="User ID" id="userID3" name="userID3" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" id="gridCheck2" required>
+                                                            <label class="form-check-label" for="gridCheck2">
+                                                                Estás eliminando definitivamente tu cuenta de usuario. ¿Deseas continuar?
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group col-md-3">
+                                                        <button type="submit" class="btn btn-danger" id="familia">Eliminar cuenta</button>
+                                                    </div>
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        <!-- ESPACIO -->
+
                     </div>
+
                 </div>
+
             </div>
-            <div class="col-lg-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h3>Contraseña</h3>
-                        <form>
-                            <label for="newpwd">OldPassword</label>
-                            <input type="text" id="oldpwd" name="oldpwd">
-                            <label for="newpwd">NewPassword</label>
-                            <input type="text" id="newpwd" name="newpwd">
-                        </form>
-                        <div class="d-flex flex row justify-content-center">
-                            <div class="p-4">
-                                <button type="button" style="margin-left: 5px" name="button" id="pwd" class="btn btn-danger">Modificar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h3>Email</h3>
-                        <form>
-                            <label for="newemail">OldEmail</label>
-                            <input type="text" id="oldemail" name="oldemail">
-                            <label for="newemail">NewEmail</label>
-                            <input type="text" id="newemail" name="newemail">
-                        </form>
-                        <div class="d-flex flex row justify-content-center">
-                            <div class="p-4">
-                                <button type="button" style="margin-left: 5px" name="button" id="email" class="btn btn-danger">Modificar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h3>Mis partidas</h3>
-                        <div class="d-flex flex row justify-content-center">
-                            <div class="p-4">
-                                <button type="button" style="margin-left: 5px" name="button" id="partidas" class="btn btn-danger">Ver</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h3>Mis pedidos</h3>
-                        <div class="d-flex flex row justify-content-center">
-                            <div class="p-4">
-                                <button type="button" style="margin-left: 5px" name="button" id="pedidos" class="btn btn-danger">Ver</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h3>Eliminar cuenta</h3>
-                        <div class="d-flex flex row justify-content-center">
-                            <div class="p-4">
-                                <button type="button" style="margin-left: 5px" name="button" id="delete" class="btn btn-danger">Eliminar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
 
 </section>
 <!---------------------------->
+<footer>
+
+    <div class="usuario-activo">
+        Has iniciado sesión como: ${userConnected} | <a href="@{Logout()}">Cerrar sesión</a>
+    </div>
+    <!-- Copyright -->
+    <div class="copyright">
+        ©2020 Firefighter
+    </div>
+    <!-- Copyright -->
+
+</footer>
 </body>
 </html>

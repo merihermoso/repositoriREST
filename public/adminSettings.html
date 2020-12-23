@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Settings</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Boostrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="shortcut icon" href="Media/logofuego.png"/>
+    <link rel="stylesheet" href="CSS/shop.css" type="text/css">
+    <!-- FONT AWESOME, para poner los simbolos en nuestra web -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+          integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="JavaScript/shop.js"></script>
+    <!-- link a hoja de estilo de google fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Faster One' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
+    <!-- link a hoja de estilo de bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- link a cosas de bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<!-- Cabecera -->
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #EB984E;">
+    <div class="container">
+        <a class="navbar-brand" href="home.html">
+            <img src="Media/logocabecera.png" style="width: 30%;">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="home.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="shop.html">Store</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="ranking.html">Ranking</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="settings.html">Settings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Panel Control Admin</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!---------------------------->
+<div class="container">
+
+    <div class="row justify-content-start">
+
+        <div class="col-lg-12 rounded-lg" id="container-login">
+
+            <div class="familia-titulo">Opciones de administrador</div>
+
+            <!-- ESPACIO -->
+
+            <div class="accordion" id="accordionExample">
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h2 class="mb-0">
+                            <button class="btn btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                INSERTAR
+                            </button>
+                        </h2>
+                    </div>
+
+                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <div class="alert alert-primary" role="alert">
+                                <p class="familia-titulo">Inserta o modifica una Partida a la base de dades.</p>
+                                <form action="@{RegistreCotxe()}" method="get">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-2">
+                                            <label for="partidaID">id </label>
+                                            <input type="text" class="form-control" id="partidaID" name="partidaID">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="fechaInicio">Fecha inicio</label>
+                                            <input type="date" class="form-control" id="fechaInicio" name="fechaInicio">
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="horaInicio">Hora inicio</label>
+                                            <input type="time" class="form-control" id="horaInicio" name="horaInicio">
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="fechaFin">Fecha fin</label>
+                                            <input type="date" class="form-control" id="fechaFin" name="fechaFin">
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="horaFin">Hora fin</label>
+                                            <input type="time" class="form-control" id="horaFin" name="horaFin">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-2">
+                                            <label for="score">Score</label>
+                                            <input type="text" class="form-control" id="score" name="score">
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="kills">Kills</label>
+                                            <input type="text" class="form-control" id="kills" name="kills">
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="damage">Damage</label>
+                                            <input type="text" class="form-control" id="damage" name="damage">
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Enviar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingTwo">
+                        <h2 class="mb-0">
+                            <button class="btn btn-block text-left collapsed" id="fuente-mod" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                MODIFICAR O CONSULTAR
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <div class="alert alert-info" role="alert">
+                                <form action="@{findAllUsers()}" method="get">
+                                    <button type="submit" class="btn btn-info boton-consulta">Consulta lista de usuarios</button>
+                                </form>
+                                <br>
+                                <form action="@{findAllPartidas()}" method="get">
+                                    <button type="submit" class="btn btn-info boton-consulta">Consulta lista de partidas</button>
+                                </form>
+                            </div>
+                            <div class="alert alert-info" role="alert">
+                                <p class="familia-titulo-2">Modifica datos de un usuario.</p>
+
+                                <form action="@{getUserUsername()}" method="get">
+
+                                    <p>Escribe el ID del usuario a buscar:</p>
+
+                                    <div class="form-group col-md-3">
+                                        <label for="userID2">ID usuario:</label>
+                                        <input type="text" class="form-control" id="userID2" name="userID2" required>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <button type="submit" class="btn btn-info familia">Buscar usuario</button>
+                                    </div>
+
+                                </form>
+                            </div>
+
+                            <div class="alert alert-info" role="alert">
+                                <p class="familia-titulo-2">Modifica datos de una partida.</p>
+
+                                <form action="@{getPartida()}" method="get">
+
+                                    <p>Escribe el ID de la partida a buscar:</p>
+
+                                    <div class="form-group col-md-3">
+                                        <label for="partidiID">ID :</label>
+                                        <input type="text" class="form-control" id="partidiID" name="partidiID" required>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <button type="submit" class="btn btn-info familia">Buscar partida</button>
+                                    </div>
+
+                                </form>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="headingThree">
+                        <h2 class="mb-0">
+                            <button class="btn btn-block text-left collapsed" id="fuente-eli" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                ELIMINAR
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                        <div class="card-body">
+
+                            <div class="alert alert-danger" id="card-panel-control2" role="alert">
+                                <div>
+                                    <p id="eliminar2">Eliminar usuari</p>
+
+                                    <form action="@{DeleteUser()}" method="get">
+
+                                        <p>Escribe el ID del usuario a eliminar:</p>
+
+                                        <div class="form-group col-md-5">
+                                            <label for="userID3" class="mr-sm-2" id="familia">ID del usuario a eliminar:</label>
+                                            <input type="text" class="form-control" placeholder="User ID" id="userID3" name="userID3" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="gridCheck2" required>
+                                                <label class="form-check-label" for="gridCheck2">
+                                                    Estás eliminando definitivamente la cuenta del usuario. ¿Deseas continuar?
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <button type="submit" class="btn btn-danger" id="familia">Eliminar usuario</button>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+
+                            <div class="alert alert-danger" id="card-panel-control" role="alert">
+                                <div>
+                                    <p id="eliminar">Eliminar partida</p>
+                                    <form action="@{BorrarPartida()}" method="post">
+
+                                        <p>Escribe el ID del usuario a eliminar:</p>
+
+                                        <!--<p>Escriu nom d'usuari, contrasenya y matrícula del cotxe que vols eliminar:</p>
+
+                                        <div class="form-group col-md-5">
+                                            <label for="user" class="mr-sm-2" id="familia">Nom d'usuari</label>
+                                            <input type="text" class="form-control" placeholder="Nom d'usuari" id="user" name="nom" required>
+                                        </div>
+                                        <div class="form-group col-md-5">
+                                            <label for="pwd2" class="mr-sm-2" id="familia">Contrasenya d'usuari:</label>
+                                            <input type="password" class="form-control" placeholder="Contrasenya d'usuari" id="pwd2" name="password" required>
+                                        </div>-->
+                                        <div class="form-group col-md-5">
+                                            <label for="partidaID3" class="mr-sm-2" id="familia">ID partida:</label>
+                                            <input type="text" class="form-control" placeholder="Partida ID" id="partidaID3" name="partidaID3" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="gridCheck" required>
+                                                <label class="form-check-label" for="gridCheck">
+                                                    Estás eliminando definitivamente la cuenta del usuario. ¿Deseas continuar?
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <button type="submit" class="btn btn-danger" id="familia">Eliminar partida</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ESPACIO -->
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- Footer -->
+<footer>
+
+    <div class="usuari-actiu">
+        Has iniciado sesión como: ${userConnected} | <a href="@{Logout()}">Cerrar sesión</a>
+    </div>
+    <!-- Copyright -->
+    <div class="copyright">
+        ©2020 Firefighter
+    </div>
+    <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
+
+</body>
+</html>
