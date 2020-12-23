@@ -12,8 +12,8 @@
     <div class="form-box">
         <div class="button-box">
             <div id="btn"></div>
-            <button type="button" class="toggle-btn" onclick="login()">Log in</button>
-            <button type="button" class="toggle-btn" onclick="register()">Register</button>
+            <button type="button" class="toggle-btn" onclick="gotoLogin()">Log in</button>
+            <button type="button" class="toggle-btn" onclick="gotoRegister()">Register</button>
         </div>
         <form id="login" class="input-group">
             <input type="text" class="input-field" placeholder="Username" required>
@@ -37,17 +37,16 @@
     var y = document.getElementById("register");
     var z = document.getElementById("btn");
 
-    function register(){
+    function gotoRegister(){
       x.style.left = "-400px";
       y.style.left = "50px";
       z.style.left = "110px";
     }
-    function login(){
+    function gotoLogin(){
       x.style.left = "50px";
       y.style.left = "450px";
       z.style.left = "0px";
     }
-
 
   </script>
 </body>
