@@ -21,7 +21,7 @@ $(document).ready(function() {
                 console.log(token);
                 window.sessionStorage.setItem("token", token)
                 window.sessionStorage.setItem("diamantes", diamantes)
-                var url = "http://localhost:8080/home.html";
+                var url = "http://localhost:8080/login.html";
                 window.open(url, "_self");
             },
             error: function (e) {

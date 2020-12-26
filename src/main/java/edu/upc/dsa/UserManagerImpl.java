@@ -1,6 +1,7 @@
 package edu.upc.dsa;
 
 
+import edu.upc.dsa.models.Credentials.RegisterCredentials;
 import edu.upc.dsa.models.User;
 
 import java.util.LinkedList;
@@ -12,7 +13,7 @@ public class UserManagerImpl implements UserManager {
 
     protected List<User> users;
 
-    final static Logger logger = Logger.getLogger(UserManagerImpl.class);
+    final static Logger logger = Logger.getLogger(UserManagerImpl.class.getName());
 
     private UserManagerImpl() {
         this.users = new LinkedList<>();
@@ -43,6 +44,7 @@ public class UserManagerImpl implements UserManager {
         return t;
     }
 
+    @Override
     public User getUser(String id) {
         logger.info("getUser("+id+")");
 
@@ -111,17 +113,12 @@ public class UserManagerImpl implements UserManager {
 
             if (t.getUsername().equals(username)) {
 
-                if (t.getPwd().equals(password)) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return t.getPwd().equals(password);
 
             }
 
         }
 
         return false;
-
     }
 }

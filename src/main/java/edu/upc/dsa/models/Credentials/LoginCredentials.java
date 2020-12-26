@@ -5,6 +5,14 @@ public class LoginCredentials {
     String username;
     String password;
 
+    public LoginCredentials(){}
+
+    public LoginCredentials(String username, String password){
+        this();
+        this.username=username;
+        this.password=password;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -21,4 +29,11 @@ public class LoginCredentials {
         this.password = password;
     }
 
+    @Override
+    public String toString() {
+        return "LoginCredentials{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }
