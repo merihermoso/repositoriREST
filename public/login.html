@@ -54,19 +54,19 @@
             <button type="button" class="toggle-btn" onclick="gotoRegister()">Register</button>
         </div>
         <form id="login" class="input-group">
-            <input type="text" class="input-field" placeholder="Username" required>
-            <input type="password" class="input-field" placeholder="Password" required>
+            <input type="text" class="input-field" id="loginName" placeholder="Username" required>
+            <input type="password" class="input-field" id="loginPassword" placeholder="Password" required>
             <input type="checkbox" class="check-box"><span>Recordar contraseña</span>
-            <button type="submit" class="submit-btn">Log in</button>
+            <button type="submit" class="submit-btn" id="loginbtn">Log in</button>
         </form>
         <form id="register" class="input-group">
-            <input type="text" class="input-field" placeholder="Username" required>
-            <input type="email" class="input-field" placeholder="Email" required>
-            <input type="password" class="input-field" placeholder="Password" required>
-            <input type="password" class="input-field" placeholder="Confirm password" required>
-            <input type="text" class="input-field" placeholder="Birthdate" required>
+            <input type="text" class="input-field" id="registerName" placeholder="Username" required>
+            <input type="email" class="input-field" id="registerMail" placeholder="Email" required>
+            <input type="password" class="input-field" id="registerPassword" placeholder="Password" required>
+            <input type="password" class="input-field" id="registerConfirm" placeholder="Confirm password" required>
+            <input type="text" class="input-field" id="registerBirth" placeholder="Birthdate" required>
             <input type="checkbox" class="check-box"><span>De acuerdo con los términos & condiciones</span>
-            <button type="submit" class="submit-btn">Register</button>
+            <button type="submit" class="submit-btn" id="registerbtn">Register</button>
         </form>
     </div>
 </div>
