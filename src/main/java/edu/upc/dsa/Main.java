@@ -10,6 +10,9 @@ import org.glassfish.jersey.server.ResourceConfig;
 import java.io.IOException;
 import java.net.URI;
 
+import edu.upc.dsa.orm.util.ObjectHelper;
+import edu.upc.dsa.orm.dao.*;
+
 /**
  * Main class.
  *
@@ -31,7 +34,7 @@ public class Main {
     public static HttpServer startServer() {
         // create a resource config that scans for JAX-RS resources and providers
         // in edu.upc.dsa package
-        final ResourceConfig rc = new ResourceConfig().packages("edu.upc.dsa.services");
+        final ResourceConfig rc = new ResourceConfig().packages("edu.upc.dsa.orm.services");
 
         rc.register(io.swagger.jaxrs.listing.ApiListingResource.class);
         rc.register(io.swagger.jaxrs.listing.SwaggerSerializers.class);
@@ -48,7 +51,7 @@ public class Main {
         beanConfig.setContact("support@grup5dsa.com");
         beanConfig.setDescription("REST API for GAME G5 Manager");
         beanConfig.setLicenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html");
-        beanConfig.setResourcePackage("edu.upc.dsa.services");
+        beanConfig.setResourcePackage("edu.upc.dsa.orm.services");
         beanConfig.setTermsOfServiceUrl("http://www.example.com/resources/eula");
         beanConfig.setTitle("REST API");
         beanConfig.setVersion("1.0.0");
@@ -86,7 +89,6 @@ public class Main {
 
         System.in.read();
         server.stop();
-
 
     }
 }
