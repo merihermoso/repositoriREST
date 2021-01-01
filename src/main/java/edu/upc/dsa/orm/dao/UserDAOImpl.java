@@ -28,7 +28,7 @@ public class UserDAOImpl implements edu.upc.dsa.orm.dao.IUserDAO {
     }
 
 
-    public User getUser(int userID) {
+    public User getUser(int userID) {   //obtenim usuari a partir del seu ID
         Session session = null;
         User user = null;
         try {

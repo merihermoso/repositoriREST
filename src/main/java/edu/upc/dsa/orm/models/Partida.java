@@ -1,43 +1,68 @@
 package edu.upc.dsa.orm.models;
 
-import edu.upc.dsa.orm.util.RandomUtils;
-
 public class Partida {
 
-    String id_partida;
-    int score_partida;
+    private int partidaID;              //mirar si a bbdd es id_partida?!
+    private String fechaInicio;
+    private String horaInicio;
+    private String fechaFin;
+    private String horaFin;
+    private int score;
 
-    public Partida() {
-        this.id_partida = RandomUtils.getId();
-        this.score_partida = 0;
+
+    public Partida(String fechaInicio, String horaInicio, String fechaFin, String horaFin, int score) {
+        this.partidaID = partidaID;
+        this.fechaInicio = fechaInicio;
+        this.horaInicio = horaInicio;
+        this.fechaFin = fechaFin;
+        this.horaFin = horaFin;
+        this.score = score;
     }
 
-    public Partida(int score_partida) {
-        this();
-        this.setScore_partida(score_partida);
+    public int getPartidaID() {
+        return partidaID;
+    }
+    public void setPartidaID(int partidaID) {
+        this.partidaID = partidaID;
     }
 
-    public String getId_partida() {
-        return this.id_partida;
+    public String getFechaInicio() {
+        return fechaInicio;
+    }
+    public void setFechaInicio(String fechaInicio) {
+        this.fechaInicio = fechaInicio;
     }
 
-    public void setId_partida(String id) {
-        this.id_partida = id;
+    public String getHoraInicio() {
+        return horaInicio;
+    }
+    public void setHoraInicio(String horaInicio) {
+        this.horaInicio = horaInicio;
     }
 
-    public int getScore_partida() {
-        return score_partida;
+    public String getFechaFin() {
+        return fechaFin;
+    }
+    public void setFechaFin(String fechaFin) {
+        this.fechaFin = fechaFin;
     }
 
-    public void setScore_partida(int score_partida) {
-        this.score_partida = score_partida;
+    public String getHoraFin() {
+        return horaFin;
+    }
+    public void setHoraFin(String horaFin) {
+        this.horaFin = horaFin;
     }
 
-
+    public int getScore() {
+        return score;
+    }
+    public void setScore(int score) {
+        this.score = score;
+    }
 
     @Override
     public String toString() {
-        return "Partida [id_partida = "+id_partida+", Score partida = " +score_partida+ "]";
+        return "Partida [id_partida = "+partidaID+", FechaInicioPartida= " +fechaInicio+", HoraInicioPartida= " +horaInicio+", FechaFinPartida= " +fechaFin+", HoraFinPartida= " +horaFin+", ScorePartida = " +score+ "]";
     }
-
 }

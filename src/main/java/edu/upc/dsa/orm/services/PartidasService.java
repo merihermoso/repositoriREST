@@ -1,10 +1,12 @@
+
+
 package edu.upc.dsa.orm.services;
 
 
-import edu.upc.dsa.orm.models.Partida;
-import edu.upc.dsa.orm.dao.PartidaManager;
-import edu.upc.dsa.orm.dao.PartidaManagerImpl;
+import edu.upc.dsa.orm.dao.IPartidaDAO;
+import edu.upc.dsa.orm.dao.PartidaDAOImpl;
 
+import edu.upc.dsa.orm.models.Partida;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -15,17 +17,17 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
-
+/*
 @Api(value = "/partidas")
 @Path("/partidas")
 public class PartidasService {
 
-    private PartidaManager pm;
+    private IPartidaDAO pm;
 
     public PartidasService() {
 
-        this.pm = PartidaManagerImpl.getInstance();
-        if (pm.size()==0) {
+        this.pm = PartidaDAOImpl.getInstance();
+        if (pm.size()==0) {                           //per afegir les partides si no estaven a la bbdd
             this.pm.addPartida(20000);
             this.pm.addPartida(30000);
             this.pm.addPartida(80000);
@@ -49,21 +51,7 @@ public class PartidasService {
 
     }
 
-    //prueba commit
-/*
-    @GET
-    @ApiOperation(value = "Get a User", notes = "Get a user from DNI")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "User found", response = User.class),
-            @ApiResponse(code = 404, message = "User not found")
-    })
-    @Path("/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getUser(@PathParam("id") String id) {
-        User u = this.tm.getUser(id);
-        if (u == null) return Response.status(404).build();
-        else  return Response.status(201).entity(u).build();
-    }*/
+
 
     @DELETE
     @ApiOperation(value = "Delete a Partida", notes = "Delete a partida")
@@ -94,7 +82,7 @@ public class PartidasService {
 
         return Response.status(201).build();
     }
-/*
+
     @POST
     @ApiOperation(value = "Register a new Partida", notes = "Register a Partida")
     @ApiResponses(value = {
@@ -137,6 +125,9 @@ public class PartidasService {
        // if (!this.pm.checkPassword(username, password)) return Response.status(603).build();
 
         return Response.status(201).build();
-    }*/
+    }
 
 }
+*/
+
+

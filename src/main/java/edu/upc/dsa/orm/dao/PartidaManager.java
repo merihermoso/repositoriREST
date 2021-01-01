@@ -1,9 +1,8 @@
+/*
 package edu.upc.dsa.orm.dao;
 
-import edu.upc.dsa.orm.models.Partida;
-
 import java.util.List;
-
+                                                                //CLASSE PRE-BBDD
 public interface PartidaManager {
 
     int size();
@@ -18,3 +17,4 @@ public interface PartidaManager {
     void deletePartida(String id_partida);
     boolean partidaExists(int id_partida);
 }
+*/

@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBUtils {                                            //NO TOCAR!!!
-    private static final String DB_NAME = "dsabbdd";              //database name
+    private static final String DB_NAME = "bbdd_grup5";              //database name
     private static final String DB_HOST = "127.0.0.1" ;           //demomento este puerto en local, luego ip màq.
     private static final String DB_USER = "root" ;                //usuario bbdd
     private static final String DB_PASS = "root";                 //contra que tengo en mariaDB

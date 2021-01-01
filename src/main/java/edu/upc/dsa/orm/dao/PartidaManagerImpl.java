@@ -1,11 +1,12 @@
+/*
 package edu.upc.dsa.orm.dao;
 
-import edu.upc.dsa.orm.models.Partida;
 import org.apache.log4j.Logger;
 
 import java.util.LinkedList;
-import java.util.List;
-
+import java.util.List;*/
+                                                                    //CLASSE QUE UTILITZAVEM ABANS DE BBDD
+/*
 public class PartidaManagerImpl implements PartidaManager {
     private static PartidaManager instance;
 
@@ -98,17 +99,9 @@ public class PartidaManagerImpl implements PartidaManager {
 
         return u;
     }
-/*
-    public boolean partidaExists(String id_partida) {               //s'hauria de fer d'una altra manera!!!!!!!!
 
-        for (Partida p: this.partidas) {
-
-            if (p.getId_partida().equals(id_partida)) {
-
-                return true;
-            }
-        }
-        return false;
-    }*/
 
 }
+
+
+ */
