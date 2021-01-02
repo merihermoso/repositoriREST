@@ -1,4 +1,4 @@
-package edu.upc.dsa.orm.dao;
+package edu.upc.dsa.orm.dao.partida;
 
 import edu.upc.dsa.orm.models.Partida;
 
@@ -10,8 +10,9 @@ public interface IPartidaDAO {
     public Partida getPartida(int partidaID);
     public void updatePartida(int partidaID, String fechaInicio, String horaInicio, String fechaFin, String horaFin, int score);
     public void deletePartida(int partidaID);
-    public List<Partida> getPartida();
+    public List<Partida> findAll();
     public List <Partida> getPartidaByUserID(int userId);
+
 
 
 }

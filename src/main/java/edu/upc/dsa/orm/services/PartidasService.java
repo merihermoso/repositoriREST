@@ -1,10 +1,7 @@
-
-
 package edu.upc.dsa.orm.services;
 
-
-import edu.upc.dsa.orm.dao.IPartidaDAO;
-import edu.upc.dsa.orm.dao.PartidaDAOImpl;
+import edu.upc.dsa.orm.dao.partida.IPartidaDAO;
+import edu.upc.dsa.orm.dao.partida.PartidaDAOImpl;
 
 import edu.upc.dsa.orm.models.Partida;
 import io.swagger.annotations.Api;
@@ -16,8 +13,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
-/*
+import java.util.*;
+
 @Api(value = "/partidas")
 @Path("/partidas")
 public class PartidasService {
@@ -27,12 +24,12 @@ public class PartidasService {
     public PartidasService() {
 
         this.pm = PartidaDAOImpl.getInstance();
-        if (pm.size()==0) {                           //per afegir les partides si no estaven a la bbdd
+       /* if (pm.size()==0) {                           //per afegir les partides si no estaven a la bbdd
             this.pm.addPartida(20000);
             this.pm.addPartida(30000);
             this.pm.addPartida(80000);
             this.pm.addPartida(70000);
-        }
+        }*/
     }
 
     @GET
@@ -60,15 +57,15 @@ public class PartidasService {
             @ApiResponse(code = 404, message = "Partida not found")
     })
     @Path("/{id}")
-    public Response deletePartida(@PathParam("id") String id_partida) {
-        Partida p = this.pm.getPartida(id_partida);
+    public Response deletePartida(@PathParam("id") int partidaID) {
+        Partida p = this.pm.getPartida(partidaID);
         if (p == null) return Response.status(404).build();
-        else this.pm.deletePartida(id_partida);
+        else this.pm.deletePartida(partidaID);
         return Response.status(201).build();
     }
-
+/*                                                                          DONA ERROR AL FER UPDATE DE TOT L'OBJECTE PARTIDA
     @PUT
-    @ApiOperation(value = "Update a User", notes = "Update a user")
+    @ApiOperation(value = "Update Partida", notes = "Update a partida")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "User found"),
             @ApiResponse(code = 404, message = "User not found")
@@ -82,7 +79,7 @@ public class PartidasService {
 
         return Response.status(201).build();
     }
-
+*/
     @POST
     @ApiOperation(value = "Register a new Partida", notes = "Register a Partida")
     @ApiResponses(value = {
@@ -95,13 +92,13 @@ public class PartidasService {
 
     @Path("/register/{id_partida}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response newUser(@PathParam("id_partida") String id_partida) {
+    public Response newUser(@PathParam("id_partida") int partidaID) {
 
-        if (id_partida==null) return Response.status(600).build();
+       // if (partidaID==null) return Response.status(600).build();      //crec que l'error seria 204 "NO CONTENT"
 
-        if (this.pm.partidaExists(id_partida)) return Response.status(250).build();
+       // if (this.pm.partidaExists(id_partida)) return Response.status(250).build();
 
-        Partida pa = this.pm.addPartida(id_partida);
+       // Partida pa = this.pm.addPartida(partidaID);       //LA FUNCIÓ NECESITA TOTS ELS PARÀMETRES PER CREAR PARTIDA
         return Response.status(201).build();
     }
 
@@ -121,13 +118,13 @@ public class PartidasService {
 
         if (username==null) return Response.status(601).build();
         if (password==null) return Response.status(602).build();
-        if (!this.pm.partidaExists(username)) return Response.status(250).build();
+     //   if (!this.pm.partidaExists(username)) return Response.status(250).build();        //LA FUNCIÓ NO ESTÀ IMPLEMENTADA
        // if (!this.pm.checkPassword(username, password)) return Response.status(603).build();
 
         return Response.status(201).build();
     }
 
 }
-*/
+
 
 

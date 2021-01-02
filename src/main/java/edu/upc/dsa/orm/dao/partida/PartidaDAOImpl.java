@@ -1,14 +1,13 @@
-package edu.upc.dsa.orm.dao;
+package edu.upc.dsa.orm.dao.partida;
 
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
 import edu.upc.dsa.orm.models.Partida;
-import edu.upc.dsa.orm.models.User;
 
 import java.util.HashMap;
 import java.util.List;
 
-public class PartidaDAOImpl implements IPartidaDAO{
+public class PartidaDAOImpl implements IPartidaDAO {
     private static IPartidaDAO instance;
 
     public static PartidaDAOImpl getInstance() {
@@ -92,12 +91,9 @@ public class PartidaDAOImpl implements IPartidaDAO{
 
     }
 
-    public List<Partida> getPartidas() {
-        return null;
-    }
 
 
-    public List<Partida> getPartida() {
+    public List<Partida> findAll() {
         Session session = null;
         List<Partida> partidaList=null;
         try {

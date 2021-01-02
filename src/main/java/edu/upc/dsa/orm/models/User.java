@@ -2,6 +2,7 @@ package edu.upc.dsa.orm.models;
 
 public class User {
 
+    private int userID;
     private String username;
     private String email;
     private String password;
@@ -17,6 +18,14 @@ public class User {
         this.password = password;
         this.nivel = nivel;
     }
+
+    public int getId() {
+        return this.userID;
+    }
+    public void setId(int userID) {
+        this.userID=userID;
+    }
+
     public String getUsername() {
         return username;
     }

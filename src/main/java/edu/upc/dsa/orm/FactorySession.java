@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class FactorySession {
     public static Session openSession() {
-        Connection conn = getConnection();
+        Connection conn = getConnection();              //establimos connexión al iniciar sesión
         Session session = new SessionImpl(conn);
         return session;
     }

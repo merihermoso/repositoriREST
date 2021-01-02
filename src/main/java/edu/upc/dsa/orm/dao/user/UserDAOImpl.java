@@ -1,13 +1,31 @@
-package edu.upc.dsa.orm.dao;
+package edu.upc.dsa.orm.dao.user;
 
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.*;
 import edu.upc.dsa.orm.models.User;
+import org.apache.log4j.Logger;
 
 import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
-public class UserDAOImpl implements edu.upc.dsa.orm.dao.IUserDAO {
+public class UserDAOImpl implements UserDAO {
+    private static UserDAO instance;
+    protected List<User> users;
+    final static Logger logger = Logger.getLogger(UserDAOImpl.class);
+
+
+    public static UserDAO getInstance() {
+        if ( instance==null) instance= new UserDAOImpl();
+        return instance;
+    }
+
+    public User addUser(User u) {
+        logger.info("new User " + u);
+
+        this.users.add (u);
+        logger.info("new User added");
+        return u;
+    }
 
     public int addUser(String username, String email, String password, int nivel) {
         Session session = null;
@@ -46,8 +64,6 @@ public class UserDAOImpl implements edu.upc.dsa.orm.dao.IUserDAO {
     }
 
 
-
-
     public void updateUser(int userID, String username, String email, String password, int nivel) {
         User user = this.getUser(userID);
         user.setUsername(username);
@@ -67,7 +83,26 @@ public class UserDAOImpl implements edu.upc.dsa.orm.dao.IUserDAO {
             session.close();
         }
     }
+    @Override
+    public User updateUser(User p) {
+        User u = this.getUser(p.getId());
 
+        if (u!=null) {
+            logger.info(p+" rebut!!!! ");
+                                            //no posem el ID?
+            u.setUsername(p.getUsername());
+            u.setEmail(p.getEmail());
+            u.setPassword(p.getPassword());
+            u.setNivel(p.getNivel());
+
+            logger.info(u+" user updated ");
+        }
+        else {
+            logger.warn("user not found "+p);
+        }
+
+        return u;
+    }
 
     public void deleteUser(int userID) {
         User user = this.getUser(userID);
@@ -105,7 +140,18 @@ public class UserDAOImpl implements edu.upc.dsa.orm.dao.IUserDAO {
         }
         return userList;
     }
+/*
+    @Override
+    public boolean userExists(int userID) {
+        for (User u: this.users) {
 
+            if (u.getId().equals(userID)) {
+                return true;
+            }
+
+        }
+        return false;
+    }*/
 
     public List<User> getUserByPartida(int partidaID) {
 

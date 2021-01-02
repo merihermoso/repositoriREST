@@ -50,6 +50,7 @@ public class SessionImpl implements edu.upc.dsa.orm.Session {
         return null;
     }
 
+
     public void update(Object object) {
     }
 

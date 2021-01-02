@@ -1,11 +1,10 @@
 package edu.upc.dsa.orm.services;
 
 
-import edu.upc.dsa.orm.dao.IUserDAO;
-import edu.upc.dsa.orm.models.User;
-import edu.upc.dsa.orm.models.Credentials.LoginCredentials;
+import edu.upc.dsa.orm.dao.user.UserDAO;
+import edu.upc.dsa.orm.dao.user.UserDAOImpl;
 import edu.upc.dsa.orm.models.Credentials.RegisterCredentials;
-
+import edu.upc.dsa.orm.models.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -15,14 +14,15 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-//mvn comimport java.text.SimpleDateFormat;
 import java.util.List;
+//mvn comimport java.text.SimpleDateFormat;
+
 
 @Api(value = "/users")
 @Path("/users")
 public class UsersService {
 
-    /*private final IUserDAO tm;
+    private final UserDAO tm;
     private final int username_min_length;
     private final int username_max_length;
     private final int password_min_length;
@@ -41,13 +41,13 @@ public class UsersService {
         this.email_max_length = 30;
         this.min_age = 14;
 
-        this.tm = UserManagerImpl.getInstance();
-        if (tm.size()==0) {
+        this.tm = UserDAOImpl.getInstance();
+     /*   if (tm.size()==0) {                   //quan no teniem bbdd
             this.tm.addUser("Meri", "Meri123", "prova@gmail.com", "12/12/1995");
             this.tm.addUser("Pedro", "Pedro123", "prova@gmail.com", "12/12/1995");
             this.tm.addUser("Montse", "Montse123", "prova@gmail.com", "12/12/1995");
             this.tm.addUser("Antonio", "Antonio123", "prova@gmail.com", "12/12/1995");
-        }
+        }*/
     }
 
     @GET
@@ -59,7 +59,7 @@ public class UsersService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUsers() {
 
-        List<User> users = this.tm.findAll();
+        List<User> users = this.tm.getUsers();
 
         GenericEntity<List<User>> entity = new GenericEntity<List<User>>(users) {};
         return Response.status(201).entity(entity).build()  ;
@@ -72,10 +72,10 @@ public class UsersService {
             @ApiResponse(code = 201, message = "User found", response = User.class),
             @ApiResponse(code = 404, message = "User not found")
     })
-    @Path("/{id}")
+    @Path("/{userID}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUser(@PathParam("id") String id) {
-        User u = this.tm.getUser(id);
+    public Response getUser(@PathParam("userID") int userID) {
+        User u = this.tm.getUser(userID);
         if (u == null) return Response.status(404).build();
         else  return Response.status(201).entity(u).build();
     }
@@ -86,11 +86,11 @@ public class UsersService {
             @ApiResponse(code = 201, message = "User found and deleted"),
             @ApiResponse(code = 404, message = "User not found")
     })
-    @Path("/{id}")
-    public Response deleteUser(@PathParam("id") String id) {
-        User t = this.tm.getUser(id);
+    @Path("/{userID}")
+    public Response deleteUser(@PathParam("userID") int userID) {
+        User t = this.tm.getUser(userID);
         if (t == null) return Response.status(404).build();
-        else this.tm.deleteUser(id);
+        else this.tm.deleteUser(userID);
         return Response.status(201).build();
     }
 
@@ -103,13 +103,14 @@ public class UsersService {
     @Path("/")
     public Response updateUser(User user) {
 
-        User t = this.tm.updateUser(user);
+        User u = this.tm.updateUser(user);
 
-        if (t == null) return Response.status(404).build();
+        if (u == null) return Response.status(404).build();
 
         return Response.status(201).build();
     }
 
+/*
     @POST
     @ApiOperation(value = "Register a new User", notes = "Register a user")
     @ApiResponses(value = {
@@ -132,10 +133,10 @@ public class UsersService {
         if (registerCredentials.getUsername().length() < this.username_min_length || registerCredentials.getUsername().length() > this.username_max_length) return Response.status(604).build();
         if (registerCredentials.getPassword().length() < this.password_min_length || registerCredentials.getPassword().length() > this.password_max_length) return Response.status(605).build();
         if (registerCredentials.getEmail().length() < this.email_min_length || registerCredentials.getEmail().length() > this.email_max_length) return Response.status(606).build();
-
+*/
         //SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
-        /*try {
+/*
+        try {
             Date d = sdf.parse(registerCredentials.getBirthdate().toString());
             Calendar c = Calendar.getInstance();
             c.setTime(d);
@@ -150,13 +151,13 @@ public class UsersService {
 
         } catch (Exception e){
 
-        }*/
 
-        /*User us = this.tm.addUser(registerCredentials.getUsername(), registerCredentials.getPassword(), registerCredentials.getEmail(), registerCredentials.getBirthdate());
+
+        User us = this.tm.addUser(registerCredentials.getUsername(), registerCredentials.getPassword(), registerCredentials.getEmail(), registerCredentials.getBirthdate());
         return Response.status(201).build();
 
-    }
-
+    }*/
+/*
     @POST
     @ApiOperation(value = "A user tries to login", notes = "Login")
     @ApiResponses(value = {
@@ -176,6 +177,6 @@ public class UsersService {
         if (!this.tm.checkPassword(loginCredentials.getUsername(), loginCredentials.getPassword())) return Response.status(603).build();
 
         return Response.status(201).build();
-    }*/
-
+    }
+*/
 }
