@@ -1,0 +1,10 @@
+La bbdd ya conecta!!
+Ejecutar DBJDBC. Dentro hay diferentes funciones con consultas a Partidas y Users.
+
+En la máquina ya hay las tablas Partidas, Users, Orders, Products y sus respectivas tablas de relación. 
+
+Hay que actualizar el proyecto (parteREST) que hay en la máquina, y adaptar la parte de DBUtils poniendo la ip de la máquina.
+
+La parte que antes había de servicios, hay que adaptarla a las funciones de la bbdd, para poder provar desde Swagger
+
+NO FUNCIONA EL LOGIN DESDE WEB
