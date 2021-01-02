@@ -23,6 +23,7 @@ public class ObjectHelper {
         //value = "toni"
         //Employee e =
         //        e.setName("toni")
+
     }
     public static Object getter(Object object, String property){
         //Method        //invoke

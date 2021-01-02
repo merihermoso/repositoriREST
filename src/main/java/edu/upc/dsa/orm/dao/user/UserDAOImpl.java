@@ -10,7 +10,7 @@ import java.util.*;
 
 public class UserDAOImpl implements UserDAO {
     private static UserDAO instance;
-    protected List<User> users;
+    protected List<User> users;                 //quan no hi ha bbdd
     final static Logger logger = Logger.getLogger(UserDAOImpl.class);
 
 
@@ -54,7 +54,7 @@ public class UserDAOImpl implements UserDAO {
             user = (User)session.get(User.class, userID);
         }
         catch (Exception e) {
-            // LOG
+           // Log.error("ERROR al obtener user: " +e);
         }
         finally {
             session.close();
@@ -77,7 +77,7 @@ public class UserDAOImpl implements UserDAO {
             session.update(User.class);
         }
         catch (Exception e) {
-            // LOG
+           // Log.error("ERROR al modificar user: " +e);
         }
         finally {
             session.close();
@@ -112,7 +112,7 @@ public class UserDAOImpl implements UserDAO {
             session.delete(User.class);
         }
         catch (Exception e) {
-            // LOG
+           // Log.error("ERROR al borrar user: " +e);
         }
         finally {
             session.close();
@@ -120,12 +120,7 @@ public class UserDAOImpl implements UserDAO {
 
     }
 
-    public List<User> getUsers() {
-        return null;
-    }
-
-
-    public List<User> getUser() {
+    public List<User> findAll() {
         Session session = null;
         List<User> userList=null;
         try {
@@ -133,7 +128,7 @@ public class UserDAOImpl implements UserDAO {
             userList = session.findAll(User.class);
         }
         catch (Exception e) {
-            // LOG
+          //  Log.error("ERROR al obtener todos los user: " +e);
         }
         finally {
             session.close();
@@ -166,7 +161,7 @@ public class UserDAOImpl implements UserDAO {
             userList = session.findAll(User.class, params);
         }
         catch (Exception e) {
-            // LOG
+          //  Log.error("ERROR al obtener user: " +e);
         }
         finally {
             session.close();

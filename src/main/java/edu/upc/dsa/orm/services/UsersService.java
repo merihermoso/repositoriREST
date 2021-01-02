@@ -59,7 +59,7 @@ public class UsersService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUsers() {
 
-        List<User> users = this.tm.getUsers();
+        List<User> users = this.tm.findAll();
 
         GenericEntity<List<User>> entity = new GenericEntity<List<User>>(users) {};
         return Response.status(201).entity(entity).build()  ;

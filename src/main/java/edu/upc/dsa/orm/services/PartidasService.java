@@ -1,6 +1,6 @@
 package edu.upc.dsa.orm.services;
 
-import edu.upc.dsa.orm.dao.partida.IPartidaDAO;
+import edu.upc.dsa.orm.dao.partida.PartidaDAO;
 import edu.upc.dsa.orm.dao.partida.PartidaDAOImpl;
 
 import edu.upc.dsa.orm.models.Partida;
@@ -19,11 +19,11 @@ import java.util.*;
 @Path("/partidas")
 public class PartidasService {
 
-    private IPartidaDAO pm;
+    private PartidaDAO pm;
 
     public PartidasService() {
 
-        this.pm = PartidaDAOImpl.getInstance();
+      //  this.pm = PartidaDAOImpl.getInstance();                       DA ERROR
        /* if (pm.size()==0) {                           //per afegir les partides si no estaven a la bbdd
             this.pm.addPartida(20000);
             this.pm.addPartida(30000);

@@ -9,7 +9,7 @@ public interface UserDAO {
     public int addUser(String username, String email, String password, int nivel);
     public User addUser(User u);
     public User getUser(int userID);
-    public List<User> getUsers();
+    public List<User> findAll();
 
     public void deleteUser(int userID);
     public void updateUser(int userID, String username, String email, String password, int nivel);

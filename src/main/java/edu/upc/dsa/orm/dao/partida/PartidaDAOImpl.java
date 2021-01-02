@@ -3,35 +3,49 @@ package edu.upc.dsa.orm.dao.partida;
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
 import edu.upc.dsa.orm.models.Partida;
+import edu.upc.dsa.orm.util.RandomUtils;
+//import jdk.incubator.jpackage.internal.Log;
+import org.apache.log4j.Logger;
+import java.util.concurrent.ThreadLocalRandom;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
-public class PartidaDAOImpl implements IPartidaDAO {
-    private static IPartidaDAO instance;
+public class PartidaDAOImpl implements PartidaDAO {
+    protected List<Partida> partidas;                       //llista que creem a memoria (S'hauria de passar a bbdd)
+    private static PartidaDAO instance;
+    final static Logger logger = Logger.getLogger(PartidaDAOImpl.class);
 
-    public static PartidaDAOImpl getInstance() {
+    private PartidaDAOImpl() {
+        this.partidas = new LinkedList<>();
+    }           //cuando no hay bbdd
+    /*
+    public static PartidaDAOImpl getInstance() {                    //DA ERROR
         if (instance==null) instance = new PartidaDAOImpl();
-        return null;//instance;
-    }
+        return instance;
+    }*/
+
     public int addPartida(String fechaInicio, String horaInicio, String fechaFin, String horaFin, int score) {
         Session session = null;             //nose si això només es al usuari o a totes les clases  ?¿
-        int partidaID = 0;
+        int partidaID = 0;          //HAURIEM DE POSAR QUE ET GENERI UN INT RANDOM
         try {
             session = FactorySession.openSession();
             Partida partida = new Partida(fechaInicio,horaInicio,fechaFin,horaFin,score);
             session.save(partida);
         }
         catch (Exception e) {
-            // LOG
+           // Log.error("ERROR al añadir partida: " + e);
         }
         finally {
             session.close();
         }
-
         return partidaID;
     }
-
+    public Partida addPartida(Partida p) {                  //NO ESTÀ IMPLEMENTAT LA BBDD
+        logger.info("new partida to add: " + p);
+        this.partidas.add (p);
+        logger.info("new Partida added");
+        return p;
+    }
 
     public Partida getPartida(int partidaID) {
         Session session = null;
@@ -41,7 +55,7 @@ public class PartidaDAOImpl implements IPartidaDAO {
             partida = (Partida)session.get(Partida.class, partidaID);
         }
         catch (Exception e) {
-            // LOG
+          //  Log.error("ERROR al obtener partida: " + e);
         }
         finally {
             session.close();
@@ -67,7 +81,7 @@ public class PartidaDAOImpl implements IPartidaDAO {
             session.update(Partida.class);
         }
         catch (Exception e) {
-            // LOG
+           // Log.error("ERROR al modificar partida: " + e);
         }
         finally {
             session.close();
@@ -83,7 +97,7 @@ public class PartidaDAOImpl implements IPartidaDAO {
             session.delete(Partida.class);
         }
         catch (Exception e) {
-            // LOG
+          //  Log.error("ERROR al eliminar partida: " + e);
         }
         finally {
             session.close();
@@ -101,7 +115,7 @@ public class PartidaDAOImpl implements IPartidaDAO {
             partidaList = session.findAll(Partida.class);
         }
         catch (Exception e) {
-            // LOG
+         //   Log.error("ERROR al findAll partida: " + e);
         }
         finally {
             session.close();
@@ -110,7 +124,7 @@ public class PartidaDAOImpl implements IPartidaDAO {
     }
 
 
-    public List<Partida> getPartidaByUserID(int userID) {
+    public List<Partida> getPartidasByUserID(int userID) {
 
         Session session = null;
         List<Partida> partidaList=null;
@@ -123,7 +137,7 @@ public class PartidaDAOImpl implements IPartidaDAO {
             partidaList = session.findAll(Partida.class, params);
         }
         catch (Exception e) {
-            // LOG
+          //  Log.error("ERROR al findAll partidas del user: " +e+userID);
         }
         finally {
             session.close();
