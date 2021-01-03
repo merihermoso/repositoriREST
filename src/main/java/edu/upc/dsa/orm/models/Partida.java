@@ -2,28 +2,28 @@ package edu.upc.dsa.orm.models;
 
 public class Partida {
 
-    private int partidaID;              //mirar si a bbdd es id_partida?!
+    private int id;
     private String fechaInicio;
     private String horaInicio;
     private String fechaFin;
     private String horaFin;
     private int score;
 
-
     public Partida(String fechaInicio, String horaInicio, String fechaFin, String horaFin, int score) {
-        this.partidaID = partidaID;
-        this.fechaInicio = fechaInicio;
-        this.horaInicio = horaInicio;
-        this.fechaFin = fechaFin;
-        this.horaFin = horaFin;
-        this.score = score;
+
+        setFechaInicio(fechaInicio);
+        setHoraInicio(horaInicio);
+        setFechaFin(fechaFin);
+        setHoraFin(horaFin);
+        setScore(score);
+
     }
 
     public int getPartidaID() {
-        return partidaID;
+        return id;
     }
     public void setPartidaID(int partidaID) {
-        this.partidaID = partidaID;
+        this.id = partidaID;
     }
 
     public String getFechaInicio() {
@@ -61,8 +61,4 @@ public class Partida {
         this.score = score;
     }
 
-    @Override
-    public String toString() {
-        return "Partida [id_partida = "+partidaID+", FechaInicioPartida= " +fechaInicio+", HoraInicioPartida= " +horaInicio+", FechaFinPartida= " +fechaFin+", HoraFinPartida= " +horaFin+", ScorePartida = " +score+ "]";
-    }
 }

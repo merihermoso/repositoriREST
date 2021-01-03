@@ -2,28 +2,31 @@ package edu.upc.dsa.orm.models;
 
 public class User {
 
-    private int userID;
+    private int id;
     private String username;
     private String email;
     private String password;
-    private int nivel;
+    private String birthdate;
+    private int score;
+    private int level;
 
-    public User(){
+    public User(String username, String email, String password, String birthdate){
 
-    }
+        setId(0);
+        setUsername(username);
+        setEmail(email);
+        setPassword(password);
+        setBirthdate(birthdate);
+        setScore(0);
+        setLevel(1);
 
-    public User(String username, String email, String password, int nivel){
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.nivel = nivel;
     }
 
     public int getId() {
-        return this.userID;
+        return this.id;
     }
     public void setId(int userID) {
-        this.userID=userID;
+        this.id=userID;
     }
 
     public String getUsername() {
@@ -47,10 +50,27 @@ public class User {
         this.password = password;
     }
 
-    public int getNivel() {
-        return nivel;
+    public String getBirthdate() {
+        return birthdate;
     }
-    public void setNivel(int nivel) {
-        this.nivel = nivel;
+
+    public void setBirthdate(String birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 }

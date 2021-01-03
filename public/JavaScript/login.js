@@ -41,7 +41,7 @@ var BASE_URI="http://localhost:8080/dsaApp/auth";
                 console.log(user);
                 $.ajax({
                     type: 'POST',
-                    url: BASE_URI.concat("/users/registerUser"),
+                    url: BASE_URI.concat("/user/registerUser"),
                     headers: { 'content-type': 'application/json',"x-kii-appid": "XXXXX","x-kii-appkey":"XXXXX" },
                     data: JSON.stringify(user),
                     dataType: 'json',

@@ -4,7 +4,7 @@ import edu.upc.dsa.orm.util.RandomUtils;
 
 public class Jugador {
 
-    String id_user;
+    String id;
     int health;
     int speed;
     int x;
@@ -12,7 +12,7 @@ public class Jugador {
 
     //Constructor
     public Jugador(){
-        this.id_user = RandomUtils.getId();
+        this.id = RandomUtils.getId();
         this.health = 100;
         this.speed = 10;
     }
@@ -23,11 +23,11 @@ public class Jugador {
     }
 
     public String getId_user() {
-        return id_user;
+        return id;
     }
 
     public void setId_user(String id_user) {
-        this.id_user = id_user;
+        this.id = id_user;
     }
 
     public int getHealth() {

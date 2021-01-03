@@ -1,21 +1,27 @@
 package edu.upc.dsa.orm.dao.user;
 
+import java.util.HashMap;
 import java.util.List;
+
+import edu.upc.dsa.orm.models.Credentials.LoginCredentials;
+import edu.upc.dsa.orm.models.Credentials.RegisterCredentials;
 import edu.upc.dsa.orm.models.User;
 
 public interface UserDAO {
 
+    boolean registerUser(RegisterCredentials registerCredentials);
+    boolean loginUser(LoginCredentials loginCredentials);
 
-    public int addUser(String username, String email, String password, int nivel);
-    public User addUser(User u);
-    public User getUser(int userID);
-    public List<User> findAll();
+    boolean userExists(String username);
 
-    public void deleteUser(int userID);
-    public void updateUser(int userID, String username, String email, String password, int nivel);
-    public User updateUser(User u);
+    List<User> findAll();
 
-    public List <User> getUserByPartida(int partidaId);
+    int getUsername_min_length();
+    int getUsername_max_length();
+    int getPassword_min_length();
+    int getPassword_max_length();
+    int getEmail_min_length();
+    int getEmail_max_length();
+    int getMin_age();
 
-  //  public boolean userExists(int userID);
 }

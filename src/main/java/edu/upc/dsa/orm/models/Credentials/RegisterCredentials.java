@@ -2,22 +2,10 @@ package edu.upc.dsa.orm.models.Credentials;
 
 public class RegisterCredentials {
 
-    String username;
-    String email;
-    String password;
-    String confirm;
-    String birthdate;
-
-    public RegisterCredentials(String username, String email, String password, String confirm, String birthdate) {
-        this();
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.confirm = confirm;
-        this.birthdate = birthdate;
-    }
-
-    public RegisterCredentials() {}
+    private String username;
+    private String password;
+    private String email;
+    private String birthdate;
 
     public String getUsername() {
         return username;
@@ -35,10 +23,6 @@ public class RegisterCredentials {
         this.password = password;
     }
 
-    public String getConfirm() { return confirm; }
-
-    public void setConfirm(String confirm) { this.confirm = confirm; }
-
     public String getEmail() {
         return email;
     }
@@ -55,14 +39,4 @@ public class RegisterCredentials {
         this.birthdate = birthdate;
     }
 
-    @Override
-    public String toString() {
-        return "RegisterCredentials{" +
-                "username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", confirm='" + confirm + '\'' +
-                ", birthdate='" + birthdate + '\'' +
-                '}';
-    }
 }

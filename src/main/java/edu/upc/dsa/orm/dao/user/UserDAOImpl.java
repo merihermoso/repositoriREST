@@ -1,173 +1,145 @@
 package edu.upc.dsa.orm.dao.user;
-
 import edu.upc.dsa.orm.FactorySession;
-import edu.upc.dsa.orm.*;
+import edu.upc.dsa.orm.Session;
+import edu.upc.dsa.orm.models.Credentials.LoginCredentials;
+import edu.upc.dsa.orm.models.Credentials.RegisterCredentials;
 import edu.upc.dsa.orm.models.User;
-import org.apache.log4j.Logger;
 
-import java.util.HashMap;
 import java.util.*;
 
 public class UserDAOImpl implements UserDAO {
     private static UserDAO instance;
-    protected List<User> users;                 //quan no hi ha bbdd
-    final static Logger logger = Logger.getLogger(UserDAOImpl.class);
 
+    private final int username_min_length;
+    private final int username_max_length;
+    private final int password_min_length;
+    private final int password_max_length;
+    private final int email_min_length;
+    private final int email_max_length;
+    private final int min_age;
+
+    private UserDAOImpl() {
+
+        this.username_min_length = 4;
+        this.username_max_length = 20;
+        this.password_min_length = 4;
+        this.password_max_length = 20;
+        this.email_min_length = 4;
+        this.email_max_length = 30;
+        this.min_age = 14;
+
+    }
 
     public static UserDAO getInstance() {
-        if ( instance==null) instance= new UserDAOImpl();
+        if ( instance==null) instance = new UserDAOImpl();
         return instance;
     }
 
-    public User addUser(User u) {
-        logger.info("new User " + u);
+    public boolean registerUser(RegisterCredentials registerCredentials) { //Afegeix el user com a obejcte
 
-        this.users.add (u);
-        logger.info("new User added");
-        return u;
-    }
+        Session session;
+        boolean result = false;
 
-    public int addUser(String username, String email, String password, int nivel) {
-        Session session = null;
-        int userID = 0;
         try {
+
             session = FactorySession.openSession();
-            User user = new User(username, email, password, nivel);
-            session.save(user);
-        }
-        catch (Exception e) {
-            // LOG
-        }
-        finally {
+            result = session.registerUser(registerCredentials);
             session.close();
+
+        } finally {
+
         }
 
-        return userID;
+        return result;
+
     }
 
+    public List<User> findAll(){
 
-    public User getUser(int userID) {   //obtenim usuari a partir del seu ID
-        Session session = null;
-        User user = null;
+        Session session;
+        List<User> userList;
+
+        HashMap<Integer, User> result;
+
         try {
+
             session = FactorySession.openSession();
-            user = (User)session.get(User.class, userID);
-        }
-        catch (Exception e) {
-           // Log.error("ERROR al obtener user: " +e);
-        }
-        finally {
+            result = session.findAll(User.class);
+
+            userList = new ArrayList<>(result.values());
+
             session.close();
-        }
 
-        return user;
-    }
-
-
-    public void updateUser(int userID, String username, String email, String password, int nivel) {
-        User user = this.getUser(userID);
-        user.setUsername(username);
-        user.setEmail(email);
-        user.setPassword(password);
-        user.setNivel(nivel);
-
-        Session session = null;
-        try {
-            session = FactorySession.openSession();
-            session.update(User.class);
-        }
-        catch (Exception e) {
-           // Log.error("ERROR al modificar user: " +e);
-        }
-        finally {
-            session.close();
-        }
-    }
-    @Override
-    public User updateUser(User p) {
-        User u = this.getUser(p.getId());
-
-        if (u!=null) {
-            logger.info(p+" rebut!!!! ");
-                                            //no posem el ID?
-            u.setUsername(p.getUsername());
-            u.setEmail(p.getEmail());
-            u.setPassword(p.getPassword());
-            u.setNivel(p.getNivel());
-
-            logger.info(u+" user updated ");
-        }
-        else {
-            logger.warn("user not found "+p);
-        }
-
-        return u;
-    }
-
-    public void deleteUser(int userID) {
-        User user = this.getUser(userID);
-        Session session = null;
-        try {
-            session = FactorySession.openSession();
-            session.delete(User.class);
-        }
-        catch (Exception e) {
-           // Log.error("ERROR al borrar user: " +e);
-        }
-        finally {
-            session.close();
-        }
-
-    }
-
-    public List<User> findAll() {
-        Session session = null;
-        List<User> userList=null;
-        try {
-            session = FactorySession.openSession();
-            userList = session.findAll(User.class);
-        }
-        catch (Exception e) {
-          //  Log.error("ERROR al obtener todos los user: " +e);
-        }
-        finally {
-            session.close();
-        }
-        return userList;
-    }
-/*
-    @Override
-    public boolean userExists(int userID) {
-        for (User u: this.users) {
-
-            if (u.getId().equals(userID)) {
-                return true;
-            }
+        } finally {
 
         }
-        return false;
-    }*/
 
-    public List<User> getUserByPartida(int partidaID) {
-
-        Session session = null;
-        List<User> userList=null;
-        try {
-            session = FactorySession.openSession();
-
-            HashMap<String, Integer> params = new HashMap<String, Integer>();
-            params.put("partidaID", partidaID);
-
-            userList = session.findAll(User.class, params);
-        }
-        catch (Exception e) {
-          //  Log.error("ERROR al obtener user: " +e);
-        }
-        finally {
-            session.close();
-        }
         return userList;
     }
 
+    public boolean userExists(String username) {
 
+        Session session;
+        boolean result = false;
+
+        try {
+
+            session = FactorySession.openSession();
+            result = session.userExists(username);
+            session.close();
+
+        } finally {
+
+        }
+
+        return result;
+
+    }
+
+    public boolean loginUser(LoginCredentials loginCredentials) {
+
+        Session session;
+        boolean result = false;
+
+        try {
+
+            session = FactorySession.openSession();
+            result = session.loginUser(loginCredentials);
+            session.close();
+
+        } finally {
+
+        }
+
+        return result;
+
+    }
+
+    public int getUsername_min_length() {
+        return username_min_length;
+    }
+
+    public int getUsername_max_length() {
+        return username_max_length;
+    }
+
+    public int getPassword_min_length() {
+        return password_min_length;
+    }
+
+    public int getPassword_max_length() {
+        return password_max_length;
+    }
+
+    public int getEmail_min_length() {
+        return email_min_length;
+    }
+
+    public int getEmail_max_length() {
+        return email_max_length;
+    }
+
+    public int getMin_age() {
+        return min_age;
+    }
 }

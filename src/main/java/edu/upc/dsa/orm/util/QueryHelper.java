@@ -9,9 +9,10 @@ public class QueryHelper {
 
         String [] fields = ObjectHelper.getFields(entity);
 
-        sb.append("ID");
         for (String field: fields) {
-            sb.append(", ").append(field);
+            if (!field.equals("id")) {
+                sb.append(", ").append(field);
+            }
         }
 
         sb.append(") VALUES (?");
@@ -28,8 +29,28 @@ public class QueryHelper {
     public static String createQuerySELECT(Object entity) {          //consulta to GET cualsevol objecte de la bbdd
         StringBuffer sb = new StringBuffer();
         sb.append("SELECT * FROM ").append(entity.getClass().getSimpleName());      //totes les files de la taula que tinguin el id=
-        sb.append(" WHERE ID = ?");
+        sb.append(" WHERE id = ?");
 
         return sb.toString();
     }
+
+    public static String createQueryUserSELECTbyUsername(String username) {          //consulta to GET cualsevol objecte de la bbdd
+        StringBuffer sb = new StringBuffer();
+        sb.append("SELECT * FROM User");      //totes les files de la taula que tinguin el id=
+        sb.append(" WHERE username = ?");
+
+        return sb.toString();
+    }
+
+    //SELECT password FROM User WHERE username = "?"
+    public static String createQueryUserSELECTPasswordByUsername() {
+
+        StringBuffer sb = new StringBuffer();
+        sb.append("SELECT password FROM User");      //totes les files de la taula que tinguin el id=
+        sb.append(" WHERE username = ?");
+
+        return sb.toString();
+
+    }
+
 }

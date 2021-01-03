@@ -1,30 +1,31 @@
 package edu.upc.dsa.orm;
 
 
+import edu.upc.dsa.orm.util.DBUtils;
+
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class FactorySession {
+
     public static Session openSession() {
-        Connection conn = getConnection();              //establimos connexión al iniciar sesión
-        Session session = new SessionImpl(conn);
-        return session;
+
+        try {
+            Connection conn = getConnection();
+            Session session = new SessionImpl(conn);
+            return session;
+
+        } catch (SQLException sqlException) {
+
+            return null;
+
+        }
+
     }
 
-    private static Connection getConnection() {
-        Connection conn = null;
-        try {
-            conn =
-                    DriverManager.getConnection("jdbc:mysql://localhost/test?" +
-                            "user=minty&password=greatsqldb");
+    public static Connection getConnection() throws SQLException {
 
-        } catch (SQLException ex) {
-            // handle any errors
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
-        }
-        return conn;
+        return DBUtils.getConnection();
+
     }
 }
