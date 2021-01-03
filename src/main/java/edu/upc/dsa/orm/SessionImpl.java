@@ -77,7 +77,6 @@ public class SessionImpl implements edu.upc.dsa.orm.Session {
 
                 result.put((int) resultSet.getObject(1), object);
 
-
             }
 
         } catch (SQLException sqlException) {

@@ -9,10 +9,14 @@ public class QueryHelper {
 
         String [] fields = ObjectHelper.getFields(entity);
 
+        int i = 0;
         for (String field: fields) {
-            if (!field.equals("id")) {
+            if (i == 0) {
+                sb.append(field);
+            } else {
                 sb.append(", ").append(field);
             }
+            i++;
         }
 
         sb.append(") VALUES (?");
