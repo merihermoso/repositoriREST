@@ -1,10 +1,10 @@
 var BASE_URI="http://localhost:8080/dsaApp";
-var idJugador = sessionStorage.getItem("token");
+/*var idJugador = sessionStorage.getItem("token");
 var diamantes = sessionStorage.getItem("diamantes");
 if (idJugador == null){
     var url = "http://localhost:8080/login.html";
     window.open(url, "_self");
-}
+}*/
 
 
 $(document).ready(function() {

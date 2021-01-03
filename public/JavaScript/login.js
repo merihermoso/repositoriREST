@@ -1,27 +1,28 @@
-var BASE_URI="http://localhost:8080/dsaApp/auth";
+var BASE_URI="http://localhost:8080/dsaApp/";
 
-/*$(document).ready(function() {
+$(document).ready(function() {
     console.log("login/register");
     $('#loginbtn').click(function () {
-        var nombre = $("#loginName").val();
+        var username = $("#loginName").val();
+        console.log(username);
         var password = $("#loginPassword").val();
-        var user = {"nombre": nombre, "password": password};
+        console.log(password);
+        var user = {"username": username, "password": password};
         console.log(user);
 
         $.ajax({
             type: 'POST',
-            url: BASE_URI.concat("/login"),
+            url: BASE_URI.concat("user/login"),
             headers: {'content-type': 'application/json', "x-kii-appid": "XXXXX", "x-kii-appkey": "XXXXX"},
             data: JSON.stringify(user),
             dataType: 'json',
             success: function (data) {
-                console.log("hola1")
-                var token = data.token;
-                var diamantes = data.diamantes;
-                console.log(token);
-                window.sessionStorage.setItem("token", token)
-                window.sessionStorage.setItem("diamantes", diamantes)
-                var url = "http://localhost:8080/shop.html";
+                //var token = data.token;
+                //var diamantes = data.diamantes;
+                //console.log(token);
+                //window.sessionStorage.setItem("token", token)
+                window.localStorage.setItem("username", username)
+                var url = "http://localhost:8080/home.html";
                 window.open(url, "_self");
             },
             error: function (e) {
@@ -30,27 +31,27 @@ var BASE_URI="http://localhost:8080/dsaApp/auth";
         });
     });
     $("#registerbtn").click(function(){
-            var nombre = $("#registerName").val();
-            var mail = $("#registerMail").val();
+            var username = $("#registerName").val();
             var password = $("#registerPassword").val();
+            var email = $("#registerMail").val();
             var confirm = $("#registerConfirm").val();
             var birthdate = $("#registerBirth").val();
             console.log("Carlos");
             if (password == confirm){
-                var user = {"nombre": nombre, "mail":mail, "password": password, "confirm":confirm, "birthdate": birthdate};
+                var user = { "id": 0, "username": username, "password": password, "email":email, "birthdate": birthdate, "score": 0, "level": 0};
                 console.log(user);
                 $.ajax({
                     type: 'POST',
-                    url: BASE_URI.concat("/user/registerUser"),
+                    url: BASE_URI.concat("user/register"),
                     headers: { 'content-type': 'application/json',"x-kii-appid": "XXXXX","x-kii-appkey":"XXXXX" },
                     data: JSON.stringify(user),
                     dataType: 'json',
                     success: function (data) {
-                        var token = data.token;
-                        var diamantes = data.diamantes;
-                        window.sessionStorage.setItem("token", token)
-                        window.sessionStorage.setItem("diamantes", diamantes)
-                        var url = "http://localhost:8080/shop.html";
+                        //var token = data.token;
+                        //var diamantes = data.diamantes;
+                        //window.sessionStorage.setItem("token", token)
+                        window.localStorage.setItem("username", username);
+                        var url = "http://localhost:8080/login.html";
                         window.open(url, "_self");
                     },
                     error: function (e) {
@@ -62,4 +63,4 @@ var BASE_URI="http://localhost:8080/dsaApp/auth";
             else
                 alert("Las contraseñas son distintas\n");
         });
-})*/
+})
