@@ -1,5 +1,7 @@
 package edu.upc.dsa.orm.util;
 
+import edu.upc.dsa.orm.models.User;
+
 public class QueryHelper {
 
     public static String createQueryINSERT(Object entity) {         //consultes que han de insertar cualsevols objecte a la bbdd
@@ -44,9 +46,9 @@ public class QueryHelper {
         return sb.toString();
     }
 
-    public static String createQuerySELECTAll(Object entity) {          //consulta to GET cualsevol objecte de la bbdd
+    public static String createQuerySELECTAll(Class theClass) {          //consulta to GET cualsevol objecte de la bbdd
         StringBuffer sb = new StringBuffer();
-        sb.append("SELECT * FROM ").append(entity.getClass().getSimpleName());
+        sb.append("SELECT * FROM ").append(theClass.getSimpleName());
 
         return sb.toString();
     }
