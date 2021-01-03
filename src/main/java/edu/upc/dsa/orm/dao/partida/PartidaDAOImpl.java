@@ -24,7 +24,7 @@ public class PartidaDAOImpl implements PartidaDAO {
         return instance;
     }*/
 
-    public int addPartida(String fechaInicio, String horaInicio, String fechaFin, String horaFin, int score) {
+   /* public int addPartida(String fechaInicio, String horaInicio, String fechaFin, String horaFin, int score) {
         Session session = null;             //nose si això només es al usuari o a totes les clases  ?¿
         int partidaID = 0;          //HAURIEM DE POSAR QUE ET GENERI UN INT RANDOM
         try {
@@ -143,7 +143,7 @@ public class PartidaDAOImpl implements PartidaDAO {
             session.close();
         }
         return partidaList;
-    }
+    }*/
 
 
 }

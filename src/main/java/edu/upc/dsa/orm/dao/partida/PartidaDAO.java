@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface PartidaDAO {
 
-    public int addPartida(String fechaInicio, String horaInicio, String fechaFin, String horaFin, int score);
+    /*public int addPartida(String fechaInicio, String horaInicio, String fechaFin, String horaFin, int score);
     Partida addPartida(Partida p);
 
     public Partida getPartida(int partidaID);
@@ -15,6 +15,6 @@ public interface PartidaDAO {
     public List<Partida> findAll();
     public List <Partida> getPartidasByUserID(int userId);
 
-
+*/
 
 }
