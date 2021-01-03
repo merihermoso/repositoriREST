@@ -19,10 +19,15 @@ public class QueryHelper {
             i++;
         }
 
-        sb.append(") VALUES (?");
+        sb.append(") VALUES (");
 
+        i = 0;
         for (String field: fields) {
-            sb.append(", ?");
+            if (i == 0) {
+                sb.append("?");
+            } else {
+                sb.append(", ?");
+            }
         }
 
         sb.append(")");
