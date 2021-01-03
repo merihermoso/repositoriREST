@@ -124,13 +124,6 @@ public class SessionImpl implements edu.upc.dsa.orm.Session {
                 i++;
             }
 
-            /*pstm.setString(1, user.getUsername());
-            pstm.setString(2, user.getEmail());
-            pstm.setString(3, user.getPassword());
-            pstm.setString(3, user.getBirthdate());
-            pstm.setInt(4, user.getScore());
-            pstm.setInt(5, user.getLevel());*/
-
             pstm.executeQuery();
 
             return true;

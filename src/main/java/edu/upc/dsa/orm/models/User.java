@@ -10,8 +10,13 @@ public class User {
     private int score;
     private int level;
 
+    public User() {
+
+    }
+
     public User(String username, String email, String password, String birthdate){
 
+        this();
         setId(0);
         setUsername(username);
         setEmail(email);
