@@ -49,11 +49,11 @@ public class SessionImpl implements edu.upc.dsa.orm.Session {
 
     }
 
-    public HashMap<Integer, Object> findAll(Class theClass) {
+    public HashMap<Integer, Object> findAll(Object entity) {
 
         HashMap<Integer, Object> result = new HashMap<>();
 
-        String selectQuery = QueryHelper.createQuerySELECTAll(theClass);
+        String selectQuery = QueryHelper.createQuerySELECTAll(entity);
 
         PreparedStatement pstm;
         ResultSet resultSet;
@@ -62,7 +62,7 @@ public class SessionImpl implements edu.upc.dsa.orm.Session {
 
         try {
 
-            object = theClass.getDeclaredConstructor().newInstance();
+            object = entity.getClass().getDeclaredConstructor().newInstance();
             pstm = conn.prepareStatement(selectQuery);
             resultSet = pstm.executeQuery();
 

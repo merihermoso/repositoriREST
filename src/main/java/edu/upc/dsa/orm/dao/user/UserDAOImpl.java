@@ -58,13 +58,14 @@ public class UserDAOImpl implements UserDAO {
 
         Session session;
         List<User> userList;
+        User user = null;
 
         HashMap<Integer, User> result;
 
         try {
 
             session = FactorySession.openSession();
-            result = session.findAll(User.class);
+            result = session.findAll(user);
 
             userList = new ArrayList<>(result.values());
 

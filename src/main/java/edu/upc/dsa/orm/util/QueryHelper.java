@@ -46,8 +46,7 @@ public class QueryHelper {
 
     public static String createQuerySELECTAll(Object entity) {          //consulta to GET cualsevol objecte de la bbdd
         StringBuffer sb = new StringBuffer();
-        sb.append("SELECT * FROM ").append(entity.getClass().getSimpleName());      //totes les files de la taula que tinguin el id=
-        sb.append(" WHERE id = ?");
+        sb.append("SELECT * FROM ").append(entity.getClass().getSimpleName());
 
         return sb.toString();
     }

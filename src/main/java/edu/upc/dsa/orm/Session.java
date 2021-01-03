@@ -11,7 +11,7 @@ public interface Session<E> {
     void save(Object entity);
     void close();
 
-    HashMap<Integer, Object> findAll(Class theClass);
+    HashMap<Integer, Object> findAll(Object entity);
 
     boolean registerUser(RegisterCredentials registerCredentials);
     boolean loginUser(LoginCredentials loginCredentials);
