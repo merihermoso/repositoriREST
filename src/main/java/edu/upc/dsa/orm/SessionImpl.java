@@ -53,7 +53,7 @@ public class SessionImpl implements edu.upc.dsa.orm.Session {
 
         HashMap<Integer, Object> result = new HashMap<>();
 
-        String selectQuery = QueryHelper.createQuerySELECT(theClass);
+        String selectQuery = QueryHelper.createQuerySELECTAll(theClass);
 
         PreparedStatement pstm;
         ResultSet resultSet;
