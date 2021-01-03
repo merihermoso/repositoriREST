@@ -1,6 +1,6 @@
 package edu.upc.dsa.orm.models;
 
-public class Partida {
+public class Partidas {
 
     private int id;
     private String fechaInicio;
@@ -9,23 +9,23 @@ public class Partida {
     private String horaFin;
     private int score_partida;
 
-    public Partida() {
+    public Partidas() {
 
     }
-    public Partida(String fechaInicio, String horaInicio, String fechaFin, String horaFin, int score) {
+    public Partidas(String fechaInicio, String horaInicio, String fechaFin, String horaFin, int score_partida) {
 
         setFechaInicio(fechaInicio);
         setHoraInicio(horaInicio);
         setFechaFin(fechaFin);
         setHoraFin(horaFin);
-        setScore(score);
+        setScore(score_partida);
 
     }
-    public int getPartidaID() {
-        return id;
+    public int getId() {
+        return this.id;
     }
-    public void setPartidaID(int partidaID) {
-        this.id = partidaID;
+    public void setId(int partidaID) {
+        this.id=partidaID;
     }
 
     public String getFechaInicio() {return fechaInicio;}

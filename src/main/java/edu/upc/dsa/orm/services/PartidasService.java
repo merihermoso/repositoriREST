@@ -1,9 +1,9 @@
-/*package edu.upc.dsa.orm.services;
+package edu.upc.dsa.orm.services;
 
 import edu.upc.dsa.orm.dao.partida.PartidaDAO;
 import edu.upc.dsa.orm.dao.partida.PartidaDAOImpl;
 
-import edu.upc.dsa.orm.models.Partida;
+import edu.upc.dsa.orm.models.Partidas;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -19,36 +19,29 @@ import java.util.*;
 @Path("/partidas")
 public class PartidasService {
 
-    private PartidaDAO pm;
+    private PartidaDAO partidaDAO;
 
     public PartidasService() {
-
-      //  this.pm = PartidaDAOImpl.getInstance();                       DA ERROR
-        if (pm.size()==0) {                           //per afegir les partides si no estaven a la bbdd
-            this.pm.addPartida(20000);
-            this.pm.addPartida(30000);
-            this.pm.addPartida(80000);
-            this.pm.addPartida(70000);
-        }
+        this.partidaDAO = PartidaDAOImpl.getInstance();
     }
 
     @GET
     @ApiOperation(value = "Get all Partidas", notes = "Get all partidas from BBDD")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Partida.class, responseContainer="List"),
+            @ApiResponse(code = 201, message = "Successful", response = Partidas.class, responseContainer="List"),
     })
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPartidas() {
 
-        List<Partida> partidas = this.pm.findAll();
+        List<Partidas> partidas = this.partidaDAO.findAll();
 
-        GenericEntity<List<Partida>> entity = new GenericEntity<List<Partida>>(partidas) {};
-        return Response.status(201).entity(entity).build()  ;
+        GenericEntity<List<Partidas>> entity = new GenericEntity<List<Partidas>>(partidas) {};
+        return Response.status(201).entity(entity).build();
 
     }
 
-
+/*
 
     @DELETE
     @ApiOperation(value = "Delete a Partida", notes = "Delete a partida")
@@ -122,8 +115,8 @@ public class PartidasService {
 
         return Response.status(201).build();
     }
-
-}*/
+*/
+}
 
 
 

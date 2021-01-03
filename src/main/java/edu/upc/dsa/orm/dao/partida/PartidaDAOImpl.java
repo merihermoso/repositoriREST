@@ -2,8 +2,7 @@ package edu.upc.dsa.orm.dao.partida;
 
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
-import edu.upc.dsa.orm.models.Partida;
-import edu.upc.dsa.orm.models.User;
+import edu.upc.dsa.orm.models.Partidas;
 //import jdk.incubator.jpackage.internal.Log;
 
 import java.util.*;
@@ -17,6 +16,23 @@ public class PartidaDAOImpl implements PartidaDAO {
     public static PartidaDAO getInstance() {                    //DA ERROR
         if (instance==null) instance = new PartidaDAOImpl();
         return instance;
+    }
+
+    public List<Partidas> findAll(){
+
+        Session session;
+        List<Partidas> partidasList;
+
+        HashMap<Integer, Partidas> result;
+
+        session = FactorySession.openSession();
+        result = session.findAll(Partidas.class);
+
+        partidasList = new ArrayList<>(result.values());
+
+        session.close();
+
+        return partidasList;
     }
 /*
    public int addPartida(String fechaInicio, String horaInicio, String fechaFin, String horaFin, int score) {
@@ -101,22 +117,7 @@ public class PartidaDAOImpl implements PartidaDAO {
     }
 */
 
-    public List<Partida> findAll(){
 
-        Session session;
-        List<Partida> partidaList;
-
-        HashMap<Integer, Partida> result;
-
-        session = FactorySession.openSession();
-        result = session.findAll(Partida.class);
-
-        partidaList = new ArrayList<>(result.values());
-
-        session.close();
-
-        return partidaList;
-    }
     /*
     public List<Partida> findAll() {            //antic     (PRE BBDD)
         Session session = null;
