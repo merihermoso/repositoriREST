@@ -7,7 +7,7 @@ $(document).ready(function() {
         console.log(username);
         var password = $("#loginPassword").val();
         console.log(password);
-        var user = {"username": username, "password": password};
+        var user = {"id": 0, "username": username, "password": password, "score": 0, "level": 0};
         console.log(user);
 
         $.ajax({
