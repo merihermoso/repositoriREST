@@ -28,6 +28,7 @@ public class QueryHelper {
             } else {
                 sb.append(", ?");
             }
+            i++;
         }
 
         sb.append(")");
