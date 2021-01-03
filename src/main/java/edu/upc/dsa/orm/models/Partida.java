@@ -7,8 +7,11 @@ public class Partida {
     private String horaInicio;
     private String fechaFin;
     private String horaFin;
-    private int score;
+    private int score_partida;
 
+    public Partida() {
+
+    }
     public Partida(String fechaInicio, String horaInicio, String fechaFin, String horaFin, int score) {
 
         setFechaInicio(fechaInicio);
@@ -18,7 +21,6 @@ public class Partida {
         setScore(score);
 
     }
-
     public int getPartidaID() {
         return id;
     }
@@ -26,9 +28,7 @@ public class Partida {
         this.id = partidaID;
     }
 
-    public String getFechaInicio() {
-        return fechaInicio;
-    }
+    public String getFechaInicio() {return fechaInicio;}
     public void setFechaInicio(String fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
@@ -55,10 +55,10 @@ public class Partida {
     }
 
     public int getScore() {
-        return score;
+        return score_partida;
     }
-    public void setScore(int score) {
-        this.score = score;
+    public void setScore(int score_partida) {
+        this.score_partida = score_partida;
     }
 
 }

@@ -3,28 +3,23 @@ package edu.upc.dsa.orm.dao.partida;
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
 import edu.upc.dsa.orm.models.Partida;
-import edu.upc.dsa.orm.util.RandomUtils;
+import edu.upc.dsa.orm.models.User;
 //import jdk.incubator.jpackage.internal.Log;
-import org.apache.log4j.Logger;
-import java.util.concurrent.ThreadLocalRandom;
 
 import java.util.*;
 
 public class PartidaDAOImpl implements PartidaDAO {
-    protected List<Partida> partidas;                       //llista que creem a memoria (S'hauria de passar a bbdd)
     private static PartidaDAO instance;
-    final static Logger logger = Logger.getLogger(PartidaDAOImpl.class);
 
     private PartidaDAOImpl() {
-        this.partidas = new LinkedList<>();
-    }           //cuando no hay bbdd
-    /*
-    public static PartidaDAOImpl getInstance() {                    //DA ERROR
+    }
+
+    public static PartidaDAO getInstance() {                    //DA ERROR
         if (instance==null) instance = new PartidaDAOImpl();
         return instance;
-    }*/
-
-   /* public int addPartida(String fechaInicio, String horaInicio, String fechaFin, String horaFin, int score) {
+    }
+/*
+   public int addPartida(String fechaInicio, String horaInicio, String fechaFin, String horaFin, int score) {
         Session session = null;             //nose si això només es al usuari o a totes les clases  ?¿
         int partidaID = 0;          //HAURIEM DE POSAR QUE ET GENERI UN INT RANDOM
         try {
@@ -104,10 +99,26 @@ public class PartidaDAOImpl implements PartidaDAO {
         }
 
     }
+*/
 
+    public List<Partida> findAll(){
 
+        Session session;
+        List<Partida> partidaList;
 
-    public List<Partida> findAll() {
+        HashMap<Integer, Partida> result;
+
+        session = FactorySession.openSession();
+        result = session.findAll(Partida.class);
+
+        partidaList = new ArrayList<>(result.values());
+
+        session.close();
+
+        return partidaList;
+    }
+    /*
+    public List<Partida> findAll() {            //antic     (PRE BBDD)
         Session session = null;
         List<Partida> partidaList=null;
         try {
@@ -143,7 +154,7 @@ public class PartidaDAOImpl implements PartidaDAO {
             session.close();
         }
         return partidaList;
-    }*/
-
+    }
+*/
 
 }

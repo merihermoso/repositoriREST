@@ -4,6 +4,7 @@ import edu.upc.dsa.orm.dao.partida.PartidaDAO;
 import edu.upc.dsa.orm.dao.partida.PartidaDAOImpl;
 
 import edu.upc.dsa.orm.models.Partida;
+import edu.upc.dsa.orm.models.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -19,37 +20,29 @@ import java.util.*;
 @Path("/partidas")
 public class PartidasService {
 
-    private PartidaDAO pm;
+    private PartidaDAO partidaDAO;
 
     public PartidasService() {
-
-      //  this.pm = PartidaDAOImpl.getInstance();                       DA ERROR
-       /* if (pm.size()==0) {                           //per afegir les partides si no estaven a la bbdd
-            this.pm.addPartida(20000);
-            this.pm.addPartida(30000);
-            this.pm.addPartida(80000);
-            this.pm.addPartida(70000);
-        }*/
+        this.partidaDAO = PartidaDAOImpl.getInstance();
     }
 
     @GET
     @ApiOperation(value = "Get all Partidas", notes = "Get all partidas from BBDD")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Partida.class, responseContainer="List"),
+            @ApiResponse(code = 201, message = "Successful", response = User.class, responseContainer="List"),
     })
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPartidas() {
 
-        List<Partida> partidas = this.pm.findAll();
+        List<Partida> partidas = this.partidaDAO.findAll();
 
         GenericEntity<List<Partida>> entity = new GenericEntity<List<Partida>>(partidas) {};
-        return Response.status(201).entity(entity).build()  ;
+        return Response.status(201).entity(entity).build();
 
     }
 
-
-
+/*                              //DE QUAN NO TENIEM BBDD...
     @DELETE
     @ApiOperation(value = "Delete a Partida", notes = "Delete a partida")
     @ApiResponses(value = {
@@ -63,7 +56,7 @@ public class PartidasService {
         else this.pm.deletePartida(partidaID);
         return Response.status(201).build();
     }
-/*                                                                          DONA ERROR AL FER UPDATE DE TOT L'OBJECTE PARTIDA
+//mal..                                                                         DONA ERROR AL FER UPDATE DE TOT L'OBJECTE PARTIDA
     @PUT
     @ApiOperation(value = "Update Partida", notes = "Update a partida")
     @ApiResponses(value = {
@@ -79,7 +72,7 @@ public class PartidasService {
 
         return Response.status(201).build();
     }
-*/
+
     @POST
     @ApiOperation(value = "Register a new Partida", notes = "Register a Partida")
     @ApiResponses(value = {
@@ -123,7 +116,7 @@ public class PartidasService {
 
         return Response.status(201).build();
     }
-
+*/
 }
 
 
