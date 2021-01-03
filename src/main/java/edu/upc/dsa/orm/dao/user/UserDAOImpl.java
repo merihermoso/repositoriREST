@@ -62,18 +62,12 @@ public class UserDAOImpl implements UserDAO {
 
         HashMap<Integer, User> result;
 
-        try {
+        session = FactorySession.openSession();
+        result = session.findAll(user);
 
-            session = FactorySession.openSession();
-            result = session.findAll(user);
+        userList = new ArrayList<>(result.values());
 
-            userList = new ArrayList<>(result.values());
-
-            session.close();
-
-        } finally {
-
-        }
+        session.close();
 
         return userList;
     }
