@@ -3,7 +3,6 @@ package edu.upc.dsa.orm.dao.order;
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
 import edu.upc.dsa.orm.models.Orders;
-import edu.upc.dsa.orm.models.User;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -37,12 +36,12 @@ public class OrderDAOImpl implements OrderDAO {
         return ordersList;
     }
 
-    public Orders getOrderFromId(int orderID) throws SQLException {
+    public Orders getOrderById(int orderID) throws SQLException {
         Session session = null;
         Orders orders = new Orders();
         try {
             session = FactorySession.openSession();
-            orders = (Orders) session.getFromId(orders, orderID);
+            orders = (Orders) session.getById(orders, orderID);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -53,6 +52,22 @@ public class OrderDAOImpl implements OrderDAO {
 
         return orders;
     }
+    public Orders getOrderByUsername(String username) throws SQLException {
+        Session session = null;
+        Orders order = new Orders();
+        // User user = new User();
+        try {
+            session = FactorySession.openSession();
+            order = (Orders) session.getOrderByUsername(order, username);          //com poso la relació game User?¿
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            session.close();
+        }
 
+        return order;
+    }
 
 }

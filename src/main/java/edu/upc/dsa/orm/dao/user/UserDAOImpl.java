@@ -3,6 +3,7 @@ import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
 import edu.upc.dsa.orm.models.Credentials.LoginCredentials;
 import edu.upc.dsa.orm.models.Credentials.RegisterCredentials;
+import edu.upc.dsa.orm.models.Game;
 import edu.upc.dsa.orm.models.User;
 
 import java.sql.SQLException;
@@ -138,12 +139,12 @@ public class UserDAOImpl implements UserDAO {
         return min_age;
     }
 
-    public User getUserFromId( int userID) throws SQLException {
+    public User getUserById( int userID) throws SQLException {
         Session session = null;
         User user = new User();
         try {
             session = FactorySession.openSession();
-            user = (User) session.getFromId(user, userID);
+            user = (User) session.getById(user, userID);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -154,4 +155,39 @@ public class UserDAOImpl implements UserDAO {
 
         return user;
     }
+    public User getUserByUsername( String username) throws SQLException {
+        Session session = null;
+        User user = new User();
+        try {
+            session = FactorySession.openSession();
+            user = (User) session.getUserByUsername(user, username);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            session.close();
+        }
+
+        return user;
+    }
+
+    public List<User> getUserRanking(){         //obtenim el rankin de usuaris amb més puntuació
+
+        Session session;
+        List<User> usersList;
+
+        HashMap<Integer, User> result;
+
+        session = FactorySession.openSession();
+        result = session.findTop(User.class);
+
+        usersList = new ArrayList<>(result.values());
+
+        session.close();
+
+        return usersList;
+    }
+
+
 }

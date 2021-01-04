@@ -8,14 +8,11 @@ import java.util.*;
 
 public interface ElementDAO {
 
-//    public int addPartida(String fechaInicio, String horaInicio, String fechaFin, String horaFin, int score);
-//    Partida addPartida(Partida p);
+    public Element getElementById(int elementID) throws SQLException;
+    public Element getElementByUsername(String username) throws SQLException;
 
-    public Element getElementFromId(int elementID) throws SQLException;
-//    public void updatePartida(int partidaID, String fechaInicio, String horaInicio, String fechaFin, String horaFin, int score);
-//    public void deletePartida(int partidaID);
     public List<Element> findAll();
-//    public List <Partida> getPartidasByUserID(int userId);
+
 
 
 

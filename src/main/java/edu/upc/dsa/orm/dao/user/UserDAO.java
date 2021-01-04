@@ -6,6 +6,7 @@ import java.util.List;
 
 import edu.upc.dsa.orm.models.Credentials.LoginCredentials;
 import edu.upc.dsa.orm.models.Credentials.RegisterCredentials;
+import edu.upc.dsa.orm.models.Game;
 import edu.upc.dsa.orm.models.User;
 
 public interface UserDAO {
@@ -25,6 +26,9 @@ public interface UserDAO {
     int getEmail_max_length();
     int getMin_age();
 
-    public User getUserFromId( int userID) throws SQLException;
+    public User getUserById( int userID) throws SQLException;
+    public User getUserByUsername( String username) throws SQLException;
+
+    public List<User> getUserRanking() throws SQLException;
 
 }

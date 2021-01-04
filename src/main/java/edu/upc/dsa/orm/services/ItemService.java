@@ -55,7 +55,7 @@ public class ItemService {
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response GetItemFromId(@PathParam("itemID") int itemID) {
         try{
-            Item item = this.itemDAO.getItemFromId(itemID);
+            Item item = this.itemDAO.getItemById(itemID);
             return Response.status(200).entity(item).build();
         }
         catch (Exception e){

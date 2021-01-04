@@ -40,12 +40,12 @@ public class ItemDAOImpl implements ItemDAO {
         return itemsList;
     }
 
-    public Item getItemFromId(int itemID) throws SQLException {
+    public Item getItemById(int itemID) throws SQLException {
         Session session = null;
         Item item = new Item();
         try {
             session = FactorySession.openSession();
-            item = (Item) session.getFromId(item, itemID);
+            item = (Item) session.getById(item, itemID);
         }
         catch (Exception e) {
             e.printStackTrace();

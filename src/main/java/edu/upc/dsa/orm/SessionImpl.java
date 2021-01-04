@@ -96,6 +96,56 @@ public class SessionImpl implements Session {
 
     }
 
+    public HashMap<Integer, Object> findTop(Class theClass) {           //findAll ordenado BY score
+
+        HashMap<Integer, Object> result = new HashMap<>();
+
+        String selectQuery = QueryHelper.createQuerySELECTtop(theClass);
+
+        PreparedStatement pstm;
+        ResultSet resultSet;
+        Object object;
+        int id;
+        System.out.println(selectQuery);
+        try {
+
+            object = theClass.getDeclaredConstructor().newInstance();
+            pstm = conn.prepareStatement(selectQuery);
+            resultSet = pstm.executeQuery();
+
+            while (resultSet.next()) {
+
+                ResultSetMetaData rsmd = resultSet.getMetaData();
+
+                for (int i = 1; i<=rsmd.getColumnCount(); i++) {
+                    String field = rsmd.getColumnName(i);
+                    ObjectHelper.setter(object, field, resultSet.getObject(i));
+                }
+                result.put((int) resultSet.getObject(1), object);
+                object = theClass.getDeclaredConstructor().newInstance();
+            }
+
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+
+        } catch (NoSuchMethodException noSuchMethodException) {
+            noSuchMethodException.printStackTrace();
+
+        } catch (IllegalAccessException illegalAccessException) {
+            illegalAccessException.printStackTrace();
+
+        } catch (InstantiationException instantiationException) {
+            instantiationException.printStackTrace();
+
+        } catch (InvocationTargetException invocationTargetException) {
+            invocationTargetException.printStackTrace();
+        }
+
+        return result;
+
+    }
+
+
     public boolean registerUser(RegisterCredentials registerCredentials) {
 
         User user = new User(registerCredentials.getUsername(), registerCredentials.getEmail(), registerCredentials.getPassword(), registerCredentials.getBirthdate());
@@ -181,8 +231,8 @@ public class SessionImpl implements Session {
 
     }
 
-    public Object getFromId(Object theObject, int id) throws SQLException {
-        String selectQuery = QueryHelper.createQuerySELECT(theObject);
+    public Object getById(Object theObject, int id) throws SQLException {
+        String selectQuery = QueryHelper.createQuerySELECT(theObject);          //quary que busca a partir del ID
         PreparedStatement pstm = null;
         try {
             pstm = conn.prepareStatement(selectQuery);
@@ -200,4 +250,88 @@ public class SessionImpl implements Session {
             return null;
         }
     }
+
+    public Object getUserByUsername(Object theObject, String username) throws SQLException {
+        String selectQuery = QueryHelper.createQueryUserSELECTbyUsername(username);
+        PreparedStatement pstm = null;
+        try {
+            pstm = conn.prepareStatement(selectQuery);
+            pstm.setObject(1, username);
+            pstm.executeQuery();
+            ResultSet rs = pstm.getResultSet();
+            if (rs.next()){
+                for (int i=1;i<=rs.getMetaData().getColumnCount();i++)
+                    ObjectHelper.setter(theObject,rs.getMetaData().getColumnName(i),rs.getObject(i));
+            }
+            return theObject;
+
+        }  catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Object getGameByUsername(Object theObject, String username) throws SQLException {
+        String selectQuery = QueryHelper.createQueryGameSELECTbyUsername(username);         //consulta per obtenir Partida del Username que introduim
+        PreparedStatement pstm = null;
+        try {
+            pstm = conn.prepareStatement(selectQuery);
+            pstm.setObject(1, username);
+            pstm.executeQuery();
+            ResultSet rs = pstm.getResultSet();
+            if (rs.next()){
+                for (int i=1;i<=rs.getMetaData().getColumnCount();i++)
+                    ObjectHelper.setter(theObject,rs.getMetaData().getColumnName(i),rs.getObject(i));
+            }
+            return theObject;
+
+        }  catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Object getOrderByUsername(Object theObject, String username) throws SQLException {
+        String selectQuery = QueryHelper.createQueryOrderSELECTbyUsername(username);         //consulta per obtenir Partida del Username que introduim
+        PreparedStatement pstm = null;
+        try {
+            pstm = conn.prepareStatement(selectQuery);
+            pstm.setObject(1, username);
+            pstm.executeQuery();
+            ResultSet rs = pstm.getResultSet();
+            if (rs.next()){
+                for (int i=1;i<=rs.getMetaData().getColumnCount();i++)
+                    ObjectHelper.setter(theObject,rs.getMetaData().getColumnName(i),rs.getObject(i));
+            }
+            return theObject;
+
+        }  catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Object getElementByUsername(Object theObject, String username) throws SQLException {
+        String selectQuery = QueryHelper.createQueryElementSELECTbyUsername(username);         //consulta per obtenir Partida del Username que introduim
+        PreparedStatement pstm = null;
+        try {
+            pstm = conn.prepareStatement(selectQuery);
+            pstm.setObject(1, username);
+            pstm.executeQuery();
+            ResultSet rs = pstm.getResultSet();
+            if (rs.next()){
+                for (int i=1;i<=rs.getMetaData().getColumnCount();i++)
+                    ObjectHelper.setter(theObject,rs.getMetaData().getColumnName(i),rs.getObject(i));
+            }
+            return theObject;
+
+        }  catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+
+
 }

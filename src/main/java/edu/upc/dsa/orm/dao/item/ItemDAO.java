@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ItemDAO {
 
-    public Item getItemFromId(int itemID) throws SQLException;
+    public Item getItemById(int itemID) throws SQLException;
 
     public List<Item> findAll();
 

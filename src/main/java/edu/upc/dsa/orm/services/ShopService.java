@@ -6,6 +6,7 @@ import edu.upc.dsa.orm.dao.element.ElementDAOImpl;
 import edu.upc.dsa.orm.dao.order.OrderDAO;
 import edu.upc.dsa.orm.dao.order.OrderDAOImpl;
 import edu.upc.dsa.orm.models.Element;
+import edu.upc.dsa.orm.models.Game;
 import edu.upc.dsa.orm.models.Orders;
 import edu.upc.dsa.orm.models.User;
 import io.swagger.annotations.Api;
@@ -60,12 +61,24 @@ public class ShopService {
             @ApiResponse(code = 503, message = "not working well...")
 
     })
-
+/*
     @Path("/getOrder/{orderID}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response GetOrderFromId(@PathParam("orderID") int orderID) {
         try{
-            Orders order = this.orderDAO.getOrderFromId(orderID);
+            Orders order = this.orderDAO.getOrderById(orderID);
+            return Response.status(200).entity(order).build();
+        }
+        catch (Exception e){
+
+            return Response.status(503).build();
+        }
+    }*/
+    @Path("getOrder/{username}")
+    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
+    public Response GetOrderByUsername(@PathParam("username") String username) {
+        try{
+            Orders order = this.orderDAO.getOrderByUsername(username);
             return Response.status(200).entity(order).build();
         }
         catch (Exception e){
@@ -97,12 +110,11 @@ public class ShopService {
             @ApiResponse(code = 503, message = "not working well...")
 
     })
-
-    @Path("getElement/{elementID}")
+    @Path("getElement/{username}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response GetElementFromId(@PathParam("elementID") int elementID) {
+    public Response GetElementFromUsername(@PathParam("username") String username) {
         try{
-            Element element = this.elementDAO.getElementFromId(elementID);
+            Element element = this.elementDAO.getElementByUsername(username);
             return Response.status(200).entity(element).build();
         }
         catch (Exception e){
@@ -110,6 +122,19 @@ public class ShopService {
             return Response.status(503).build();
         }
     }
+    /*
+    @Path("getElement/{elementID}")
+    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
+    public Response GetElementFromId(@PathParam("elementID") int elementID) {
+        try{
+            Element element = this.elementDAO.getElementById(elementID);
+            return Response.status(200).entity(element).build();
+        }
+        catch (Exception e){
+
+            return Response.status(503).build();
+        }
+    }*/
 
 
 }

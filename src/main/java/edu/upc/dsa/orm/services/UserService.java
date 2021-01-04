@@ -129,12 +129,27 @@ public class UserService {
             @ApiResponse(code = 503, message = "not working well...")
 
     })
-
+/*
     @Path("/{userID}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response GetUserFromId(@PathParam("userID") int userID) {
+    public Response GetUserById(@PathParam("userID") int userID) {
         try{
-            User user = this.userDAO.getUserFromId(userID);
+            User user = this.userDAO.getUserById(userID);
+            return Response.status(200).entity(user).build();
+        }
+        catch (Exception e){
+
+            return Response.status(503).build();
+        }
+    }
+    */
+
+
+    @Path("/{username}")                                        //servicio para encontrar usuario a partir del username
+    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
+    public Response GetUserByUsername(@PathParam("username") String username) {
+        try{
+            User user = this.userDAO.getUserByUsername(username);
             return Response.status(200).entity(user).build();
         }
         catch (Exception e){
