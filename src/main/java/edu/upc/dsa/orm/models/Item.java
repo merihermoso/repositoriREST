@@ -1,10 +1,10 @@
 package edu.upc.dsa.orm.models;
 
 
-public class Item {
+public class Item {                         //classe per objectes DINS del joc
 
-    private int id; //Asignamos un id al objeto creado
-    private String objeto;
+    private int id; //Asignamos un id al name creado
+    private String name;
     private int hit;
     private int defense;
     private int healing;
@@ -14,17 +14,16 @@ public class Item {
 
     }
 
-    public Item(String objeto, int hit, int defense, int healing, int damage) {
+    public Item(String name, int hit, int defense, int healing, int damage) {
 
         this();
-        setId(0);
-        setObjeto(objeto);
+        setName(name);
         setHit(hit);
         setDefense(defense);
         setHealing(healing);
         setDamage(damage);
 
-        /*this.objeto = objeto;
+        /*this.name = name;
         this.id = id;
         this.hit = hit;
         this.defense = defense;
@@ -34,18 +33,14 @@ public class Item {
          */
     }
 
-    public String getObjeto() {
-        return objeto;
-    }
-
-    public void setObjeto(String item) {
-        this.objeto = item;
+    public String getName() {        return name;    }
+    public void setName(String item) {
+        this.name = item;
     }
 
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -53,7 +48,6 @@ public class Item {
     public int getHit() {
         return hit;
     }
-
     public void setHit(int hit) {
         this.hit = hit;
     }
@@ -61,7 +55,6 @@ public class Item {
     public int getDefense() {
         return defense;
     }
-
     public void setDefense(int defense) {
         this.defense = defense;
     }
@@ -69,7 +62,6 @@ public class Item {
     public int getHealing() {
         return healing;
     }
-
     public void setHealing(int healing) {
         this.healing = healing;
     }
@@ -77,7 +69,6 @@ public class Item {
     public int getDamage() {
         return damage;
     }
-
     public void setDamage(int damage) {
         this.damage = damage;
     }

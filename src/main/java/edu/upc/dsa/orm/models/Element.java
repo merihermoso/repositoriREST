@@ -1,21 +1,20 @@
 package edu.upc.dsa.orm.models;
 
-public class Elements {
+public class Element {              //classe per objectes de la botiga
 
     private int id;
     private String name;
     private String description;
     private int price;
 
-    public Elements() {
+    public Element() {
 
     }
-    public Elements(String name, String description, int price) {
+    public Element(String name, String description, int price) {
 
         setName(name);
         setDescription(description);
         setPrice(price);
-
 
     }
     public int getId() {

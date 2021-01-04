@@ -1,9 +1,9 @@
 package edu.upc.dsa.orm.services;
 
-import edu.upc.dsa.orm.dao.partida.PartidaDAO;
-import edu.upc.dsa.orm.dao.partida.PartidaDAOImpl;
+import edu.upc.dsa.orm.dao.game.GameDAO;
+import edu.upc.dsa.orm.dao.game.GameDAOImpl;
 
-import edu.upc.dsa.orm.models.Partidas;
+import edu.upc.dsa.orm.models.Game;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -15,28 +15,28 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.*;
 
-@Api(value = "/partidas")
-@Path("/partidas")
-public class PartidasService {
+@Api(value = "/games")
+@Path("/games")
+public class GameService {
 
-    private PartidaDAO partidaDAO;
+    private GameDAO gameDAO;
 
-    public PartidasService() {
-        this.partidaDAO = PartidaDAOImpl.getInstance();
+    public GameService() {
+        this.gameDAO = GameDAOImpl.getInstance();
     }
 
     @GET
     @ApiOperation(value = "Get all Partidas", notes = "Get all partidas from BBDD")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Partidas.class, responseContainer="List"),
+            @ApiResponse(code = 201, message = "Successful", response = Game.class, responseContainer="List"),
     })
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getPartidas() {
+    public Response getGames() {
 
-        List<Partidas> partidas = this.partidaDAO.findAll();
+        List<Game> games = this.gameDAO.findAll();
 
-        GenericEntity<List<Partidas>> entity = new GenericEntity<List<Partidas>>(partidas) {};
+        GenericEntity<List<Game>> entity = new GenericEntity<List<Game>>(games) {};
         return Response.status(201).entity(entity).build();
 
     }

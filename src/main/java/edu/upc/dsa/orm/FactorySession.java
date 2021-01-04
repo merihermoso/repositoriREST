@@ -16,9 +16,7 @@ public class FactorySession {
             return session;
 
         } catch (SQLException sqlException) {
-
             return null;
-
         }
 
     }

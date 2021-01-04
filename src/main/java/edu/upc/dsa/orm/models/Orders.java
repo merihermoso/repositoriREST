@@ -1,6 +1,6 @@
 package edu.upc.dsa.orm.models;
 
-public class Orders {
+public class Orders {           //comandes fetes a la botiga
 
     private int id;
     private String date;

@@ -24,7 +24,6 @@ public class SessionImpl implements Session {
     public void save(Object entity) {
 
         String insertQuery = QueryHelper.createQueryINSERT(entity);
-
         PreparedStatement pstm = null;
 
         try {
@@ -73,32 +72,24 @@ public class SessionImpl implements Session {
                     String field = rsmd.getColumnName(i);
                     ObjectHelper.setter(object, field, resultSet.getObject(i));
                 }
-
                 result.put((int) resultSet.getObject(1), object);
                 object = theClass.getDeclaredConstructor().newInstance();
-
             }
 
         } catch (SQLException sqlException) {
-
             sqlException.printStackTrace();
 
         } catch (NoSuchMethodException noSuchMethodException) {
-
             noSuchMethodException.printStackTrace();
 
         } catch (IllegalAccessException illegalAccessException) {
-
             illegalAccessException.printStackTrace();
 
         } catch (InstantiationException instantiationException) {
-
             instantiationException.printStackTrace();
 
         } catch (InvocationTargetException invocationTargetException) {
-
             invocationTargetException.printStackTrace();
-
         }
 
         return result;

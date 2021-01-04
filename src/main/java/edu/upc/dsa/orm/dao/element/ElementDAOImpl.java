@@ -3,7 +3,7 @@ package edu.upc.dsa.orm.dao.element;
 //import com.sun.tools.javac.jvm.Items;
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
-import edu.upc.dsa.orm.models.Elements;
+import edu.upc.dsa.orm.models.Element;
 
 import java.util.*;
 
@@ -18,15 +18,15 @@ public class ElementDAOImpl implements ElementDAO {
         return instance;
     }
 
-    public List<Elements> findAll(){
+    public List<Element> findAll(){
 
         Session session;
-        List<Elements> elementsList;
+        List<Element> elementsList;
 
-        HashMap<Integer, Elements> result;
+        HashMap<Integer, Element> result;
 
         session = FactorySession.openSession();
-        result = session.findAll(Elements.class);
+        result = session.findAll(Element.class);
 
         elementsList = new ArrayList<>(result.values());
 

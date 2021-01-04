@@ -1,38 +1,38 @@
-package edu.upc.dsa.orm.dao.partida;
+package edu.upc.dsa.orm.dao.game;
 
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
-import edu.upc.dsa.orm.models.Partidas;
+import edu.upc.dsa.orm.models.Game;
 //import jdk.incubator.jpackage.internal.Log;
 
 import java.util.*;
 
-public class PartidaDAOImpl implements PartidaDAO {
-    private static PartidaDAO instance;
+public class GameDAOImpl implements GameDAO {
+    private static GameDAO instance;
 
-    private PartidaDAOImpl() {
+    private GameDAOImpl() {
     }
 
-    public static PartidaDAO getInstance() {                    //DA ERROR
-        if (instance==null) instance = new PartidaDAOImpl();
+    public static GameDAO getInstance() {                    //DA ERROR
+        if (instance==null) instance = new GameDAOImpl();
         return instance;
     }
 
-    public List<Partidas> findAll(){
+    public List<Game> findAll(){
 
         Session session;
-        List<Partidas> partidasList;
+        List<Game> gamesList;
 
-        HashMap<Integer, Partidas> result;
+        HashMap<Integer, Game> result;
 
         session = FactorySession.openSession();
-        result = session.findAll(Partidas.class);
+        result = session.findAll(Game.class);
 
-        partidasList = new ArrayList<>(result.values());
+        gamesList = new ArrayList<>(result.values());
 
         session.close();
 
-        return partidasList;
+        return gamesList;
     }
 /*
    public int addPartida(String fechaInicio, String horaInicio, String fechaFin, String horaFin, int score) {
