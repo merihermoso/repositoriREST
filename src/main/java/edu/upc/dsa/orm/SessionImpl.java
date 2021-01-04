@@ -2,8 +2,11 @@ package edu.upc.dsa.orm;
 
 import edu.upc.dsa.orm.models.Credentials.LoginCredentials;
 import edu.upc.dsa.orm.models.Credentials.RegisterCredentials;
-import edu.upc.dsa.orm.models.Item;
+import edu.upc.dsa.orm.models.Element;
+import edu.upc.dsa.orm.models.Orders;
 import edu.upc.dsa.orm.models.User;
+import edu.upc.dsa.orm.models.shopCredentials.ElementCredentials;
+import edu.upc.dsa.orm.models.shopCredentials.OrderCredentials;
 import edu.upc.dsa.orm.util.ObjectHelper;
 import edu.upc.dsa.orm.util.QueryHelper;
 
@@ -21,9 +24,9 @@ public class SessionImpl implements Session {
         this.conn = conn;
     }
 
-    public void save(Object entity) {
+    public void save(Object entity) {                   //guardar
 
-        String insertQuery = QueryHelper.createQueryINSERT(entity);
+        String insertQuery = QueryHelper.createQueryINSERT(entity);         //INSERTA
         PreparedStatement pstm = null;
 
         try {
@@ -32,7 +35,7 @@ public class SessionImpl implements Session {
             int i = 2;
 
             for (String field: ObjectHelper.getFields(entity)) {
-                pstm.setObject(i++, ObjectHelper.getter(entity, field));
+                pstm.setObject(i++, ObjectHelper.getter(entity, field));       // guarda en el objeto de esa entidad y valor
             }
 
             pstm.executeQuery();
@@ -47,7 +50,7 @@ public class SessionImpl implements Session {
 
     }
 
-    public HashMap<Integer, Object> findAll(Class theClass) {
+    public HashMap<Integer, Object> findAll(Class theClass) {           //obtener todos (aplicable a todas las funciones)
 
         HashMap<Integer, Object> result = new HashMap<>();
 
@@ -330,8 +333,100 @@ public class SessionImpl implements Session {
             return null;
         }
     }
+    public boolean registerOrder(OrderCredentials orderCredentials) {
 
+        Orders orders = new Orders(orderCredentials.getDate(), orderCredentials.getTime(), orderCredentials.getPrice());
 
+        String insertQuery = QueryHelper.createQueryINSERT(orders);
 
+        PreparedStatement pstm;
+        System.out.println(insertQuery);
+        try {
+
+            pstm = conn.prepareStatement(insertQuery);
+
+            int i = 1;
+
+            for (String field: ObjectHelper.getFields(orders)) {
+                pstm.setObject(i, ObjectHelper.getter(orders, field));
+                i++;
+            }
+
+            pstm.executeQuery();
+
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            return false;
+        }
+
+    }
+
+   /* public boolean orderToUser(String username int orderID) {
+  //      User user = new User(getUsername());
+  //      Orders order = new Orders(getById());
+
+        String insertQuery = QueryHelper.createQueryINSERT(user);
+                    //UserOrderINSERTcompra
+        String selectQuery = QueryHelper.createQueryINSERT(user,orders);
+
+        PreparedStatement pstm;
+        ResultSet resultSet;
+
+        try {
+
+            pstm = conn.prepareStatement(selectQuery);
+            pstm.setString(1, loginCredentials.getUsername());
+            resultSet = pstm.executeQuery();
+
+            if (resultSet.next()) {
+
+                return resultSet.getString(1).equals(loginCredentials.getPassword());
+
+            } else {
+
+                return false;
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            return false;
+        }
+
+    }*/
+   public boolean registerElement(ElementCredentials elementCredentials) {
+
+       Element element = new Element(elementCredentials.getName(), elementCredentials.getDescription(), elementCredentials.getPrice());
+
+       String insertQuery = QueryHelper.createQueryINSERT(element);
+
+       PreparedStatement pstm;
+       System.out.println(insertQuery);
+       try {
+
+           pstm = conn.prepareStatement(insertQuery);
+
+           int i = 1;
+
+           for (String field: ObjectHelper.getFields(element)) {
+               pstm.setObject(i, ObjectHelper.getter(element, field));
+               i++;
+           }
+
+           pstm.executeQuery();
+
+           return true;
+
+       } catch (SQLException e) {
+           e.printStackTrace();
+
+           return false;
+       }
+
+   }
 
 }

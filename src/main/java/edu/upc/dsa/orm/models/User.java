@@ -10,11 +10,13 @@ public class User {
     private int score;
     private int level;
 
+ //   private int creditCard;
+
     public User() {
 
     }
 
-    public User(String username, String email, String password, String birthdate){
+    public User(String username, String email, String password, String birthdate){      //int creditCard
 
         this();
         setId(0);
@@ -24,6 +26,7 @@ public class User {
         setBirthdate(birthdate);
         setScore(0);
         setLevel(1);
+      //  setCreditCard(creditCard);
 
     }
 
@@ -58,7 +61,6 @@ public class User {
     public String getBirthdate() {
         return birthdate;
     }
-
     public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
     }
@@ -66,7 +68,6 @@ public class User {
     public int getScore() {
         return score;
     }
-
     public void setScore(int score) {
         this.score = score;
     }
@@ -74,8 +75,10 @@ public class User {
     public int getLevel() {
         return level;
     }
-
     public void setLevel(int level) {
         this.level = level;
     }
+/*
+    public int getCreditCard() {        return creditCard;    }
+    public void setCreditCard(int creditCard) {        this.creditCard = creditCard;    }*/
 }

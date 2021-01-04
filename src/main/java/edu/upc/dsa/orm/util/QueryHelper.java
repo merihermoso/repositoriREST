@@ -107,7 +107,6 @@ public class QueryHelper {
         sb.append(" And  Orders.id = UserOrder.id_order");
         sb.append(" And  Element.id = OrderElement.id_element");
 
-
         return sb.toString();
     }
 

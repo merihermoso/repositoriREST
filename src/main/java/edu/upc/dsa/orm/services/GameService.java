@@ -84,36 +84,14 @@ public class GameService {
 
 
 
-    @GET
+    @GET                                                                    //OBTENEMOS la Partida
     @ApiOperation(value = "get a Game", notes = "Get all data 1 game")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Game.class),
             @ApiResponse(code = 503, message = "not working well...")
 
     })
-/*
-    @Path("getGame/{gameID}")
-    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response GetGameById(@PathParam("gameID") int gameID) {
-        try{
-            Game game = this.gameDAO.getGameById(gameID);
-            return Response.status(200).entity(game).build();
-        }
-        catch (Exception e){
-
-            return Response.status(503).build();
-        }
-    }
-
-    @GET
-    @ApiOperation(value = "get a Game by the Username", notes = "Get all data 1 game")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = Game.class),
-            @ApiResponse(code = 503, message = "not working well...")
-
-    })
-*/
-    @Path("getGame/{username}")
+    @Path("getGame/{username}")                                             //Partida By Username
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response GetGameByUsername(@PathParam("username") String username) {
         try{
@@ -125,6 +103,21 @@ public class GameService {
             return Response.status(503).build();
         }
     }
+/*
+    @Path("getGame/{gameID}")                                               //servicio que obtenia la Partida a partir del ID
+    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
+    public Response GetGameById(@PathParam("gameID") int gameID) {
+        try{
+            Game game = this.gameDAO.getGameById(gameID);
+            return Response.status(200).entity(game).build();
+        }
+        catch (Exception e){
+
+            return Response.status(503).build();
+        }
+    }
+*/
+
 }
 
 

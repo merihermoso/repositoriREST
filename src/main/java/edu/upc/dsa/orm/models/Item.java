@@ -22,15 +22,6 @@ public class Item {                         //classe per objectes DINS del joc
         setDefense(defense);
         setHealing(healing);
         setDamage(damage);
-
-        /*this.name = name;
-        this.id = id;
-        this.hit = hit;
-        this.defense = defense;
-        this.healing = healing;
-        this.damage = damage;
-
-         */
     }
 
     public String getName() {        return name;    }

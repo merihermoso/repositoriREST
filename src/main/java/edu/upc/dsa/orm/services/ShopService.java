@@ -6,22 +6,18 @@ import edu.upc.dsa.orm.dao.element.ElementDAOImpl;
 import edu.upc.dsa.orm.dao.order.OrderDAO;
 import edu.upc.dsa.orm.dao.order.OrderDAOImpl;
 import edu.upc.dsa.orm.models.Element;
-import edu.upc.dsa.orm.models.Game;
 import edu.upc.dsa.orm.models.Orders;
-import edu.upc.dsa.orm.models.User;
+import edu.upc.dsa.orm.models.shopCredentials.ElementCredentials;
+import edu.upc.dsa.orm.models.shopCredentials.OrderCredentials;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.sql.SQLException;
 import java.util.List;
 
 
@@ -135,6 +131,45 @@ public class ShopService {
             return Response.status(503).build();
         }
     }*/
+    @POST
+    @ApiOperation(value = "Register a new Order", notes = "Register an order")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful! Order registered"),
+            @ApiResponse(code = 600, message = "Need to fill in username field"),
+            @ApiResponse(code = 601, message = "Need to fill in password field"),
+
+    })
+    @Path("/registerOrder")
+    public Response orderRegister(OrderCredentials orderCredentials) {
+
+        if (orderCredentials.getDate()==null) return Response.status(600).build();
+        if (orderCredentials.getTime()==null) return Response.status(601).build();
+     //   if (orderCredentials.getPrice()==null) return Response.status(602).build();
+
+        this.orderDAO.registerOrder(orderCredentials);
+        return Response.status(201).build();
+
+    }
+
+    @POST
+    @ApiOperation(value = "Register a new Element", notes = "Register an order")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful! Order registered"),
+            @ApiResponse(code = 600, message = "Need to fill in username field"),
+            @ApiResponse(code = 601, message = "Need to fill in password field"),
+
+    })
+    @Path("/registerElement")
+    public Response elementRegister(ElementCredentials elementCredentials) {
+
+        if (elementCredentials.getName()==null) return Response.status(600).build();
+        if (elementCredentials.getDescription()==null) return Response.status(601).build();
+        //   if (elementCredentials.getPrice()==null) return Response.status(602).build();
+
+        this.elementDAO.registerElement(elementCredentials);
+        return Response.status(201).build();
+
+    }
 
 
 }

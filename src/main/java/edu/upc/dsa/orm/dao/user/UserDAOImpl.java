@@ -85,9 +85,7 @@ public class UserDAOImpl implements UserDAO {
             session.close();
 
         } finally {
-
         }
-
         return result;
 
     }
@@ -98,11 +96,9 @@ public class UserDAOImpl implements UserDAO {
         boolean result = false;
 
         try {
-
             session = FactorySession.openSession();
             result = session.loginUser(loginCredentials);
             session.close();
-
         } finally {
 
         }

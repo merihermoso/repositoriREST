@@ -15,7 +15,6 @@ public class Orders {           //comandes fetes a la botiga
         setDate(date);
         setTime(time);
         setPrice(price);
-
     }
     public int getId() {
         return this.id;

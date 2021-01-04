@@ -3,6 +3,7 @@ package edu.upc.dsa.orm.dao.order;
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
 import edu.upc.dsa.orm.models.Orders;
+import edu.upc.dsa.orm.models.shopCredentials.OrderCredentials;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -69,5 +70,42 @@ public class OrderDAOImpl implements OrderDAO {
 
         return order;
     }
+    public boolean registerOrder(OrderCredentials orderCredentials) { //Afegeix el user com a obejcte
+
+        Session session;
+        boolean result = false;
+
+        try {
+
+            session = FactorySession.openSession();
+            result = session.registerOrder(orderCredentials);
+            session.close();
+
+        } finally {
+
+        }
+
+        return result;
+
+    }
+/*
+    public boolean addOrdertoUser(LoginCredentials loginCredentials) throws SQLException {
+
+        Session session;
+        boolean result = false;
+
+        try {
+
+            session = FactorySession.openSession();
+            result = session.orderToUser(loginCredentials);
+            session.close();
+
+        } finally {
+
+        }
+
+        return result;
+
+    }*/
 
 }

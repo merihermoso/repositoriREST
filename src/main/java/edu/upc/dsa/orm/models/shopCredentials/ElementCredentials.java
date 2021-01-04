@@ -1,25 +1,11 @@
-package edu.upc.dsa.orm.models;
+package edu.upc.dsa.orm.models.shopCredentials;
 
-public class Element {              //classe per objectes de la botiga
+public class ElementCredentials {
 
     private int id;
     private String name;
     private String description;
     private int price;
-
-    public Element() {
-    }
-    public Element(String name, String description, int price) {
-        setName(name);
-        setDescription(description);
-        setPrice(price);
-    }
-    public int getId() {
-        return this.id;
-    }
-    public void setId(int elementID) {
-        this.id=elementID;
-    }
 
     public String getName() {        return name;    }
     public void setName(String name) {        this.name = name;    }
@@ -29,5 +15,6 @@ public class Element {              //classe per objectes de la botiga
 
     public int getPrice() {        return price;    }
     public void setPrice(int price) {        this.price = price;    }
+
 
 }

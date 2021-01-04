@@ -6,6 +6,8 @@ import edu.upc.dsa.orm.Session;
 import edu.upc.dsa.orm.models.Element;
 import edu.upc.dsa.orm.models.Game;
 import edu.upc.dsa.orm.models.Orders;
+import edu.upc.dsa.orm.models.shopCredentials.ElementCredentials;
+import edu.upc.dsa.orm.models.shopCredentials.OrderCredentials;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -68,6 +70,25 @@ public class ElementDAOImpl implements ElementDAO {
         }
 
         return element;
+    }
+
+    public boolean registerElement(ElementCredentials elementCredentials) { //Afegeix el user com a obejcte
+
+        Session session;
+        boolean result = false;
+
+        try {
+
+            session = FactorySession.openSession();
+            result = session.registerElement(elementCredentials);
+            session.close();
+
+        } finally {
+
+        }
+
+        return result;
+
     }
 
 }
