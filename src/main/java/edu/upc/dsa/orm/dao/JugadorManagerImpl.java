@@ -1,6 +1,6 @@
 package edu.upc.dsa.orm.dao;
 
-
+/*
 import edu.upc.dsa.orm.models.Jugador;
 import edu.upc.dsa.orm.models.Weapone.Weapone;
 import org.apache.log4j.Logger;
@@ -33,7 +33,7 @@ public class JugadorManagerImpl implements JugadorManager{
 
         this.enemies.add (t);
         logger.info("new Jugador added");
-        return t;*/
+        return t;
 
         return p;
     }
@@ -53,3 +53,6 @@ public class JugadorManagerImpl implements JugadorManager{
 
     }
 }
+
+ */
+

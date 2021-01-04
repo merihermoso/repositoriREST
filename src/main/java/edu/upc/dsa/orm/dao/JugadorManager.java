@@ -1,6 +1,6 @@
 package edu.upc.dsa.orm.dao;
 
-import edu.upc.dsa.orm.models.Jugador;
+/*import edu.upc.dsa.orm.models.Jugador;
 import edu.upc.dsa.orm.models.Weapone.*;
 
 public interface JugadorManager {
@@ -15,3 +15,5 @@ public interface JugadorManager {
     //List<Item> findAll();
 
 }
+
+ */

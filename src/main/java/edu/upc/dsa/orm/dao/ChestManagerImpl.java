@@ -1,4 +1,6 @@
 package edu.upc.dsa.orm.dao;
+
+/*
 import edu.upc.dsa.orm.models.Item;
 import edu.upc.dsa.orm.models.Defense.*;
 import edu.upc.dsa.orm.models.Healing.*;
@@ -141,3 +143,5 @@ public class ChestManagerImpl implements ChestManager{
         return this.items;
     }
 }
+
+ */

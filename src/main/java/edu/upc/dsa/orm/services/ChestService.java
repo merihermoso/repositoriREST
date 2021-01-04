@@ -1,6 +1,6 @@
 package edu.upc.dsa.orm.services;
 
-
+/*
 import edu.upc.dsa.orm.dao.ChestManager;
 import edu.upc.dsa.orm.dao.ChestManagerImpl;
 
@@ -41,5 +41,8 @@ public class ChestService {
         GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(items) {};
         return Response.status(201).entity(entity).build();
 
-    }*/
+    }
 }
+
+
+ */

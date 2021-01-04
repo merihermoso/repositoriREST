@@ -1,7 +1,7 @@
 package edu.upc.dsa.orm.dao;
 
 
-import edu.upc.dsa.orm.models.Item;
+/*import edu.upc.dsa.orm.models.Item;
 import edu.upc.dsa.orm.models.Defense.*;
 import edu.upc.dsa.orm.models.Healing.*;
 import edu.upc.dsa.orm.models.Weapone.*;
@@ -230,5 +230,8 @@ public class InventoryManagerImpl implements InventoryManager {
         }
         else this.items.remove(t);
         logger.info(t + "Item deleted");
-    }*/
+    }
 }
+
+ */
+

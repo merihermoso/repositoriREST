@@ -1,8 +1,8 @@
 package edu.upc.dsa.orm;
 
-import edu.upc.dsa.*;
 import edu.upc.dsa.orm.models.Credentials.LoginCredentials;
 import edu.upc.dsa.orm.models.Credentials.RegisterCredentials;
+import edu.upc.dsa.orm.models.Item;
 import edu.upc.dsa.orm.models.User;
 import edu.upc.dsa.orm.util.ObjectHelper;
 import edu.upc.dsa.orm.util.QueryHelper;
@@ -11,10 +11,9 @@ import edu.upc.dsa.orm.util.QueryHelper;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
 import java.util.HashMap;
-import java.util.List;
 
 
-public class SessionImpl implements edu.upc.dsa.orm.Session {
+public class SessionImpl implements Session {
 
     private final Connection conn;
 
@@ -59,7 +58,7 @@ public class SessionImpl implements edu.upc.dsa.orm.Session {
         ResultSet resultSet;
         Object object;
         int id;
-
+        System.out.println(selectQuery);
         try {
 
             object = theClass.getDeclaredConstructor().newInstance();
@@ -113,7 +112,7 @@ public class SessionImpl implements edu.upc.dsa.orm.Session {
         String insertQuery = QueryHelper.createQueryINSERT(user);
 
         PreparedStatement pstm;
-
+        System.out.println(insertQuery);
         try {
 
             pstm = conn.prepareStatement(insertQuery);
@@ -191,4 +190,30 @@ public class SessionImpl implements edu.upc.dsa.orm.Session {
 
     }
 
+    @Override
+        public void AddItem(Item item) {
+
+        String insertQuery = QueryHelper.createQueryINSERT(item);
+
+        PreparedStatement pstm;
+        System.out.println(insertQuery);
+        try {
+
+            pstm = conn.prepareStatement(insertQuery);
+
+            int i = 1;
+
+            for (String field: ObjectHelper.getFields(item)) {
+                pstm.setObject(i, ObjectHelper.getter(item, field));
+                i++;
+            }
+
+            pstm.executeQuery();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+    }
 }

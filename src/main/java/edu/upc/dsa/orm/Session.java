@@ -2,9 +2,9 @@ package edu.upc.dsa.orm;
 
 import edu.upc.dsa.orm.models.Credentials.LoginCredentials;
 import edu.upc.dsa.orm.models.Credentials.RegisterCredentials;
+import edu.upc.dsa.orm.models.Item;
 
 import java.util.HashMap;
-import java.util.List;
 
 public interface Session<E> {
 
@@ -16,5 +16,7 @@ public interface Session<E> {
     boolean registerUser(RegisterCredentials registerCredentials);
     boolean loginUser(LoginCredentials loginCredentials);
     boolean userExists(String username);
+
+    void AddItem(Item item);
 
 }

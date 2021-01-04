@@ -1,6 +1,6 @@
 package edu.upc.dsa.orm.dao;
 
-import edu.upc.dsa.orm.models.Defense.Defense;
+/*import edu.upc.dsa.orm.models.Defense.Defense;
 import edu.upc.dsa.orm.models.Healing.Healing;
 import edu.upc.dsa.orm.models.Item;
 import edu.upc.dsa.orm.models.Weapone.Weapone;
@@ -31,4 +31,8 @@ public interface ChestManager {
     Item getItem(String id);
     void deleteItem(String id);
     List<Item> findAll(); //Recuperar todos los objetos Item
+
+
 }
+
+ */
