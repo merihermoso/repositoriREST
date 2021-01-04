@@ -1,5 +1,6 @@
 package edu.upc.dsa.orm.dao.user;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,5 +24,7 @@ public interface UserDAO {
     int getEmail_min_length();
     int getEmail_max_length();
     int getMin_age();
+
+    public User getUserFromId( int userID) throws SQLException;
 
 }

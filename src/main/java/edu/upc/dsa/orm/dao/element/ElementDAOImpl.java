@@ -4,7 +4,9 @@ package edu.upc.dsa.orm.dao.element;
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
 import edu.upc.dsa.orm.models.Element;
+import edu.upc.dsa.orm.models.Orders;
 
+import java.sql.SQLException;
 import java.util.*;
 
 public class ElementDAOImpl implements ElementDAO {
@@ -34,6 +36,21 @@ public class ElementDAOImpl implements ElementDAO {
 
         return elementsList;
     }
+    public Element getElementFromId(int elementID) throws SQLException {
+        Session session = null;
+        Element element = new Element();
+        try {
+            session = FactorySession.openSession();
+            element = (Element) session.getFromId(element, elementID);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            session.close();
+        }
 
+        return element;
+    }
 
 }

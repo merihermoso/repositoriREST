@@ -4,6 +4,7 @@ import edu.upc.dsa.orm.models.Credentials.LoginCredentials;
 import edu.upc.dsa.orm.models.Credentials.RegisterCredentials;
 import edu.upc.dsa.orm.models.Item;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 
 public interface Session<E> {
@@ -17,6 +18,6 @@ public interface Session<E> {
     boolean loginUser(LoginCredentials loginCredentials);
     boolean userExists(String username);
 
-    void AddItem(Item item);
+    public Object getFromId(Object theClass, int id) throws SQLException;
 
 }

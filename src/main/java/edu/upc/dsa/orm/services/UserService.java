@@ -40,7 +40,7 @@ public class UserService {
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = User.class, responseContainer="List"),
     })
-    @Path("/")
+    @Path("AllUsers/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUsers() {
 
@@ -121,4 +121,25 @@ public class UserService {
         return Response.status(201).build();
     }
 
+
+    @GET
+    @ApiOperation(value = "get a User", notes = "Get all data 1 user")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = User.class),
+            @ApiResponse(code = 503, message = "not working well...")
+
+    })
+
+    @Path("/{userID}")
+    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
+    public Response GetUserFromId(@PathParam("userID") int userID) {
+        try{
+            User user = this.userDAO.getUserFromId(userID);
+            return Response.status(200).entity(user).build();
+        }
+        catch (Exception e){
+
+            return Response.status(503).build();
+        }
+    }
 }

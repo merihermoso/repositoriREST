@@ -5,6 +5,7 @@ import edu.upc.dsa.orm.models.Credentials.LoginCredentials;
 import edu.upc.dsa.orm.models.Credentials.RegisterCredentials;
 import edu.upc.dsa.orm.models.User;
 
+import java.sql.SQLException;
 import java.util.*;
 
 public class UserDAOImpl implements UserDAO {
@@ -135,5 +136,22 @@ public class UserDAOImpl implements UserDAO {
 
     public int getMin_age() {
         return min_age;
+    }
+
+    public User getUserFromId( int userID) throws SQLException {
+        Session session = null;
+        User user = new User();
+        try {
+            session = FactorySession.openSession();
+            user = (User) session.getFromId(user, userID);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            session.close();
+        }
+
+        return user;
     }
 }

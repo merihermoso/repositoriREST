@@ -158,7 +158,7 @@ public class SessionImpl implements Session {
 
     }
 
-    public boolean userExists(String username) {
+    public boolean userExists(String username) {            //busca per username i retorna true si existeix
 
         String selectQuery = QueryHelper.createQueryUserSELECTbyUsername(username);
 
@@ -181,30 +181,23 @@ public class SessionImpl implements Session {
 
     }
 
-    @Override
-        public void AddItem(Item item) {
-
-        String insertQuery = QueryHelper.createQueryINSERT(item);
-
-        PreparedStatement pstm;
-        System.out.println(insertQuery);
+    public Object getFromId(Object theObject, int id) throws SQLException {
+        String selectQuery = QueryHelper.createQuerySELECT(theObject);
+        PreparedStatement pstm = null;
         try {
-
-            pstm = conn.prepareStatement(insertQuery);
-
-            int i = 1;
-
-            for (String field: ObjectHelper.getFields(item)) {
-                pstm.setObject(i, ObjectHelper.getter(item, field));
-                i++;
-            }
-
+            pstm = conn.prepareStatement(selectQuery);
+            pstm.setObject(1, id);
             pstm.executeQuery();
+            ResultSet rs = pstm.getResultSet();
+            if (rs.next()){
+                for (int i=1;i<=rs.getMetaData().getColumnCount();i++)
+                    ObjectHelper.setter(theObject,rs.getMetaData().getColumnName(i),rs.getObject(i));
+            }
+            return theObject;
 
-
-        } catch (SQLException e) {
+        }  catch (Exception e) {
             e.printStackTrace();
-
+            return null;
         }
     }
 }

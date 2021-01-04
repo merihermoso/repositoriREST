@@ -3,6 +3,7 @@ package edu.upc.dsa.orm.services;
 import edu.upc.dsa.orm.dao.game.GameDAO;
 import edu.upc.dsa.orm.dao.game.GameDAOImpl;
 
+import edu.upc.dsa.orm.models.Element;
 import edu.upc.dsa.orm.models.Game;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,7 +31,7 @@ public class GameService {
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Game.class, responseContainer="List"),
     })
-    @Path("/")
+    @Path("AllGames/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getGames() {
 
@@ -41,81 +42,26 @@ public class GameService {
 
     }
 
-/*
-
-    @DELETE
-    @ApiOperation(value = "Delete a Partida", notes = "Delete a partida")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Partida found and deleted"),
-            @ApiResponse(code = 404, message = "Partida not found")
-    })
-    @Path("/{id}")
-    public Response deletePartida(@PathParam("id") int partidaID) {
-        Partida p = this.pm.getPartida(partidaID);
-        if (p == null) return Response.status(404).build();
-        else this.pm.deletePartida(partidaID);
-        return Response.status(201).build();
-    }
-                                                                       DONA ERROR AL FER UPDATE DE TOT L'OBJECTE PARTIDA
-    @PUT
-    @ApiOperation(value = "Update Partida", notes = "Update a partida")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "User found"),
-            @ApiResponse(code = 404, message = "User not found")
-    })
-    @Path("/")
-    public Response updatePartida(Partida partida) {
-
-        Partida p = this.pm.updatePartida(partida);
-
-        if (p == null) return Response.status(404).build();
-
-        return Response.status(201).build();
-    }
-    @POST
-    @ApiOperation(value = "Register a new Partida", notes = "Register a Partida")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful! Partida registered"),
-            @ApiResponse(code = 600, message = "Need to fill in score field"),
-          //  @ApiResponse(code = 601, message = "Need to fill in password field"),
-            @ApiResponse(code = 250, message = "User already exists")
-
-    })
-
-    @Path("/register/{id_partida}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response newUser(@PathParam("id_partida") int partidaID) {
-
-       // if (partidaID==null) return Response.status(600).build();      //crec que l'error seria 204 "NO CONTENT"
-
-       // if (this.pm.partidaExists(id_partida)) return Response.status(250).build();
-
-       // Partida pa = this.pm.addPartida(partidaID);       //LA FUNCIÓ NECESITA TOTS ELS PARÀMETRES PER CREAR PARTIDA
-        return Response.status(201).build();
-    }
-
     @GET
-    @ApiOperation(value = "A user tries to login", notes = "Login")
+    @ApiOperation(value = "get a Game", notes = "Get all data 1 game")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Login Successful!"),
-            @ApiResponse(code = 601, message = "Need to fill in username field"),
-            @ApiResponse(code = 602, message = "Need to fill in password field"),
-            @ApiResponse(code = 603, message = "Incorrect password"),
-            @ApiResponse(code = 250, message = "User not exists")
+            @ApiResponse(code = 200, message = "OK", response = Game.class),
+            @ApiResponse(code = 503, message = "not working well...")
 
     })
-    @Path("/login/{username}/{password}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response partidaLogin(@PathParam("username") String username, @PathParam("password") String password) {
 
-        if (username==null) return Response.status(601).build();
-        if (password==null) return Response.status(602).build();
-     //   if (!this.pm.partidaExists(username)) return Response.status(250).build();        //LA FUNCIÓ NO ESTÀ IMPLEMENTADA
-       // if (!this.pm.checkPassword(username, password)) return Response.status(603).build();
+    @Path("getGame/{gameID}")
+    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
+    public Response GetGameFromId(@PathParam("gameID") int gameID) {
+        try{
+            Game game = this.gameDAO.getGameFromId(gameID);
+            return Response.status(200).entity(game).build();
+        }
+        catch (Exception e){
 
-        return Response.status(201).build();
+            return Response.status(503).build();
+        }
     }
-*/
 }
 
 

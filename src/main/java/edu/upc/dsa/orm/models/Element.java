@@ -20,8 +20,8 @@ public class Element {              //classe per objectes de la botiga
     public int getId() {
         return this.id;
     }
-    public void setId(int partidaID) {
-        this.id=partidaID;
+    public void setId(int elementID) {
+        this.id=elementID;
     }
 
     public String getName() {        return name;    }

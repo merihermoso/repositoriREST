@@ -5,7 +5,9 @@ package edu.upc.dsa.orm.dao.item;
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
 import edu.upc.dsa.orm.models.Item;
+import edu.upc.dsa.orm.models.Orders;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,6 +38,23 @@ public class ItemDAOImpl implements ItemDAO {
         session.close();
 
         return itemsList;
+    }
+
+    public Item getItemFromId(int itemID) throws SQLException {
+        Session session = null;
+        Item item = new Item();
+        try {
+            session = FactorySession.openSession();
+            item = (Item) session.getFromId(item, itemID);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            session.close();
+        }
+
+        return item;
     }
 
 
