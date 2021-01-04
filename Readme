@@ -1,10 +1,12 @@
-La bbdd ya conecta!!
-Ejecutar DBJDBC. Dentro hay diferentes funciones con consultas a Partidas y Users.
+Consultas hechas para obtener cualquier Element,Order,Game,User a partir del Username
+Consulta para obtener el top Usuarios,Partidas pero aún no lo ordena por scor (aunque ponga el ORDER BY score)
 
-En la máquina ya hay las tablas Partidas, Users, Orders, Products y sus respectivas tablas de relación. 
+Nueva tabla de relación GameItem
 
-Hay que actualizar el proyecto (parteREST) que hay en la máquina, y adaptar la parte de DBUtils poniendo la ip de la máquina.
+FALTA:
+-> PASAR POR PARAMETRO CON CREDENTIALS (no con Path)
+-> AddObject ...
+-> Update object (generalizado, para poder poner el objecto, atributo y nuevo valor) y que sirva para todas
+-> Delete ...
 
-La parte que antes había de servicios, hay que adaptarla a las funciones de la bbdd, para poder provar desde Swagger
-
-NO FUNCIONA EL LOGIN DESDE WEB
+-> Añadir INSERT TO tabla relación (para poder asignar elements a orders, o games a users...)
