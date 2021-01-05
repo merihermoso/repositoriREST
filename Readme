@@ -2,20 +2,27 @@ Consultas hechas para obtener cualquier Element,Order,Game,User a partir del Use
 Consultas hechas para CREAR cualquier Element,Order,User  (falta para partida)
 Consulta para obtener el top Usuarios,Partidas pero aún no lo ordena por scor (aunque ponga el ORDER BY score)
 
-Nueva tabla de relación GameItem (Para los items que hay en el momento en la partida?)
+Nueva tabla de relación GameItem (Para los items que hay en el momento en la partida?)[ponemos un campo de activvo/inactivo??)
 
 FALTA:
--> PASAR POR PARAMETRO CON CREDENTIALS (no con Path)
+-> PASAR POR PARAMETRO CON CREDENTIALS (no con Path)        (ya está aplicado en la función Register para cada Objeto)
+
+-> Hacer que se ponga directamente la hora y fecha cuando se crea(compra) una Order
+      -> Aplicar también a partida
+      
+-> Listar que funciones necesitan pasar por credentials y aplicar.
+
+
+CONSULTAS QUE FALTAN
+-> Posición Usuario en el ranking
+-> Posición Partida en el ranking
+
+-> falta arreglar el ORDER BY de los top (rankings)
+
 -> AddObject(ja està feta la funció fer CREAR)(falta la part de crear la relació!!)
 -> Añadir INSERT TO tabla relación (para poder asignar elements a orders, o games a users...)
 
 -> Update object (generalizado, para poder poner el objecto, atributo y nuevo valor) y que sirva para todas
 -> Delete ...
-
--> falta arreglar el ORDER BY de los top (rankings)
--> Hacer que se ponga directamente la hora y fecha cuando se crea(compra) una Order
-      -> Aplicar también a partida
-      
--> Listar que funciones necesitan pasar por credentials y aplicar.
 
 
