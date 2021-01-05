@@ -4,10 +4,7 @@ package edu.upc.dsa.orm.dao.element;
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
 import edu.upc.dsa.orm.models.Element;
-import edu.upc.dsa.orm.models.Game;
-import edu.upc.dsa.orm.models.Orders;
 import edu.upc.dsa.orm.models.shopCredentials.ElementCredentials;
-import edu.upc.dsa.orm.models.shopCredentials.OrderCredentials;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -55,6 +52,23 @@ public class ElementDAOImpl implements ElementDAO {
 
         return element;
     }
+    public Element getElementByName(String name) throws SQLException {
+        Session session = null;
+        Element element = new Element();
+        try {
+            session = FactorySession.openSession();
+            element = (Element) session.getByName(element, name);          //com poso la relació game User?¿
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            session.close();
+        }
+
+        return element;
+    }
+
     public Element getElementByUsername(String username) throws SQLException {
         Session session = null;
         Element element = new Element();

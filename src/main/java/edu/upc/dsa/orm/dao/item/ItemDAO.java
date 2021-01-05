@@ -1,5 +1,6 @@
 package edu.upc.dsa.orm.dao.item;
 
+import edu.upc.dsa.orm.models.Element;
 import edu.upc.dsa.orm.models.GameCredentials.ItemCredentials;
 import edu.upc.dsa.orm.models.Item;
 import edu.upc.dsa.orm.models.User;
@@ -11,6 +12,7 @@ import java.util.List;
 public interface ItemDAO {
 
     public Item getItemById(int itemID) throws SQLException;
+    public Item getItemByName(String name) throws SQLException;
 
     public List<Item> findAll();
 

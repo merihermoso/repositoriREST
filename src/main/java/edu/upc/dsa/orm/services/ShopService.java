@@ -39,41 +39,35 @@ public class ShopService {
     @ApiOperation(value = "Get all Orders", notes = "Get all orders from BBDD")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Orders.class, responseContainer="List"),
+            @ApiResponse(code = 503, message = "not working well...")
     })
-    @Path("AllOrders/")
+    @Path("/Orders/findAll")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getOrders() {
-
+        try{
         List<Orders> orders = this.orderDAO.findAll();
 
         GenericEntity<List<Orders>> entity = new GenericEntity<List<Orders>>(orders) {};
         return Response.status(201).entity(entity).build();
-
-    }
-    @GET
-    @ApiOperation(value = "get an Order", notes = "Get all data 1 user")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = Element.class),
-            @ApiResponse(code = 503, message = "not working well...")
-
-    })
-/*
-    @Path("/getOrder/{orderID}")
-    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response GetOrderFromId(@PathParam("orderID") int orderID) {
-        try{
-            Orders order = this.orderDAO.getOrderById(orderID);
-            return Response.status(200).entity(order).build();
         }
         catch (Exception e){
 
             return Response.status(503).build();
         }
-    }*/
-    @Path("getOrder/{username}")
+    }
+    @GET
+    @ApiOperation(value = "get an Order by Username", notes = "Get all data 1 user")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Element.class),
+            @ApiResponse(code = 503, message = "not working well..."),
+            @ApiResponse(code = 600, message = "Need to fill in username field.")
+
+    })
+    @Path("/Order/getByUSERNAME/{username}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response GetOrderByUsername(@PathParam("username") String username) {
         try{
+            if (username==null) return Response.status(600).build();
             Orders order = this.orderDAO.getOrderByUsername(username);
             return Response.status(200).entity(order).build();
         }
@@ -82,34 +76,64 @@ public class ShopService {
             return Response.status(503).build();
         }
     }
-    ////// Part ELEMENTS shop
-    @GET
-    @ApiOperation(value = "Get all Elements", notes = "Get all Elements from BBDD")
+
+    @GET                                                                //Servicio para obtener un Pedido a partir del ID
+    @ApiOperation(value = "get an Order from its ID", notes = "Get all data 1 user")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Element.class),
+            @ApiResponse(code = 503, message = "not working well..."),
+            @ApiResponse(code = 600, message = "Need to fill in orderID field.")
+
+    })
+    @Path("/Order/getByID/{orderID}")
+    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
+    public Response GetOrderFromId(@PathParam("orderID") int orderID) {
+        try{
+            if (orderID==0) return Response.status(600).build();
+            Orders order = this.orderDAO.getOrderById(orderID);
+            return Response.status(200).entity(order).build();
+        }
+        catch (Exception e){
+            return Response.status(503).build();
+        }
+    }
+
+                                                                                    ////// ELEMENTS SHOP    ////////////
+
+    @GET                                                                            //Servicio para obtener todos los elementos
+    @ApiOperation(value = "Get all Elements from BBDD", notes = "Get all Elements from BBDD")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Element.class, responseContainer="List"),
+            @ApiResponse(code = 503, message = "not working well..."),
     })
-    @Path("AllElements/")
+    @Path("/Element/findAll")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getElements(){
-
+        try{
         List<Element> elements = this.elementDAO.findAll();
 
         GenericEntity<List<Element>> entity = new GenericEntity<List<Element>>(elements) {};
         return Response.status(201).entity(entity).build();
+        }
+        catch (Exception e){
 
+            return Response.status(503).build();
+        }
     }
 
-    @GET
-    @ApiOperation(value = "get an Element", notes = "Get all data 1 element")
+    @GET                                                                            //Servicio para obtener el elemento de un Usuario (USERNAME)
+    @ApiOperation(value = "get an Element by Username", notes = "Get all data 1 element")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Element.class),
-            @ApiResponse(code = 503, message = "not working well...")
+            @ApiResponse(code = 503, message = "not working well..."),
+            @ApiResponse(code = 600, message = "Need to fill in username field.")
 
     })
-    @Path("getElement/{username}")
+    @Path("/Element/getByUSERNAME/{username}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response GetElementFromUsername(@PathParam("username") String username) {
         try{
+            if (username==null) return Response.status(600).build();
             Element element = this.elementDAO.getElementByUsername(username);
             return Response.status(200).entity(element).build();
         }
@@ -118,11 +142,19 @@ public class ShopService {
             return Response.status(503).build();
         }
     }
-    /*
-    @Path("getElement/{elementID}")
+    @GET                                                                            //Servicio para obtener un elemento a partir de su ID
+    @ApiOperation(value = "get an Element by its ID", notes = "Get all data 1 element")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Element.class),
+            @ApiResponse(code = 503, message = "not working well..."),
+            @ApiResponse(code = 600, message = "Need to fill in elementID field.")
+
+    })
+    @Path("/Element/getByID/{elementID}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response GetElementFromId(@PathParam("elementID") int elementID) {
+    public Response GetElementById(@PathParam("elementID") int elementID) {
         try{
+            if (elementID==0) return Response.status(600).build();
             Element element = this.elementDAO.getElementById(elementID);
             return Response.status(200).entity(element).build();
         }
@@ -130,41 +162,64 @@ public class ShopService {
 
             return Response.status(503).build();
         }
-    }*/
-    @POST
+    }
+    @GET                                                                            //Servicio para obtener un elemento a partir de su nombre
+    @ApiOperation(value = "get an Element by its name", notes = "Get all data 1 user")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Element.class),
+            @ApiResponse(code = 503, message = "not working well..."),
+            @ApiResponse(code = 600, message = "Need to fill in name field.")
+
+    })
+    @Path("/Element/getByNAME/{name}")
+    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
+    public Response GetElementByName(@PathParam("name") String name) {
+        try{
+            if (name==null) return Response.status(600).build();
+            Element element = this.elementDAO.getElementByName(name);
+            return Response.status(200).entity(element).build();
+        }
+        catch (Exception e){
+
+            return Response.status(503).build();
+        }
+    }
+    @POST                                                                   //Servicio para registrar nuevo Pedido
     @ApiOperation(value = "Register a new Order", notes = "Register an order")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful! Order registered"),
-            @ApiResponse(code = 600, message = "Need to fill in username field"),
-            @ApiResponse(code = 601, message = "Need to fill in password field"),
+            @ApiResponse(code = 600, message = "Need to fill in date field"),
+            @ApiResponse(code = 601, message = "Need to fill in time field"),
+            @ApiResponse(code = 602, message = "Need to fill in price field"),
 
     })
-    @Path("/registerOrder")
+    @Path("/Order/register")
     public Response orderRegister(OrderCredentials orderCredentials) {
 
         if (orderCredentials.getDate()==null) return Response.status(600).build();
         if (orderCredentials.getTime()==null) return Response.status(601).build();
-     //   if (orderCredentials.getPrice()==null) return Response.status(602).build();
+        if (orderCredentials.getPrice()==0) return Response.status(602).build();
 
         this.orderDAO.registerOrder(orderCredentials);
         return Response.status(201).build();
 
     }
 
-    @POST
+    @POST                                                                   // Servicio para registrar nuevo elemento en la tienda
     @ApiOperation(value = "Register a new Element", notes = "Register an order")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful! Order registered"),
-            @ApiResponse(code = 600, message = "Need to fill in username field"),
-            @ApiResponse(code = 601, message = "Need to fill in password field"),
+            @ApiResponse(code = 201, message = "Successful! Element registered"),
+            @ApiResponse(code = 600, message = "Need to fill in name field"),
+            @ApiResponse(code = 601, message = "Need to fill in description field"),
+            @ApiResponse(code = 602, message = "Need to fill in price field"),
 
     })
-    @Path("/registerElement")
+    @Path("/Element/register")
     public Response elementRegister(ElementCredentials elementCredentials) {
 
         if (elementCredentials.getName()==null) return Response.status(600).build();
         if (elementCredentials.getDescription()==null) return Response.status(601).build();
-        //   if (elementCredentials.getPrice()==null) return Response.status(602).build();
+           if (elementCredentials.getPrice()==0) return Response.status(602).build();
 
         this.elementDAO.registerElement(elementCredentials);
         return Response.status(201).build();

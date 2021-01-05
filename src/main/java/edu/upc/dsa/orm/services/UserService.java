@@ -132,7 +132,7 @@ public class UserService {
 
     })
 
-    @Path("/{username}")
+    @Path("/GetUserByUSERNAME/{username}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response GetUserByUsername(@PathParam("username") String username) {
         try{
@@ -144,7 +144,25 @@ public class UserService {
             return Response.status(503).build();
         }
     }
+    @GET
+    @ApiOperation(value = "get a User", notes = "Get all data 1 user")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = User.class),
+            @ApiResponse(code = 503, message = "not working well...")
 
+    })
+    @Path("/GetUserByID/{userID}")
+    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
+    public Response GetUserByID(@PathParam("userID") int id) {
+        try{
+            User user = this.userDAO.getUserById(id);
+            return Response.status(200).entity(user).build();
+        }
+        catch (Exception e){
+
+            return Response.status(503).build();
+        }
+    }
 
 /*
     @Path("/delete/{username}")                                        //servicio para encontrar usuario a partir del username

@@ -4,6 +4,7 @@ package edu.upc.dsa.orm.dao.item;
 
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
+import edu.upc.dsa.orm.models.Element;
 import edu.upc.dsa.orm.models.GameCredentials.GameCredentials;
 import edu.upc.dsa.orm.models.GameCredentials.ItemCredentials;
 import edu.upc.dsa.orm.models.Item;
@@ -48,6 +49,22 @@ public class ItemDAOImpl implements ItemDAO {
         try {
             session = FactorySession.openSession();
             item = (Item) session.getById(item, itemID);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            session.close();
+        }
+
+        return item;
+    }
+    public Item getItemByName(String name) throws SQLException {
+        Session session = null;
+        Item item = new Item();
+        try {
+            session = FactorySession.openSession();
+            item = (Item) session.getByName(item, name);          //com poso la relació game User?¿
         }
         catch (Exception e) {
             e.printStackTrace();

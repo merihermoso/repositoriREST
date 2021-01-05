@@ -36,14 +36,14 @@ public interface Session<E> {
    // boolean createGAME(createGameCredentials gameCredentials) throws SQLException;        //seria un insert partida...
 
     public Object getById(Object theClass, int id) throws SQLException;
-
+    public Object getByName(Object theClass, String username) throws SQLException;
 
     public Object getUserByUsername(Object theClass, String username) throws SQLException;
     public Object getGameByUsername(Object theClass, String username) throws SQLException;      //es podria optimitzar i aplicar a qualsevol clase (no nomes game)
     public Object getOrderByUsername(Object theClass, String username) throws SQLException;
     public Object getElementByUsername(Object theClass, String username) throws SQLException;   //relaciona 3 taules User,Order,Element
 
-    public Object getEnemyByName(Object theClass, String username) throws SQLException;
+
 
 
 

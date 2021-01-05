@@ -42,11 +42,11 @@ public class GameService {
     }
 
     @GET                                                                    //Servicio para obtener todas las partidas
-    @ApiOperation(value = "Get all Partidas", notes = "Get all partidas from BBDD")
+    @ApiOperation(value = "Get all Games from BBDD", notes = "Get all partidas from BBDD")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Game.class, responseContainer = "List"),
     })
-    @Path("AllGames/")
+    @Path("/Games/findAll")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getGames() {
 
@@ -64,7 +64,7 @@ public class GameService {
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Game.class, responseContainer = "List"),
     })
-    @Path("topGames/")
+    @Path("/Games/top")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTopGames() throws SQLException {
 
@@ -81,7 +81,7 @@ public class GameService {
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = User.class, responseContainer = "List"),
     })
-    @Path("topUsers/")
+    @Path("/Users/top")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTopUsers() throws SQLException {
 
@@ -95,13 +95,13 @@ public class GameService {
 
 
     @GET                                                                    //Servicio para obtener la Partida a partir del Username (User)
-    @ApiOperation(value = "get a Game", notes = "Get all data 1 game")
+    @ApiOperation(value = "get a Game by Username", notes = "Get all data 1 game")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Game.class),
             @ApiResponse(code = 503, message = "not working well...")
 
     })
-    @Path("getGame/{username}")                                             //Partida By Username
+    @Path("/Game/getByUSERNAME/{username}")                                             //Partida By Username
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response GetGameByUsername(@PathParam("username") String username) {
         try {
@@ -113,8 +113,14 @@ public class GameService {
         }
     }
 
-    /*
-        @Path("getGame/{gameID}")                                               //servicio que obtenia la Partida a partir del ID
+    @GET                                                                    //Servicio para obtener la Partida a partir del Username (User)
+    @ApiOperation(value = "get a Game by its ID", notes = "Get all data 1 game")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Game.class),
+            @ApiResponse(code = 503, message = "not working well...")
+
+    })
+        @Path("/Game/getByID/{gameID}")                                               //servicio que obtenia la Partida a partir del ID
         @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
         public Response GetGameById(@PathParam("gameID") int gameID) {
             try{
@@ -126,7 +132,7 @@ public class GameService {
                 return Response.status(503).build();
             }
         }
-    */
+
 
                                                                                     // Servicio para registrar una nueva partida
     @POST
@@ -134,9 +140,8 @@ public class GameService {
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful! Game registered"),
 
-
     })
-    @Path("/registerGame")
+    @Path("/Game/register")
     public Response gameRegister(GameCredentials gameCredentials) throws SQLException {
 
         //   if (orderCredentials.getPrice()==null) return Response.status(602).build();
@@ -145,16 +150,15 @@ public class GameService {
         return Response.status(201).build();
 
     }
-
                                                                                                         ////// ITEMS SERVICE /////
 
                                                                             //Servicio para obtener todos los items
     @GET
-    @ApiOperation(value = "Get all items", notes = "Get all items from BBDD")
+    @ApiOperation(value = "Get all items from BBDD", notes = "Get all items from BBDD")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Item.class, responseContainer = "List"),
     })
-    @Path("AllItems/")
+    @Path("/Items/findAll")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getItems() {
 
@@ -167,14 +171,14 @@ public class GameService {
     }
 
     @GET                                                                         //Servicio para obtener un Item a partir del ID
-    @ApiOperation(value = "get an Item", notes = "Get all data 1 item")
+    @ApiOperation(value = "get an Item by its ID", notes = "Get all data 1 item")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Item.class),
             @ApiResponse(code = 503, message = "not working well...")
 
     })
 
-    @Path("/GetItem/{itemID}")
+    @Path("/Item/GetByID/{itemID}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response GetItemById(@PathParam("itemID") int itemID) {
         try {
@@ -185,13 +189,32 @@ public class GameService {
             return Response.status(503).build();
         }
     }
+    @GET
+    @ApiOperation(value = "get an Item by its name", notes = "Get all data one ITEM")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Item.class),
+            @ApiResponse(code = 503, message = "not working well...")
+
+    })
+    @Path("/Item/getByNAME/{name}")
+    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
+    public Response GetItemByName(@PathParam("name") String name) {
+        try{
+            Item item = this.itemDAO.getItemByName(name);
+            return Response.status(200).entity(item).build();
+        }
+        catch (Exception e){
+
+            return Response.status(503).build();
+        }
+    }
                                                                                 //Servicio para registrar un nuevo Item
     @POST
     @ApiOperation(value = "Register a new Item", notes = "Register a new item")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful! Game registered"),
     })
-    @Path("/registerItem")
+    @Path("/Item/register")
     public Response itemRegister(ItemCredentials itemCredentials) throws SQLException {
         this.itemDAO.registerItem(itemCredentials);
         return Response.status(201).build();
@@ -200,11 +223,11 @@ public class GameService {
     ///////////////////////////////////////////////////////////////////////         ENEMY           ////////////////////////
 
     @GET                                                                    //OBTENEMOS TODAS LAS PARTIDAS
-    @ApiOperation(value = "Get all Enemy", notes = "Get all enemies from BBDD")
+    @ApiOperation(value = "Get all Enemy from BBDD", notes = "Get all enemies from BBDD")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Enemy.class, responseContainer = "List"),
     })
-    @Path("AllEnemies/")
+    @Path("Enemy/findAll")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEnemies() {
 
@@ -217,14 +240,14 @@ public class GameService {
     }
 
     @GET
-    @ApiOperation(value = "get an Enemy", notes = "Get all data 1 item")
+    @ApiOperation(value = "get an Enemy by its NAME", notes = "Get all data 1 item")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Enemy.class),
             @ApiResponse(code = 503, message = "not working well...")
 
     })
 
-    @Path("/GetEnemy/{name}")
+    @Path("/Enemy/GetByNAME/{name}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response GetEnemyByName(@PathParam("name") String name) {
         try {
@@ -242,7 +265,7 @@ public class GameService {
             @ApiResponse(code = 201, message = "Successful! Game registered"),
 
     })
-    @Path("/registerEnemy")
+    @Path("/Enemy/register")
     public Response enemyRegister(EnemyCredentials enemyCredentials) throws SQLException {
 
         this.enemyDAO.registerEnemy(enemyCredentials);

@@ -59,10 +59,9 @@ public class EnemyDAOImpl implements EnemyDAO {
     public Enemy getEnemyByName(String name) throws SQLException {
         Session session = null;
         Enemy enemy = new Enemy();
-      // User user = new User();
         try {
             session = FactorySession.openSession();
-            enemy = (Enemy) session.getEnemyByName(enemy, name);          //com poso la relació game User?¿
+            enemy = (Enemy) session.getByName(enemy, name);          //com poso la relació game User?¿
         }
         catch (Exception e) {
             e.printStackTrace();

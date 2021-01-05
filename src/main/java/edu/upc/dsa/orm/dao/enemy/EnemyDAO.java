@@ -20,4 +20,6 @@ public interface EnemyDAO {
 
 
        boolean  registerEnemy(EnemyCredentials enemyCredentials) throws SQLException;
+
+
 }

@@ -236,7 +236,7 @@ public class SessionImpl implements Session {
     }
 
     public Object getById(Object theObject, int id) throws SQLException {
-        String selectQuery = QueryHelper.createQuerySELECT(theObject);          //quary que busca a partir del ID
+        String selectQuery = QueryHelper.createQuerySELECTbyID(theObject);          //quary que busca a partir del ID
         PreparedStatement pstm = null;
         try {
             pstm = conn.prepareStatement(selectQuery);
@@ -494,8 +494,8 @@ public class SessionImpl implements Session {
         }
 
     }
-    public Object getEnemyByName(Object theObject, String name) throws SQLException {
-        String selectQuery = QueryHelper.createQueryEnemySELECTbyName(name);         //consulta per obtenir Partida del Username que introduim
+    public Object getByName(Object theObject, String name) throws SQLException {
+        String selectQuery = QueryHelper.createQuerySELECTbyName(theObject);         //consulta per obtenir Partida del Username que introduim
         PreparedStatement pstm = null;
         try {
             pstm = conn.prepareStatement(selectQuery);
