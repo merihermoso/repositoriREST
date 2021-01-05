@@ -4,7 +4,6 @@ import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
 import edu.upc.dsa.orm.models.Game;
 import edu.upc.dsa.orm.models.GameCredentials.GameCredentials;
-import edu.upc.dsa.orm.models.shopCredentials.OrderCredentials;
 //import jdk.incubator.jpackage.internal.Log;
 
 import java.sql.SQLException;
@@ -24,18 +23,18 @@ public class GameDAOImpl implements GameDAO {
     public List<Game> findAll(){
 
         Session session;
-        List<Game> gamesList;
+        List<Game> gameList;
 
         HashMap<Integer, Game> result;
 
         session = FactorySession.openSession();
         result = session.findAll(Game.class);
 
-        gamesList = new ArrayList<>(result.values());
+        gameList = new ArrayList<>(result.values());
 
         session.close();
 
-        return gamesList;
+        return gameList;
     }
 
     public List<Game> getGameRanking(){

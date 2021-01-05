@@ -1,35 +1,16 @@
-package edu.upc.dsa.orm.models;
+package edu.upc.dsa.orm.models.GameCredentials;
 
+public class EnemyCredentials {
 
-public class Item {                         //classe per objectes DINS del joc
-
-    private int id; //Asignamos un id al name creado
+    private int id;
     private String name;
     private int hit;
     private int defense;
     private int healing;
     private int damage;
+ //   private int posX;
+ //   private int posY;
 
-    public Item() {
-
-    }
-
-    public Item(String name, int hit, int defense, int healing, int damage) {
-
-        this();
-        setName(name);
-        setHit(hit);
-        setDefense(defense);
-        setHealing(healing);
-        setDamage(damage);
-    }
-
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {        return name;    }
     public void setName(String item) {
@@ -64,9 +45,11 @@ public class Item {                         //classe per objectes DINS del joc
         this.damage = damage;
     }
 
-    @Override
-    public String toString(){
-        return "User { id: "+id+",Name:" +name+", Hit:"+hit+", Defense:"+defense+", Healing:"+healing+ ", Damage:"+damage+"}";
-    }
+ //   public int getPosX() {        return posX;    }
+ //   public void setPosX(int posX) {        this.posX = posX;    }
+
+  //  public int getPosY() {        return posY;    }
+  //  public void setPosY(int posY) {        this.posY = posY;    }
+
 
 }

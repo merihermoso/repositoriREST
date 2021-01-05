@@ -3,6 +3,7 @@ package edu.upc.dsa.orm;
 import edu.upc.dsa.orm.models.*;
 import edu.upc.dsa.orm.models.Credentials.LoginCredentials;
 import edu.upc.dsa.orm.models.Credentials.RegisterCredentials;
+import edu.upc.dsa.orm.models.GameCredentials.EnemyCredentials;
 import edu.upc.dsa.orm.models.GameCredentials.GameCredentials;
 import edu.upc.dsa.orm.models.GameCredentials.ItemCredentials;
 import edu.upc.dsa.orm.models.shopCredentials.ElementCredentials;
@@ -34,7 +35,7 @@ public class SessionImpl implements Session {
             pstm.setObject(1, 0);
             int i = 2;
 
-            for (String field: ObjectHelper.getFields(entity)) {
+            for (String field : ObjectHelper.getFields(entity)) {
                 pstm.setObject(i++, ObjectHelper.getter(entity, field));       // guarda en el objeto de esa entidad y valor
             }
 
@@ -71,7 +72,7 @@ public class SessionImpl implements Session {
 
                 ResultSetMetaData rsmd = resultSet.getMetaData();
 
-                for (int i = 1; i<=rsmd.getColumnCount(); i++) {
+                for (int i = 1; i <= rsmd.getColumnCount(); i++) {
                     String field = rsmd.getColumnName(i);
                     ObjectHelper.setter(object, field, resultSet.getObject(i));
                 }
@@ -120,7 +121,7 @@ public class SessionImpl implements Session {
 
                 ResultSetMetaData rsmd = resultSet.getMetaData();
 
-                for (int i = 1; i<=rsmd.getColumnCount(); i++) {
+                for (int i = 1; i <= rsmd.getColumnCount(); i++) {
                     String field = rsmd.getColumnName(i);
                     ObjectHelper.setter(object, field, resultSet.getObject(i));
                 }
@@ -163,7 +164,7 @@ public class SessionImpl implements Session {
 
             int i = 1;
 
-            for (String field: ObjectHelper.getFields(user)) {
+            for (String field : ObjectHelper.getFields(user)) {
                 pstm.setObject(i, ObjectHelper.getter(user, field));
                 i++;
             }
@@ -242,13 +243,13 @@ public class SessionImpl implements Session {
             pstm.setObject(1, id);
             pstm.executeQuery();
             ResultSet rs = pstm.getResultSet();
-            if (rs.next()){
-                for (int i=1;i<=rs.getMetaData().getColumnCount();i++)
-                    ObjectHelper.setter(theObject,rs.getMetaData().getColumnName(i),rs.getObject(i));
+            if (rs.next()) {
+                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++)
+                    ObjectHelper.setter(theObject, rs.getMetaData().getColumnName(i), rs.getObject(i));
             }
             return theObject;
 
-        }  catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -262,13 +263,13 @@ public class SessionImpl implements Session {
             pstm.setObject(1, username);
             pstm.executeQuery();
             ResultSet rs = pstm.getResultSet();
-            if (rs.next()){
-                for (int i=1;i<=rs.getMetaData().getColumnCount();i++)
-                    ObjectHelper.setter(theObject,rs.getMetaData().getColumnName(i),rs.getObject(i));
+            if (rs.next()) {
+                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++)
+                    ObjectHelper.setter(theObject, rs.getMetaData().getColumnName(i), rs.getObject(i));
             }
             return theObject;
 
-        }  catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -282,13 +283,13 @@ public class SessionImpl implements Session {
             pstm.setObject(1, username);
             pstm.executeQuery();
             ResultSet rs = pstm.getResultSet();
-            if (rs.next()){
-                for (int i=1;i<=rs.getMetaData().getColumnCount();i++)
-                    ObjectHelper.setter(theObject,rs.getMetaData().getColumnName(i),rs.getObject(i));
+            if (rs.next()) {
+                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++)
+                    ObjectHelper.setter(theObject, rs.getMetaData().getColumnName(i), rs.getObject(i));
             }
             return theObject;
 
-        }  catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -302,13 +303,13 @@ public class SessionImpl implements Session {
             pstm.setObject(1, username);
             pstm.executeQuery();
             ResultSet rs = pstm.getResultSet();
-            if (rs.next()){
-                for (int i=1;i<=rs.getMetaData().getColumnCount();i++)
-                    ObjectHelper.setter(theObject,rs.getMetaData().getColumnName(i),rs.getObject(i));
+            if (rs.next()) {
+                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++)
+                    ObjectHelper.setter(theObject, rs.getMetaData().getColumnName(i), rs.getObject(i));
             }
             return theObject;
 
-        }  catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -322,17 +323,19 @@ public class SessionImpl implements Session {
             pstm.setObject(1, username);
             pstm.executeQuery();
             ResultSet rs = pstm.getResultSet();
-            if (rs.next()){
-                for (int i=1;i<=rs.getMetaData().getColumnCount();i++)
-                    ObjectHelper.setter(theObject,rs.getMetaData().getColumnName(i),rs.getObject(i));
+            if (rs.next()) {
+                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++)
+                    ObjectHelper.setter(theObject, rs.getMetaData().getColumnName(i), rs.getObject(i));
             }
             return theObject;
 
-        }  catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
+
+
 
 
     //////////////////////////////////////////////////////////////////////////   REGISTERS   ////////////////
@@ -350,7 +353,7 @@ public class SessionImpl implements Session {
 
             int i = 1;
 
-            for (String field: ObjectHelper.getFields(orders)) {
+            for (String field : ObjectHelper.getFields(orders)) {
                 pstm.setObject(i, ObjectHelper.getter(orders, field));
                 i++;
             }
@@ -368,39 +371,40 @@ public class SessionImpl implements Session {
     }
 
 
-   public boolean registerElement(ElementCredentials elementCredentials) {
+    public boolean registerElement(ElementCredentials elementCredentials) {
 
-       Element element = new Element(elementCredentials.getName(), elementCredentials.getDescription(), elementCredentials.getPrice());
+        Element element = new Element(elementCredentials.getName(), elementCredentials.getDescription(), elementCredentials.getPrice());
 
-       String insertQuery = QueryHelper.createQueryINSERT(element);
+        String insertQuery = QueryHelper.createQueryINSERT(element);
 
-       PreparedStatement pstm;
-       System.out.println(insertQuery);
-       try {
+        PreparedStatement pstm;
+        System.out.println(insertQuery);
+        try {
 
-           pstm = conn.prepareStatement(insertQuery);
+            pstm = conn.prepareStatement(insertQuery);
 
-           int i = 1;
+            int i = 1;
 
-           for (String field: ObjectHelper.getFields(element)) {
-               pstm.setObject(i, ObjectHelper.getter(element, field));
-               i++;
-           }
+            for (String field : ObjectHelper.getFields(element)) {
+                pstm.setObject(i, ObjectHelper.getter(element, field));
+                i++;
+            }
 
-           pstm.executeQuery();
+            pstm.executeQuery();
 
-           return true;
+            return true;
 
-       } catch (SQLException e) {
-           e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
 
-           return false;
-       }
+            return false;
+        }
 
-   }
+    }
+
     public boolean registerGame(GameCredentials gameCredentials) {
 
-        Game game = new Game(gameCredentials.getDateStart(), gameCredentials.getTimeStart(),gameCredentials.getDateEnd(),gameCredentials.getTimeEnd(), gameCredentials.getScore());
+        Game game = new Game(gameCredentials.getDateStart(), gameCredentials.getTimeStart(), gameCredentials.getDateEnd(), gameCredentials.getTimeEnd(), gameCredentials.getScore());
 
         String insertQuery = QueryHelper.createQueryINSERT(game);
 
@@ -412,7 +416,7 @@ public class SessionImpl implements Session {
 
             int i = 1;
 
-            for (String field: ObjectHelper.getFields(game)) {
+            for (String field : ObjectHelper.getFields(game)) {
                 pstm.setObject(i, ObjectHelper.getter(game, field));
                 i++;
             }
@@ -428,9 +432,10 @@ public class SessionImpl implements Session {
         }
 
     }
+
     public boolean registerItem(ItemCredentials itemCredentials) {
 
-        Item item = new Item(itemCredentials.getName(),itemCredentials.getHit(), itemCredentials.getDefense(), itemCredentials.getHealing(), itemCredentials.getDamage());
+        Item item = new Item(itemCredentials.getName(), itemCredentials.getHit(), itemCredentials.getDefense(), itemCredentials.getHealing(), itemCredentials.getDamage());
 
         String insertQuery = QueryHelper.createQueryINSERT(item);
 
@@ -442,7 +447,7 @@ public class SessionImpl implements Session {
 
             int i = 1;
 
-            for (String field: ObjectHelper.getFields(item)) {
+            for (String field : ObjectHelper.getFields(item)) {
                 pstm.setObject(i, ObjectHelper.getter(item, field));
                 i++;
             }
@@ -459,4 +464,55 @@ public class SessionImpl implements Session {
 
     }
 
+    public boolean registerEnemy(EnemyCredentials enemyCredentials) {
+
+        Enemy enemy = new Enemy(enemyCredentials.getName(), enemyCredentials.getHit(),enemyCredentials.getHealing(),enemyCredentials.getDamage(),enemyCredentials.getDefense());
+
+        String insertQuery = QueryHelper.createQueryINSERT(enemy);
+
+        PreparedStatement pstm;
+        System.out.println(insertQuery);
+        try {
+
+            pstm = conn.prepareStatement(insertQuery);
+
+            int i = 1;
+
+            for (String field : ObjectHelper.getFields(enemy)) {
+                pstm.setObject(i, ObjectHelper.getter(enemy, field));
+                i++;
+            }
+
+            pstm.executeQuery();
+
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            return false;
+        }
+
+    }
+    public Object getEnemyByName(Object theObject, String name) throws SQLException {
+        String selectQuery = QueryHelper.createQueryEnemySELECTbyName(name);         //consulta per obtenir Partida del Username que introduim
+        PreparedStatement pstm = null;
+        try {
+            pstm = conn.prepareStatement(selectQuery);
+            pstm.setObject(1, name);
+            pstm.executeQuery();
+            ResultSet rs = pstm.getResultSet();
+            if (rs.next()) {
+                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++)
+                    ObjectHelper.setter(theObject, rs.getMetaData().getColumnName(i), rs.getObject(i));
+            }
+            return theObject;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }
+

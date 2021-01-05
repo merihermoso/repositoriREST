@@ -123,4 +123,22 @@ public class QueryHelper {
         return sb.toString();
 
     }
+
+                                                                                        //  CONSULTES PER BORRAR    //
+    public static String createQueryDELETE(Object object) {  //consulta to GET qualsevol objecte de la bbdd
+        StringBuffer sb = new StringBuffer();
+        sb.append("DELETE * FROM User");      //totes les files de la taula que tinguin el id=
+        sb.append(" WHERE username = ?");
+
+        return sb.toString();                      //FALTA FER QUE ORDENI PER SCORE, PERO PETA....
+    }
+
+
+    public static String createQueryEnemySELECTbyName(String name) {
+        StringBuffer sb = new StringBuffer();
+        sb.append("SELECT * FROM Enemy");      //totes les files de la taula que tinguin el id=
+        sb.append(" WHERE name = ?");
+
+        return sb.toString();                      //FALTA FER QUE ORDENI PER SCORE, PERO PETA....
+    }
 }

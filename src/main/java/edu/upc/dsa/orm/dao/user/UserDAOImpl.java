@@ -203,7 +203,26 @@ public class UserDAOImpl implements UserDAO {
         }
 
         return user;
-    }*/
+    }
 
 
+                                                                                        // DELETES  //
+
+    public User deleteUserByUsername(String username) throws SQLException {
+        Session session = null;
+        User user = new User();
+        try {
+            session = FactorySession.openSession();
+            user = (User) session.deleteUserByUsername(user, username);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            session.close();
+        }
+
+        return user;
+    }
+*/
 }

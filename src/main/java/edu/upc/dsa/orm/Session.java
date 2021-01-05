@@ -2,6 +2,8 @@ package edu.upc.dsa.orm;
 
 import edu.upc.dsa.orm.models.Credentials.LoginCredentials;
 import edu.upc.dsa.orm.models.Credentials.RegisterCredentials;
+import edu.upc.dsa.orm.models.Enemy;
+import edu.upc.dsa.orm.models.GameCredentials.EnemyCredentials;
 import edu.upc.dsa.orm.models.GameCredentials.GameCredentials;
 import edu.upc.dsa.orm.models.GameCredentials.ItemCredentials;
 import edu.upc.dsa.orm.models.shopCredentials.ElementCredentials;
@@ -22,10 +24,13 @@ public interface Session<E> {
     boolean loginUser(LoginCredentials loginCredentials);
     boolean userExists(String username);
 
-    boolean registerOrder(OrderCredentials orderCredentials);           //afegim a la taula sql
+    boolean registerOrder(OrderCredentials orderCredentials);           //afegim a la taula sql     INSERT
     boolean registerElement(ElementCredentials elementCredentials);
     boolean registerGame(GameCredentials gameCredentials);
     boolean registerItem(ItemCredentials itemCredentials);
+
+
+    boolean registerEnemy(EnemyCredentials enemyCredentials);
 
   //  boolean orderToUser(LoginCredentials loginCredentials);           //NO CONSEGUEIXO QUE INSERTI A LA TAULA DE RELACIÓ
    // boolean createGAME(createGameCredentials gameCredentials) throws SQLException;        //seria un insert partida...
@@ -37,6 +42,14 @@ public interface Session<E> {
     public Object getGameByUsername(Object theClass, String username) throws SQLException;      //es podria optimitzar i aplicar a qualsevol clase (no nomes game)
     public Object getOrderByUsername(Object theClass, String username) throws SQLException;
     public Object getElementByUsername(Object theClass, String username) throws SQLException;   //relaciona 3 taules User,Order,Element
+
+    public Object getEnemyByName(Object theClass, String username) throws SQLException;
+
+
+
+    //  public Object deleteUserByUsername(Object theClass, String username) throws SQLException;
+
+
 
 
     //no retorna la meva posició encara   public Object getUserPositionByUsername(Object theClass, String username) ;

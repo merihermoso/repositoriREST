@@ -2,7 +2,6 @@ package edu.upc.dsa.orm.dao.game;
 
 import edu.upc.dsa.orm.models.Game;
 import edu.upc.dsa.orm.models.GameCredentials.GameCredentials;
-import edu.upc.dsa.orm.models.shopCredentials.OrderCredentials;
 
 import java.sql.SQLException;
 import java.util.List;

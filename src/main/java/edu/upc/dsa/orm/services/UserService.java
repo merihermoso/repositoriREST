@@ -131,23 +131,8 @@ public class UserService {
             @ApiResponse(code = 503, message = "not working well...")
 
     })
-/*
-    @Path("/{userID}")
-    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response GetUserById(@PathParam("userID") int userID) {
-        try{
-            User user = this.userDAO.getUserById(userID);
-            return Response.status(200).entity(user).build();
-        }
-        catch (Exception e){
 
-            return Response.status(503).build();
-        }
-    }
-    */
-
-
-    @Path("/{username}")                                        //servicio para encontrar usuario a partir del username
+    @Path("/{username}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response GetUserByUsername(@PathParam("username") String username) {
         try{
@@ -160,5 +145,33 @@ public class UserService {
         }
     }
 
+
+/*
+    @Path("/delete/{username}")                                        //servicio para encontrar usuario a partir del username
+    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
+    public Response deleteUserByUsername(@PathParam("username") String username) {
+        try{
+            User user = this.userDAO.deleteUserByUsername(username);
+            return Response.status(200).entity(user).build();
+        }
+        catch (Exception e){
+
+            return Response.status(503).build();
+        }
+    }
+
+    @Path("/{username}")                                        //servicio para encontrar usuario a partir del username
+    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
+    public Response DeleteUserByUsername(@PathParam("username") String username) {
+        try{
+            User user = this.userDAO.deleteUserByUsername(username);
+            return Response.status(200).entity(user).build();
+        }
+        catch (Exception e){
+
+            return Response.status(503).build();
+        }
+    }
+*/
 
 }

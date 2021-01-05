@@ -32,5 +32,9 @@ public class Orders {           //comandes fetes a la botiga
     public int getPrice() { return price; }
     public void setPrice(int price) { this.price = price; }
 
+    @Override
+    public String toString(){
+        return "Order { id: "+id+",Date:" +date+", Time:"+time+", Price:"+price+ "}";
+    }
 
 }

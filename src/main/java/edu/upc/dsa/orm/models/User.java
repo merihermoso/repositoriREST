@@ -81,4 +81,9 @@ public class User {
 /*
     public int getCreditCard() {        return creditCard;    }
     public void setCreditCard(int creditCard) {        this.creditCard = creditCard;    }*/
+
+    @Override
+    public String toString(){
+        return "User { id: "+id+",Username:" +username+", Email:"+email+", Password:"+password+", Birthdate:"+birthdate+ ", Score:"+score+", Level:"+level+"}";
+    }
 }
