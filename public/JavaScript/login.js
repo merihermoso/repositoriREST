@@ -33,7 +33,7 @@ $(document).ready(function() {
                 }
             },
             success: function (data) {
-
+                alert(data.status);
             },
             error: function (e) {
                 console.log(e.message);
@@ -88,7 +88,7 @@ $(document).ready(function() {
                     }
                 },
                 success: function (data) {
-
+                    alert(data.status);
                 },
                 error: function (e) {
                     // log error in browser
