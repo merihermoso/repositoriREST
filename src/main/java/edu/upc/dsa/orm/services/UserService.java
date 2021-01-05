@@ -60,7 +60,8 @@ public class UserService {
             @ApiResponse(code = 250, message = "User already exists"),
             @ApiResponse(code = 604, message = "Username too short or too long"),
             @ApiResponse(code = 605, message = "Password too short or too long"),
-            @ApiResponse(code = 606, message = "Email too short or too long")
+            @ApiResponse(code = 606, message = "Email too short or too long"),
+            @ApiResponse(code = 607, message = "Too young to play")
     })
     @Path("/register")
     public Response userRegister(RegisterCredentials registerCredentials) {
