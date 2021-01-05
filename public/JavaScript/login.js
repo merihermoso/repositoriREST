@@ -16,8 +16,9 @@ $(document).ready(function() {
             headers: {'content-type': 'application/json'},
             statusCode: {
                 201: function() {
-                    alert("Has iniciado sesion correctamente\n");
-                    window.localStorage.setItem("username", username);
+                    alert("Has iniciado sesión correctamente\n");
+                    var url = "http://147.83.7.207:8080/home.html";
+                    window.open(url, "_self");
                 },
                 601: function() {
                     alert("Debes escribir un nombre de usuario\n");
@@ -80,13 +81,6 @@ $(document).ready(function() {
                     250: function() {
                         alert("Ya existe un usuario con ese nombre\n");
                     }
-                },
-                success: function (data) {
-                    alert(data.status);
-                },
-                error: function (e) {
-                    // log error in browser
-                    console.log(e);
                 }
             });
         }
