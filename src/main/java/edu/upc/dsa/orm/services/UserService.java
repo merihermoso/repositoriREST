@@ -5,6 +5,7 @@ import edu.upc.dsa.orm.dao.user.UserDAO;
 import edu.upc.dsa.orm.dao.user.UserDAOImpl;
 import edu.upc.dsa.orm.models.Credentials.LoginCredentials;
 import edu.upc.dsa.orm.models.Credentials.RegisterCredentials;
+import edu.upc.dsa.orm.models.Game;
 import edu.upc.dsa.orm.models.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -158,4 +159,6 @@ public class UserService {
             return Response.status(503).build();
         }
     }
+
+
 }

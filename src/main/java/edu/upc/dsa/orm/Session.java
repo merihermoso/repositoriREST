@@ -2,6 +2,8 @@ package edu.upc.dsa.orm;
 
 import edu.upc.dsa.orm.models.Credentials.LoginCredentials;
 import edu.upc.dsa.orm.models.Credentials.RegisterCredentials;
+import edu.upc.dsa.orm.models.GameCredentials.GameCredentials;
+import edu.upc.dsa.orm.models.GameCredentials.ItemCredentials;
 import edu.upc.dsa.orm.models.shopCredentials.ElementCredentials;
 import edu.upc.dsa.orm.models.shopCredentials.OrderCredentials;
 
@@ -20,9 +22,10 @@ public interface Session<E> {
     boolean loginUser(LoginCredentials loginCredentials);
     boolean userExists(String username);
 
-    boolean registerOrder(OrderCredentials orderCredentials);
-
+    boolean registerOrder(OrderCredentials orderCredentials);           //afegim a la taula sql
     boolean registerElement(ElementCredentials elementCredentials);
+    boolean registerGame(GameCredentials gameCredentials);
+    boolean registerItem(ItemCredentials itemCredentials);
 
   //  boolean orderToUser(LoginCredentials loginCredentials);           //NO CONSEGUEIXO QUE INSERTI A LA TAULA DE RELACIÓ
    // boolean createGAME(createGameCredentials gameCredentials) throws SQLException;        //seria un insert partida...
@@ -35,5 +38,13 @@ public interface Session<E> {
     public Object getOrderByUsername(Object theClass, String username) throws SQLException;
     public Object getElementByUsername(Object theClass, String username) throws SQLException;   //relaciona 3 taules User,Order,Element
 
+
+    //no retorna la meva posició encara   public Object getUserPositionByUsername(Object theClass, String username) ;
+
+
+
+
+    //no funciona encara
+    //  public int getUserCount(Object theClass) throws SQLException;
 
 }

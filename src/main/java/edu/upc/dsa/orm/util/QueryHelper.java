@@ -65,7 +65,7 @@ public class QueryHelper {
         sb.append("SELECT * FROM User");      //totes les files de la taula que tinguin el id=
         sb.append(" WHERE username = ?");
 
-        return sb.toString();
+        return sb.toString();                      //FALTA FER QUE ORDENI PER SCORE, PERO PETA....
     }
 
     //SELECT password FROM User WHERE username = "?"
@@ -78,6 +78,9 @@ public class QueryHelper {
         return sb.toString();
 
     }
+
+
+    //////////////////////////////////////////////////////////////////////////es poden unificar en una sola consulta
 
     public static String createQueryGameSELECTbyUsername(String username) {          //consulta to GET qualsevol objecte de la bbdd
         StringBuffer sb = new StringBuffer();
@@ -109,5 +112,15 @@ public class QueryHelper {
 
         return sb.toString();
     }
+    //SELECT position and score FROM User WHERE username = "?"
+    public static String createQueryUserPositionSELECTbyUsername(String username)  {
 
+        StringBuffer sb = new StringBuffer();
+        sb.append("SELECT ROW_NUMBER FROM User");     //HA DE DIRTE LA TEVA POSICIÓ         ENCARA NO FUNCIONA
+        sb.append(" WHERE username = ?");
+        sb.append(" ORDER BY score ASC");
+
+        return sb.toString();
+
+    }
 }

@@ -31,4 +31,6 @@ public interface UserDAO {
 
     public List<User> getUserRanking() throws SQLException;
 
+  //  public User getUserPositionByUsername(String username) throws SQLException;
+
 }

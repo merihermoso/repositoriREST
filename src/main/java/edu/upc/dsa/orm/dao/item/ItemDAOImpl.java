@@ -4,6 +4,8 @@ package edu.upc.dsa.orm.dao.item;
 
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
+import edu.upc.dsa.orm.models.GameCredentials.GameCredentials;
+import edu.upc.dsa.orm.models.GameCredentials.ItemCredentials;
 import edu.upc.dsa.orm.models.Item;
 import edu.upc.dsa.orm.models.Orders;
 
@@ -55,6 +57,25 @@ public class ItemDAOImpl implements ItemDAO {
         }
 
         return item;
+    }
+
+    public boolean registerItem(ItemCredentials itemCredentials) { //Afegeix el user com a obejcte
+
+        Session session;
+        boolean result = false;
+
+        try {
+
+            session = FactorySession.openSession();
+            result = session.registerItem(itemCredentials);
+            session.close();
+
+        } finally {
+
+        }
+
+        return result;
+
     }
 
 

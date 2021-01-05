@@ -3,6 +3,8 @@ package edu.upc.dsa.orm.dao.game;
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
 import edu.upc.dsa.orm.models.Game;
+import edu.upc.dsa.orm.models.GameCredentials.GameCredentials;
+import edu.upc.dsa.orm.models.shopCredentials.OrderCredentials;
 //import jdk.incubator.jpackage.internal.Log;
 
 import java.sql.SQLException;
@@ -86,6 +88,25 @@ public class GameDAOImpl implements GameDAO {
         }
 
         return game;
+    }
+
+    public boolean registerGame(GameCredentials gameCredentials) { //Afegeix el user com a obejcte
+
+        Session session;
+        boolean result = false;
+
+        try {
+
+            session = FactorySession.openSession();
+            result = session.registerGame(gameCredentials);
+            session.close();
+
+        } finally {
+
+        }
+
+        return result;
+
     }
 
 

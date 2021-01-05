@@ -1,10 +1,10 @@
 package edu.upc.dsa.orm;
 
+import edu.upc.dsa.orm.models.*;
 import edu.upc.dsa.orm.models.Credentials.LoginCredentials;
 import edu.upc.dsa.orm.models.Credentials.RegisterCredentials;
-import edu.upc.dsa.orm.models.Element;
-import edu.upc.dsa.orm.models.Orders;
-import edu.upc.dsa.orm.models.User;
+import edu.upc.dsa.orm.models.GameCredentials.GameCredentials;
+import edu.upc.dsa.orm.models.GameCredentials.ItemCredentials;
 import edu.upc.dsa.orm.models.shopCredentials.ElementCredentials;
 import edu.upc.dsa.orm.models.shopCredentials.OrderCredentials;
 import edu.upc.dsa.orm.util.ObjectHelper;
@@ -333,6 +333,9 @@ public class SessionImpl implements Session {
             return null;
         }
     }
+
+
+    //////////////////////////////////////////////////////////////////////////   REGISTERS   ////////////////
     public boolean registerOrder(OrderCredentials orderCredentials) {
 
         Orders orders = new Orders(orderCredentials.getDate(), orderCredentials.getTime(), orderCredentials.getPrice());
@@ -364,40 +367,7 @@ public class SessionImpl implements Session {
 
     }
 
-   /* public boolean orderToUser(String username int orderID) {
-  //      User user = new User(getUsername());
-  //      Orders order = new Orders(getById());
 
-        String insertQuery = QueryHelper.createQueryINSERT(user);
-                    //UserOrderINSERTcompra
-        String selectQuery = QueryHelper.createQueryINSERT(user,orders);
-
-        PreparedStatement pstm;
-        ResultSet resultSet;
-
-        try {
-
-            pstm = conn.prepareStatement(selectQuery);
-            pstm.setString(1, loginCredentials.getUsername());
-            resultSet = pstm.executeQuery();
-
-            if (resultSet.next()) {
-
-                return resultSet.getString(1).equals(loginCredentials.getPassword());
-
-            } else {
-
-                return false;
-
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-            return false;
-        }
-
-    }*/
    public boolean registerElement(ElementCredentials elementCredentials) {
 
        Element element = new Element(elementCredentials.getName(), elementCredentials.getDescription(), elementCredentials.getPrice());
@@ -428,5 +398,65 @@ public class SessionImpl implements Session {
        }
 
    }
+    public boolean registerGame(GameCredentials gameCredentials) {
+
+        Game game = new Game(gameCredentials.getDateStart(), gameCredentials.getTimeStart(),gameCredentials.getDateEnd(),gameCredentials.getTimeEnd(), gameCredentials.getScore());
+
+        String insertQuery = QueryHelper.createQueryINSERT(game);
+
+        PreparedStatement pstm;
+        System.out.println(insertQuery);
+        try {
+
+            pstm = conn.prepareStatement(insertQuery);
+
+            int i = 1;
+
+            for (String field: ObjectHelper.getFields(game)) {
+                pstm.setObject(i, ObjectHelper.getter(game, field));
+                i++;
+            }
+
+            pstm.executeQuery();
+
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            return false;
+        }
+
+    }
+    public boolean registerItem(ItemCredentials itemCredentials) {
+
+        Item item = new Item(itemCredentials.getName(),itemCredentials.getHit(), itemCredentials.getDefense(), itemCredentials.getHealing(), itemCredentials.getDamage());
+
+        String insertQuery = QueryHelper.createQueryINSERT(item);
+
+        PreparedStatement pstm;
+        System.out.println(insertQuery);
+        try {
+
+            pstm = conn.prepareStatement(insertQuery);
+
+            int i = 1;
+
+            for (String field: ObjectHelper.getFields(item)) {
+                pstm.setObject(i, ObjectHelper.getter(item, field));
+                i++;
+            }
+
+            pstm.executeQuery();
+
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            return false;
+        }
+
+    }
 
 }

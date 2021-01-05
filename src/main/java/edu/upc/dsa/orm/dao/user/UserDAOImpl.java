@@ -185,5 +185,25 @@ public class UserDAOImpl implements UserDAO {
         return usersList;
     }
 
+    //NO FUNCIONA ENCARA (LA PART DE QUERYHELPER NO ESTÀ BEN FETA LA CONSULTA PER TROBAR LA POSICIÓ
+  /*  public User getUserPositionByUsername(String username) throws SQLException {
+        Session session = null;
+        User user = new User();
+
+        try {
+            session = FactorySession.openSession();
+            user = (User) session.getUserPositionByUsername(user, username);          //com poso la relació game User?¿
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            session.close();
+        }
+
+        return user;
+    }*/
+
 
 }
