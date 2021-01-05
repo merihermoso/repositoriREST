@@ -31,12 +31,6 @@ $(document).ready(function() {
                 250: function() {
                     alert("No existe un usuario con ese nombre\n");
                 }
-            },
-            success: function (data) {
-                alert(data.status);
-            },
-            error: function (e) {
-                console.log(e.message);
             }
         });
     });
