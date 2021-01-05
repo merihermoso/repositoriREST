@@ -17,6 +17,7 @@ $(document).ready(function() {
             statusCode: {
                 201: function() {
                     alert("Has iniciado sesión correctamente\n");
+                    window.localStorage.setItem("username", username);
                     var url = "http://147.83.7.207:8080/home.html";
                     window.open(url, "_self");
                 },
