@@ -3,6 +3,7 @@ package edu.upc.dsa.orm.dao.order;
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
 import edu.upc.dsa.orm.models.Orders;
+import edu.upc.dsa.orm.models.User;
 import edu.upc.dsa.orm.models.shopCredentials.OrderCredentials;
 
 import java.sql.SQLException;
@@ -19,6 +20,7 @@ public class OrderDAOImpl implements OrderDAO {
         if (instance==null) instance = new OrderDAOImpl();
         return instance;
     }
+    /*****************************************  FUNCIONS GENERALS    *************************************************/
 
     public List<Orders> findAll(){
 
@@ -37,6 +39,18 @@ public class OrderDAOImpl implements OrderDAO {
         return ordersList;
     }
 
+    public int size() {
+        Session session;
+        HashMap<String, Orders> orders = null;
+        try{
+            session = FactorySession.openSession();
+            orders = session.findAll(Orders.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return orders.size();
+    }
+    /*****************************************  OBTENIM COMANDA     *************************************************/
     public Orders getOrderById(int orderID) throws SQLException {
         Session session = null;
         Orders orders = new Orders();
@@ -70,6 +84,7 @@ public class OrderDAOImpl implements OrderDAO {
 
         return order;
     }
+    /*****************************************  REGISTRE COMANDA     *************************************************/
     public boolean registerOrder(OrderCredentials orderCredentials) { //Afegeix el user com a obejcte
 
         Session session;
@@ -88,6 +103,9 @@ public class OrderDAOImpl implements OrderDAO {
         return result;
 
     }
+
+    /*************************************************  TO DO....     *************************************************/
+
 /*
     public boolean addOrdertoUser(LoginCredentials loginCredentials) throws SQLException {
 
@@ -107,5 +125,6 @@ public class OrderDAOImpl implements OrderDAO {
         return result;
 
     }*/
+    /******************************************************************************************************************/
 
 }

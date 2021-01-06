@@ -8,14 +8,19 @@ import java.util.List;
 
 public interface GameDAO {
 
+      /*****************************************  FUNCIONS GENERALS    ************************************************/
+      public List<Game> findAll();
+      public int size();
 
+      /*****************************************  OBTENIM PARTIDA     *************************************************/
       public Game getGameById(int gameID) throws SQLException;
       public Game getGameByUsername(String username) throws SQLException;
 
+      /*****************************************  OBTENIM ranking     *************************************************/
       public List<Game> getGameRanking() throws SQLException;
 
-      public List<Game> findAll();
 
+      /*****************************************   REGISTRE PARTIDAS   ************************************************/
       boolean registerGame(GameCredentials gameCredentials) throws SQLException;
 
 

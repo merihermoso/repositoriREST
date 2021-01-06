@@ -41,7 +41,44 @@ public class GameService {
         this.enemyDAO = EnemyDAOImpl.getInstance();
     }
 
-    @GET                                                                    //Servicio para obtener todas las partidas
+    /*********************************************  RANKINGS    *******************************************************/
+    //Servicio para obtener las 5 PARTIDAS CON MÁS SCORE
+    @GET
+    @ApiOperation(value = "Get TOP Games", notes = "Get top GAMES ordered BY score from BBDD")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = Game.class, responseContainer = "List"),
+    })
+    @Path("/Games/top")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getTopGames() throws SQLException {
+
+        List<Game> games = this.gameDAO.getGameRanking();
+
+        GenericEntity<List<Game>> entity = new GenericEntity<List<Game>>(games) {
+        };
+        return Response.status(201).entity(entity).build();
+
+    }
+    //Servicio para obtener las 5 PARTIDAS CON MÁS SCORE
+    @GET
+    @ApiOperation(value = "Get TOP Users", notes = "Get top USERS ordered BY score from BBDD")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = User.class, responseContainer = "List"),
+    })
+    @Path("/Users/top")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getTopUsers() throws SQLException {
+
+        List<User> users = this.userDAO.getUserRanking();
+
+        GenericEntity<List<User>> entity = new GenericEntity<List<User>>(users) {
+        };
+        return Response.status(201).entity(entity).build();
+
+    }
+    /**********************************************     GAMES (partidas) services   ***********************************/
+    //Servicio para obtener todas las partidas
+    @GET
     @ApiOperation(value = "Get all Games from BBDD", notes = "Get all partidas from BBDD")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Game.class, responseContainer = "List"),
@@ -58,43 +95,8 @@ public class GameService {
 
     }
 
-
-    @GET                                                                    //Servicio para obtener las 5 PARTIDAS CON MÁS SCORE
-    @ApiOperation(value = "Get TOP Games", notes = "Get top GAMES ordered BY score from BBDD")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Game.class, responseContainer = "List"),
-    })
-    @Path("/Games/top")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getTopGames() throws SQLException {
-
-        List<Game> games = this.gameDAO.getGameRanking();
-
-        GenericEntity<List<Game>> entity = new GenericEntity<List<Game>>(games) {
-        };
-        return Response.status(201).entity(entity).build();
-
-    }
-
-    @GET                                                                    //Servicio para obtener las 5 PARTIDAS CON MÁS SCORE
-    @ApiOperation(value = "Get TOP Users", notes = "Get top USERS ordered BY score from BBDD")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = User.class, responseContainer = "List"),
-    })
-    @Path("/Users/top")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getTopUsers() throws SQLException {
-
-        List<User> users = this.userDAO.getUserRanking();
-
-        GenericEntity<List<User>> entity = new GenericEntity<List<User>>(users) {
-        };
-        return Response.status(201).entity(entity).build();
-
-    }
-
-
-    @GET                                                                    //Servicio para obtener la Partida a partir del Username (User)
+    //Servicio para obtener la Partida a partir del Username (User)
+    @GET
     @ApiOperation(value = "get a Game by Username", notes = "Get all data 1 game")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Game.class),
@@ -113,14 +115,15 @@ public class GameService {
         }
     }
 
-    @GET                                                                    //Servicio para obtener la Partida a partir del Username (User)
+    //Servicio para obtener la Partida a partir del Username (User)
+    @GET
     @ApiOperation(value = "get a Game by its ID", notes = "Get all data 1 game")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Game.class),
             @ApiResponse(code = 503, message = "not working well...")
 
     })
-        @Path("/Game/getByID/{gameID}")                                               //servicio que obtenia la Partida a partir del ID
+        @Path("/Game/getByID/{gameID}")    //servicio que obtenia la Partida a partir del ID
         @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
         public Response GetGameById(@PathParam("gameID") int gameID) {
             try{
@@ -134,7 +137,7 @@ public class GameService {
         }
 
 
-                                                                                    // Servicio para registrar una nueva partida
+    // Servicio para registrar una nueva partida
     @POST
     @ApiOperation(value = "Register a new Game", notes = "Register a game")
     @ApiResponses(value = {
@@ -150,9 +153,8 @@ public class GameService {
         return Response.status(201).build();
 
     }
-                                                                                                        ////// ITEMS SERVICE /////
-
-                                                                            //Servicio para obtener todos los items
+/******************************************     ITEMS services  *******************************************************/
+    //Servicio para obtener todos los items
     @GET
     @ApiOperation(value = "Get all items from BBDD", notes = "Get all items from BBDD")
     @ApiResponses(value = {
@@ -169,8 +171,8 @@ public class GameService {
         return Response.status(201).entity(entity).build();
 
     }
-
-    @GET                                                                         //Servicio para obtener un Item a partir del ID
+    //Servicio para obtener un Item a partir del ID
+    @GET
     @ApiOperation(value = "get an Item by its ID", notes = "Get all data 1 item")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Item.class),
@@ -189,6 +191,7 @@ public class GameService {
             return Response.status(503).build();
         }
     }
+    //Servei per obtenir un item a partir del seu nom
     @GET
     @ApiOperation(value = "get an Item by its name", notes = "Get all data one ITEM")
     @ApiResponses(value = {
@@ -208,7 +211,7 @@ public class GameService {
             return Response.status(503).build();
         }
     }
-                                                                                //Servicio para registrar un nuevo Item
+    //Serrvei per registrar un nou item
     @POST
     @ApiOperation(value = "Register a new Item", notes = "Register a new item")
     @ApiResponses(value = {
@@ -220,8 +223,8 @@ public class GameService {
         return Response.status(201).build();
     }
 
-    ///////////////////////////////////////////////////////////////////////         ENEMY           ////////////////////////
-
+    /************************************************   ENEMIES services ***********************************************/
+    //Servei per obtenir tots els enemics
     @GET                                                                    //OBTENEMOS TODAS LAS PARTIDAS
     @ApiOperation(value = "Get all Enemy from BBDD", notes = "Get all enemies from BBDD")
     @ApiResponses(value = {
@@ -238,7 +241,7 @@ public class GameService {
         return Response.status(201).entity(entity).build();
 
     }
-
+    //Servei per obtenir un enemic a partir del seu nom
     @GET
     @ApiOperation(value = "get an Enemy by its NAME", notes = "Get all data 1 item")
     @ApiResponses(value = {
@@ -258,7 +261,7 @@ public class GameService {
             return Response.status(503).build();
         }
     }
-                                                                        //Servicio para registar un nuevo enemigo
+    //Servicio para registar un nuevo enemigo
     @POST
     @ApiOperation(value = "Register a new Enemy", notes = "Register a new item")
     @ApiResponses(value = {
@@ -271,6 +274,8 @@ public class GameService {
         this.enemyDAO.registerEnemy(enemyCredentials);
         return Response.status(201).build();
     }
+    /**********************************************************************************************************/
+
 }
 
 

@@ -34,7 +34,8 @@ public class ShopService {
         this.elementDAO = ElementDAOImpl.getInstance();
 
     }
-                                                                        /////// Part ORDERS shop
+/*******************************************    ORDERS services    *******************************************************/
+    //Servei per obtenir totes les comandes
     @GET
     @ApiOperation(value = "Get all Orders", notes = "Get all orders from BBDD")
     @ApiResponses(value = {
@@ -55,6 +56,8 @@ public class ShopService {
             return Response.status(503).build();
         }
     }
+
+    //Servei per obtenir LA PRIMERA comanda de un usuari                                //hauria de retornar totes
     @GET
     @ApiOperation(value = "get an Order by Username", notes = "Get all data 1 user")
     @ApiResponses(value = {
@@ -76,7 +79,7 @@ public class ShopService {
             return Response.status(503).build();
         }
     }
-
+    //Servei per obtenir una comanda a partir de la seva ID
     @GET                                                                //Servicio para obtener un Pedido a partir del ID
     @ApiOperation(value = "get an Order from its ID", notes = "Get all data 1 user")
     @ApiResponses(value = {
@@ -98,8 +101,8 @@ public class ShopService {
         }
     }
 
-                                                                                    ////// ELEMENTS SHOP    ////////////
-
+    /*******************************************    ELEMENTS services    *******************************************************/
+    //Servei per obtenir tots els elements registrats
     @GET                                                                            //Servicio para obtener todos los elementos
     @ApiOperation(value = "Get all Elements from BBDD", notes = "Get all Elements from BBDD")
     @ApiResponses(value = {
@@ -120,7 +123,7 @@ public class ShopService {
             return Response.status(503).build();
         }
     }
-
+    // Servei per obtenir un element a partir del username del usuari
     @GET                                                                            //Servicio para obtener el elemento de un Usuario (USERNAME)
     @ApiOperation(value = "get an Element by Username", notes = "Get all data 1 element")
     @ApiResponses(value = {
@@ -142,6 +145,7 @@ public class ShopService {
             return Response.status(503).build();
         }
     }
+    //Servei per obtenir un element a partir de la seva id
     @GET                                                                            //Servicio para obtener un elemento a partir de su ID
     @ApiOperation(value = "get an Element by its ID", notes = "Get all data 1 element")
     @ApiResponses(value = {
@@ -163,6 +167,7 @@ public class ShopService {
             return Response.status(503).build();
         }
     }
+    // Servei per obtenir un element a partir del seu nom
     @GET                                                                            //Servicio para obtener un elemento a partir de su nombre
     @ApiOperation(value = "get an Element by its name", notes = "Get all data 1 user")
     @ApiResponses(value = {
@@ -184,6 +189,7 @@ public class ShopService {
             return Response.status(503).build();
         }
     }
+    //Servei per registrar una nova comanda
     @POST                                                                   //Servicio para registrar nuevo Pedido
     @ApiOperation(value = "Register a new Order", notes = "Register an order")
     @ApiResponses(value = {
@@ -204,7 +210,7 @@ public class ShopService {
         return Response.status(201).build();
 
     }
-
+    // Servei per registrar un element nou
     @POST                                                                   // Servicio para registrar nuevo elemento en la tienda
     @ApiOperation(value = "Register a new Element", notes = "Register an order")
     @ApiResponses(value = {
@@ -225,6 +231,7 @@ public class ShopService {
         return Response.status(201).build();
 
     }
+    /******************************************************************************************************************/
 
 
 }

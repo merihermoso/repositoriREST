@@ -3,6 +3,8 @@ package edu.upc.dsa.orm.util;
 import edu.upc.dsa.orm.models.User;
 
 public class QueryHelper {
+
+    /***************************************    INSERT      ***********************************************************/
                                                                     //consulta general (serveix per insertar on sigui)
     public static String createQueryINSERT(Object entity) {         //consultes que han de insertar qualsevol objecte a la bbdd
         StringBuffer sb = new StringBuffer("INSERT INTO ");
@@ -37,7 +39,9 @@ public class QueryHelper {
 
         return sb.toString();
     }
-                                                                    //serveix per tots
+    /***************************************    SELECTs      ***********************************************************/
+
+    //serveix per tots
     public static String createQuerySELECTbyID(Object entity) {          //consulta to GET by ID
         StringBuffer sb = new StringBuffer();
         sb.append("SELECT * FROM ").append(entity.getClass().getSimpleName());      //totes les files de la taula que tinguin el id=
@@ -89,8 +93,26 @@ public class QueryHelper {
 
     }
 
+    /**************************     SELECT IDs     ************************************/
+    //SELECT idClass FROM Class WHERE name=?
+    public static String createQueryGetIDbyName(Object entity){
+        int res=0;
+        StringBuffer sb = new StringBuffer();
+        sb.append("SELECT id"+entity.getClass().getSimpleName()+" FROM ").append(entity.getClass().getSimpleName());
+        sb.append(" WHERE name = ?");
+        return sb.toString();
+    }
 
-    //////////////////////////////////////////////////////////////////////////es poden unificar en una sola consulta
+    //SELECT idClass FROM Class WHERE name=?
+    public static String createQueryGetIDbyUsername(Object entity){
+        StringBuffer sb = new StringBuffer();
+        sb.append("SELECT id"+entity.getClass().getSimpleName()+" FROM ").append(entity.getClass().getSimpleName());
+        sb.append(" WHERE username = ?");
+        return sb.toString();
+    }
+
+
+/**************************CONSULTES AMB RELACIONS ENTRE DIFERENTS TAULES ************************************/
 
     //consulta to GET qualsevol objecte de la bbdd
     public static String createQueryGameSELECTbyUsername(String username) {
@@ -136,15 +158,40 @@ public class QueryHelper {
         return sb.toString();
 
     }
-
+    /**************************CONSULTES AMB RELACIONS ENTRE DIFERENTS TAULES ************************************/
                                                                                         //  CONSULTES PER ELIMINAR     //
-    public static String createQueryDELETE(Object object) {  //consulta to GET qualsevol objecte de la bbdd
+    //DELETE FROM Class WHERE ID = ?
+    public static String createQueryDELETE(Object entity){
         StringBuffer sb = new StringBuffer();
-        sb.append("DELETE * FROM User");      //totes les files de la taula que tinguin el id=
-        sb.append(" WHERE username = ?");
-
-        return sb.toString();                      //FALTA FER QUE ORDENI PER SCORE, PERO PETA....
+        sb.append("UPDATE "+entity.getClass().getSimpleName()+" SET status='inactive'");
+        sb.append(" WHERE id"+entity.getClass().getSimpleName()+" = ?");
+        return sb.toString();
     }
+
+    /*************************      UPDATE      *****************************************************************/
+
+    //UPDATE User SET id = ?, nombre = ?, mail = ? WHERE ID = 'user.getId()'
+    public static String createQueryUPDATE(Object entity) {
+        StringBuffer sb = new StringBuffer("UPDATE ");
+        sb.append(entity.getClass().getSimpleName());
+        sb.append(" SET ");
+
+        String[] fields = ObjectHelper.getFields(entity);
+       /* if(entity.getClass()== Inventario.class){
+            sb.append("cantidad=? WHERE idObjeto=? AND idJugador=?");
+        }
+        else {*/
+            sb.append("id" + entity.getClass().getSimpleName() + " = ?");
+
+            for (String field : fields) {
+                if (!field.startsWith("id")) sb.append(", ").append(field).append(" = ?");
+            }
+            sb.append(" WHERE id" + entity.getClass().getSimpleName() + " = '" +
+                    ObjectHelper.getter(entity, "id" + entity.getClass().getSimpleName()) + "'");
+     //   }
+        return sb.toString();
+    }
+
 
 
 

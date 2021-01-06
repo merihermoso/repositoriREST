@@ -15,29 +15,40 @@ import java.util.*;
 public interface Session<E> {
 
     void save(Object entity);
+    void update(Object object);
+    void delete(Object object);
     void close();
 
+    /*****************************      OBTENIR LLISTAT         *******************************************************/
     HashMap<Integer, Object> findAll(Class theClass);
-    HashMap<Integer, Object> findTop(Class theClass);  //Busca els millors SCORE    List<User> users?¿ nose si els desordena per això
+    HashMap<Integer, Object> findTop(Class theClass);     //el hashmap ho desordena
 
+    /*****************************      autenticación Usuario    ******************************************************/
     boolean registerUser(RegisterCredentials registerCredentials);
     boolean loginUser(LoginCredentials loginCredentials);
     boolean userExists(String username);
 
-    boolean registerOrder(OrderCredentials orderCredentials);           //afegim a la taula sql     INSERT
+    /*****************************      REGISTREM OBJECTES NOUS  (INSERT) *********************************************/
+    boolean registerOrder(OrderCredentials orderCredentials);
     boolean registerElement(ElementCredentials elementCredentials);
     boolean registerGame(GameCredentials gameCredentials);
     boolean registerItem(ItemCredentials itemCredentials);
-
-
     boolean registerEnemy(EnemyCredentials enemyCredentials);
 
-  //  boolean orderToUser(LoginCredentials loginCredentials);           //NO CONSEGUEIXO QUE INSERTI A LA TAULA DE RELACIÓ
-   // boolean createGAME(createGameCredentials gameCredentials) throws SQLException;        //seria un insert partida...
+    /*****************************OBTENIM OBJECTES A PARTIR DEL USERNAME DEL USER**************************************/
+    public Object getById(Object theClass, int id) throws SQLException;             //obtenim objecte a partir del id
+    public Object getByName(Object theClass, String name) throws SQLException;      //obtenim objecte a partir del seu nom
 
-    public Object getById(Object theClass, int id) throws SQLException;
-    public Object getByName(Object theClass, String username) throws SQLException;
 
+    /*****************************OBTENIM IDs A PARTIR DEL USERNAME/NAME ********no funcionan pq obtenen un INT *******/
+ //   public String getIDbyUsername(Object theClass, String username) throws SQLException;
+ //   public String getIDByName(Object theClass, String name) throws SQLException;
+
+    //   public String getCOINSbyUsername(Object theClass, String username) throws SQLException;
+    //   public String getLEVELbyUsername(Object theClass, String username) throws SQLException;
+
+
+    /*****************************OBTENIM OBJECTES A PARTIR DEL USERNAME DEL USER*******************************/
     public Object getUserByUsername(Object theClass, String username) throws SQLException;
     public Object getGameByUsername(Object theClass, String username) throws SQLException;      //es podria optimitzar i aplicar a qualsevol clase (no nomes game)
     public Object getOrderByUsername(Object theClass, String username) throws SQLException;
@@ -45,19 +56,5 @@ public interface Session<E> {
 
 
 
-
-
-    //  public Object deleteUserByUsername(Object theClass, String username) throws SQLException;
-
-
-
-
-    //no retorna la meva posició encara   public Object getUserPositionByUsername(Object theClass, String username) ;
-
-
-
-
-    //no funciona encara
-    //  public int getUserCount(Object theClass) throws SQLException;
 
 }

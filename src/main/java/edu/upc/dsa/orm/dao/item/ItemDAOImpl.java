@@ -9,6 +9,7 @@ import edu.upc.dsa.orm.models.GameCredentials.GameCredentials;
 import edu.upc.dsa.orm.models.GameCredentials.ItemCredentials;
 import edu.upc.dsa.orm.models.Item;
 import edu.upc.dsa.orm.models.Orders;
+import edu.upc.dsa.orm.models.User;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class ItemDAOImpl implements ItemDAO {
         if (instance==null) instance = new ItemDAOImpl();
         return instance;
     }
-
+    /*****************************************  FUNCIONS GENERALS    ***************************************************/
     public List<Item> findAll(){
 
         Session session;
@@ -42,7 +43,19 @@ public class ItemDAOImpl implements ItemDAO {
 
         return itemsList;
     }
+    public int size() {
+        Session session;
+        HashMap<String, Item> items = null;
+        try{
+            session = FactorySession.openSession();
+            items = session.findAll(Item.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return items.size();
+    }
 
+    /*****************************************  OBTENIM ITEM inventari *************************************************/
     public Item getItemById(int itemID) throws SQLException {
         Session session = null;
         Item item = new Item();
@@ -76,6 +89,7 @@ public class ItemDAOImpl implements ItemDAO {
         return item;
     }
 
+    /*****************************************  REGISTRE ITEM     *************************************************/
     public boolean registerItem(ItemCredentials itemCredentials) { //Afegeix el user com a obejcte
 
         Session session;
@@ -94,6 +108,6 @@ public class ItemDAOImpl implements ItemDAO {
         return result;
 
     }
-
+    /**********************************************************************************************************/
 
 }

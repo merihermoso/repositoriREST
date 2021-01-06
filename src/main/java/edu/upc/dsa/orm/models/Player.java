@@ -3,8 +3,9 @@ package edu.upc.dsa.orm.models;
 public class Player {              //classe per objectes de la botiga
 
     private int id;                 //s'hauria de vincular amb el userID
-    private String username;            //s'hauria de relacionar amb username del user
+  //  private String username;            //s'hauria de relacionar amb username del user
     private String status;
+    private int level;
     private int coins;
     private int score;
 
@@ -30,6 +31,7 @@ public class Player {              //classe per objectes de la botiga
 
     public int getScore() {        return score;    }
     public void setScore(int score) {        this.score = score;    }
+
 
     @Override
     public String toString(){

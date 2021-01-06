@@ -36,6 +36,7 @@ public class UserDAOImpl implements UserDAO {
         if ( instance==null) instance = new UserDAOImpl();
         return instance;
     }
+    /*****************************************  AUTHENTICATION USER   *************************************************/
 
     public boolean registerUser(RegisterCredentials registerCredentials) { //Afegeix el user com a obejcte
 
@@ -56,22 +57,7 @@ public class UserDAOImpl implements UserDAO {
 
     }
 
-    public List<User> findAll(){
 
-        Session session;
-        List<User> userList;
-
-        HashMap<Integer, User> result;
-
-        session = FactorySession.openSession();
-        result = session.findAll(User.class);
-
-        userList = new ArrayList<>(result.values());
-
-        session.close();
-
-        return userList;
-    }
 
     public boolean userExists(String username) {
 
@@ -135,6 +121,40 @@ public class UserDAOImpl implements UserDAO {
         return min_age;
     }
 
+    /*****************************************  FUNCIONS BÀSIQUES   *************************************************/
+
+    public List<User> findAll(){
+
+        Session session;
+        List<User> userList;
+
+        HashMap<Integer, User> result;
+
+        session = FactorySession.openSession();
+        result = session.findAll(User.class);
+
+        userList = new ArrayList<>(result.values());
+
+        session.close();
+
+        return userList;
+    }
+    public int size() {
+        Session session;
+        HashMap<String,User> users = null;
+        try{
+            session = FactorySession.openSession();
+            users = session.findAll(User.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return users.size();
+    }
+
+
+
+    /***********************************************  OBTENIM USUARI  *************************************************/
+
     public User getUserById( int userID) throws SQLException {
         Session session = null;
         User user = new User();
@@ -185,6 +205,9 @@ public class UserDAOImpl implements UserDAO {
         return usersList;
     }
 
+
+    /*****************************************  to do    *************************************************/
+
     //NO FUNCIONA ENCARA (LA PART DE QUERYHELPER NO ESTÀ BEN FETA LA CONSULTA PER TROBAR LA POSICIÓ
   /*  public User getUserPositionByUsername(String username) throws SQLException {
         Session session = null;
@@ -225,4 +248,6 @@ public class UserDAOImpl implements UserDAO {
         return user;
     }
 */
+    /**********************************************************************************************************/
+
 }

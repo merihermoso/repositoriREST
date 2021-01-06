@@ -9,6 +9,7 @@ public class User {
     private String birthdate;
     private int score;
     private int level;
+    private String status;
 
  //   private int creditCard;
 
@@ -26,6 +27,7 @@ public class User {
         setBirthdate(birthdate);
         setScore(0);
         setLevel(1);
+   //     setStatus("Active");
       //  setCreditCard(creditCard);
 
     }
@@ -78,6 +80,9 @@ public class User {
     public void setLevel(int level) {
         this.level = level;
     }
+
+  //  public String getStatus() { return status; }
+  //  public void setStatus(String status) { this.status = status; }
 /*
     public int getCreditCard() {        return creditCard;    }
     public void setCreditCard(int creditCard) {        this.creditCard = creditCard;    }*/

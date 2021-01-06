@@ -46,11 +46,71 @@ public class SessionImpl implements Session {
         }
 
     }
+    //Funcion que actualiza los datos de un objeto con los atributos
+    //del objeto que le enviamos como parametro
+    public void update(Object object) {
+        String updateQuery = QueryHelper.createQueryUPDATE(object);
+        PreparedStatement statement = null;
+        int i = 1;
+        try{
+            statement = conn.prepareStatement(updateQuery);
+            String[] fields = ObjectHelper.getFields(object);
+            for(String field : fields){
+                /*if(object.getClass()== Inventario.class) {
+                    switch (field) {
+                        case "cantidad":
+                            statement.setObject(1, ObjectHelper.getter(object, field));
+                            break;
+                        case "idObjeto":
+                            statement.setObject(2, ObjectHelper.getter(object, field));
+                            break;
+                        case "idJugador":
+                            statement.setObject(3, ObjectHelper.getter(object, field));
+                            break;
+                    }
+                }
+                else{*/
+                    statement.setObject(i, ObjectHelper.getter(object, field));
+                    i++;
+             //   }
+            }
+            System.out.println(statement);
+            statement.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+        System.out.println("Object updated : "+object.toString());
+    }
 
+    //Funcion que busca a un objeto y lo elimina
+    public void delete(Object object) {
+        String deleteQuery = QueryHelper.createQueryDELETE(object);
+        PreparedStatement statement = null;
+        String idValue = null;
+        try{
+            /*if(object.getClass()==Inventario.class){
+                statement = conn.prepareStatement("DELETE FROM Inventario WHERE idObjeto=? AND idJugador=?");
+                statement.setObject(1, ObjectHelper.getter(object, "idObjeto"));
+                statement.setObject(2, ObjectHelper.getter(object, "idJugador"));
+            } else {*/
+                statement = conn.prepareStatement(deleteQuery);
+                idValue = (String) ObjectHelper.getter(object, "id" + object.getClass().getSimpleName());
+                statement.setObject(1, ObjectHelper.getter(object, "id" + object.getClass().getSimpleName()));
+        //    }
+            statement.executeQuery();
+            System.out.println(statement);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+    }
     public void close() {
 
     }
-
+/*********************************      CONSULTES llistats      *************************************************/
     public HashMap<Integer, Object> findAll(Class theClass) {           //obtener todos (aplicable a todas las funciones)
 
         HashMap<Integer, Object> result = new HashMap<>();
@@ -149,7 +209,7 @@ public class SessionImpl implements Session {
 
     }
 
-
+/**********************************     AUTENTICACIONS      *************************************************/
     public boolean registerUser(RegisterCredentials registerCredentials) {
 
         User user = new User(registerCredentials.getUsername(), registerCredentials.getEmail(), registerCredentials.getPassword(), registerCredentials.getBirthdate());
@@ -234,6 +294,7 @@ public class SessionImpl implements Session {
         }
 
     }
+/*****************************************      CONSULTES  obtenim objectes     ***********************************************/
 
     public Object getById(Object theObject, int id) throws SQLException {
         String selectQuery = QueryHelper.createQuerySELECTbyID(theObject);          //quary que busca a partir del ID
@@ -254,6 +315,91 @@ public class SessionImpl implements Session {
             return null;
         }
     }
+
+    public Object getByName(Object theObject, String name) throws SQLException {
+        String selectQuery = QueryHelper.createQuerySELECTbyName(theObject);         //consulta per obtenir Partida del Username que introduim
+        PreparedStatement pstm = null;
+        try {
+            pstm = conn.prepareStatement(selectQuery);
+            pstm.setObject(1, name);
+            pstm.executeQuery();
+            ResultSet rs = pstm.getResultSet();
+            if (rs.next()) {
+                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++)
+                    ObjectHelper.setter(theObject, rs.getMetaData().getColumnName(i), rs.getObject(i));
+            }
+            return theObject;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    /************************************   OBTENIM ID A PARTIR DE NAME/USERNAME  *****************************/
+//Función que devuelve el ID de un objeto
+/*
+    @Override
+    public String getIDbyName(Class theClass, String name) {
+        ResultSet rs;
+        Object object = null;
+
+        String selectID = QueryHelper.createQueryGetIDbyName(theClass);
+
+        PreparedStatement pstm;
+
+        try {
+            object = theClass.newInstance();
+            pstm = this.conn.prepareStatement(selectID);
+            pstm.setObject(1, name);
+            rs = pstm.executeQuery();
+            System.out.println(pstm);
+            while(rs.next()) {
+                ResultSetMetaData rsmd = rs.getMetaData();
+                for(int i=1; i<=rsmd.getColumnCount();i++){
+                    String field = rsmd.getColumnName(i);
+                    ObjectHelper.setter(object,field,rs.getObject(i));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Object founded: "+object);
+        return null;
+    }
+
+ //   @Override
+    public String getIDbyUsername(Class theClass, String username) {
+        ResultSet rs;
+        Object object = null;
+
+        String selectID = QueryHelper.createQueryGetIDbyUsername(theClass);
+
+        PreparedStatement pstm;
+
+        try {
+            object = theClass.newInstance();
+            pstm = this.conn.prepareStatement(selectID);
+            pstm.setObject(1, username);
+            rs = pstm.executeQuery();
+            System.out.println(pstm);
+            while(rs.next()) {
+                ResultSetMetaData rsmd = rs.getMetaData();
+                for(int i=1; i<=rsmd.getColumnCount();i++){
+                    String field = rsmd.getColumnName(i);
+                    ObjectHelper.setter(object,field,rs.getObject(i));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("User founded: "+object);
+        return null;
+    }*/
+
+    /************************************   OBTENIM OBJECTE A PARTIR DE USERNAME USER   *****************************/
 
     public Object getUserByUsername(Object theObject, String username) throws SQLException {
         String selectQuery = QueryHelper.createQueryUserSELECTbyUsername(username);
@@ -338,7 +484,7 @@ public class SessionImpl implements Session {
 
 
 
-    //////////////////////////////////////////////////////////////////////////   REGISTERS   ////////////////
+    /**********************************************   REGISTERS   ************************************************/
     public boolean registerOrder(OrderCredentials orderCredentials) {
 
         Orders orders = new Orders(orderCredentials.getDate(), orderCredentials.getTime(), orderCredentials.getPrice());
@@ -494,25 +640,9 @@ public class SessionImpl implements Session {
         }
 
     }
-    public Object getByName(Object theObject, String name) throws SQLException {
-        String selectQuery = QueryHelper.createQuerySELECTbyName(theObject);         //consulta per obtenir Partida del Username que introduim
-        PreparedStatement pstm = null;
-        try {
-            pstm = conn.prepareStatement(selectQuery);
-            pstm.setObject(1, name);
-            pstm.executeQuery();
-            ResultSet rs = pstm.getResultSet();
-            if (rs.next()) {
-                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++)
-                    ObjectHelper.setter(theObject, rs.getMetaData().getColumnName(i), rs.getObject(i));
-            }
-            return theObject;
+    /****************************************************************************************************************/
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+
 
 }
 

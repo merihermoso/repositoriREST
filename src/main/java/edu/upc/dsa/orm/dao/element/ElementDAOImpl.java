@@ -4,6 +4,7 @@ package edu.upc.dsa.orm.dao.element;
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
 import edu.upc.dsa.orm.models.Element;
+import edu.upc.dsa.orm.models.User;
 import edu.upc.dsa.orm.models.shopCredentials.ElementCredentials;
 
 import java.sql.SQLException;
@@ -19,6 +20,7 @@ public class ElementDAOImpl implements ElementDAO {
         if (instance==null) instance = new ElementDAOImpl();
         return instance;
     }
+    /*****************************************  FUNCIONS GENERALS    ***************************************************/
 
     public List<Element> findAll(){
 
@@ -36,6 +38,20 @@ public class ElementDAOImpl implements ElementDAO {
 
         return elementsList;
     }
+    //Obtenemos la cantidad total de elementos registrados
+    public int size() {
+        Session session;
+        HashMap<String, Element> elements = null;
+        try{
+            session = FactorySession.openSession();
+            elements = session.findAll(Element.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return elements.size();
+    }
+    /*****************************************  OBTENIM ELEMENT     ***************************************************/
+    //Obtenim l'objecte element a partir del seu ID
     public Element getElementById(int elementID) throws SQLException {
         Session session = null;
         Element element = new Element();
@@ -52,6 +68,7 @@ public class ElementDAOImpl implements ElementDAO {
 
         return element;
     }
+    //Obtenim l'objecte element a partir del seu nom
     public Element getElementByName(String name) throws SQLException {
         Session session = null;
         Element element = new Element();
@@ -68,7 +85,7 @@ public class ElementDAOImpl implements ElementDAO {
 
         return element;
     }
-
+    //Obtenim l'objecte element a partir del username del usuari propietari
     public Element getElementByUsername(String username) throws SQLException {
         Session session = null;
         Element element = new Element();
@@ -86,23 +103,21 @@ public class ElementDAOImpl implements ElementDAO {
         return element;
     }
 
-    public boolean registerElement(ElementCredentials elementCredentials) { //Afegeix el user com a obejcte
+    /*****************************************  INSERT ELEMENT     ***************************************************/
+    //Inserta tot l'objecte ELEMENT passant les dades "amagades"
+    public boolean registerElement(ElementCredentials elementCredentials) {
 
         Session session;
         boolean result = false;
 
         try {
-
             session = FactorySession.openSession();
             result = session.registerElement(elementCredentials);
             session.close();
 
         } finally {
-
         }
-
         return result;
-
     }
-
+    /**********************************************************************************************************/
 }

@@ -10,16 +10,16 @@ import java.util.List;
 
 public interface EnemyDAO {
 
+    /*****************************************  FUNCIONS GENERALS    ***************************************************/
+    public List<Enemy> findAll();  //Enemies
+    public int size();
 
-      public Enemy getEnemyById(int enemyID) throws SQLException;
-      public Enemy getEnemyByName(String name) throws SQLException;
+    /***************************************** GET ***********************************************/
+    public Enemy getEnemyById(int enemyID) throws SQLException;
+    public Enemy getEnemyByName(String name) throws SQLException;
 
-      //public List<Game> getEnemies() throws SQLException;
-
-      public List<Enemy> findAll();  //Enemies
-
-
-       boolean  registerEnemy(EnemyCredentials enemyCredentials) throws SQLException;
+    /*********************************** REGISTRE ENEMICS *******************************************/
+    boolean  registerEnemy(EnemyCredentials enemyCredentials) throws SQLException;
 
 
 }

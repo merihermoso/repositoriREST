@@ -7,14 +7,17 @@ import java.sql.SQLException;
 import java.util.*;
 
 public interface ElementDAO {
+    /*****************************************  FUNCIONS GENERALS    ***************************************************/
+    public List<Element> findAll();
+    public int size();
 
+    /*****************************************  OBTENIM ELEMENT     ***************************************************/
     public Element getElementById(int elementID) throws SQLException;
     public Element getElementByName(String name) throws SQLException;
-
     public Element getElementByUsername(String username) throws SQLException;
 
-    public List<Element> findAll();
-
-
+    /*****************************************  registre ELEMENT     ***************************************************/
     boolean registerElement(ElementCredentials elementCredentials);
+
+
 }

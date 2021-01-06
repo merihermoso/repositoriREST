@@ -11,11 +11,15 @@ import java.util.List;
 
 public interface ItemDAO {
 
+    /*****************************************  FUNCIONS GENERALS    ***************************************************/
+    public List<Item> findAll();
+    public int size();
+
+    /*****************************************  OBTENIM ITEM inventari *************************************************/
     public Item getItemById(int itemID) throws SQLException;
     public Item getItemByName(String name) throws SQLException;
 
-    public List<Item> findAll();
-
+    /*****************************************  REGISTRE ITEM     *************************************************/
     boolean registerItem(ItemCredentials itemCredentials) throws SQLException;
 
 

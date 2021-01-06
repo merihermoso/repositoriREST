@@ -35,22 +35,8 @@ public class UserService {
         this.userDAO = UserDAOImpl.getInstance();
 
     }
+/**********************************************     authenitication      *****************************************************/
 
-    @GET
-    @ApiOperation(value = "Get all Users", notes = "Get all users from BBDD")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = User.class, responseContainer="List"),
-    })
-    @Path("AllUsers/")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getUsers() {
-
-        List<User> users = this.userDAO.findAll();
-
-        GenericEntity<List<User>> entity = new GenericEntity<List<User>>(users) {};
-        return Response.status(201).entity(entity).build();
-
-    }
 
     @POST
     @ApiOperation(value = "Register a new User", notes = "Register a user")
@@ -122,8 +108,25 @@ public class UserService {
 
         return Response.status(201).build();
     }
+    /**********************************************     consultes     *****************************************************/
+    //Servei per obtenir tots els usuaris
+    @GET
+    @ApiOperation(value = "Get all Users", notes = "Get all users from BBDD")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = User.class, responseContainer="List"),
+    })
+    @Path("AllUsers/")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUsers() {
 
+        List<User> users = this.userDAO.findAll();
 
+        GenericEntity<List<User>> entity = new GenericEntity<List<User>>(users) {};
+        return Response.status(201).entity(entity).build();
+
+    }
+
+    //Servei per obtenir un usuari a partir del username
     @GET
     @ApiOperation(value = "get a User", notes = "Get all data 1 user")
     @ApiResponses(value = {
@@ -144,6 +147,7 @@ public class UserService {
             return Response.status(503).build();
         }
     }
+    //Servei per obtenir un usuari a partir del ID
     @GET
     @ApiOperation(value = "get a User", notes = "Get all data 1 user")
     @ApiResponses(value = {
@@ -164,8 +168,11 @@ public class UserService {
         }
     }
 
+
+    /*************************************************** POR HACER... *****************************************/
 /*
-    @Path("/delete/{username}")                                        //servicio para encontrar usuario a partir del username
+ //servicio para encontrar usuario a partir del username
+    @Path("/delete/{username}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response deleteUserByUsername(@PathParam("username") String username) {
         try{
@@ -177,19 +184,7 @@ public class UserService {
             return Response.status(503).build();
         }
     }
-
-    @Path("/{username}")                                        //servicio para encontrar usuario a partir del username
-    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response DeleteUserByUsername(@PathParam("username") String username) {
-        try{
-            User user = this.userDAO.deleteUserByUsername(username);
-            return Response.status(200).entity(user).build();
-        }
-        catch (Exception e){
-
-            return Response.status(503).build();
-        }
-    }
 */
+    /**********************************************************************************************************/
 
 }

@@ -8,12 +8,20 @@ import java.util.List;
 
 public interface OrderDAO {
 
-      boolean registerOrder(OrderCredentials orderCredentials);
-
+      /*****************************************  FUNCIONS GENERALS    *************************************************/
       public List<Orders> findAll();
+      public int size();
+
+      /*****************************************  OBTENIM COMANDA     *************************************************/
       public Orders getOrderById(int orderID) throws SQLException;
       public Orders getOrderByUsername(String username) throws SQLException;
 
+      /*****************************************  REGISTRE COMANDA     *************************************************/
+      boolean registerOrder(OrderCredentials orderCredentials);
+
+
 // public Orders addOrderToUser(String username) throws SQLException;           //fer funció asignar Order a User (al apretar el botón "Pagar"
                                     //->pasar parametres LoginCredentials?
+
+
 }

@@ -4,6 +4,7 @@ import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
 import edu.upc.dsa.orm.models.Game;
 import edu.upc.dsa.orm.models.GameCredentials.GameCredentials;
+import edu.upc.dsa.orm.models.User;
 //import jdk.incubator.jpackage.internal.Log;
 
 import java.sql.SQLException;
@@ -19,7 +20,7 @@ public class GameDAOImpl implements GameDAO {
         if (instance==null) instance = new GameDAOImpl();
         return instance;
     }
-
+    /*****************************************  FUNCIONS GENERALS    ************************************************/
     public List<Game> findAll(){
 
         Session session;
@@ -36,25 +37,20 @@ public class GameDAOImpl implements GameDAO {
 
         return gameList;
     }
-
-    public List<Game> getGameRanking(){
-
+    public int size() {
         Session session;
-        List<Game> gamesList;
-
-        HashMap<Integer, Game> result;
-
-        session = FactorySession.openSession();
-        result = session.findTop(Game.class);
-
-        gamesList = new ArrayList<>(result.values());
-
-        session.close();
-
-        return gamesList;
+        HashMap<String, Game> games = null;
+        try{
+            session = FactorySession.openSession();
+            games = session.findAll(Game.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return games.size();
     }
 
-    public Game getGameById(int gameID) throws SQLException {
+    /*****************************************  OBTENIM PARTIDA     *************************************************/
+        public Game getGameById(int gameID) throws SQLException {
         Session session = null;
         Game game = new Game();
         try {
@@ -88,6 +84,24 @@ public class GameDAOImpl implements GameDAO {
 
         return game;
     }
+    /*****************************************  OBTENIM ranking     *************************************************/
+    public List<Game> getGameRanking(){
+
+        Session session;
+        List<Game> gamesList;
+
+        HashMap<Integer, Game> result;
+
+        session = FactorySession.openSession();
+        result = session.findTop(Game.class);
+
+        gamesList = new ArrayList<>(result.values());
+
+        session.close();
+
+        return gamesList;
+    }
+    /*****************************************   REGISTRE PARTIDAS   ************************************************/
 
     public boolean registerGame(GameCredentials gameCredentials) { //Afegeix el user com a obejcte
 
@@ -107,6 +121,5 @@ public class GameDAOImpl implements GameDAO {
         return result;
 
     }
-
-
+    /**********************************************************************************************************/
 }

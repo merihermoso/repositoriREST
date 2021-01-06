@@ -4,6 +4,7 @@ import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
 import edu.upc.dsa.orm.models.Enemy;
 import edu.upc.dsa.orm.models.GameCredentials.EnemyCredentials;
+import edu.upc.dsa.orm.models.User;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class EnemyDAOImpl implements EnemyDAO {
         if (instance==null) instance = new EnemyDAOImpl();
         return instance;
     }
+    /*****************************************  FUNCIONS GENERALS    ***************************************************/
 
     public List<Enemy> findAll(){
 
@@ -37,6 +39,18 @@ public class EnemyDAOImpl implements EnemyDAO {
 
         return enemyList;
     }
+    public int size() {
+        Session session;
+        HashMap<String, Enemy> enemies = null;
+        try{
+            session = FactorySession.openSession();
+            enemies = session.findAll(Enemy.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return enemies.size();
+    }
+    /***************************************** GET ***********************************************/
 
 
     public Enemy getEnemyById(int enemyID) throws SQLException {
@@ -73,6 +87,7 @@ public class EnemyDAOImpl implements EnemyDAO {
         return enemy;
     }
 
+    /*********************************** REGISTRE ENEMICS *******************************************/
     public boolean registerEnemy(EnemyCredentials enemyCredentials) { //Afegeix el user com a obejcte
 
         Session session;
@@ -91,7 +106,5 @@ public class EnemyDAOImpl implements EnemyDAO {
         return result;
 
     }
-
-
-
+    /**********************************************************************************************************/
 }
