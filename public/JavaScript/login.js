@@ -1,4 +1,4 @@
-var BASE_URI="http://147.83.7.207:8080/dsaApp/";
+var BASE_URI="/dsaApp";
 
 $(document).ready(function() {
 
@@ -10,7 +10,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: 'POST',
-            url: BASE_URI.concat("user/login"),
+            url: BASE_URI.concat("/user/login"),
             data: JSON.stringify(user),
             dataType: 'json',
             headers: {'content-type': 'application/json'},
@@ -18,7 +18,7 @@ $(document).ready(function() {
                 201: function() {
                     alert("Has iniciado sesión correctamente\n");
                     window.localStorage.setItem("username", username);
-                    var url = "http://147.83.7.207:8080/home.html";
+                    var url = "home.html";
                     window.open(url, "_self");
                 },
                 601: function() {
@@ -50,7 +50,7 @@ $(document).ready(function() {
 
             $.ajax({
                 type: 'POST',
-                url: BASE_URI.concat("user/register"),
+                url: BASE_URI.concat("/user/register"),
                 headers: {'content-type': 'application/json'},
                 data: JSON.stringify(user),
                 dataType: 'json',
@@ -58,7 +58,7 @@ $(document).ready(function() {
                     201: function() {
                         alert("Te has registrado correctamente\n");
                         window.localStorage.setItem("username", username);
-                        var url = "http://147.83.7.207:8080/home.html";
+                        var url = "home.html";
                         window.open(url, "_self");
                     },
                     600: function() {

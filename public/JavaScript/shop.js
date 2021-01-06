@@ -1,8 +1,8 @@
-var BASE_URI="http://147.83.7.207:8080/dsaApp";
+var BASE_URI="/dsaApp";
 var idJugador = localStorage.getItem("token");
 var diamantes = localStorage.getItem("diamantes");
 if (idJugador == null){
-    var url = "http://147.83.7.207:8080/login.html";
+    var url = "login.html";
     window.open(url, "_self");
 }
 
