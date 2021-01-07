@@ -25,6 +25,7 @@ public interface UserDAO {
     int getEmail_min_length();
     int getEmail_max_length();
     int getMin_age();
+
     /*****************************************  FUNCIONS BÀSIQUES  *************************************************/
 
     List<User> findAll();

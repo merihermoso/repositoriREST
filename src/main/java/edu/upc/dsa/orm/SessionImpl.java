@@ -128,6 +128,7 @@ public class SessionImpl implements Session {
         Object object;
         int id;
         System.out.println(selectQuery);
+
         try {
 
             object = theClass.getDeclaredConstructor().newInstance();
@@ -144,6 +145,7 @@ public class SessionImpl implements Session {
                 }
                 result.put((int) resultSet.getObject(1), object);
                 object = theClass.getDeclaredConstructor().newInstance();
+
             }
 
         } catch (SQLException sqlException) {
@@ -225,19 +227,22 @@ public class SessionImpl implements Session {
 
             String selectQuery = QueryHelper.createQueryUPDATEPasswordByUsername();
 
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(changePasswordCredentials.getNewPassword().getBytes(StandardCharsets.UTF_8));
+
             System.out.println(selectQuery);
 
             PreparedStatement pstm;
             ResultSet resultSet;
 
             pstm = conn.prepareStatement(selectQuery);
-            pstm.setString(1, changePasswordCredentials.getNewPassword());
+            pstm.setString(1, encodeHex(hash));
             pstm.setString(2, changePasswordCredentials.getUsername());
             resultSet = pstm.executeQuery();
 
             return true;
 
-        } catch (SQLException e) {
+        } catch (SQLException | NoSuchAlgorithmException e) {
 
             e.printStackTrace();
             return false;
