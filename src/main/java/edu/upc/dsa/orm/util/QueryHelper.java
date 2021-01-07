@@ -69,7 +69,7 @@ public class QueryHelper {
     public static String createQuerySELECTtop(Class theClass) {
         StringBuffer sb = new StringBuffer();
         sb.append("SELECT * FROM ").append(theClass.getSimpleName());
-        sb.append(" ORDER BY score ASC");
+        sb.append(" ORDER BY score DESC");
         return sb.toString();                      //FALTA FER QUE ORDENI PER SCORE, PERO PETA....
     }
 

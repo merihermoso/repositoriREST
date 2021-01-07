@@ -173,14 +173,17 @@ public class SessionImpl implements Session {
         PreparedStatement pstm;
         ResultSet resultSet;
         Object object;
+
         int id;
         System.out.println(selectQuery);
+
         try {
 
             object = theClass.getDeclaredConstructor().newInstance();
             pstm = conn.prepareStatement(selectQuery);
             resultSet = pstm.executeQuery();
 
+            int pos = 1;
             while (resultSet.next()) {
 
                 ResultSetMetaData rsmd = resultSet.getMetaData();
@@ -189,8 +192,9 @@ public class SessionImpl implements Session {
                     String field = rsmd.getColumnName(i);
                     ObjectHelper.setter(object, field, resultSet.getObject(i));
                 }
-                result.put((int) resultSet.getObject(1), object);
+                result.put((int) pos, object);
                 object = theClass.getDeclaredConstructor().newInstance();
+                pos++;
             }
 
         } catch (SQLException sqlException) {
