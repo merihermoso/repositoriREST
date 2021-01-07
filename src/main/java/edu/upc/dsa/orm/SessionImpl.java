@@ -225,6 +225,8 @@ public class SessionImpl implements Session {
 
             String selectQuery = QueryHelper.createQueryUPDATEPasswordByUsername();
 
+            System.out.println(selectQuery);
+
             PreparedStatement pstm;
             ResultSet resultSet;
 
@@ -249,6 +251,8 @@ public class SessionImpl implements Session {
         try {
 
             String selectQuery = QueryHelper.createQueryUPDATEEmailByUsername();
+
+            System.out.println(selectQuery);
 
             PreparedStatement pstm;
             ResultSet resultSet;
