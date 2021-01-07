@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
+import edu.upc.dsa.orm.models.Credentials.ChangeEmailCredentials;
+import edu.upc.dsa.orm.models.Credentials.ChangePasswordCredentials;
 import edu.upc.dsa.orm.models.Credentials.LoginCredentials;
 import edu.upc.dsa.orm.models.Credentials.RegisterCredentials;
 import edu.upc.dsa.orm.models.Game;
@@ -38,6 +40,9 @@ public interface UserDAO {
 
     int getUserPositionByUsername(String username) throws SQLException;
     //  public User deleteUserByUsername(String username) throws SQLException;
+
+    boolean changeUserEmail(ChangeEmailCredentials changeEmailCredentials);
+    boolean changeUserPassword(ChangePasswordCredentials changePasswordCredentials);
 
 
 

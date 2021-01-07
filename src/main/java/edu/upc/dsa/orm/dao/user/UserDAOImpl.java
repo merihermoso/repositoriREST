@@ -1,6 +1,8 @@
 package edu.upc.dsa.orm.dao.user;
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
+import edu.upc.dsa.orm.models.Credentials.ChangeEmailCredentials;
+import edu.upc.dsa.orm.models.Credentials.ChangePasswordCredentials;
 import edu.upc.dsa.orm.models.Credentials.LoginCredentials;
 import edu.upc.dsa.orm.models.Credentials.RegisterCredentials;
 import edu.upc.dsa.orm.models.Game;
@@ -205,8 +207,27 @@ public class UserDAOImpl implements UserDAO {
         return usersList;
     }
 
+    public boolean changeUserEmail(ChangeEmailCredentials changeEmailCredentials) {
 
-    /*****************************************  to do    *************************************************/
+        Session session;
+
+        session = FactorySession.openSession();
+        session.close();
+
+        return session.changeEmail(changeEmailCredentials);
+
+    }
+
+    public boolean changeUserPassword(ChangePasswordCredentials changePasswordCredentials) {
+
+        Session session;
+
+        session = FactorySession.openSession();
+        session.close();
+
+        return session.changePassword(changePasswordCredentials);
+
+    }
 
     //NO FUNCIONA ENCARA (LA PART DE QUERYHELPER NO ESTÀ BEN FETA LA CONSULTA PER TROBAR LA POSICIÓ
    public int getUserPositionByUsername(String username) throws SQLException {

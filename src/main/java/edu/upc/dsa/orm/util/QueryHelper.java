@@ -190,8 +190,19 @@ public class QueryHelper {
         return sb.toString();
     }
 
+    public static String createQueryUPDATEPasswordByUsername() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("UPDATE User SET password = ?");
+        sb.append(" WHERE username = ? ");
+        return sb.toString();
+    }
 
-
+    public static String createQueryUPDATEEmailByUsername() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("UPDATE User SET email = ?");
+        sb.append(" WHERE username = ? ");
+        return sb.toString();
+    }
 
 
 }

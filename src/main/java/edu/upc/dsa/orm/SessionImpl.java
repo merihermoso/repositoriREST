@@ -2,6 +2,8 @@ package edu.upc.dsa.orm;
 
 import com.sun.tools.javac.util.Convert;
 import edu.upc.dsa.orm.models.*;
+import edu.upc.dsa.orm.models.Credentials.ChangeEmailCredentials;
+import edu.upc.dsa.orm.models.Credentials.ChangePasswordCredentials;
 import edu.upc.dsa.orm.models.Credentials.LoginCredentials;
 import edu.upc.dsa.orm.models.Credentials.RegisterCredentials;
 import edu.upc.dsa.orm.models.GameCredentials.EnemyCredentials;
@@ -214,6 +216,56 @@ public class SessionImpl implements Session {
         }
 
         return result;
+
+    }
+
+    public boolean changePassword(ChangePasswordCredentials changePasswordCredentials) {
+
+        try {
+
+            String selectQuery = QueryHelper.createQueryUPDATEPasswordByUsername();
+
+            PreparedStatement pstm;
+            ResultSet resultSet;
+
+            pstm = conn.prepareStatement(selectQuery);
+            pstm.setString(1, changePasswordCredentials.getUsername());
+            pstm.setString(2, changePasswordCredentials.getNewPassword());
+            resultSet = pstm.executeQuery();
+
+            return true;
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+            return false;
+
+        }
+
+    }
+
+    public boolean changeEmail(ChangeEmailCredentials changeEmailCredentials) {
+
+        try {
+
+            String selectQuery = QueryHelper.createQueryUPDATEEmailByUsername();
+
+            PreparedStatement pstm;
+            ResultSet resultSet;
+
+            pstm = conn.prepareStatement(selectQuery);
+            pstm.setString(1, changeEmailCredentials.getUsername());
+            pstm.setString(2, changeEmailCredentials.getNewEmail());
+            resultSet = pstm.executeQuery();
+
+            return true;
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+            return false;
+
+        }
 
     }
 

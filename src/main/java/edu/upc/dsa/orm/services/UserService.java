@@ -3,9 +3,7 @@ package edu.upc.dsa.orm.services;
 
 import edu.upc.dsa.orm.dao.user.UserDAO;
 import edu.upc.dsa.orm.dao.user.UserDAOImpl;
-import edu.upc.dsa.orm.models.Credentials.GetUserCredentials;
-import edu.upc.dsa.orm.models.Credentials.LoginCredentials;
-import edu.upc.dsa.orm.models.Credentials.RegisterCredentials;
+import edu.upc.dsa.orm.models.Credentials.*;
 import edu.upc.dsa.orm.models.GameParameters;
 import edu.upc.dsa.orm.models.User;
 import io.swagger.annotations.Api;
@@ -17,6 +15,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
@@ -90,6 +89,63 @@ public class UserService {
 
         return Response.status(201).build();
     }
+
+
+    @POST
+    @ApiOperation(value = "Change user password", notes = "Change the password of a user")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 603, message = "Incorrect password"),
+    })
+    @Path("/changePassword")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response changeUserPassword(ChangePasswordCredentials changePasswordCredentials) throws SQLException {
+
+        LoginCredentials loginCredentials = new LoginCredentials();
+        loginCredentials.setUsername(changePasswordCredentials.getUsername());
+        loginCredentials.setPassword(changePasswordCredentials.getPassword());
+
+        if (this.userDAO.loginUser(loginCredentials)) {
+
+            this.userDAO.changeUserPassword(changePasswordCredentials);
+            return Response.status(201).build();
+
+        } else {
+
+            return Response.status(603).build();
+
+        }
+
+    }
+
+    @POST
+    @ApiOperation(value = "Change user email", notes = "Change the email of a user")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 603, message = "Incorrect password"),
+    })
+    @Path("/changeEmail")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response changeUserEmail(ChangeEmailCredentials changeEmailCredentials) throws SQLException {
+
+        LoginCredentials loginCredentials = new LoginCredentials();
+        loginCredentials.setUsername(changeEmailCredentials.getUsername());
+        loginCredentials.setPassword(changeEmailCredentials.getPassword());
+
+        if (this.userDAO.loginUser(loginCredentials)) {
+
+            this.userDAO.changeUserEmail(changeEmailCredentials);
+            return Response.status(201).build();
+
+        } else {
+
+            return Response.status(603).build();
+
+        }
+
+    }
+
+
     /**********************************************     consultes     *****************************************************/
     //Servei per obtenir tots els usuaris
     @GET

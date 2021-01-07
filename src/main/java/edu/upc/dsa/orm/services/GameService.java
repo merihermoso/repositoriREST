@@ -10,7 +10,9 @@ import edu.upc.dsa.orm.dao.item.ItemDAOImpl;
 import edu.upc.dsa.orm.dao.user.UserDAO;
 import edu.upc.dsa.orm.dao.user.UserDAOImpl;
 import edu.upc.dsa.orm.models.*;
+import edu.upc.dsa.orm.models.Credentials.ChangePasswordCredentials;
 import edu.upc.dsa.orm.models.Credentials.GetUserCredentials;
+import edu.upc.dsa.orm.models.Credentials.LoginCredentials;
 import edu.upc.dsa.orm.models.GameCredentials.EnemyCredentials;
 import edu.upc.dsa.orm.models.GameCredentials.GameCredentials;
 import edu.upc.dsa.orm.models.GameCredentials.ItemCredentials;
@@ -98,7 +100,6 @@ public class GameService {
         }
 
     }
-
 
     /**********************************************     GAMES (partidas) services   ***********************************/
     //Servicio para obtener todas las partidas

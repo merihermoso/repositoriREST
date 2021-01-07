@@ -1,5 +1,7 @@
 package edu.upc.dsa.orm;
 
+import edu.upc.dsa.orm.models.Credentials.ChangeEmailCredentials;
+import edu.upc.dsa.orm.models.Credentials.ChangePasswordCredentials;
 import edu.upc.dsa.orm.models.Credentials.LoginCredentials;
 import edu.upc.dsa.orm.models.Credentials.RegisterCredentials;
 import edu.upc.dsa.orm.models.Enemy;
@@ -48,6 +50,9 @@ public interface Session<E> {
     //   public String getLEVELbyUsername(Object theClass, String username) throws SQLException;
 
     int getUserPositionByUsername(String username);
+
+    boolean changeEmail(ChangeEmailCredentials changeEmailCredentials);
+    boolean changePassword(ChangePasswordCredentials changePasswordCredentials);
 
     /*****************************OBTENIM OBJECTES A PARTIR DEL USERNAME DEL USER*******************************/
     public Object getUserByUsername(Object theClass, String username) throws SQLException;
