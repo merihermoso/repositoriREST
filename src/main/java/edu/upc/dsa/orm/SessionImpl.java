@@ -212,7 +212,7 @@ public class SessionImpl implements Session {
 /**********************************     AUTENTICACIONS      *************************************************/
     public boolean registerUser(RegisterCredentials registerCredentials) {
 
-        User user = new User(registerCredentials.getUsername(), registerCredentials.getEmail(), registerCredentials.getPassword(), registerCredentials.getBirthdate());
+        User user = new User(registerCredentials.getUsername(), registerCredentials.getEmail(), registerCredentials.getPassword(), registerCredentials.getBirthdate_day() + "/" + registerCredentials.getBirthdate_month() + "/" + registerCredentials.getBirthdate_year());
 
         String insertQuery = QueryHelper.createQueryINSERT(user);
 

@@ -5,7 +5,7 @@ import edu.upc.dsa.orm.dao.user.UserDAO;
 import edu.upc.dsa.orm.dao.user.UserDAOImpl;
 import edu.upc.dsa.orm.models.Credentials.LoginCredentials;
 import edu.upc.dsa.orm.models.Credentials.RegisterCredentials;
-import edu.upc.dsa.orm.models.Game;
+import edu.upc.dsa.orm.models.GameParameters;
 import edu.upc.dsa.orm.models.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -16,11 +16,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 
@@ -62,26 +59,10 @@ public class UserService {
         if (registerCredentials.getPassword().length() < this.userDAO.getPassword_min_length() || registerCredentials.getPassword().length() > this.userDAO.getPassword_max_length()) return Response.status(605).build();
         if (registerCredentials.getEmail().length() < this.userDAO.getEmail_min_length() || registerCredentials.getEmail().length() > this.userDAO.getEmail_max_length()) return Response.status(606).build();
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        LocalDate l1 = LocalDate.of(registerCredentials.getBirthdate_year(), registerCredentials.getBirthdate_month(),  registerCredentials.getBirthdate_day());
+        Period diff1 = Period.between(l1, LocalDate.now());
 
-        try {
-
-            Date d = sdf.parse(registerCredentials.getBirthdate());
-            Calendar c = Calendar.getInstance();
-            c.setTime(d);
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH) + 1;
-            int date = c.get(Calendar.DATE);
-            LocalDate l1 = LocalDate.of(year, month, date);
-            LocalDate now1 = LocalDate.now();
-            Period diff1 = Period.between(l1, now1);
-
-            if (diff1.getYears() < this.userDAO.getMin_age()) return Response.status(607).build();
-
-        } catch (Exception e) {
-
-
-        }
+        if (diff1.getYears() < this.userDAO.getMin_age()) return Response.status(607).build();
 
         this.userDAO.registerUser(registerCredentials);
         return Response.status(201).build();
@@ -115,7 +96,7 @@ public class UserService {
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = User.class, responseContainer="List"),
     })
-    @Path("AllUsers/")
+    @Path("/allUsers")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUsers() {
 
@@ -123,6 +104,20 @@ public class UserService {
 
         GenericEntity<List<User>> entity = new GenericEntity<List<User>>(users) {};
         return Response.status(201).entity(entity).build();
+
+    }
+
+    @GET
+    @ApiOperation(value = "Get game parameters", notes = "Send game global parameters to client")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = GameParameters.class),
+    })
+    @Path("/gameParameters")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getGameParameters() {
+
+        GameParameters gameParameters = new GameParameters(this.userDAO.getUsername_min_length(), this.userDAO.getUsername_max_length(), this.userDAO.getPassword_min_length(), this.userDAO.getPassword_max_length(), this.userDAO.getEmail_min_length(), this.userDAO.getEmail_max_length(), this.userDAO.getMin_age());
+        return Response.status(201).entity(gameParameters).build();
 
     }
 

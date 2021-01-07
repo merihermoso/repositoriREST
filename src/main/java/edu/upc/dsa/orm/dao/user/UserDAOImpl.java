@@ -28,7 +28,7 @@ public class UserDAOImpl implements UserDAO {
         this.password_max_length = 20;
         this.email_min_length = 4;
         this.email_max_length = 30;
-        this.min_age = 14;
+        this.min_age = 15;
 
     }
 
