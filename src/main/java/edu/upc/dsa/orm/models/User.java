@@ -9,7 +9,7 @@ public class User {
     private String birthdate;
     private int score;
     private int level;
-    private String status;
+    //private String status;
 
  //   private int creditCard;
 
