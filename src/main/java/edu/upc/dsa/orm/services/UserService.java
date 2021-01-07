@@ -3,6 +3,7 @@ package edu.upc.dsa.orm.services;
 
 import edu.upc.dsa.orm.dao.user.UserDAO;
 import edu.upc.dsa.orm.dao.user.UserDAOImpl;
+import edu.upc.dsa.orm.models.Credentials.GetUserCredentials;
 import edu.upc.dsa.orm.models.Credentials.LoginCredentials;
 import edu.upc.dsa.orm.models.Credentials.RegisterCredentials;
 import edu.upc.dsa.orm.models.GameParameters;
@@ -122,19 +123,18 @@ public class UserService {
     }
 
     //Servei per obtenir un usuari a partir del username
-    @GET
+    @POST
     @ApiOperation(value = "get a User", notes = "Get all data 1 user")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = User.class),
             @ApiResponse(code = 503, message = "not working well...")
 
     })
-
-    @Path("/GetUserByUSERNAME/{username}")
+    @Path("/getUserByUsername")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response GetUserByUsername(@PathParam("username") String username) {
+    public Response getUserByUsername(GetUserCredentials getUserCredentials) {
         try{
-            User user = this.userDAO.getUserByUsername(username);
+            User user = this.userDAO.getUserByUsername(getUserCredentials.getUsername());
             return Response.status(200).entity(user).build();
         }
         catch (Exception e){
@@ -142,6 +142,7 @@ public class UserService {
             return Response.status(503).build();
         }
     }
+
     //Servei per obtenir un usuari a partir del ID
     @GET
     @ApiOperation(value = "get a User", notes = "Get all data 1 user")
