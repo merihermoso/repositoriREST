@@ -1,5 +1,6 @@
 package edu.upc.dsa.orm;
 
+import com.sun.tools.javac.util.Convert;
 import edu.upc.dsa.orm.models.*;
 import edu.upc.dsa.orm.models.Credentials.LoginCredentials;
 import edu.upc.dsa.orm.models.Credentials.RegisterCredentials;
@@ -220,7 +221,7 @@ public class SessionImpl implements Session {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(registerCredentials.getPassword().getBytes(StandardCharsets.UTF_8));
 
-            User user = new User(registerCredentials.getUsername(), registerCredentials.getEmail(), hash.toString(), registerCredentials.getBirthdate_day() + "/" + registerCredentials.getBirthdate_month() + "/" + registerCredentials.getBirthdate_year());
+            User user = new User(registerCredentials.getUsername(), registerCredentials.getEmail(), encodeHex(hash), registerCredentials.getBirthdate_day() + "/" + registerCredentials.getBirthdate_month() + "/" + registerCredentials.getBirthdate_year());
 
             String insertQuery = QueryHelper.createQueryINSERT(user);
 
@@ -271,7 +272,8 @@ public class SessionImpl implements Session {
 
             if (resultSet.next()) {
 
-                return resultSet.getString(1).equals(hash.toString());
+
+                return resultSet.getString(1).equals(encodeHex(hash));
 
             } else {
 
@@ -663,6 +665,13 @@ public class SessionImpl implements Session {
     }
     /****************************************************************************************************************/
 
+    private static String encodeHex(byte[] digest) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < digest.length; i++) {
+            sb.append(Integer.toString((digest[i] & 0xff) + 0x100, 16).substring(1));
+        }
+        return sb.toString();
+    }
 
 
 }
