@@ -3,10 +3,9 @@ package edu.upc.dsa.orm.services;
 
 import edu.upc.dsa.orm.dao.element.ElementDAO;
 import edu.upc.dsa.orm.dao.element.ElementDAOImpl;
-import edu.upc.dsa.orm.dao.order.OrderDAO;
-import edu.upc.dsa.orm.dao.order.OrderDAOImpl;
 import edu.upc.dsa.orm.models.Element;
-import edu.upc.dsa.orm.models.Orders;
+import edu.upc.dsa.orm.models.GameCredentials.GetObjectCredentials;
+import edu.upc.dsa.orm.models.GameCredentials.ObjectIdResponse;
 import edu.upc.dsa.orm.models.shopCredentials.ElementCredentials;
 import edu.upc.dsa.orm.models.shopCredentials.OrderCredentials;
 import io.swagger.annotations.Api;
@@ -18,6 +17,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.sql.SQLException;
 import java.util.List;
 
 
@@ -25,83 +25,16 @@ import java.util.List;
 @Path("shop")
 public class ShopService {
 
-    private final OrderDAO orderDAO;
     private final ElementDAO elementDAO;
 
     public ShopService() {
 
-        this.orderDAO = OrderDAOImpl.getInstance();
         this.elementDAO = ElementDAOImpl.getInstance();
 
     }
-/*******************************************    ORDERS services    *******************************************************/
-    //Servei per obtenir totes les comandes
-    @GET
-    @ApiOperation(value = "Get all Orders", notes = "Get all orders from BBDD")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Orders.class, responseContainer="List"),
-            @ApiResponse(code = 503, message = "not working well...")
-    })
-    @Path("/Orders/findAll")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getOrders() {
-        try{
-        List<Orders> orders = this.orderDAO.findAll();
-
-        GenericEntity<List<Orders>> entity = new GenericEntity<List<Orders>>(orders) {};
-        return Response.status(201).entity(entity).build();
-        }
-        catch (Exception e){
-
-            return Response.status(503).build();
-        }
-    }
-
-    //Servei per obtenir LA PRIMERA comanda de un usuari                                //hauria de retornar totes
-    @GET
-    @ApiOperation(value = "get an Order by Username", notes = "Get all data 1 user")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = Element.class),
-            @ApiResponse(code = 503, message = "not working well..."),
-            @ApiResponse(code = 600, message = "Need to fill in username field.")
-
-    })
-    @Path("/Order/getByUSERNAME/{username}")
-    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response GetOrderByUsername(@PathParam("username") String username) {
-        try{
-            if (username==null) return Response.status(600).build();
-            Orders order = this.orderDAO.getOrderByUsername(username);
-            return Response.status(200).entity(order).build();
-        }
-        catch (Exception e){
-
-            return Response.status(503).build();
-        }
-    }
-    //Servei per obtenir una comanda a partir de la seva ID
-    @GET                                                                //Servicio para obtener un Pedido a partir del ID
-    @ApiOperation(value = "get an Order from its ID", notes = "Get all data 1 user")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = Element.class),
-            @ApiResponse(code = 503, message = "not working well..."),
-            @ApiResponse(code = 600, message = "Need to fill in orderID field.")
-
-    })
-    @Path("/Order/getByID/{orderID}")
-    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response GetOrderFromId(@PathParam("orderID") int orderID) {
-        try{
-            if (orderID==0) return Response.status(600).build();
-            Orders order = this.orderDAO.getOrderById(orderID);
-            return Response.status(200).entity(order).build();
-        }
-        catch (Exception e){
-            return Response.status(503).build();
-        }
-    }
 
     /*******************************************    ELEMENTS services    *******************************************************/
+
     //Servei per obtenir tots els elements registrats
     @GET                                                                            //Servicio para obtener todos los elementos
     @ApiOperation(value = "Get all Elements from BBDD", notes = "Get all Elements from BBDD")
@@ -189,27 +122,26 @@ public class ShopService {
             return Response.status(503).build();
         }
     }
-    //Servei per registrar una nova comanda
-    @POST                                                                   //Servicio para registrar nuevo Pedido
-    @ApiOperation(value = "Register a new Order", notes = "Register an order")
+    @POST
+    @ApiOperation(value = "Get an element ID", notes = "Get elementID by its name")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful! Order registered"),
-            @ApiResponse(code = 600, message = "Need to fill in date field"),
-            @ApiResponse(code = 601, message = "Need to fill in time field"),
-            @ApiResponse(code = 602, message = "Need to fill in price field"),
-
+            @ApiResponse(code = 201, message = "Successful", response = ObjectIdResponse.class),
+            @ApiResponse(code = 404, message = "User not found"),
     })
-    @Path("/Order/register")
-    public Response orderRegister(OrderCredentials orderCredentials) {
+    @Path("/getElementIdByName")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getElementIdByName(GetObjectCredentials getObjectCredentials) throws SQLException {
 
-        if (orderCredentials.getDate()==null) return Response.status(600).build();
-        if (orderCredentials.getTime()==null) return Response.status(601).build();
-        if (orderCredentials.getPrice()==0) return Response.status(602).build();
+        ObjectIdResponse objectIdResponse = new ObjectIdResponse(this.elementDAO.getElementIdByName(getObjectCredentials.getName()));
 
-        this.orderDAO.registerOrder(orderCredentials);
-        return Response.status(201).build();
+        if (objectIdResponse.getObjectID() != -1) {
+            return Response.status(201).entity(objectIdResponse).build();
+        } else {
+            return Response.status(404).entity(objectIdResponse).build();
+        }
 
     }
+
     // Servei per registrar un element nou
     @POST                                                                   // Servicio para registrar nuevo elemento en la tienda
     @ApiOperation(value = "Register a new Element", notes = "Register an order")

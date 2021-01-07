@@ -1,7 +1,7 @@
 package edu.upc.dsa.orm.models;
 
 
-public class Item {                         //classe per objectes DINS del joc
+public class Item {     //classe per objectes DINS del inventari    (objectes comprats a la botiga o conseguits al joc)
 
     private int id; //Asignamos un id al name creado
     private String name;

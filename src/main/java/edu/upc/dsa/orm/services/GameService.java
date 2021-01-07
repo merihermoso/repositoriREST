@@ -7,16 +7,16 @@ import edu.upc.dsa.orm.dao.game.GameDAOImpl;
 
 import edu.upc.dsa.orm.dao.item.ItemDAO;
 import edu.upc.dsa.orm.dao.item.ItemDAOImpl;
+import edu.upc.dsa.orm.dao.player.PlayerDAO;
+import edu.upc.dsa.orm.dao.player.PlayerDAOImpl;
 import edu.upc.dsa.orm.dao.user.UserDAO;
 import edu.upc.dsa.orm.dao.user.UserDAOImpl;
 import edu.upc.dsa.orm.models.*;
+import edu.upc.dsa.orm.models.Credentials.ChangeEmailCredentials;
 import edu.upc.dsa.orm.models.Credentials.ChangePasswordCredentials;
 import edu.upc.dsa.orm.models.Credentials.GetUserCredentials;
 import edu.upc.dsa.orm.models.Credentials.LoginCredentials;
-import edu.upc.dsa.orm.models.GameCredentials.EnemyCredentials;
-import edu.upc.dsa.orm.models.GameCredentials.GameCredentials;
-import edu.upc.dsa.orm.models.GameCredentials.ItemCredentials;
-import edu.upc.dsa.orm.models.GameCredentials.RankingPositionResponse;
+import edu.upc.dsa.orm.models.GameCredentials.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -37,22 +37,31 @@ public class GameService {
     private UserDAO userDAO;
     private ItemDAO itemDAO;
     private EnemyDAO enemyDAO;
+    private PlayerDAO playerDAO;
 
     public GameService() {
         this.gameDAO = GameDAOImpl.getInstance();
         this.userDAO = UserDAOImpl.getInstance();
+        this.playerDAO = PlayerDAOImpl.getInstance();
         this.itemDAO = ItemDAOImpl.getInstance();
         this.enemyDAO = EnemyDAOImpl.getInstance();
     }
 
     /*********************************************  RANKINGS    *******************************************************/
+    /***
+     * /Games/topGames
+     *
+     *
+     *
+     *
+    ****/
     //Servicio para obtener las 5 PARTIDAS CON MÁS SCORE
     @GET
     @ApiOperation(value = "Get TOP Games", notes = "Get top GAMES ordered BY score from BBDD")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Game.class, responseContainer = "List"),
     })
-    @Path("/Games/top")
+    @Path("/topGames")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTopGames() throws SQLException {
 
@@ -63,7 +72,7 @@ public class GameService {
         return Response.status(201).entity(entity).build();
 
     }
-
+    //Servicio para obtener las 5 USERS CON MÁS SCORE
     @GET
     @ApiOperation(value = "Get TOP Users", notes = "Get top USERS ordered BY score from BBDD")
     @ApiResponses(value = {
@@ -80,7 +89,7 @@ public class GameService {
         return Response.status(201).entity(entity).build();
 
     }
-
+    //Servicio para obtener la posición en el ranking del usuario
     @POST
     @ApiOperation(value = "Get a user position in ranking", notes = "Get position of a user in the score ranking")
     @ApiResponses(value = {
@@ -98,7 +107,6 @@ public class GameService {
         } else {
             return Response.status(404).entity(rankingPositionResponse).build();
         }
-
     }
 
     /**********************************************     GAMES (partidas) services   ***********************************/
@@ -113,13 +121,10 @@ public class GameService {
     public Response getGames() {
 
         List<Game> games = this.gameDAO.findAll();
-
         GenericEntity<List<Game>> entity = new GenericEntity<List<Game>>(games) {
         };
         return Response.status(201).entity(entity).build();
-
     }
-
 
 
     //Servicio para obtener la Partida a partir del Username (User)
@@ -137,7 +142,6 @@ public class GameService {
             Game game = this.gameDAO.getGameByUsername(username);
             return Response.status(200).entity(game).build();
         } catch (Exception e) {
-
             return Response.status(503).build();
         }
     }
@@ -180,6 +184,98 @@ public class GameService {
         return Response.status(201).build();
 
     }
+
+    /**************************************     PLAYER services ******************************************************/
+
+    //Servicio para obtener todas los players
+    @GET
+    @ApiOperation(value = "Get all Players from BBDD", notes = "Get all players from BBDD")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = Player.class, responseContainer = "List"),
+    })
+    @Path("/Players/findAll")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getPlayers() {
+
+        List<Player> players = this.playerDAO.findAll();
+        GenericEntity<List<Player>> entity = new GenericEntity<List<Player>>(players) {
+        };
+        return Response.status(201).entity(entity).build();
+    }
+
+
+    //Servicio para obtener el player a partir del Username (User)
+    @GET
+    @ApiOperation(value = "get the Player by Username", notes = "Get all data 1 game")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Game.class),
+            @ApiResponse(code = 503, message = "not working well...")
+
+    })
+    @Path("/Player/getByUSERNAME/{username}")                                             //Partida By Username
+    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
+    public Response GetPlayerByUsername(@PathParam("username") String username) {
+        try {
+            Player player = this.playerDAO.getPlayerByUsername(username);
+            return Response.status(200).entity(player).build();
+        } catch (Exception e) {
+            return Response.status(503).build();
+        }
+    }
+
+    //Servicio para obtener la Partida a partir del Username (User)
+    @GET
+    @ApiOperation(value = "get a Game by its ID", notes = "Get all data 1 game")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Game.class),
+            @ApiResponse(code = 503, message = "not working well...")
+
+    })
+    @Path("/Player/getByID/{playerID}")    //servicio que obtenia la Partida a partir del ID
+    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
+    public Response GetPlayerById(@PathParam("playerID") int playerID) {
+        try{
+            Player player = this.playerDAO.getPlayerById(playerID);
+            return Response.status(200).entity(player).build();
+        }
+        catch (Exception e){
+
+            return Response.status(503).build();
+        }
+    }
+
+
+    // Servicio para registrar una nueva partida
+    @POST
+    @ApiOperation(value = "Register a new Player", notes = "Register a player")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful! Game registered"),
+
+    })
+    @Path("/Player/register")
+    public Response playerRegister(PlayerCredentials playerCredentials) throws SQLException {
+
+        //   if (orderCredentials.getPrice()==null) return Response.status(602).build();
+
+        this.playerDAO.registerPlayer(playerCredentials);
+        return Response.status(201).build();
+
+    }
+
+    /***************************************    modificacions Player    ***********************************************/
+    /*
+    *  Hauria d'haver un servei només per escollir qué es vol incrementar i en quin valor
+    * (tipo la botiga si compres 5 elements)
+    *
+    *
+     */
+
+
+
+
+
+
+
 /******************************************     ITEMS services  *******************************************************/
     //Servicio para obtener todos los items
     @GET

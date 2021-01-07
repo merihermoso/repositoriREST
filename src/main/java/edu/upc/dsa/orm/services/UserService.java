@@ -4,6 +4,7 @@ package edu.upc.dsa.orm.services;
 import edu.upc.dsa.orm.dao.user.UserDAO;
 import edu.upc.dsa.orm.dao.user.UserDAOImpl;
 import edu.upc.dsa.orm.models.Credentials.*;
+import edu.upc.dsa.orm.models.Credentials.UserIdResponse;
 import edu.upc.dsa.orm.models.GameParameters;
 import edu.upc.dsa.orm.models.User;
 import io.swagger.annotations.Api;
@@ -205,7 +206,6 @@ public class UserService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = User.class),
             @ApiResponse(code = 503, message = "not working well...")
-
     })
     @Path("/GetUserByID/{userID}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
@@ -219,10 +219,38 @@ public class UserService {
             return Response.status(503).build();
         }
     }
+    @POST
+    @ApiOperation(value = "Get an user ID", notes = "Get userID")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = UserIdResponse.class),
+            @ApiResponse(code = 404, message = "User not found"),
+    })
+    @Path("/getUserIdByUserame")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUserIdByName(GetUserCredentials getUserCredentials) throws SQLException {
+
+        UserIdResponse userIdResponse = new UserIdResponse(this.userDAO.getUserIdByUsername(getUserCredentials.getUsername()));
+
+        if (userIdResponse.getUserID() != -1) {
+            return Response.status(201).entity(userIdResponse).build();
+        } else {
+            return Response.status(404).entity(userIdResponse).build();
+        }
+
+    }
 
 
     /*************************************************** POR HACER... *****************************************/
 /*
+        NO HARIA EL DELETE... CAMBIARIA EL STATUS-> DELETED
+
+        HAY QUE HACER IFs status...     (tener en cuenta el status del admin...)
+        hay que hacer if( username = Admin, password= Admin) -> para que vaya a AdmingSettings.html
+
+
+
+
+
  //servicio para encontrar usuario a partir del username
     @Path("/delete/{username}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user

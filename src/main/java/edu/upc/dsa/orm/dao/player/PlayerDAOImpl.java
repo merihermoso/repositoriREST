@@ -1,63 +1,65 @@
-package edu.upc.dsa.orm.dao.item;
+package edu.upc.dsa.orm.dao.player;
 
 //import com.sun.tools.javac.jvm.Items;
 
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
-import edu.upc.dsa.orm.models.GameCredentials.ItemCredentials;
+import edu.upc.dsa.orm.models.GameCredentials.PlayerCredentials;
 import edu.upc.dsa.orm.models.Item;
+import edu.upc.dsa.orm.models.Player;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class ItemDAOImpl implements ItemDAO {
-    private static ItemDAO instance;
+public class PlayerDAOImpl implements PlayerDAO {
+    private static PlayerDAO instance;
 
-    private ItemDAOImpl() {
+    private PlayerDAOImpl() {
     }
 
-    public static ItemDAO getInstance() {                    //DA ERROR
-        if (instance==null) instance = new ItemDAOImpl();
+    public static PlayerDAO getInstance() {                    //DA ERROR
+        if (instance==null) instance = new PlayerDAOImpl();
         return instance;
     }
     /*****************************************  FUNCIONS GENERALS    ***************************************************/
-    public List<Item> findAll(){
+    public List<Player> findAll(){
 
         Session session;
-        List<Item> itemsList;
+        List<Player> playersList;
 
-        HashMap<Integer, Item> result;
+        HashMap<Integer, Player> result;
 
         session = FactorySession.openSession();
-        result = session.findAll(Item.class);
+        result = session.findAll(Player.class);
 
-        itemsList = new ArrayList<>(result.values());
+        playersList = new ArrayList<>(result.values());
 
         session.close();
 
-        return itemsList;
+        return playersList;
     }
     public int size() {
         Session session;
-        HashMap<String, Item> items = null;
+        HashMap<String, Player> players = null;
         try{
             session = FactorySession.openSession();
-            items = session.findAll(Item.class);
+            players = session.findAll(Item.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return items.size();
+        return players.size();
     }
 
-    /*****************************************  OBTENIM ITEM inventari *************************************************/
-    public Item getItemById(int itemID) throws SQLException {
+    /*****************************************  OBTENIM Player  ****************************************************/
+
+    public Player getPlayerById(int playerID) throws SQLException {
         Session session = null;
-        Item item = new Item();
+        Player player = new Player();
         try {
             session = FactorySession.openSession();
-            item = (Item) session.getById(item, itemID);
+            player = (Player) session.getById(player, playerID);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -66,14 +68,16 @@ public class ItemDAOImpl implements ItemDAO {
             session.close();
         }
 
-        return item;
+        return player;
     }
-    public Item getItemByName(String name) throws SQLException {
+
+    //Obtenim l'objecte element a partir del username del usuari propietari
+    public Player getPlayerByUsername(String username) throws SQLException {
         Session session = null;
-        Item item = new Item();
+        Player player = new Player();
         try {
             session = FactorySession.openSession();
-            item = (Item) session.getByName(item, name);          //com poso la relació game User?¿
+            player = (Player) session.getPlayerByUsername(player, username);          //com poso la relació game User?¿
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -82,27 +86,21 @@ public class ItemDAOImpl implements ItemDAO {
             session.close();
         }
 
-        return item;
+        return player;
     }
 
     /*****************************************  REGISTRE ITEM     *************************************************/
-    public boolean registerItem(ItemCredentials itemCredentials) { //Afegeix el user com a obejcte
-
+    public boolean registerPlayer(PlayerCredentials playerCredentials) { //Afegeix el user com a obejcte
         Session session;
         boolean result = false;
 
         try {
-
             session = FactorySession.openSession();
-            result = session.registerItem(itemCredentials);
+            result = session.registerPlayer(playerCredentials);
             session.close();
-
         } finally {
-
         }
-
         return result;
-
     }
     /**********************************************************************************************************/
 

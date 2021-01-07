@@ -102,7 +102,28 @@ public class ElementDAOImpl implements ElementDAO {
 
         return element;
     }
+    //Funció per obtenir el ID del element a partir del seu nom
+    public int getElementIdByName(String name) throws SQLException {
 
+        Session session = null;
+
+        int objectID = -1;
+
+        try {
+
+            session = FactorySession.openSession();
+            objectID = session.getElementIdByName(name);          //com poso la relació game User?¿
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            session.close();
+        }
+
+        return objectID;
+    }
     /*****************************************  INSERT ELEMENT     ***************************************************/
     //Inserta tot l'objecte ELEMENT passant les dades "amagades"
     public boolean registerElement(ElementCredentials elementCredentials) {

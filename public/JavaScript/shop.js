@@ -1,14 +1,14 @@
 var BASE_URI="/dsaApp";
-var idJugador = localStorage.getItem("token");
+var username = localStorage.getItem("username");
 var diamantes = localStorage.getItem("diamantes");
-if (idJugador == null){
+if (username == null){
     var url = "login.html";
     window.open(url, "_self");
 }
 
 
 $(document).ready(function() {
-    console.log(idJugador);
+    console.log(username);
     console.log(diamantes);
     $("#m").text(diamantes);
     var cantidad1 = parseInt($("#numero1").text());

@@ -1,9 +1,7 @@
-package edu.upc.dsa.orm.models;
+package edu.upc.dsa.orm.models.GameCredentials;
 
-public class Player {              //classe per objectes de la botiga
+public class PlayerCredentials {
 
-    private int id;                 //s'hauria de vincular amb el userID
-  //  private String username;            //s'hauria de relacionar amb username del user
     private String status;
     private int coins;
     private int score;
@@ -13,27 +11,6 @@ public class Player {              //classe per objectes de la botiga
     private int defense;
     private int healing;
     private int damage;
-
-
-    public Player() {
-    }
-    public Player(String status, int coins, int score, int numLevel, int speed, int hit, int defense, int healing, int damage) {
-        setStatus(status);
-        setCoins(coins);
-        setScore(score);
-        setNumLevel(numLevel);
-        setSpeed(speed);
-        setHit(hit);
-        setDefense(defense);
-        setHealing(healing);
-        setDamage(damage);
-    }
-    public int getId() {
-        return this.id;
-    }
-    public void setId(int elementID) {
-        this.id=elementID;
-    }
 
     public String getStatus() {        return status;    }
     public void setStatus(String status) {        this.status = status;    }
@@ -61,5 +38,6 @@ public class Player {              //classe per objectes de la botiga
 
     public int getDamage() {        return damage;    }
     public void setDamage(int damage) {        this.damage = damage;    }
+
 
 }

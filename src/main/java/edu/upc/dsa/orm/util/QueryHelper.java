@@ -94,7 +94,17 @@ public class QueryHelper {
     }
 
     /**************************     SELECT IDs     ************************************/
-    //SELECT idClass FROM Class WHERE name=?
+    //SELECT elementID FROM Element WHERE name = "?"
+    public static String createQueryElementIdSELECTbyName()  {
+
+        StringBuffer sb = new StringBuffer();
+        sb.append("SELECT id FROM Element WHERE name = ? ");
+
+        return sb.toString();
+
+    }
+
+    //SELECT idClass FROM Class WHERE name=?                        //generica per obtenir el id a partir del nom (not working yet)
     public static String createQueryGetIDbyName(Object entity){
         int res=0;
         StringBuffer sb = new StringBuffer();
@@ -103,12 +113,14 @@ public class QueryHelper {
         return sb.toString();
     }
 
-    //SELECT idClass FROM Class WHERE name=?
-    public static String createQueryGetIDbyUsername(Object entity){
+    //SELECT userID FROM User WHERE username = "?"
+    public static String createQueryIdSELECTbyUsername()  {
+
         StringBuffer sb = new StringBuffer();
-        sb.append("SELECT id"+entity.getClass().getSimpleName()+" FROM ").append(entity.getClass().getSimpleName());
-        sb.append(" WHERE username = ?");
+        sb.append("SELECT id FROM User WHERE username = ? ");
+
         return sb.toString();
+
     }
 
 
@@ -117,34 +129,44 @@ public class QueryHelper {
     //consulta to GET qualsevol objecte de la bbdd
     public static String createQueryGameSELECTbyUsername(String username) {
         StringBuffer sb = new StringBuffer();
-        sb.append("SELECT Game.* FROM Game, User, UserGame");      //totes les files de la taula que tinguin el id=
+        sb.append("SELECT Game.* FROM Game, User, Player, PlayerGame");      //totes les files de la taula que tinguin el id=
         sb.append(" WHERE User.username = ?");
-        sb.append(" And  User.id = UserGame.id_player");
-        sb.append(" And  Game.id = UserGame.id_game");
+        sb.append(" And  User.id = UserPlayer.id_user");
+        sb.append(" And  Player.id = UserPlayer.id_player");
+        sb.append(" And  Player.id = PlayerGame.id_player");
+        sb.append(" And  Game.id = PlayerGame.id_game");
+
+        return sb.toString();
+    }
+    //consulta to GET qualsevol objecte de la bbdd
+    public static String createQueryPlayerSELECTbyUsername(String username) {
+        StringBuffer sb = new StringBuffer();
+        sb.append("SELECT Player.id, Player.status, Player.coins, Player.score, Player.numLevel, Player.speed, Player.hit, Player.defense, Player.healing, Player.damage FROM Player, User, UserPlayer");
+        sb.append(" WHERE User.username = ?");
+        sb.append(" And  User.id = UserPlayer.id_user");
+        sb.append(" And  Player.id = UserPlayer.id_player");
+
+        return sb.toString();
+    }
+                                                                             //DE MOMENT NOMES PRINTEA LA PRIMERA QUE TROBA...
+    //consulta to GET qualsevol objecte de la bbdd
+    public static String createQueryElementSELECTbyUsername(String username) {
+        StringBuffer sb = new StringBuffer();
+        sb.append("SELECT Element.id, Element.name, Element.description, Element.price Element FROM Element,User, UserElement");      //totes les files de la taula que tinguin el id=
+        sb.append(" WHERE User.username = ?");
+        sb.append(" And  User.id = UserElement.id_user");
+        sb.append(" And  Element.id = UserElement.id_element");
 
         return sb.toString();
     }
 
-    //consulta to GET qualsevol objecte de la bbdd
-    public static String createQueryOrderSELECTbyUsername(String username) {
+    //consulta to GET tots els objectes de la shop
+    public static String createQueryElementShopSELECTbyUsername(String username) {
         StringBuffer sb = new StringBuffer();
-        sb.append("SELECT Orders.* FROM Orders, User, UserOrder");      //totes les files de la taula que tinguin el id=
+        sb.append("SELECT Element.id, Element.name, Element.description, Element.price Element.description, Element.price Element FROM Element,User, UserElement");      //totes les files de la taula que tinguin el id=
         sb.append(" WHERE User.username = ?");
-        sb.append(" And  User.id = UserOrder.id_user");
-        sb.append(" And  Orders.id = UserOrder.id_order");
-
-        return sb.toString();
-    }                                                                               //DE MOMENT NOMES PRINTEA LA PRIMERA QUE TROBA...
-
-    //consulta to GET qualsevol objecte de la bbdd
-    public static String createQueryElementSELECTbyUsername(String username) {
-        StringBuffer sb = new StringBuffer();
-        sb.append("SELECT Element.id, Element.name FROM Element, OrderElement,Orders, User, UserOrder");      //totes les files de la taula que tinguin el id=
-        sb.append(" WHERE User.username = ?");
-        sb.append(" And  User.id = UserOrder.id_user");
-        sb.append(" And  Orders.id = UserOrder.id_order");
-        sb.append(" And  Element.id = OrderElement.id_element");
-
+        sb.append(" And  User.id = UserElement.id_user");
+        sb.append(" And  Element.id = UserElement.id_element");
         return sb.toString();
     }
     //SELECT position and score FROM User WHERE username = "?"

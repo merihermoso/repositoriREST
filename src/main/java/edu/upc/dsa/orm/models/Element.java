@@ -6,6 +6,7 @@ public class Element {              //classe per objectes de la botiga
     private String name;
     private String description;
     private int price;
+    private String image;
 
     public Element() {
     }
@@ -29,6 +30,9 @@ public class Element {              //classe per objectes de la botiga
 
     public int getPrice() {        return price;    }
     public void setPrice(int price) {        this.price = price;    }
+
+    public String getImage() {        return image;    }
+    public void setImage(String image) {        this.image = image;    }
 
     @Override
     public String toString(){

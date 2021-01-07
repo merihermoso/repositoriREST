@@ -35,6 +35,8 @@ public interface UserDAO {
     User getUserById( int userID) throws SQLException;
     User getUserByUsername( String username) throws SQLException;
 
+    int getUserIdByUsername(String username) throws SQLException;
+
     /*****************************************  OBTENIM ranking     *************************************************/
     public List<User> getUserRanking() throws SQLException;
 

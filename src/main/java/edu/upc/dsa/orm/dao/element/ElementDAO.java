@@ -16,6 +16,8 @@ public interface ElementDAO {
     public Element getElementByName(String name) throws SQLException;
     public Element getElementByUsername(String username) throws SQLException;
 
+    int getElementIdByName(String name) throws SQLException;
+
     /*****************************************  registre ELEMENT     ***************************************************/
     boolean registerElement(ElementCredentials elementCredentials);
 

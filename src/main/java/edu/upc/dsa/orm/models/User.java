@@ -7,8 +7,8 @@ public class User {
     private String email;
     private String password;
     private String birthdate;
-    private int score;
-    private int level;
+    private int score;          //score total que ha conseguit
+    private int level;          //
     //private String status;
 
  //   private int creditCard;

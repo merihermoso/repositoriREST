@@ -2,7 +2,6 @@ package edu.upc.dsa.orm.models.GameCredentials;
 
 public class ItemCredentials {
 
-    private int id;
     private String name;
     private int hit;
     private int defense;

@@ -1,19 +1,18 @@
 package edu.upc.dsa.orm;
 
-import com.sun.tools.javac.util.Convert;
-import edu.upc.dsa.orm.models.*;
 import edu.upc.dsa.orm.models.Credentials.ChangeEmailCredentials;
 import edu.upc.dsa.orm.models.Credentials.ChangePasswordCredentials;
 import edu.upc.dsa.orm.models.Credentials.LoginCredentials;
 import edu.upc.dsa.orm.models.Credentials.RegisterCredentials;
+import edu.upc.dsa.orm.models.*;
 import edu.upc.dsa.orm.models.GameCredentials.EnemyCredentials;
 import edu.upc.dsa.orm.models.GameCredentials.GameCredentials;
 import edu.upc.dsa.orm.models.GameCredentials.ItemCredentials;
+import edu.upc.dsa.orm.models.GameCredentials.PlayerCredentials;
 import edu.upc.dsa.orm.models.shopCredentials.ElementCredentials;
 import edu.upc.dsa.orm.models.shopCredentials.OrderCredentials;
 import edu.upc.dsa.orm.util.ObjectHelper;
 import edu.upc.dsa.orm.util.QueryHelper;
-
 
 import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
@@ -424,68 +423,68 @@ public class SessionImpl implements Session {
         }
     }
 
+
     /************************************   OBTENIM ID A PARTIR DE NAME/USERNAME  *****************************/
-//Función que devuelve el ID de un objeto
-/*
-    @Override
-    public String getIDbyName(Class theClass, String name) {
-        ResultSet rs;
-        Object object = null;
-
-        String selectID = QueryHelper.createQueryGetIDbyName(theClass);
-
-        PreparedStatement pstm;
-
+//Función para obtener el id del elemento a partir de su nombre
+    public int getElementIdByName(String name) {
         try {
-            object = theClass.newInstance();
-            pstm = this.conn.prepareStatement(selectID);
-            pstm.setObject(1, name);
-            rs = pstm.executeQuery();
-            System.out.println(pstm);
-            while(rs.next()) {
-                ResultSetMetaData rsmd = rs.getMetaData();
-                for(int i=1; i<=rsmd.getColumnCount();i++){
-                    String field = rsmd.getColumnName(i);
-                    ObjectHelper.setter(object,field,rs.getObject(i));
-                }
+            String selectQuery = QueryHelper.createQueryElementIdSELECTbyName();
+
+            PreparedStatement pstm;
+            ResultSet resultSet;
+
+            pstm = conn.prepareStatement(selectQuery);
+            pstm.setString(1, name);
+            resultSet = pstm.executeQuery();
+
+            if (resultSet.next()) {
+
+                return resultSet.getInt(1);
+
+            } else {
+
+                return -1;
+
             }
-        } catch (Exception e) {
+
+        } catch (SQLException e) {
+
             e.printStackTrace();
+            return -1;
+
         }
 
-        System.out.println("Object founded: "+object);
-        return null;
+    }
+    public int getUserIdByUsername(String username) {
+        try {
+            String selectQuery = QueryHelper.createQueryIdSELECTbyUsername();
+
+            PreparedStatement pstm;
+            ResultSet resultSet;
+
+            pstm = conn.prepareStatement(selectQuery);
+            pstm.setString(1, username);
+            resultSet = pstm.executeQuery();
+
+            if (resultSet.next()) {
+
+                return resultSet.getInt(1);
+
+            } else {
+
+                return -1;
+
+            }
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+            return -1;
+
+        }
+
     }
 
- //   @Override
-    public String getIDbyUsername(Class theClass, String username) {
-        ResultSet rs;
-        Object object = null;
-
-        String selectID = QueryHelper.createQueryGetIDbyUsername(theClass);
-
-        PreparedStatement pstm;
-
-        try {
-            object = theClass.newInstance();
-            pstm = this.conn.prepareStatement(selectID);
-            pstm.setObject(1, username);
-            rs = pstm.executeQuery();
-            System.out.println(pstm);
-            while(rs.next()) {
-                ResultSetMetaData rsmd = rs.getMetaData();
-                for(int i=1; i<=rsmd.getColumnCount();i++){
-                    String field = rsmd.getColumnName(i);
-                    ObjectHelper.setter(object,field,rs.getObject(i));
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        System.out.println("User founded: "+object);
-        return null;
-    }*/
 
     /************************************   OBTENIM OBJECTE A PARTIR DE USERNAME USER   *****************************/
 
@@ -509,8 +508,8 @@ public class SessionImpl implements Session {
         }
     }
 
-    public Object getGameByUsername(Object theObject, String username) throws SQLException {
-        String selectQuery = QueryHelper.createQueryGameSELECTbyUsername(username);         //consulta per obtenir Partida del Username que introduim
+    public Object getPlayerByUsername(Object theObject, String username) throws SQLException {
+        String selectQuery = QueryHelper.createQueryPlayerSELECTbyUsername(username);
         PreparedStatement pstm = null;
         try {
             pstm = conn.prepareStatement(selectQuery);
@@ -529,8 +528,8 @@ public class SessionImpl implements Session {
         }
     }
 
-    public Object getOrderByUsername(Object theObject, String username) throws SQLException {
-        String selectQuery = QueryHelper.createQueryOrderSELECTbyUsername(username);         //consulta per obtenir Partida del Username que introduim
+    public Object getGameByUsername(Object theObject, String username) throws SQLException {
+        String selectQuery = QueryHelper.createQueryGameSELECTbyUsername(username);         //consulta per obtenir Partida del Username que introduim
         PreparedStatement pstm = null;
         try {
             pstm = conn.prepareStatement(selectQuery);
@@ -572,37 +571,8 @@ public class SessionImpl implements Session {
 
 
 
+
     /**********************************************   REGISTERS   ************************************************/
-    public boolean registerOrder(OrderCredentials orderCredentials) {
-
-        Orders orders = new Orders(orderCredentials.getDate(), orderCredentials.getTime(), orderCredentials.getPrice());
-
-        String insertQuery = QueryHelper.createQueryINSERT(orders);
-
-        PreparedStatement pstm;
-        System.out.println(insertQuery);
-        try {
-
-            pstm = conn.prepareStatement(insertQuery);
-
-            int i = 1;
-
-            for (String field : ObjectHelper.getFields(orders)) {
-                pstm.setObject(i, ObjectHelper.getter(orders, field));
-                i++;
-            }
-
-            pstm.executeQuery();
-
-            return true;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-            return false;
-        }
-
-    }
 
     public int getUserPositionByUsername(String username) {
 
@@ -653,6 +623,36 @@ public class SessionImpl implements Session {
 
             for (String field : ObjectHelper.getFields(element)) {
                 pstm.setObject(i, ObjectHelper.getter(element, field));
+                i++;
+            }
+
+            pstm.executeQuery();
+
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+            return false;
+        }
+
+    }
+    public boolean registerPlayer(PlayerCredentials playerCredentials) {
+
+        Player player = new Player(playerCredentials.getStatus(),playerCredentials.getCoins(),playerCredentials.getScore(), playerCredentials.getNumLevel(), playerCredentials.getSpeed(), playerCredentials.getHit(), playerCredentials.getDefense(), playerCredentials.getHealing(), playerCredentials.getDamage());
+
+        String insertQuery = QueryHelper.createQueryINSERT(player);
+
+        PreparedStatement pstm;
+        System.out.println(insertQuery);
+        try {
+
+            pstm = conn.prepareStatement(insertQuery);
+
+            int i = 1;
+
+            for (String field : ObjectHelper.getFields(player)) {
+                pstm.setObject(i, ObjectHelper.getter(player, field));
                 i++;
             }
 

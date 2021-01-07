@@ -8,6 +8,7 @@ import edu.upc.dsa.orm.models.Enemy;
 import edu.upc.dsa.orm.models.GameCredentials.EnemyCredentials;
 import edu.upc.dsa.orm.models.GameCredentials.GameCredentials;
 import edu.upc.dsa.orm.models.GameCredentials.ItemCredentials;
+import edu.upc.dsa.orm.models.GameCredentials.PlayerCredentials;
 import edu.upc.dsa.orm.models.shopCredentials.ElementCredentials;
 import edu.upc.dsa.orm.models.shopCredentials.OrderCredentials;
 
@@ -31,11 +32,11 @@ public interface Session<E> {
     boolean userExists(String username);
 
     /*****************************      REGISTREM OBJECTES NOUS  (INSERT) *********************************************/
-    boolean registerOrder(OrderCredentials orderCredentials);
     boolean registerElement(ElementCredentials elementCredentials);
     boolean registerGame(GameCredentials gameCredentials);
     boolean registerItem(ItemCredentials itemCredentials);
     boolean registerEnemy(EnemyCredentials enemyCredentials);
+    boolean registerPlayer(PlayerCredentials playerCredentials);
 
     /*****************************OBTENIM OBJECTES A PARTIR DEL USERNAME DEL USER**************************************/
     public Object getById(Object theClass, int id) throws SQLException;             //obtenim objecte a partir del id
@@ -43,11 +44,8 @@ public interface Session<E> {
 
 
     /*****************************OBTENIM IDs A PARTIR DEL USERNAME/NAME ********no funcionan pq obtenen un INT *******/
- //   public String getIDbyUsername(Object theClass, String username) throws SQLException;
- //   public String getIDByName(Object theClass, String name) throws SQLException;
-
-    //   public String getCOINSbyUsername(Object theClass, String username) throws SQLException;
-    //   public String getLEVELbyUsername(Object theClass, String username) throws SQLException;
+    int getUserIdByUsername(String username);
+    int getElementIdByName(String name);
 
     int getUserPositionByUsername(String username);
 
@@ -57,10 +55,11 @@ public interface Session<E> {
     /*****************************OBTENIM OBJECTES A PARTIR DEL USERNAME DEL USER*******************************/
     public Object getUserByUsername(Object theClass, String username) throws SQLException;
     public Object getGameByUsername(Object theClass, String username) throws SQLException;      //es podria optimitzar i aplicar a qualsevol clase (no nomes game)
-    public Object getOrderByUsername(Object theClass, String username) throws SQLException;
     public Object getElementByUsername(Object theClass, String username) throws SQLException;   //relaciona 3 taules User,Order,Element
+    public Object getPlayerByUsername(Object theClass, String username) throws SQLException;
 
-
+    //   public String getCOINSbyUsername(Object theClass, String username) throws SQLException;
+    //   public String getLEVELbyUsername(Object theClass, String username) throws SQLException;
 
 
 }

@@ -206,7 +206,29 @@ public class UserDAOImpl implements UserDAO {
 
         return usersList;
     }
+    //Funció per obtenir userID a partir del seu username
+    public int getUserIdByUsername(String username) throws SQLException {
 
+        Session session = null;
+
+        int userID = -1;
+
+        try {
+
+            session = FactorySession.openSession();
+            userID = session.getUserIdByUsername(username);          //com poso la relació game User?¿
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            session.close();
+        }
+
+        return userID;
+    }
+    //Funció per modificar userEmail
     public boolean changeUserEmail(ChangeEmailCredentials changeEmailCredentials) {
 
         Session session;
@@ -217,7 +239,7 @@ public class UserDAOImpl implements UserDAO {
         return session.changeEmail(changeEmailCredentials);
 
     }
-
+    //Funció per modificar userEmail
     public boolean changeUserPassword(ChangePasswordCredentials changePasswordCredentials) {
 
         Session session;
@@ -252,7 +274,7 @@ public class UserDAOImpl implements UserDAO {
         return pos;
     }
 
-
+/***************************************** to do ***************************************************************/
                                                                                         // DELETES  //
 /*
     public User deleteUserByUsername(String username) throws SQLException {
