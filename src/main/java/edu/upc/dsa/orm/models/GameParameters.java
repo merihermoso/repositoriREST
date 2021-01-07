@@ -10,6 +10,11 @@ public class GameParameters {
     private int email_max_length;
     private int min_age;
 
+    public GameParameters() {
+
+
+    }
+
     public GameParameters(int username_min_length, int username_max_length, int password_min_length, int password_max_length, int email_min_length, int email_max_length, int min_age) {
         this.username_min_length = username_min_length;
         this.username_max_length = username_max_length;
