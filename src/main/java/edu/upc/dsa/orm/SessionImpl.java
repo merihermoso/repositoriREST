@@ -231,8 +231,8 @@ public class SessionImpl implements Session {
             ResultSet resultSet;
 
             pstm = conn.prepareStatement(selectQuery);
-            pstm.setString(1, changePasswordCredentials.getUsername());
-            pstm.setString(2, changePasswordCredentials.getNewPassword());
+            pstm.setString(1, changePasswordCredentials.getNewPassword());
+            pstm.setString(2, changePasswordCredentials.getUsername());
             resultSet = pstm.executeQuery();
 
             return true;
@@ -258,8 +258,8 @@ public class SessionImpl implements Session {
             ResultSet resultSet;
 
             pstm = conn.prepareStatement(selectQuery);
-            pstm.setString(1, changeEmailCredentials.getUsername());
-            pstm.setString(2, changeEmailCredentials.getNewEmail());
+            pstm.setString(1, changeEmailCredentials.getNewEmail());
+            pstm.setString(2, changeEmailCredentials.getUsername());
             resultSet = pstm.executeQuery();
 
             return true;
