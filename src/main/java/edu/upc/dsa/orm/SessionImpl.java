@@ -13,6 +13,9 @@ import edu.upc.dsa.orm.util.QueryHelper;
 
 
 import java.lang.reflect.InvocationTargetException;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.HashMap;
 
@@ -212,13 +215,18 @@ public class SessionImpl implements Session {
 /**********************************     AUTENTICACIONS      *************************************************/
     public boolean registerUser(RegisterCredentials registerCredentials) {
 
-        User user = new User(registerCredentials.getUsername(), registerCredentials.getEmail(), registerCredentials.getPassword(), registerCredentials.getBirthdate_day() + "/" + registerCredentials.getBirthdate_month() + "/" + registerCredentials.getBirthdate_year());
-
-        String insertQuery = QueryHelper.createQueryINSERT(user);
-
-        PreparedStatement pstm;
-        System.out.println(insertQuery);
         try {
+
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(registerCredentials.getPassword().getBytes(StandardCharsets.UTF_8));
+
+            User user = new User(registerCredentials.getUsername(), registerCredentials.getEmail(), hash.toString(), registerCredentials.getBirthdate_day() + "/" + registerCredentials.getBirthdate_month() + "/" + registerCredentials.getBirthdate_year());
+
+            String insertQuery = QueryHelper.createQueryINSERT(user);
+
+            PreparedStatement pstm;
+            System.out.println(insertQuery);
+
 
             pstm = conn.prepareStatement(insertQuery);
 
@@ -237,18 +245,25 @@ public class SessionImpl implements Session {
             e.printStackTrace();
 
             return false;
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return false;
         }
 
     }
 
     public boolean loginUser(LoginCredentials loginCredentials) {
 
-        String selectQuery = QueryHelper.createQueryUserSELECTPasswordByUsername();
-
-        PreparedStatement pstm;
-        ResultSet resultSet;
-
         try {
+
+            String selectQuery = QueryHelper.createQueryUserSELECTPasswordByUsername();
+
+            PreparedStatement pstm;
+            ResultSet resultSet;
+
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(loginCredentials.getPassword().getBytes(StandardCharsets.UTF_8));
 
             pstm = conn.prepareStatement(selectQuery);
             pstm.setString(1, loginCredentials.getUsername());
@@ -256,7 +271,7 @@ public class SessionImpl implements Session {
 
             if (resultSet.next()) {
 
-                return resultSet.getString(1).equals(loginCredentials.getPassword());
+                return resultSet.getString(1).equals(hash.toString());
 
             } else {
 
@@ -265,9 +280,15 @@ public class SessionImpl implements Session {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
 
+            e.printStackTrace();
             return false;
+
+        } catch (NoSuchAlgorithmException e) {
+
+            e.printStackTrace();
+            return false;
+
         }
 
     }
