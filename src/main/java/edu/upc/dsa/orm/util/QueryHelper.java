@@ -66,10 +66,10 @@ public class QueryHelper {
         return sb.toString();
     }
 
-    public static String createQuerySELECTtop(Class theClass) {
+    public static String createQuerySELECTtop20(Class theClass) {
         StringBuffer sb = new StringBuffer();
         sb.append("SELECT * FROM ").append(theClass.getSimpleName());
-        sb.append(" ORDER BY score DESC");
+        sb.append(" ORDER BY score DESC LIMIT 20");
         return sb.toString();                      //FALTA FER QUE ORDENI PER SCORE, PERO PETA....
     }
 

@@ -26,7 +26,7 @@ import java.sql.SQLException;
 import java.util.*;
 
 @Api(value = "/game")
-@Path("/game")
+@Path("game")
 public class GameService {
 
     private GameDAO gameDAO;
@@ -59,13 +59,13 @@ public class GameService {
         return Response.status(201).entity(entity).build();
 
     }
-    //Servicio para obtener las 5 PARTIDAS CON MÁS SCORE
+
     @GET
     @ApiOperation(value = "Get TOP Users", notes = "Get top USERS ordered BY score from BBDD")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = User.class, responseContainer = "List"),
     })
-    @Path("/Users/top")
+    @Path("/topUsers")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTopUsers() throws SQLException {
 

@@ -168,7 +168,7 @@ public class SessionImpl implements Session {
 
         HashMap<Integer, Object> result = new HashMap<>();
 
-        String selectQuery = QueryHelper.createQuerySELECTtop(theClass);
+        String selectQuery = QueryHelper.createQuerySELECTtop20(theClass);
 
         PreparedStatement pstm;
         ResultSet resultSet;
