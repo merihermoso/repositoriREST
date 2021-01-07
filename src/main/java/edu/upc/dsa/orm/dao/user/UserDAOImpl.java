@@ -209,13 +209,16 @@ public class UserDAOImpl implements UserDAO {
     /*****************************************  to do    *************************************************/
 
     //NO FUNCIONA ENCARA (LA PART DE QUERYHELPER NO ESTÀ BEN FETA LA CONSULTA PER TROBAR LA POSICIÓ
-  /*  public User getUserPositionByUsername(String username) throws SQLException {
+   public int getUserPositionByUsername(String username) throws SQLException {
+
         Session session = null;
-        User user = new User();
+
+        int pos = -1;
 
         try {
+
             session = FactorySession.openSession();
-            user = (User) session.getUserPositionByUsername(user, username);          //com poso la relació game User?¿
+            pos = session.getUserPositionByUsername(username);          //com poso la relació game User?¿
 
         }
         catch (Exception e) {
@@ -225,12 +228,12 @@ public class UserDAOImpl implements UserDAO {
             session.close();
         }
 
-        return user;
+        return pos;
     }
 
 
                                                                                         // DELETES  //
-
+/*
     public User deleteUserByUsername(String username) throws SQLException {
         Session session = null;
         User user = new User();

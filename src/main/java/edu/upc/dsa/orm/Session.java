@@ -47,6 +47,7 @@ public interface Session<E> {
     //   public String getCOINSbyUsername(Object theClass, String username) throws SQLException;
     //   public String getLEVELbyUsername(Object theClass, String username) throws SQLException;
 
+    int getUserPositionByUsername(String username);
 
     /*****************************OBTENIM OBJECTES A PARTIR DEL USERNAME DEL USER*******************************/
     public Object getUserByUsername(Object theClass, String username) throws SQLException;

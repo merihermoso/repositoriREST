@@ -148,12 +148,10 @@ public class QueryHelper {
         return sb.toString();
     }
     //SELECT position and score FROM User WHERE username = "?"
-    public static String createQueryUserPositionSELECTbyUsername(String username)  {
+    public static String createQueryUserPositionSELECTbyUsername()  {
 
         StringBuffer sb = new StringBuffer();
-        sb.append("SELECT COUNT ROW_NUMBER FROM User");     //HA DE DIRTE LA TEVA POSICIÓ         ENCARA NO FUNCIONA
-        sb.append(" WHERE username = ?");
-        sb.append(" ORDER BY score ASC");
+        sb.append("SELECT 1 + (SELECT count( * ) FROM User a WHERE a.score > b.score ) AS rank FROM User b WHERE username = ? ORDER BY rank LIMIT 1");
 
         return sb.toString();
 

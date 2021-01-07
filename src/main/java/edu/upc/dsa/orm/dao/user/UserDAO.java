@@ -26,17 +26,17 @@ public interface UserDAO {
     /*****************************************  FUNCIONS BÀSIQUES  *************************************************/
 
     List<User> findAll();
-    public int size();
+    int size();
     /*****************************************  OBTENIM USUARI  *************************************************/
 
-    public User getUserById( int userID) throws SQLException;
-    public User getUserByUsername( String username) throws SQLException;
+    User getUserById( int userID) throws SQLException;
+    User getUserByUsername( String username) throws SQLException;
 
     /*****************************************  OBTENIM ranking     *************************************************/
     public List<User> getUserRanking() throws SQLException;
 
 
-    //  public User getUserPositionByUsername(String username) throws SQLException;
+    int getUserPositionByUsername(String username) throws SQLException;
     //  public User deleteUserByUsername(String username) throws SQLException;
 
 

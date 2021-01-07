@@ -10,9 +10,11 @@ import edu.upc.dsa.orm.dao.item.ItemDAOImpl;
 import edu.upc.dsa.orm.dao.user.UserDAO;
 import edu.upc.dsa.orm.dao.user.UserDAOImpl;
 import edu.upc.dsa.orm.models.*;
+import edu.upc.dsa.orm.models.Credentials.GetUserCredentials;
 import edu.upc.dsa.orm.models.GameCredentials.EnemyCredentials;
 import edu.upc.dsa.orm.models.GameCredentials.GameCredentials;
 import edu.upc.dsa.orm.models.GameCredentials.ItemCredentials;
+import edu.upc.dsa.orm.models.GameCredentials.RankingPositionResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -76,6 +78,28 @@ public class GameService {
         return Response.status(201).entity(entity).build();
 
     }
+
+    @POST
+    @ApiOperation(value = "Get a user position in ranking", notes = "Get position of a user in the score ranking")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = RankingPositionResponse.class),
+            @ApiResponse(code = 404, message = "User not found"),
+    })
+    @Path("/getUserPositionByUsername")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUserPositionByUsername(GetUserCredentials getUserCredentials) throws SQLException {
+
+        RankingPositionResponse rankingPositionResponse = new RankingPositionResponse(this.userDAO.getUserPositionByUsername(getUserCredentials.getUsername()));
+
+        if (rankingPositionResponse.getPosition() != -1) {
+            return Response.status(201).entity(rankingPositionResponse).build();
+        } else {
+            return Response.status(404).entity(rankingPositionResponse).build();
+        }
+
+    }
+
+
     /**********************************************     GAMES (partidas) services   ***********************************/
     //Servicio para obtener todas las partidas
     @GET
@@ -94,6 +118,8 @@ public class GameService {
         return Response.status(201).entity(entity).build();
 
     }
+
+
 
     //Servicio para obtener la Partida a partir del Username (User)
     @GET

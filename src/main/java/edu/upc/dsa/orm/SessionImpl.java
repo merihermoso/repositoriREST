@@ -543,6 +543,38 @@ public class SessionImpl implements Session {
 
     }
 
+    public int getUserPositionByUsername(String username) {
+
+        try {
+
+            String selectQuery = QueryHelper.createQueryUserPositionSELECTbyUsername();
+
+            PreparedStatement pstm;
+            ResultSet resultSet;
+
+            pstm = conn.prepareStatement(selectQuery);
+            pstm.setString(1, username);
+            resultSet = pstm.executeQuery();
+
+            if (resultSet.next()) {
+
+                return resultSet.getInt(1);
+
+            } else {
+
+                return -1;
+
+            }
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+            return -1;
+
+        }
+
+    }
+
 
     public boolean registerElement(ElementCredentials elementCredentials) {
 
