@@ -198,6 +198,10 @@ public class UserDAOImpl implements UserDAO {
         session = FactorySession.openSession();
         result = session.findTop(User.class);
 
+        for (User us : result.values()) {
+            System.out.println(us.getScore());
+        }
+
         usersList = new ArrayList<>(result.values());
 
         session.close();
