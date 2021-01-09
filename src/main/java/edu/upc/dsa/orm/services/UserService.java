@@ -208,20 +208,32 @@ public class UserService {
     @ApiOperation(value = "get a User", notes = "Get all data 1 user")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = User.class),
+            @ApiResponse(code = 404, message = "User not exists"),
             @ApiResponse(code = 503, message = "not working well...")
 
     })
     @Path("/getUserByUsername")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response getUserByUsername(GetUserCredentials getUserCredentials) {
-        try{
-            User user = this.userDAO.getUserByUsername(getUserCredentials.getUsername());
-            return Response.status(200).entity(user).build();
-        }
-        catch (Exception e){
 
-            return Response.status(503).build();
+        if (this.userDAO.userExists(getUserCredentials.getUsername())) {
+
+            try {
+
+                User user = this.userDAO.getUserByUsername(getUserCredentials.getUsername());
+                return Response.status(200).entity(user).build();
+
+            } catch (Exception e) {
+
+                return Response.status(503).build();
+            }
+
+        } else {
+
+            return Response.status(404).build();
+
         }
+
     }
 
     //Servei per obtenir un usuari a partir del ID

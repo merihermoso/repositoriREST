@@ -19,7 +19,7 @@ import edu.upc.dsa.orm.dao.*;
  */
 public class Main {
 
-    private static final boolean remote_machine = false;
+    private static final boolean remote_machine = true;
 
     private static final String remote_ip = "147.83.7.207";
     private static final int remote_port = 8080;

@@ -94,19 +94,24 @@ public class GameService {
     @ApiOperation(value = "Get a user position in ranking", notes = "Get position of a user in the score ranking")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = RankingPositionResponse.class),
-            @ApiResponse(code = 404, message = "User not found"),
+            @ApiResponse(code = 404, message = "User not exists"),
     })
     @Path("/getUserPositionByUsername")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUserPositionByUsername(GetUserCredentials getUserCredentials) throws SQLException {
 
-        RankingPositionResponse rankingPositionResponse = new RankingPositionResponse(this.userDAO.getUserPositionByUsername(getUserCredentials.getUsername()));
+        if (this.userDAO.userExists(getUserCredentials.getUsername())) {
 
-        if (rankingPositionResponse.getPosition() != -1) {
+            RankingPositionResponse rankingPositionResponse = new RankingPositionResponse(this.userDAO.getUserPositionByUsername(getUserCredentials.getUsername()));
+
             return Response.status(201).entity(rankingPositionResponse).build();
+
         } else {
-            return Response.status(404).entity(rankingPositionResponse).build();
+
+            return Response.status(404).build();
+
         }
+
     }
 
     /**********************************************     GAMES (partidas) services   ***********************************/
