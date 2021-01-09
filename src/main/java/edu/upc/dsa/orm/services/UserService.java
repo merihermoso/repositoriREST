@@ -5,7 +5,7 @@ import edu.upc.dsa.orm.dao.user.UserDAO;
 import edu.upc.dsa.orm.dao.user.UserDAOImpl;
 import edu.upc.dsa.orm.models.Credentials.*;
 import edu.upc.dsa.orm.models.Credentials.UserIdResponse;
-import edu.upc.dsa.orm.models.GameParameters;
+import edu.upc.dsa.orm.models.UserCredentialsParameters;
 import edu.upc.dsa.orm.models.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,11 +33,9 @@ public class UserService {
         this.userDAO = UserDAOImpl.getInstance();
 
     }
-/**********************************************     authenitication      *****************************************************/
-
 
     @POST
-    @ApiOperation(value = "Register a new User", notes = "Register a user")
+    @ApiOperation(value = "Register a new User")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful! User registered"),
             @ApiResponse(code = 600, message = "Need to fill in username field"),
@@ -49,10 +47,10 @@ public class UserService {
             @ApiResponse(code = 607, message = "Too young to play")
     })
     @Path("/register")
-    public Response userRegister(RegisterCredentials registerCredentials) {
+    public Response register(RegisterCredentials registerCredentials) {
 
-        if (registerCredentials.getUsername()==null) return Response.status(600).build();
-        if (registerCredentials.getPassword()==null) return Response.status(601).build();
+        if (registerCredentials.getUsername() == null) return Response.status(600).build();
+        if (registerCredentials.getPassword() == null) return Response.status(601).build();
 
         if (this.userDAO.userExists(registerCredentials.getUsername())) return Response.status(250).build();
 
@@ -71,7 +69,7 @@ public class UserService {
     }
 
     @POST
-    @ApiOperation(value = "A user tries to login", notes = "Login")
+    @ApiOperation(value = "Log in with a given username and password")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Login Successful!"),
             @ApiResponse(code = 601, message = "Need to fill in username field"),
@@ -81,7 +79,7 @@ public class UserService {
 
     })
     @Path("/login")
-    public Response userLogin(LoginCredentials loginCredentials) {
+    public Response login(LoginCredentials loginCredentials) {
 
         if (loginCredentials.getUsername()==null) return Response.status(601).build();
         if (loginCredentials.getPassword()==null) return Response.status(602).build();
@@ -93,94 +91,119 @@ public class UserService {
 
 
     @POST
-    @ApiOperation(value = "Change user password", notes = "Change the password of a user")
+    @ApiOperation(value = "Change user password")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 404, message = "User not exists"),
             @ApiResponse(code = 603, message = "Incorrect password"),
     })
     @Path("/changePassword")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response changeUserPassword(ChangePasswordCredentials changePasswordCredentials) throws SQLException {
+    public Response changePassword(ChangePasswordCredentials changePasswordCredentials) throws SQLException {
 
-        LoginCredentials loginCredentials = new LoginCredentials();
-        loginCredentials.setUsername(changePasswordCredentials.getUsername());
-        loginCredentials.setPassword(changePasswordCredentials.getPassword());
+        if (this.userDAO.userExists(changePasswordCredentials.getUsername())) {
 
-        if (this.userDAO.loginUser(loginCredentials)) {
+            LoginCredentials loginCredentials = new LoginCredentials();
+            loginCredentials.setUsername(changePasswordCredentials.getUsername());
+            loginCredentials.setPassword(changePasswordCredentials.getPassword());
 
-            this.userDAO.changeUserPassword(changePasswordCredentials);
-            return Response.status(201).build();
+            if (this.userDAO.loginUser(loginCredentials)) {
+
+                this.userDAO.changeUserPassword(changePasswordCredentials);
+                return Response.status(201).build();
+
+            } else {
+
+                return Response.status(603).build();
+
+            }
 
         } else {
 
-            return Response.status(603).build();
+            return Response.status(404).build();
 
         }
 
     }
 
     @POST
-    @ApiOperation(value = "Change user email", notes = "Change the email of a user")
+    @ApiOperation(value = "Change user email")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 603, message = "Incorrect password"),
+            @ApiResponse(code = 404, message = "User not exists"),
     })
     @Path("/changeEmail")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response changeUserEmail(ChangeEmailCredentials changeEmailCredentials) throws SQLException {
+    public Response changeEmail(ChangeEmailCredentials changeEmailCredentials) throws SQLException {
 
-        LoginCredentials loginCredentials = new LoginCredentials();
-        loginCredentials.setUsername(changeEmailCredentials.getUsername());
-        loginCredentials.setPassword(changeEmailCredentials.getPassword());
+        if (this.userDAO.userExists(changeEmailCredentials.getUsername())) {
 
-        if (this.userDAO.loginUser(loginCredentials)) {
+            LoginCredentials loginCredentials = new LoginCredentials();
+            loginCredentials.setUsername(changeEmailCredentials.getUsername());
+            loginCredentials.setPassword(changeEmailCredentials.getPassword());
 
-            this.userDAO.changeUserEmail(changeEmailCredentials);
-            return Response.status(201).build();
+            if (this.userDAO.loginUser(loginCredentials)) {
+
+                this.userDAO.changeUserEmail(changeEmailCredentials);
+                return Response.status(201).build();
+
+            } else {
+
+                return Response.status(603).build();
+
+            }
 
         } else {
 
-            return Response.status(603).build();
+            return Response.status(404).build();
 
         }
 
     }
     @POST
-    @ApiOperation(value = "Change user Birthday", notes = "Change the birthday of a user")
+    @ApiOperation(value = "Change user Birthday")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 603, message = "Incorrect status"),
+            @ApiResponse(code = 404, message = "User not exists"),
     })
     @Path("/changeBirthday")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response changeUserBirthday(ChangeBirthdayCredentials changeBirthdayCredentials) throws SQLException {
+    public Response changeBirthday(ChangeBirthdayCredentials changeBirthdayCredentials) throws SQLException {
 
-        LoginCredentials loginCredentials = new LoginCredentials();
-        loginCredentials.setUsername(changeBirthdayCredentials.getUsername());
-        loginCredentials.setPassword(changeBirthdayCredentials.getPassword());
+        if (this.userDAO.userExists(changeBirthdayCredentials.getUsername())) {
 
-        if (this.userDAO.loginUser(loginCredentials)) {         //fer if user status = Admin (que pugui fer tot)
-            this.userDAO.changeUserBirthday(changeBirthdayCredentials);
-            return Response.status(201).build();
+            LoginCredentials loginCredentials = new LoginCredentials();
+            loginCredentials.setUsername(changeBirthdayCredentials.getUsername());
+            loginCredentials.setPassword(changeBirthdayCredentials.getPassword());
+
+            if (this.userDAO.loginUser(loginCredentials)) {         //fer if user status = Admin (que pugui fer tot)
+                this.userDAO.changeUserBirthday(changeBirthdayCredentials);
+                return Response.status(201).build();
+
+            } else {
+
+                return Response.status(603).build();
+
+            }
 
         } else {
 
-            return Response.status(603).build();
+            return Response.status(404).build();
 
         }
 
     }
 
-    /**********************************************     consultes     *****************************************************/
-    //Servei per obtenir tots els usuaris
     @GET
-    @ApiOperation(value = "Get all Users", notes = "Get all users from BBDD")
+    @ApiOperation(value = "Get all Users")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = User.class, responseContainer="List"),
     })
-    @Path("/allUsers")
+    @Path("/getAllUsers")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUsers() {
+    public Response getAllUsers() {
 
         List<User> users = this.userDAO.findAll();
 
@@ -189,23 +212,52 @@ public class UserService {
 
     }
 
-    @GET
-    @ApiOperation(value = "Get game parameters", notes = "Send game global parameters to client")
+    @POST
+    @ApiOperation(value = "Check if a user exists")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = GameParameters.class),
+            @ApiResponse(code = 201, message = "User exists"),
+            @ApiResponse(code = 404, message = "User not exists"),
     })
-    @Path("/gameParameters")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getGameParameters() {
+    @Path("/userExists")
+    public Response userExists(GetUserCredentials getUserCredentials) {
 
-        GameParameters gameParameters = new GameParameters(this.userDAO.getUsername_min_length(), this.userDAO.getUsername_max_length(), this.userDAO.getPassword_min_length(), this.userDAO.getPassword_max_length(), this.userDAO.getEmail_min_length(), this.userDAO.getEmail_max_length(), this.userDAO.getMin_age());
-        return Response.status(201).entity(gameParameters).build();
+        if (this.userDAO.userExists(getUserCredentials.getUsername())) {
+
+            return Response.status(201).build();
+
+        } else {
+
+            return Response.status(404).build();
+
+        }
 
     }
 
-    //Servei per obtenir un usuari a partir del username
+    @GET
+    @ApiOperation(value = "Get user credentials parameters")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = UserCredentialsParameters.class),
+    })
+    @Path("/getUserCredentialsParameters")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUserCredentialsParameters() {
+
+        UserCredentialsParameters userCredentialsParameters = new UserCredentialsParameters(
+                this.userDAO.getUsername_min_length(),
+                this.userDAO.getUsername_max_length(),
+                this.userDAO.getPassword_min_length(),
+                this.userDAO.getPassword_max_length(),
+                this.userDAO.getEmail_min_length(),
+                this.userDAO.getEmail_max_length(),
+                this.userDAO.getMin_age());
+
+        return Response.status(201).entity(userCredentialsParameters).build();
+
+    }
+
+
     @POST
-    @ApiOperation(value = "get a User", notes = "Get all data 1 user")
+    @ApiOperation(value = "Get a User given a username")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = User.class),
             @ApiResponse(code = 404, message = "User not exists"),
@@ -236,34 +288,38 @@ public class UserService {
 
     }
 
-    //Servei per obtenir un usuari a partir del ID
+
     @GET
-    @ApiOperation(value = "get a User", notes = "Get all data 1 user")
+    @ApiOperation(value = "Get a User given an id")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = User.class),
+            @ApiResponse(code = 200, message = "Succesful", response = User.class),
             @ApiResponse(code = 503, message = "not working well...")
     })
-    @Path("/GetUserByID/{userID}")
+    @Path("/getUserById/{userID}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response GetUserByID(@PathParam("userID") int id) {
+    public Response getUserById(@PathParam("userID") int id) {
         try{
+
             User user = this.userDAO.getUserById(id);
             return Response.status(200).entity(user).build();
+
         }
         catch (Exception e){
 
             return Response.status(503).build();
         }
     }
+
+
     @POST
-    @ApiOperation(value = "Get an user ID", notes = "Get userID")
+    @ApiOperation(value = "Get a user ID")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = UserIdResponse.class),
             @ApiResponse(code = 404, message = "User not found"),
     })
-    @Path("/getUserIdByUserame")
+    @Path("/getIdByUserame")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUserIdByName(GetUserCredentials getUserCredentials) throws SQLException {
+    public Response getIdByUsername(GetUserCredentials getUserCredentials) throws SQLException {
 
         UserIdResponse userIdResponse = new UserIdResponse(this.userDAO.getUserIdByUsername(getUserCredentials.getUsername()));
 

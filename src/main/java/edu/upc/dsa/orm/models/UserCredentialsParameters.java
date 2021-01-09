@@ -1,6 +1,6 @@
 package edu.upc.dsa.orm.models;
 
-public class GameParameters {
+public class UserCredentialsParameters {
 
     private int username_min_length;
     private int username_max_length;
@@ -10,12 +10,12 @@ public class GameParameters {
     private int email_max_length;
     private int min_age;
 
-    public GameParameters() {
+    public UserCredentialsParameters() {
 
 
     }
 
-    public GameParameters(int username_min_length, int username_max_length, int password_min_length, int password_max_length, int email_min_length, int email_max_length, int min_age) {
+    public UserCredentialsParameters(int username_min_length, int username_max_length, int password_min_length, int password_max_length, int email_min_length, int email_max_length, int min_age) {
         this.username_min_length = username_min_length;
         this.username_max_length = username_max_length;
         this.password_min_length = password_min_length;

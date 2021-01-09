@@ -57,11 +57,11 @@ public class GameService {
     ****/
     //Servicio para obtener las 5 PARTIDAS CON MÁS SCORE
     @GET
-    @ApiOperation(value = "Get TOP Games", notes = "Get top GAMES ordered BY score from BBDD")
+    @ApiOperation(value = "Get TOP Games")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Game.class, responseContainer = "List"),
     })
-    @Path("/topGames")
+    @Path("/getTopGames")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTopGames() throws SQLException {
 
@@ -72,13 +72,14 @@ public class GameService {
         return Response.status(201).entity(entity).build();
 
     }
-    //Servicio para obtener las 5 USERS CON MÁS SCORE
+
+
     @GET
-    @ApiOperation(value = "Get TOP Users", notes = "Get top USERS ordered BY score from BBDD")
+    @ApiOperation(value = "Get the users with the most score")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = User.class, responseContainer = "List"),
     })
-    @Path("/topUsers")
+    @Path("/getTopUsers")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTopUsers() throws SQLException {
 
@@ -89,9 +90,11 @@ public class GameService {
         return Response.status(201).entity(entity).build();
 
     }
+
+
     //Servicio para obtener la posición en el ranking del usuario
     @POST
-    @ApiOperation(value = "Get a user position in ranking", notes = "Get position of a user in the score ranking")
+    @ApiOperation(value = "Get a user position in ranking")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = RankingPositionResponse.class),
             @ApiResponse(code = 404, message = "User not exists"),
@@ -117,7 +120,7 @@ public class GameService {
     /**********************************************     GAMES (partidas) services   ***********************************/
     //Servicio para obtener todas las partidas
     @GET
-    @ApiOperation(value = "Get all Games from BBDD", notes = "Get all partidas from BBDD")
+    @ApiOperation(value = "Get all Games from BBDD")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Game.class, responseContainer = "List"),
     })
@@ -134,7 +137,7 @@ public class GameService {
 
     //Servicio para obtener la Partida a partir del Username (User)
     @GET
-    @ApiOperation(value = "get a Game by Username", notes = "Get all data 1 game")
+    @ApiOperation(value = "get a Game by Username")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Game.class),
             @ApiResponse(code = 503, message = "not working well...")
@@ -153,7 +156,7 @@ public class GameService {
 
     //Servicio para obtener la Partida a partir del Username (User)
     @GET
-    @ApiOperation(value = "get a Game by its ID", notes = "Get all data 1 game")
+    @ApiOperation(value = "get a Game by its ID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Game.class),
             @ApiResponse(code = 503, message = "not working well...")
@@ -175,7 +178,7 @@ public class GameService {
 
     // Servicio para registrar una nueva partida
     @POST
-    @ApiOperation(value = "Register a new Game", notes = "Register a game")
+    @ApiOperation(value = "Register a new Game")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful! Game registered"),
 
@@ -194,7 +197,7 @@ public class GameService {
 
     //Servicio para obtener todas los players
     @GET
-    @ApiOperation(value = "Get all Players from BBDD", notes = "Get all players from BBDD")
+    @ApiOperation(value = "Get all Players from BBDD")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Player.class, responseContainer = "List"),
     })
@@ -211,7 +214,7 @@ public class GameService {
 
     //Servicio para obtener el player a partir del Username (User)
     @GET
-    @ApiOperation(value = "get the Player by Username", notes = "Get all data 1 game")
+    @ApiOperation(value = "get the Player by Username")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Game.class),
             @ApiResponse(code = 503, message = "not working well...")
@@ -230,7 +233,7 @@ public class GameService {
 
     //Servicio para obtener la Partida a partir del Username (User)
     @GET
-    @ApiOperation(value = "get a Game by its ID", notes = "Get all data 1 game")
+    @ApiOperation(value = "get a Game by its ID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Game.class),
             @ApiResponse(code = 503, message = "not working well...")
@@ -252,7 +255,7 @@ public class GameService {
 
     // Servicio para registrar una nueva partida
     @POST
-    @ApiOperation(value = "Register a new Player", notes = "Register a player")
+    @ApiOperation(value = "Register a new Player")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful! Game registered"),
 
@@ -284,7 +287,7 @@ public class GameService {
 /******************************************     ITEMS services  *******************************************************/
     //Servicio para obtener todos los items
     @GET
-    @ApiOperation(value = "Get all items from BBDD", notes = "Get all items from BBDD")
+    @ApiOperation(value = "Get all items from BBDD")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Item.class, responseContainer = "List"),
     })
@@ -301,7 +304,7 @@ public class GameService {
     }
     //Servicio para obtener un Item a partir del ID
     @GET
-    @ApiOperation(value = "get an Item by its ID", notes = "Get all data 1 item")
+    @ApiOperation(value = "get an Item by its ID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Item.class),
             @ApiResponse(code = 503, message = "not working well...")
@@ -321,7 +324,7 @@ public class GameService {
     }
     //Servei per obtenir un item a partir del seu nom
     @GET
-    @ApiOperation(value = "get an Item by its name", notes = "Get all data one ITEM")
+    @ApiOperation(value = "get an Item by its name")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Item.class),
             @ApiResponse(code = 503, message = "not working well...")
