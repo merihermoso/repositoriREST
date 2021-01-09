@@ -7,6 +7,7 @@ import edu.upc.dsa.orm.Session;
 import edu.upc.dsa.orm.models.GameCredentials.PlayerCredentials;
 import edu.upc.dsa.orm.models.Item;
 import edu.upc.dsa.orm.models.Player;
+import edu.upc.dsa.orm.models.adminCredentials.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -103,5 +104,59 @@ public class PlayerDAOImpl implements PlayerDAO {
         return result;
     }
     /**********************************************************************************************************/
+//Funció per modificar playerStatus
+    public boolean changePlayerStatus(ChangePlayerStatus changePlayerStatus) {
 
+        Session session;
+
+        session = FactorySession.openSession();
+        session.close();
+
+        return session.changePlayerStatus(changePlayerStatus);
+
+    }
+    //Funció per modificar playerScore
+    public boolean changePlayerScore(ChangePlayerScore changePlayerScore) {
+
+        Session session;
+
+        session = FactorySession.openSession();
+        session.close();
+
+        return session.changePlayerScore(changePlayerScore);
+
+    }
+    //Funció per modificar playerLevel
+    public boolean changePlayerLevel(ChangePlayerLevel changePlayerLevel) {
+
+        Session session;
+
+        session = FactorySession.openSession();
+        session.close();
+
+        return session.changePlayerLevel(changePlayerLevel);
+
+    }
+    //Funció per modificar playerScore
+    public boolean changePlayerSpeed(ChangePlayerSpeed changePlayerSpeed) {
+
+        Session session;
+
+        session = FactorySession.openSession();
+        session.close();
+
+        return session.changePlayerSpeed(changePlayerSpeed);
+
+    }
+    //Funció per modificar playerLevel
+    public boolean changePlayerCoins(ChangePlayerCoins changePlayerCoins) {
+
+        Session session;
+
+        session = FactorySession.openSession();
+        session.close();
+
+        return session.changePlayerCoins(changePlayerCoins);
+
+    }
 }

@@ -1,12 +1,11 @@
 package edu.upc.dsa.orm.dao.user;
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
-import edu.upc.dsa.orm.models.Credentials.ChangeEmailCredentials;
-import edu.upc.dsa.orm.models.Credentials.ChangePasswordCredentials;
-import edu.upc.dsa.orm.models.Credentials.LoginCredentials;
-import edu.upc.dsa.orm.models.Credentials.RegisterCredentials;
-import edu.upc.dsa.orm.models.Game;
+import edu.upc.dsa.orm.models.Credentials.*;
 import edu.upc.dsa.orm.models.User;
+import edu.upc.dsa.orm.models.adminCredentials.ChangeLevel;
+import edu.upc.dsa.orm.models.adminCredentials.ChangeScore;
+import edu.upc.dsa.orm.models.adminCredentials.ChangeStatus;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -126,17 +125,14 @@ public class UserDAOImpl implements UserDAO {
     /*****************************************  FUNCIONS BÀSIQUES   *************************************************/
 
     public List<User> findAll(){
-
         Session session;
         List<User> userList;
-
         HashMap<Integer, User> result;
 
         session = FactorySession.openSession();
         result = session.findAll(User.class);
 
         userList = new ArrayList<>(result.values());
-
         session.close();
 
         return userList;
@@ -153,8 +149,74 @@ public class UserDAOImpl implements UserDAO {
         return users.size();
     }
 
+    /*****************************************  modificacions USUARI   *************************************************/
+    //Funció per modificar userEmail
+    public boolean changeUserEmail(ChangeEmailCredentials changeEmailCredentials) {
 
+        Session session;
 
+        session = FactorySession.openSession();
+        session.close();
+
+        return session.changeEmail(changeEmailCredentials);
+
+    }
+    //Funció per modificar userEmail
+    public boolean changeUserPassword(ChangePasswordCredentials changePasswordCredentials) {
+
+        Session session;
+
+        session = FactorySession.openSession();
+        session.close();
+
+        return session.changePassword(changePasswordCredentials);
+
+    }
+
+    //Funció per modificar userEmail
+    public boolean changeUserBirthday(ChangeBirthdayCredentials changeBirthdayCredentials) {
+
+        Session session;
+
+        session = FactorySession.openSession();
+        session.close();
+
+        return session.changeBirthday(changeBirthdayCredentials);
+
+    }
+    //Funció per modificar userStatus
+    public boolean changeUserStatus(ChangeStatus changeStatusCredentials) {
+
+        Session session;
+
+        session = FactorySession.openSession();
+        session.close();
+
+        return session.changeStatus(changeStatusCredentials);
+
+    }
+    //Funció per modificar userEmail
+    public boolean changeUserScore(ChangeScore changeScoreCredentials) {
+
+        Session session;
+
+        session = FactorySession.openSession();
+        session.close();
+
+        return session.changeScore(changeScoreCredentials);
+
+    }
+    //Funció per modificar userEmail
+    public boolean changeUserLevel(ChangeLevel changeLevelCredentials) {
+
+        Session session;
+
+        session = FactorySession.openSession();
+        session.close();
+
+        return session.changeLevel(changeLevelCredentials);
+
+    }
     /***********************************************  OBTENIM USUARI  *************************************************/
 
     public User getUserById( int userID) throws SQLException {
@@ -228,28 +290,7 @@ public class UserDAOImpl implements UserDAO {
 
         return userID;
     }
-    //Funció per modificar userEmail
-    public boolean changeUserEmail(ChangeEmailCredentials changeEmailCredentials) {
 
-        Session session;
-
-        session = FactorySession.openSession();
-        session.close();
-
-        return session.changeEmail(changeEmailCredentials);
-
-    }
-    //Funció per modificar userEmail
-    public boolean changeUserPassword(ChangePasswordCredentials changePasswordCredentials) {
-
-        Session session;
-
-        session = FactorySession.openSession();
-        session.close();
-
-        return session.changePassword(changePasswordCredentials);
-
-    }
 
     //NO FUNCIONA ENCARA (LA PART DE QUERYHELPER NO ESTÀ BEN FETA LA CONSULTA PER TROBAR LA POSICIÓ
    public int getUserPositionByUsername(String username) throws SQLException {

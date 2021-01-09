@@ -1,16 +1,13 @@
 package edu.upc.dsa.orm;
 
-import edu.upc.dsa.orm.models.Credentials.ChangeEmailCredentials;
-import edu.upc.dsa.orm.models.Credentials.ChangePasswordCredentials;
-import edu.upc.dsa.orm.models.Credentials.LoginCredentials;
-import edu.upc.dsa.orm.models.Credentials.RegisterCredentials;
+import edu.upc.dsa.orm.models.Credentials.*;
 import edu.upc.dsa.orm.models.*;
 import edu.upc.dsa.orm.models.GameCredentials.EnemyCredentials;
 import edu.upc.dsa.orm.models.GameCredentials.GameCredentials;
 import edu.upc.dsa.orm.models.GameCredentials.ItemCredentials;
 import edu.upc.dsa.orm.models.GameCredentials.PlayerCredentials;
+import edu.upc.dsa.orm.models.adminCredentials.*;
 import edu.upc.dsa.orm.models.shopCredentials.ElementCredentials;
-import edu.upc.dsa.orm.models.shopCredentials.OrderCredentials;
 import edu.upc.dsa.orm.util.ObjectHelper;
 import edu.upc.dsa.orm.util.QueryHelper;
 
@@ -28,6 +25,11 @@ public class SessionImpl implements Session {
 
     public SessionImpl(Connection conn) {
         this.conn = conn;
+    }
+
+    @Override                                           //Obtenir
+    public void get(Object entity) {
+
     }
 
     public void save(Object entity) {                   //guardar
@@ -251,13 +253,9 @@ public class SessionImpl implements Session {
     }
 
     public boolean changeEmail(ChangeEmailCredentials changeEmailCredentials) {
-
         try {
-
             String selectQuery = QueryHelper.createQueryUPDATEEmailByUsername();
-
             System.out.println(selectQuery);
-
             PreparedStatement pstm;
             ResultSet resultSet;
 
@@ -265,18 +263,182 @@ public class SessionImpl implements Session {
             pstm.setString(1, changeEmailCredentials.getNewEmail());
             pstm.setString(2, changeEmailCredentials.getUsername());
             resultSet = pstm.executeQuery();
-
             return true;
 
         } catch (SQLException e) {
-
             e.printStackTrace();
             return false;
-
         }
-
     }
 
+    public boolean changeBirthday(ChangeBirthdayCredentials changeBirthdayCredentials) {
+        try {
+            String selectQuery = QueryHelper.createQueryUPDATEBirthdayByUsername();
+            System.out.println(selectQuery);
+            PreparedStatement pstm;
+            ResultSet resultSet;
+
+            pstm = conn.prepareStatement(selectQuery);
+            pstm.setString(1, changeBirthdayCredentials.getNewBirthday());
+            pstm.setString(2, changeBirthdayCredentials.getUsername());
+            resultSet = pstm.executeQuery();
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean changeStatus(ChangeStatus changeStatusCredentials) {
+        try {
+            String selectQuery = QueryHelper.createQueryUPDATEStatusByUsername();
+            System.out.println(selectQuery);
+            PreparedStatement pstm;
+            ResultSet resultSet;
+
+            pstm = conn.prepareStatement(selectQuery);
+            pstm.setString(1, changeStatusCredentials.getNewStatus());
+            pstm.setString(2, changeStatusCredentials.getUsername());
+            resultSet = pstm.executeQuery();
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean changeScore(ChangeScore changeScoreCredentials) {
+        try {
+            String selectQuery = QueryHelper.createQueryUPDATEScoreByUsername();
+            System.out.println(selectQuery);
+            PreparedStatement pstm;
+            ResultSet resultSet;
+
+            pstm = conn.prepareStatement(selectQuery);
+            pstm.setInt(1, changeScoreCredentials.getNewScore());
+            pstm.setString(2, changeScoreCredentials.getUsername());
+            resultSet = pstm.executeQuery();
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean changeLevel(ChangeLevel changeLevelCredentials) {
+        try {
+            String selectQuery = QueryHelper.createQueryUPDATELevelByUsername();
+            System.out.println(selectQuery);
+            PreparedStatement pstm;
+            ResultSet resultSet;
+
+            pstm = conn.prepareStatement(selectQuery);
+            pstm.setInt(1, changeLevelCredentials.getNewLevel());
+            pstm.setString(2, changeLevelCredentials.getUsername());
+            resultSet = pstm.executeQuery();
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+/*****************************          modificacions PLAYER                *******************************************/
+
+    public boolean changePlayerLevel(ChangePlayerLevel changePlayerLevel) {
+        try {
+            String selectQuery = QueryHelper.createQueryPlayerUPDATELevelByUsername();
+            System.out.println(selectQuery);
+            PreparedStatement pstm;
+            ResultSet resultSet;
+
+            pstm = conn.prepareStatement(selectQuery);
+            pstm.setInt(1, changePlayerLevel.getNewLevel());
+            pstm.setString(2, changePlayerLevel.getUsername());
+            resultSet = pstm.executeQuery();
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean changePlayerStatus(ChangePlayerStatus changePlayerStatus) {
+        try {
+            String selectQuery = QueryHelper.createQueryPlayerUPDATEStatusByUsername();
+            System.out.println(selectQuery);
+            PreparedStatement pstm;
+            ResultSet resultSet;
+
+            pstm = conn.prepareStatement(selectQuery);
+            pstm.setString(1, changePlayerStatus.getNewStatus());
+            pstm.setString(2, changePlayerStatus.getUsername());
+            resultSet = pstm.executeQuery();
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean changePlayerCoins(ChangePlayerCoins changePlayerCoins) {
+        try {
+            String selectQuery = QueryHelper.createQueryPlayerUPDATECoinsByUsername();
+            System.out.println(selectQuery);
+            PreparedStatement pstm;
+            ResultSet resultSet;
+
+            pstm = conn.prepareStatement(selectQuery);
+            pstm.setInt(1, changePlayerCoins.getNewCoins());
+            pstm.setString(2, changePlayerCoins.getUsername());
+            resultSet = pstm.executeQuery();
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean changePlayerSpeed(ChangePlayerSpeed changePlayerSpeed) {
+        try {
+            String selectQuery = QueryHelper.createQueryPlayerUPDATESpeedByUsername();
+            System.out.println(selectQuery);
+            PreparedStatement pstm;
+            ResultSet resultSet;
+
+            pstm = conn.prepareStatement(selectQuery);
+            pstm.setInt(1, changePlayerSpeed.getNewSpeed());
+            pstm.setString(2, changePlayerSpeed.getUsername());
+            resultSet = pstm.executeQuery();
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean changePlayerScore(ChangePlayerScore changePlayerScore) {
+        try {
+            String selectQuery = QueryHelper.createQueryPlayerUPDATEScoreByUsername();
+            System.out.println(selectQuery);
+            PreparedStatement pstm;
+            ResultSet resultSet;
+
+            pstm = conn.prepareStatement(selectQuery);
+            pstm.setInt(1, changePlayerScore.getNewScore());
+            pstm.setString(2, changePlayerScore.getUsername());
+            resultSet = pstm.executeQuery();
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 /**********************************     AUTENTICACIONS      *************************************************/
     public boolean registerUser(RegisterCredentials registerCredentials) {
 

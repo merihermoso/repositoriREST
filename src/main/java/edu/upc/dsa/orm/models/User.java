@@ -7,6 +7,7 @@ public class User {
     private String email;
     private String password;
     private String birthdate;
+    private String status;
     private int score;          //score total que ha conseguit
     private int level;          //
     //private String status;
@@ -27,7 +28,7 @@ public class User {
         setBirthdate(birthdate);
         setScore(0);
         setLevel(1);
-   //     setStatus("Active");
+        setStatus("Active");
       //  setCreditCard(creditCard);
 
     }
@@ -58,6 +59,13 @@ public class User {
     }
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getBirthdate() {

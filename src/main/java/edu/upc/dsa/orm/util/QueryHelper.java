@@ -190,6 +190,7 @@ public class QueryHelper {
 
     /*************************      UPDATE      *****************************************************************/
 
+    //NO IMPLEMENTADA ENCARA
     //UPDATE User SET id = ?, nombre = ?, mail = ? WHERE ID = 'user.getId()'
     public static String createQueryUPDATE(Object entity) {
         StringBuffer sb = new StringBuffer("UPDATE ");
@@ -223,6 +224,77 @@ public class QueryHelper {
         StringBuffer sb = new StringBuffer();
         sb.append("UPDATE User SET email = ?");
         sb.append(" WHERE username = ? ");
+        return sb.toString();
+    }
+    public static String createQueryUPDATEBirthdayByUsername() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("UPDATE User SET birthday = ?");
+        sb.append(" WHERE username = ? ");
+        return sb.toString();
+    }
+    public static String createQueryUPDATEStatusByUsername() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("UPDATE User SET status = ?");
+        sb.append(" WHERE username = ? ");
+        return sb.toString();
+    }
+    public static String createQueryUPDATELevelByUsername() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("UPDATE User SET level = ?");
+        sb.append(" WHERE username = ? ");
+        return sb.toString();
+    }
+    public static String createQueryUPDATEScoreByUsername() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("UPDATE User SET score = ?");
+        sb.append(" WHERE username = ? ");
+        return sb.toString();
+    }
+
+    /********************************** modificacions player **********************************************************/
+    public static String createQueryPlayerUPDATELevelByUsername() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("UPDATE Player SET Player.level = ?");
+        sb.append(" FROM User,Player,UserPlayer ");
+        sb.append(" WHERE User.username = ? ");
+        sb.append(" And  User.id = UserPlayer.id_user");
+        sb.append(" And  Player.id = UserPlayer.id_player");
+        return sb.toString();
+    }
+    public static String createQueryPlayerUPDATEScoreByUsername() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("UPDATE Player SET Player.score = ?");
+        sb.append(" FROM User,Player,UserPlayer ");
+        sb.append(" WHERE User.username = ? ");
+        sb.append(" And  User.id = UserPlayer.id_user");
+        sb.append(" And  Player.id = UserPlayer.id_player");
+        return sb.toString();
+    }
+    public static String createQueryPlayerUPDATECoinsByUsername() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("UPDATE Player SET Player.coins = ?");
+        sb.append(" FROM User,Player,UserPlayer ");
+        sb.append(" WHERE User.username = ? ");
+        sb.append(" And  User.id = UserPlayer.id_user");
+        sb.append(" And  Player.id = UserPlayer.id_player");
+        return sb.toString();
+    }
+    public static String createQueryPlayerUPDATESpeedByUsername() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("UPDATE Player SET Player.speed = ?");
+        sb.append(" FROM User,Player,UserPlayer ");
+        sb.append(" WHERE User.username = ? ");
+        sb.append(" And  User.id = UserPlayer.id_user");
+        sb.append(" And  Player.id = UserPlayer.id_player");
+        return sb.toString();
+    }
+    public static String createQueryPlayerUPDATEStatusByUsername() {
+        StringBuffer sb = new StringBuffer();
+        sb.append("UPDATE Player SET Player.status = ?");
+        sb.append(" FROM User,Player,UserPlayer ");
+        sb.append(" WHERE User.username = ? ");
+        sb.append(" And  User.id = UserPlayer.id_user");
+        sb.append(" And  Player.id = UserPlayer.id_player");
         return sb.toString();
     }
 

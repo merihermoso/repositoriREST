@@ -7,7 +7,7 @@ public class Player {              //classe per objectes de la botiga
     private String status;
     private int coins;
     private int score;
-    private int numLevel;
+    private int level;
     private int speed;
     private int hit;
     private int defense;
@@ -17,11 +17,11 @@ public class Player {              //classe per objectes de la botiga
 
     public Player() {
     }
-    public Player(String status, int coins, int score, int numLevel, int speed, int hit, int defense, int healing, int damage) {
+    public Player(String status, int coins, int score, int level, int speed, int hit, int defense, int healing, int damage) {
         setStatus(status);
         setCoins(coins);
         setScore(score);
-        setNumLevel(numLevel);
+        setLevel(level);
         setSpeed(speed);
         setHit(hit);
         setDefense(defense);
@@ -44,8 +44,8 @@ public class Player {              //classe per objectes de la botiga
     public int getScore() {        return score;    }
     public void setScore(int score) {        this.score = score;    }
 
-    public int getNumLevel() {        return numLevel;    }
-    public void setNumLevel(int numLevel) {        this.numLevel = numLevel;    }
+    public int getLevel() {        return level;    }
+    public void setLevel(int level) {        this.level = level;    }
 
     public int getSpeed() {        return speed;    }
     public void setSpeed(int speed) {        this.speed = speed;    }

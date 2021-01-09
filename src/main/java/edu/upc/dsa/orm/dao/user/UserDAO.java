@@ -1,16 +1,14 @@
 package edu.upc.dsa.orm.dao.user;
 
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
 
-import edu.upc.dsa.orm.models.Credentials.ChangeEmailCredentials;
-import edu.upc.dsa.orm.models.Credentials.ChangePasswordCredentials;
-import edu.upc.dsa.orm.models.Credentials.LoginCredentials;
-import edu.upc.dsa.orm.models.Credentials.RegisterCredentials;
-import edu.upc.dsa.orm.models.Game;
+import edu.upc.dsa.orm.models.Credentials.*;
 import edu.upc.dsa.orm.models.User;
-import edu.upc.dsa.orm.models.shopCredentials.OrderCredentials;
+import edu.upc.dsa.orm.models.adminCredentials.ChangeLevel;
+import edu.upc.dsa.orm.models.adminCredentials.ChangePlayerScore;
+import edu.upc.dsa.orm.models.adminCredentials.ChangeScore;
+import edu.upc.dsa.orm.models.adminCredentials.ChangeStatus;
 
 public interface UserDAO {
     /*****************************************  AUTHENTICATION USER   *************************************************/
@@ -26,26 +24,39 @@ public interface UserDAO {
     int getEmail_max_length();
     int getMin_age();
 
-    /*****************************************  FUNCIONS BÀSIQUES  *************************************************/
+    /*****************************************  modificacions USER   **************************************************/
+    boolean changeUserPassword(ChangePasswordCredentials changePasswordCredentials);
+    boolean changeUserEmail(ChangeEmailCredentials changeEmailCredentials);
+    boolean changeUserBirthday(ChangeBirthdayCredentials changeBirthdayCredentials);
 
+    //funcions admin
+    boolean changeUserStatus(ChangeStatus changeStatusCredentials);
+    boolean changeUserScore(ChangeScore changeScoreCredentials);
+    boolean changeUserLevel(ChangeLevel changeLevelCredentials);
+
+
+    /*****************************************  FUNCIONS BÀSIQUES    **************************************************/
     List<User> findAll();
     int size();
-    /*****************************************  OBTENIM USUARI  *************************************************/
 
+    /*****************************************  OBTENIM USUARI       **************************************************/
+   //Obtenim objecte
     User getUserById( int userID) throws SQLException;
     User getUserByUsername( String username) throws SQLException;
 
+    //Obtenim un atribut
     int getUserIdByUsername(String username) throws SQLException;
+    int getUserPositionByUsername(String username) throws SQLException;
 
     /*****************************************  OBTENIM ranking     *************************************************/
     public List<User> getUserRanking() throws SQLException;
 
 
-    int getUserPositionByUsername(String username) throws SQLException;
+
+
     //  public User deleteUserByUsername(String username) throws SQLException;
 
-    boolean changeUserEmail(ChangeEmailCredentials changeEmailCredentials);
-    boolean changeUserPassword(ChangePasswordCredentials changePasswordCredentials);
+
 
 
 

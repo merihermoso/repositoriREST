@@ -145,7 +145,31 @@ public class UserService {
         }
 
     }
+    @POST
+    @ApiOperation(value = "Change user Birthday", notes = "Change the birthday of a user")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 603, message = "Incorrect status"),
+    })
+    @Path("/changeBirthday")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response changeUserBirthday(ChangeBirthdayCredentials changeBirthdayCredentials) throws SQLException {
 
+        LoginCredentials loginCredentials = new LoginCredentials();
+        loginCredentials.setUsername(changeBirthdayCredentials.getUsername());
+        loginCredentials.setPassword(changeBirthdayCredentials.getPassword());
+
+        if (this.userDAO.loginUser(loginCredentials)) {         //fer if user status = Admin (que pugui fer tot)
+            this.userDAO.changeUserBirthday(changeBirthdayCredentials);
+            return Response.status(201).build();
+
+        } else {
+
+            return Response.status(603).build();
+
+        }
+
+    }
 
     /**********************************************     consultes     *****************************************************/
     //Servei per obtenir tots els usuaris
