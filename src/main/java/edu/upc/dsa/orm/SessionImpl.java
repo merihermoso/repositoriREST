@@ -251,6 +251,7 @@ public class SessionImpl implements Session {
     }
 
     //Funció que retorna els coins de un PLAYER
+    @Override
     public int getCoinsPlayer(String id_player) {
         ResultSet rs;
         int coins = 0;
@@ -285,6 +286,25 @@ public class SessionImpl implements Session {
             throwables.printStackTrace();
         }
         return price;
+    }
+
+    @Override
+    public int getCoinsPlayer(int id_player) {
+        ResultSet rs;
+        int coins = 0;
+        Statement statement;
+        String selectQuery = QueryHelper.createQuerySELECTCoinsPlayer(id_player);
+        try{
+            statement = this.conn.createStatement();
+            statement.execute(selectQuery);
+            rs = statement.getResultSet();
+            if (rs.next()) {
+                coins = (int) rs.getObject(1);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return coins;
     }
 
 

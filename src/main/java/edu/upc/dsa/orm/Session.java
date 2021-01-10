@@ -80,6 +80,9 @@ public interface Session<E> {
     HashMap<Integer, Object> getItemsUser(Class theClass, int id_user) throws UserNotFoundException;
 
 
+    //Funció que retorna els coins de un PLAYER
+    int getCoinsPlayer(String id_player);
+
     //Obtenir Atributs Item
     int getPriceItem(int id_item);
     int getCoinsPlayer(int id_player);
