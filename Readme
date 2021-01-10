@@ -11,6 +11,8 @@ CONSULTAS QUE FALTAN (Backend)
 -> Update object (generalizado, para poder poner el objecto, atributo y nuevo valor) y que sirva para todas
 -> Delete ...
 
+-> Fer la part de servei de getPriceItem i getCoinsPlayer   (nose si pasar-ho per Path o no)(nose si es pot fer una sola funció que et dongui l'atribut que vols de cada objecte...)
+
 
 COSAS QUE FALTAN WEB
 
