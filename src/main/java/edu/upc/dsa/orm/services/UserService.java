@@ -95,11 +95,18 @@ public class UserService {
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 404, message = "User not exists"),
+            @ApiResponse(code = 601, message = "Need to fill in username field"),
+            @ApiResponse(code = 602, message = "Need to fill in password field"),
+            @ApiResponse(code = 604, message = "Need to fill in new password field"),
             @ApiResponse(code = 603, message = "Incorrect password"),
     })
     @Path("/changePassword")
     @Produces(MediaType.APPLICATION_JSON)
     public Response changePassword(ChangePasswordCredentials changePasswordCredentials) throws SQLException {
+
+        if (changePasswordCredentials.getUsername() == null) return Response.status(601).build();
+        if (changePasswordCredentials.getPassword() == null) return Response.status(602).build();
+        if (changePasswordCredentials.getNewPassword() == null) return Response.status(604).build();
 
         if (this.userDAO.userExists(changePasswordCredentials.getUsername())) {
 
@@ -131,11 +138,18 @@ public class UserService {
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 603, message = "Incorrect password"),
+            @ApiResponse(code = 601, message = "Need to fill in username field"),
+            @ApiResponse(code = 602, message = "Need to fill in password field"),
+            @ApiResponse(code = 604, message = "Need to fill in new email field"),
             @ApiResponse(code = 404, message = "User not exists"),
     })
     @Path("/changeEmail")
     @Produces(MediaType.APPLICATION_JSON)
     public Response changeEmail(ChangeEmailCredentials changeEmailCredentials) throws SQLException {
+
+        if (changeEmailCredentials.getUsername() == null) return Response.status(601).build();
+        if (changeEmailCredentials.getPassword() == null) return Response.status(602).build();
+        if (changeEmailCredentials.getNewEmail() == null) return Response.status(604).build();
 
         if (this.userDAO.userExists(changeEmailCredentials.getUsername())) {
 
@@ -161,40 +175,7 @@ public class UserService {
         }
 
     }
-    @POST
-    @ApiOperation(value = "Change user Birthday")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful"),
-            @ApiResponse(code = 603, message = "Incorrect status"),
-            @ApiResponse(code = 404, message = "User not exists"),
-    })
-    @Path("/changeBirthday")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response changeBirthday(ChangeBirthdayCredentials changeBirthdayCredentials) throws SQLException {
 
-        if (this.userDAO.userExists(changeBirthdayCredentials.getUsername())) {
-
-            LoginCredentials loginCredentials = new LoginCredentials();
-            loginCredentials.setUsername(changeBirthdayCredentials.getUsername());
-            loginCredentials.setPassword(changeBirthdayCredentials.getPassword());
-
-            if (this.userDAO.loginUser(loginCredentials)) {         //fer if user status = Admin (que pugui fer tot)
-                this.userDAO.changeUserBirthday(changeBirthdayCredentials);
-                return Response.status(201).build();
-
-            } else {
-
-                return Response.status(603).build();
-
-            }
-
-        } else {
-
-            return Response.status(404).build();
-
-        }
-
-    }
 
     @GET
     @ApiOperation(value = "Get all Users")
@@ -216,10 +197,13 @@ public class UserService {
     @ApiOperation(value = "Check if a user exists")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "User exists"),
+            @ApiResponse(code = 601, message = "Need to fill in username field"),
             @ApiResponse(code = 404, message = "User not exists"),
     })
     @Path("/userExists")
     public Response userExists(GetUserCredentials getUserCredentials) {
+
+        if (getUserCredentials.getUsername() == null) return Response.status(601).build();
 
         if (this.userDAO.userExists(getUserCredentials.getUsername())) {
 
@@ -261,12 +245,15 @@ public class UserService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = User.class),
             @ApiResponse(code = 404, message = "User not exists"),
+            @ApiResponse(code = 601, message = "Need to fill in username field"),
             @ApiResponse(code = 503, message = "not working well...")
 
     })
     @Path("/getUserByUsername")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response getUserByUsername(GetUserCredentials getUserCredentials) {
+
+        if (getUserCredentials.getUsername() == null) return Response.status(601).build();
 
         if (this.userDAO.userExists(getUserCredentials.getUsername())) {
 
@@ -315,18 +302,25 @@ public class UserService {
     @ApiOperation(value = "Get a user ID")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = UserIdResponse.class),
+            @ApiResponse(code = 601, message = "Need to fill in username field"),
             @ApiResponse(code = 404, message = "User not found"),
     })
     @Path("/getIdByUserame")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getIdByUsername(GetUserCredentials getUserCredentials) throws SQLException {
 
-        UserIdResponse userIdResponse = new UserIdResponse(this.userDAO.getUserIdByUsername(getUserCredentials.getUsername()));
+        if (getUserCredentials.getUsername() == null) return Response.status(601).build();
 
-        if (userIdResponse.getUserID() != -1) {
+        if (this.userDAO.userExists(getUserCredentials.getUsername())) {
+
+            UserIdResponse userIdResponse = new UserIdResponse(this.userDAO.getUserIdByUsername(getUserCredentials.getUsername()));
+
             return Response.status(201).entity(userIdResponse).build();
+
         } else {
-            return Response.status(404).entity(userIdResponse).build();
+
+            return Response.status(404).build();
+
         }
 
     }

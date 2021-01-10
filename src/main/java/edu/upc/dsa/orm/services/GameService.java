@@ -97,11 +97,14 @@ public class GameService {
     @ApiOperation(value = "Get a user position in ranking")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = RankingPositionResponse.class),
+            @ApiResponse(code = 601, message = "Need to fill in username field"),
             @ApiResponse(code = 404, message = "User not exists"),
     })
     @Path("/getUserPositionByUsername")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUserPositionByUsername(GetUserCredentials getUserCredentials) throws SQLException {
+
+        if (getUserCredentials.getUsername() == null) return Response.status(601).build();
 
         if (this.userDAO.userExists(getUserCredentials.getUsername())) {
 
