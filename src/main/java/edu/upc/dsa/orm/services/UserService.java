@@ -1,10 +1,11 @@
 package edu.upc.dsa.orm.services;
 
 
+import edu.upc.dsa.orm.dao.game.GameDAO;
+import edu.upc.dsa.orm.dao.game.GameDAOImpl;
 import edu.upc.dsa.orm.dao.user.UserDAO;
 import edu.upc.dsa.orm.dao.user.UserDAOImpl;
-import edu.upc.dsa.orm.models.Credentials.*;
-import edu.upc.dsa.orm.models.Credentials.UserIdResponse;
+import edu.upc.dsa.orm.models.API.*;
 import edu.upc.dsa.orm.models.UserCredentialsParameters;
 import edu.upc.dsa.orm.models.User;
 import io.swagger.annotations.Api;
@@ -19,6 +20,7 @@ import javax.ws.rs.core.Response;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,10 +29,12 @@ import java.util.List;
 public class UserService {
 
     private final UserDAO userDAO;
+    private final GameDAO gameDAO;
 
     public UserService() {
 
         this.userDAO = UserDAOImpl.getInstance();
+        this.gameDAO = GameDAOImpl.getInstance();
 
     }
 
@@ -180,15 +184,28 @@ public class UserService {
     @GET
     @ApiOperation(value = "Get all Users")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = User.class, responseContainer="List"),
+            @ApiResponse(code = 201, message = "Successful", response = ProfileResponse.class, responseContainer="List"),
     })
     @Path("/getAllUsers")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllUsers() {
 
-        List<User> users = this.userDAO.findAll();
+        List<User> users = this.userDAO.getAllUsers();
 
-        GenericEntity<List<User>> entity = new GenericEntity<List<User>>(users) {};
+        List<ProfileResponse> profileResponses = new ArrayList<>();
+
+        for(User user : users) {
+
+            profileResponses.add(new ProfileResponse(user.getUsername(),
+                    user.getEmail(),
+                    user.getBirthdate(),
+                    user.getScore(),
+                    user.getLevel(),
+                    this.gameDAO.getUserPositionByUsername(user.getUsername())));
+
+        }
+
+        GenericEntity<List<ProfileResponse>> entity = new GenericEntity<List<ProfileResponse>>(profileResponses) {};
         return Response.status(201).entity(entity).build();
 
     }
@@ -244,7 +261,7 @@ public class UserService {
     @GET
     @ApiOperation(value = "Get a User given a username")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = User.class),
+            @ApiResponse(code = 200, message = "OK", response = ProfileResponse.class),
             @ApiResponse(code = 404, message = "User not exists"),
             @ApiResponse(code = 601, message = "Need to fill in username field"),
             @ApiResponse(code = 503, message = "not working well...")
@@ -261,7 +278,15 @@ public class UserService {
             try {
 
                 User user = this.userDAO.getUserByUsername(username);
-                return Response.status(200).entity(user).build();
+
+                ProfileResponse profileResponse = new ProfileResponse(user.getUsername(),
+                        user.getEmail(),
+                        user.getBirthdate(),
+                        user.getScore(),
+                        user.getLevel(),
+                        this.gameDAO.getUserPositionByUsername(user.getUsername()));
+
+                return Response.status(200).entity(profileResponse).build();
 
             } catch (Exception e) {
 
@@ -280,7 +305,7 @@ public class UserService {
     @GET
     @ApiOperation(value = "Get a User given an id")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Succesful", response = User.class),
+            @ApiResponse(code = 200, message = "Succesful", response = ProfileResponse.class),
             @ApiResponse(code = 503, message = "not working well...")
     })
     @Path("/getUserById/{id}")
@@ -290,7 +315,15 @@ public class UserService {
         try{
 
             User user = this.userDAO.getUserById(id);
-            return Response.status(200).entity(user).build();
+
+            ProfileResponse profileResponse = new ProfileResponse(user.getUsername(),
+                    user.getEmail(),
+                    user.getBirthdate(),
+                    user.getScore(),
+                    user.getLevel(),
+                    this.gameDAO.getUserPositionByUsername(user.getUsername()));
+
+            return Response.status(200).entity(profileResponse).build();
 
         }
         catch (Exception e){
@@ -303,7 +336,7 @@ public class UserService {
     @GET
     @ApiOperation(value = "Get a user ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = UserIdResponse.class),
+            @ApiResponse(code = 201, message = "Successful", response = IdResponse.class),
             @ApiResponse(code = 601, message = "Need to fill in username field"),
             @ApiResponse(code = 404, message = "User not found"),
     })
@@ -315,9 +348,9 @@ public class UserService {
 
         if (this.userDAO.userExists(username)) {
 
-            UserIdResponse userIdResponse = new UserIdResponse(this.userDAO.getUserIdByUsername(username));
+            IdResponse idResponse = new IdResponse(this.userDAO.getUserIdByUsername(username));
 
-            return Response.status(201).entity(userIdResponse).build();
+            return Response.status(201).entity(idResponse).build();
 
         } else {
 

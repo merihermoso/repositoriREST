@@ -12,6 +12,8 @@ import edu.upc.dsa.orm.dao.player.PlayerDAOImpl;
 import edu.upc.dsa.orm.dao.user.UserDAO;
 import edu.upc.dsa.orm.dao.user.UserDAOImpl;
 import edu.upc.dsa.orm.models.*;
+import edu.upc.dsa.orm.models.API.ProfileResponse;
+import edu.upc.dsa.orm.models.API.RankingPositionResponse;
 import edu.upc.dsa.orm.models.GameCredentials.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,11 +31,11 @@ import java.util.*;
 @Path("game")
 public class GameService {
 
-    private GameDAO gameDAO;
-    private UserDAO userDAO;
-    private ItemDAO itemDAO;
-    private EnemyDAO enemyDAO;
-    private PlayerDAO playerDAO;
+    private final GameDAO gameDAO;
+    private final UserDAO userDAO;
+    private final ItemDAO itemDAO;
+    private final EnemyDAO enemyDAO;
+    private final PlayerDAO playerDAO;
 
     public GameService() {
         this.gameDAO = GameDAOImpl.getInstance();
@@ -73,15 +75,27 @@ public class GameService {
     @GET
     @ApiOperation(value = "Get the users with the most score")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = User.class, responseContainer = "List"),
+            @ApiResponse(code = 201, message = "Successful", response = ProfileResponse.class, responseContainer = "List"),
     })
     @Path("/getTopUsers")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTopUsers() throws SQLException {
 
-        List<User> users = this.userDAO.getUserRanking();
+        List<User> users = this.gameDAO.getUserRanking();
 
-        GenericEntity<List<User>> entity = new GenericEntity<List<User>>(users) {
+        List<ProfileResponse> profileResponses = new ArrayList<>();
+
+        for(User user : users) {
+
+            profileResponses.add(new ProfileResponse(user.getUsername(),
+                    user.getEmail(),
+                    user.getBirthdate(),
+                    user.getScore(),
+                    user.getLevel(),
+                    this.gameDAO.getUserPositionByUsername(user.getUsername())));
+        }
+
+        GenericEntity<List<ProfileResponse>> entity = new GenericEntity<List<ProfileResponse>>(profileResponses) {
         };
         return Response.status(201).entity(entity).build();
 
@@ -105,7 +119,7 @@ public class GameService {
         if (this.userDAO.userExists(username)) {
 
             RankingPositionResponse rankingPositionResponse =
-                    new RankingPositionResponse(this.userDAO.getUserPositionByUsername(username));
+                    new RankingPositionResponse(this.gameDAO.getUserPositionByUsername(username));
 
             return Response.status(201).entity(rankingPositionResponse).build();
 

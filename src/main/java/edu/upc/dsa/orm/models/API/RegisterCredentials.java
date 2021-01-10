@@ -1,4 +1,4 @@
-package edu.upc.dsa.orm.models.Credentials;
+package edu.upc.dsa.orm.models.API;
 
 public class RegisterCredentials {
 

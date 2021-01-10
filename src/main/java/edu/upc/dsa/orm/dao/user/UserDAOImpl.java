@@ -1,7 +1,10 @@
 package edu.upc.dsa.orm.dao.user;
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
-import edu.upc.dsa.orm.models.Credentials.*;
+import edu.upc.dsa.orm.models.API.ChangeEmailCredentials;
+import edu.upc.dsa.orm.models.API.ChangePasswordCredentials;
+import edu.upc.dsa.orm.models.API.LoginCredentials;
+import edu.upc.dsa.orm.models.API.RegisterCredentials;
 import edu.upc.dsa.orm.models.User;
 import edu.upc.dsa.orm.models.adminCredentials.ChangeLevel;
 import edu.upc.dsa.orm.models.adminCredentials.ChangeScore;
@@ -124,7 +127,7 @@ public class UserDAOImpl implements UserDAO {
 
     /*****************************************  FUNCIONS BÀSIQUES   *************************************************/
 
-    public List<User> findAll(){
+    public List<User> getAllUsers(){
         Session session;
         List<User> userList;
         HashMap<Integer, User> result;
@@ -173,17 +176,6 @@ public class UserDAOImpl implements UserDAO {
 
     }
 
-    //Funció per modificar userEmail
-    public boolean changeUserBirthday(ChangeBirthdayCredentials changeBirthdayCredentials) {
-
-        Session session;
-
-        session = FactorySession.openSession();
-        session.close();
-
-        return session.changeBirthday(changeBirthdayCredentials);
-
-    }
     //Funció per modificar userStatus
     public boolean changeUserStatus(ChangeStatus changeStatusCredentials) {
 
@@ -252,22 +244,6 @@ public class UserDAOImpl implements UserDAO {
         return user;
     }
 
-    public List<User> getUserRanking(){         //obtenim el rankin de usuaris amb més puntuació
-
-        Session session;
-        List<User> usersList;
-
-        HashMap<Integer, User> result;
-
-        session = FactorySession.openSession();
-        result = session.findTop(User.class);
-
-        usersList = new ArrayList<>(result.values());
-
-        session.close();
-
-        return usersList;
-    }
     //Funció per obtenir userID a partir del seu username
     public int getUserIdByUsername(String username) throws SQLException {
 
@@ -291,29 +267,6 @@ public class UserDAOImpl implements UserDAO {
         return userID;
     }
 
-
-    //NO FUNCIONA ENCARA (LA PART DE QUERYHELPER NO ESTÀ BEN FETA LA CONSULTA PER TROBAR LA POSICIÓ
-   public int getUserPositionByUsername(String username) throws SQLException {
-
-        Session session = null;
-
-        int pos = -1;
-
-        try {
-
-            session = FactorySession.openSession();
-            pos = session.getUserPositionByUsername(username);          //com poso la relació game User?¿
-
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        finally {
-            session.close();
-        }
-
-        return pos;
-    }
 
 /***************************************** to do ***************************************************************/
                                                                                         // DELETES  //

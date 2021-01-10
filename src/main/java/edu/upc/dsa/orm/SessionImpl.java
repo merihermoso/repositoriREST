@@ -1,6 +1,9 @@
 package edu.upc.dsa.orm;
 
-import edu.upc.dsa.orm.models.Credentials.*;
+import edu.upc.dsa.orm.models.API.ChangeEmailCredentials;
+import edu.upc.dsa.orm.models.API.ChangePasswordCredentials;
+import edu.upc.dsa.orm.models.API.LoginCredentials;
+import edu.upc.dsa.orm.models.API.RegisterCredentials;
 import edu.upc.dsa.orm.models.*;
 import edu.upc.dsa.orm.models.GameCredentials.EnemyCredentials;
 import edu.upc.dsa.orm.models.GameCredentials.GameCredentials;
@@ -271,24 +274,6 @@ public class SessionImpl implements Session {
         }
     }
 
-    public boolean changeBirthday(ChangeBirthdayCredentials changeBirthdayCredentials) {
-        try {
-            String selectQuery = QueryHelper.createQueryUPDATEBirthdayByUsername();
-            System.out.println(selectQuery);
-            PreparedStatement pstm;
-            ResultSet resultSet;
-
-            pstm = conn.prepareStatement(selectQuery);
-            pstm.setString(1, changeBirthdayCredentials.getNewBirthday());
-            pstm.setString(2, changeBirthdayCredentials.getUsername());
-            resultSet = pstm.executeQuery();
-            return true;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
     public boolean changeStatus(ChangeStatus changeStatusCredentials) {
         try {
             String selectQuery = QueryHelper.createQueryUPDATEStatusByUsername();

@@ -226,12 +226,7 @@ public class QueryHelper {
         sb.append(" WHERE username = ? ");
         return sb.toString();
     }
-    public static String createQueryUPDATEBirthdayByUsername() {
-        StringBuffer sb = new StringBuffer();
-        sb.append("UPDATE User SET birthday = ?");
-        sb.append(" WHERE username = ? ");
-        return sb.toString();
-    }
+
     public static String createQueryUPDATEStatusByUsername() {
         StringBuffer sb = new StringBuffer();
         sb.append("UPDATE User SET status = ?");

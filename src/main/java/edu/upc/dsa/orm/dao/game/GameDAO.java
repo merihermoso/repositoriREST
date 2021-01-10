@@ -2,6 +2,7 @@ package edu.upc.dsa.orm.dao.game;
 
 import edu.upc.dsa.orm.models.Game;
 import edu.upc.dsa.orm.models.GameCredentials.GameCredentials;
+import edu.upc.dsa.orm.models.User;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -22,6 +23,10 @@ public interface GameDAO {
 
       /*****************************************   REGISTRE PARTIDAS   ************************************************/
       boolean registerGame(GameCredentials gameCredentials) throws SQLException;
+
+      /*****************************************  OBTENIM ranking     *************************************************/
+      List<User> getUserRanking() throws SQLException;
+      int getUserPositionByUsername(String username);
 
 
 }

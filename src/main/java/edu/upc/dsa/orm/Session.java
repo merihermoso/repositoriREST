@@ -1,6 +1,9 @@
 package edu.upc.dsa.orm;
 
-import edu.upc.dsa.orm.models.Credentials.*;
+import edu.upc.dsa.orm.models.API.ChangeEmailCredentials;
+import edu.upc.dsa.orm.models.API.ChangePasswordCredentials;
+import edu.upc.dsa.orm.models.API.LoginCredentials;
+import edu.upc.dsa.orm.models.API.RegisterCredentials;
 import edu.upc.dsa.orm.models.GameCredentials.EnemyCredentials;
 import edu.upc.dsa.orm.models.GameCredentials.GameCredentials;
 import edu.upc.dsa.orm.models.GameCredentials.ItemCredentials;
@@ -47,7 +50,6 @@ public interface Session<E> {
     int getUserPositionByUsername(String username);
 
     //modificar camps user
-    boolean changeBirthday(ChangeBirthdayCredentials changeBirthdayCredentials);
     boolean changeEmail(ChangeEmailCredentials changeEmailCredentials);
     boolean changePassword(ChangePasswordCredentials changePasswordCredentials);
     boolean changeStatus(ChangeStatus changeStatusCredentials);

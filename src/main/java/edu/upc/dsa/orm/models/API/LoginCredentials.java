@@ -1,14 +1,13 @@
-package edu.upc.dsa.orm.models.Credentials;
+package edu.upc.dsa.orm.models.API;
 
-public class ChangePasswordCredentials {
+public class LoginCredentials {
+
     private String username;
     private String password;
-    private String newPassword;
 
     public String getUsername() {
         return username;
     }
-
     public void setUsername(String username) {
         this.username = username;
     }
@@ -16,17 +15,8 @@ public class ChangePasswordCredentials {
     public String getPassword() {
         return password;
     }
-
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getNewPassword() {
-        return newPassword;
-    }
-
-    public void setNewPassword(String newPassword) {
-        this.newPassword = newPassword;
     }
 
 }

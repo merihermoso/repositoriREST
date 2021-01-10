@@ -121,5 +121,41 @@ public class GameDAOImpl implements GameDAO {
         return result;
 
     }
+
+    public List<User> getUserRanking(){         //obtenim el rankin de usuaris amb més puntuació
+
+        Session session;
+        List<User> usersList;
+
+        HashMap<Integer, User> result;
+
+        session = FactorySession.openSession();
+        result = session.findTop(User.class);
+
+        usersList = new ArrayList<>(result.values());
+
+        session.close();
+
+        return usersList;
+    }
+
+    public int getUserPositionByUsername(String username) {
+
+        Session session = null;
+
+        int pos;
+
+        try {
+
+            session = FactorySession.openSession();
+            pos = session.getUserPositionByUsername(username);
+
+        } finally {
+            session.close();
+        }
+
+        return pos;
+    }
+
     /**********************************************************************************************************/
 }

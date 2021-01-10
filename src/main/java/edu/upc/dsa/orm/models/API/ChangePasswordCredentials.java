@@ -1,10 +1,9 @@
-package edu.upc.dsa.orm.models.Credentials;
+package edu.upc.dsa.orm.models.API;
 
-public class ChangeEmailCredentials {
-
+public class ChangePasswordCredentials {
     private String username;
     private String password;
-    private String newEmail;
+    private String newPassword;
 
     public String getUsername() {
         return username;
@@ -22,12 +21,12 @@ public class ChangeEmailCredentials {
         this.password = password;
     }
 
-    public String getNewEmail() {
-        return newEmail;
+    public String getNewPassword() {
+        return newPassword;
     }
 
-    public void setNewEmail(String newPassword) {
-        this.newEmail = newPassword;
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
     }
 
 }
