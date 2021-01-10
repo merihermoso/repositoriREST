@@ -1,28 +1,24 @@
-Consultas hechas para obtener cualquier Element,Order,Game,User a partir del Username
-Consultas hechas para CREAR cualquier Element,Order,User  (falta para partida)
-Consulta para obtener el top Usuarios,Partidas pero aún no lo ordena por scor (aunque ponga el ORDER BY score)
-
-Nueva tabla de relación GameItem (Para los items que hay en el momento en la partida?)[ponemos un campo de activvo/inactivo??)
-
-FALTA:
--> PASAR POR PARAMETRO CON CREDENTIALS (no con Path)        (ya está aplicado en la función Register para cada Objeto)
-
--> Hacer que se ponga directamente la hora y fecha cuando se crea(compra) una Order
-      -> Aplicar también a partida
-      
--> Listar que funciones necesitan pasar por credentials y aplicar.
-
-
-CONSULTAS QUE FALTAN
--> Posición Usuario en el ranking
+CONSULTAS QUE FALTAN (Backend)
+-> Arreglar función getItemsUser    (fa la consulta però només et reotrna la quantitat del primer objecte que troba a Inventory amb el id_user)
+-> Arreglar funció getGames (només retorna la primera partida que troba...)
+-> Fer funció update Inventory      (per aumentar/reduir quantitat de item)
+-> Funció modificar atributs player
+      -> Afegir que quan health=0         -> fin partida
+      -> Funció per marcar l'estat dels jugadors al inici de la partida
+-> ¿Todos los objetos que se encuentra en el mapa se pueden cojer?
+-> Clase itemsComprados? i guardar ahi id_user, id_item, quantity (seria como Inventory, pero sin que se modifique cuando se gastan los objetos mientras juegas)
 -> Posición Partida en el ranking
-
--> falta arreglar el ORDER BY de los top (rankings)
-
--> AddObject(ja està feta la funció fer CREAR)(falta la part de crear la relació!!)
--> Añadir INSERT TO tabla relación (para poder asignar elements a orders, o games a users...)
-
 -> Update object (generalizado, para poder poner el objecto, atributo y nuevo valor) y que sirva para todas
 -> Delete ...
 
+-> Fer la part de servei de getPriceItem i getCoinsPlayer   (nose si pasar-ho per Path o no)(nose si es pot fer una sola funció que et dongui l'atribut que vols de cada objecte...)
 
+
+COSAS QUE FALTAN WEB
+
+-> Todo menos Login i Register 
+-> Hacer que cada boton retorne algo
+-> Hacer que la función pase las imagenes de cada item, para que la web las coja del servidor
+
+UNITY
+Nueva tabla de relación GameItem (Para los items que hay en el momento en la partida?) ?????
