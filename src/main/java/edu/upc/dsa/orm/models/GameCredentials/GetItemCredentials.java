@@ -1,6 +1,6 @@
 package edu.upc.dsa.orm.models.GameCredentials;
 
-public class GetObjectCredentials {
+public class GetItemCredentials {
     private String name;
 
     public String getName() {

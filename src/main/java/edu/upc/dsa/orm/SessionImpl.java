@@ -10,7 +10,6 @@ import edu.upc.dsa.orm.models.GameCredentials.GameCredentials;
 import edu.upc.dsa.orm.models.GameCredentials.ItemCredentials;
 import edu.upc.dsa.orm.models.GameCredentials.PlayerCredentials;
 import edu.upc.dsa.orm.models.adminCredentials.*;
-import edu.upc.dsa.orm.models.shopCredentials.ElementCredentials;
 import edu.upc.dsa.orm.util.ObjectHelper;
 import edu.upc.dsa.orm.util.QueryHelper;
 
@@ -573,9 +572,9 @@ public class SessionImpl implements Session {
 
     /************************************   OBTENIM ID A PARTIR DE NAME/USERNAME  *****************************/
 //Función para obtener el id del elemento a partir de su nombre
-    public int getElementIdByName(String name) {
+    public int getItemIdByName(String name) {
         try {
-            String selectQuery = QueryHelper.createQueryElementIdSELECTbyName();
+            String selectQuery = QueryHelper.createQueryItemIdSELECTbyName();
 
             PreparedStatement pstm;
             ResultSet resultSet;
@@ -694,9 +693,8 @@ public class SessionImpl implements Session {
             return null;
         }
     }
-
-    public Object getElementByUsername(Object theObject, String username) throws SQLException {
-        String selectQuery = QueryHelper.createQueryElementSELECTbyUsername(username);         //consulta per obtenir Partida del Username que introduim
+    public Object getItemByUsername(Object theObject, String username) throws SQLException {
+        String selectQuery = QueryHelper.createQueryItemSELECTbyUsername(username);
         PreparedStatement pstm = null;
         try {
             pstm = conn.prepareStatement(selectQuery);
@@ -714,6 +712,7 @@ public class SessionImpl implements Session {
             return null;
         }
     }
+
 
 
 
@@ -754,158 +753,86 @@ public class SessionImpl implements Session {
     }
 
 
-    public boolean registerElement(ElementCredentials elementCredentials) {
 
-        Element element = new Element(elementCredentials.getName(), elementCredentials.getDescription(), elementCredentials.getPrice());
-
-        String insertQuery = QueryHelper.createQueryINSERT(element);
-
-        PreparedStatement pstm;
-        System.out.println(insertQuery);
-        try {
-
-            pstm = conn.prepareStatement(insertQuery);
-
-            int i = 1;
-
-            for (String field : ObjectHelper.getFields(element)) {
-                pstm.setObject(i, ObjectHelper.getter(element, field));
-                i++;
-            }
-
-            pstm.executeQuery();
-
-            return true;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-            return false;
-        }
-
-    }
+    //Registrar nuevo Player
     public boolean registerPlayer(PlayerCredentials playerCredentials) {
-
         Player player = new Player(playerCredentials.getStatus(),playerCredentials.getCoins(),playerCredentials.getScore(), playerCredentials.getNumLevel(), playerCredentials.getSpeed(), playerCredentials.getHit(), playerCredentials.getDefense(), playerCredentials.getHealing(), playerCredentials.getDamage());
-
         String insertQuery = QueryHelper.createQueryINSERT(player);
-
         PreparedStatement pstm;
         System.out.println(insertQuery);
         try {
-
             pstm = conn.prepareStatement(insertQuery);
-
             int i = 1;
-
             for (String field : ObjectHelper.getFields(player)) {
                 pstm.setObject(i, ObjectHelper.getter(player, field));
                 i++;
             }
-
             pstm.executeQuery();
-
             return true;
-
         } catch (SQLException e) {
             e.printStackTrace();
-
             return false;
         }
-
     }
 
     public boolean registerGame(GameCredentials gameCredentials) {
-
         Game game = new Game(gameCredentials.getDateStart(), gameCredentials.getTimeStart(), gameCredentials.getDateEnd(), gameCredentials.getTimeEnd(), gameCredentials.getScore());
-
         String insertQuery = QueryHelper.createQueryINSERT(game);
-
         PreparedStatement pstm;
         System.out.println(insertQuery);
         try {
-
             pstm = conn.prepareStatement(insertQuery);
-
             int i = 1;
-
             for (String field : ObjectHelper.getFields(game)) {
                 pstm.setObject(i, ObjectHelper.getter(game, field));
                 i++;
             }
-
             pstm.executeQuery();
-
             return true;
-
         } catch (SQLException e) {
             e.printStackTrace();
-
             return false;
         }
-
     }
 
     public boolean registerItem(ItemCredentials itemCredentials) {
-
-        Item item = new Item(itemCredentials.getName(), itemCredentials.getHit(), itemCredentials.getDefense(), itemCredentials.getHealing(), itemCredentials.getDamage());
-
+        Item item = new Item(itemCredentials.getName(), itemCredentials.getHit(), itemCredentials.getDefense(), itemCredentials.getHealing(), itemCredentials.getDamage(), itemCredentials.getPrice(), itemCredentials.getDescription(), itemCredentials.getImage());
         String insertQuery = QueryHelper.createQueryINSERT(item);
-
         PreparedStatement pstm;
         System.out.println(insertQuery);
         try {
-
             pstm = conn.prepareStatement(insertQuery);
-
             int i = 1;
-
             for (String field : ObjectHelper.getFields(item)) {
                 pstm.setObject(i, ObjectHelper.getter(item, field));
                 i++;
             }
-
             pstm.executeQuery();
-
             return true;
-
         } catch (SQLException e) {
             e.printStackTrace();
-
             return false;
         }
-
     }
 
     public boolean registerEnemy(EnemyCredentials enemyCredentials) {
-
         Enemy enemy = new Enemy(enemyCredentials.getName(), enemyCredentials.getHit(),enemyCredentials.getHealing(),enemyCredentials.getDamage(),enemyCredentials.getDefense());
-
         String insertQuery = QueryHelper.createQueryINSERT(enemy);
-
         PreparedStatement pstm;
         System.out.println(insertQuery);
         try {
-
             pstm = conn.prepareStatement(insertQuery);
-
             int i = 1;
-
             for (String field : ObjectHelper.getFields(enemy)) {
                 pstm.setObject(i, ObjectHelper.getter(enemy, field));
                 i++;
             }
-
             pstm.executeQuery();
-
             return true;
-
         } catch (SQLException e) {
             e.printStackTrace();
-
             return false;
         }
-
     }
     /****************************************************************************************************************/
 

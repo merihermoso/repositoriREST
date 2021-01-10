@@ -94,11 +94,11 @@ public class QueryHelper {
     }
 
     /**************************     SELECT IDs     ************************************/
-    //SELECT elementID FROM Element WHERE name = "?"
-    public static String createQueryElementIdSELECTbyName()  {
+    //SELECT itemID FROM Item WHERE name = "?"
+    public static String createQueryItemIdSELECTbyName()  {
 
         StringBuffer sb = new StringBuffer();
-        sb.append("SELECT id FROM Element WHERE name = ? ");
+        sb.append("SELECT id FROM Item WHERE name = ? ");
 
         return sb.toString();
 
@@ -150,25 +150,16 @@ public class QueryHelper {
     }
                                                                              //DE MOMENT NOMES PRINTEA LA PRIMERA QUE TROBA...
     //consulta to GET qualsevol objecte de la bbdd
-    public static String createQueryElementSELECTbyUsername(String username) {
+    public static String createQueryItemSELECTbyUsername(String username) {
         StringBuffer sb = new StringBuffer();
-        sb.append("SELECT Element.id, Element.name, Element.description, Element.price Element FROM Element,User, UserElement");      //totes les files de la taula que tinguin el id=
+        sb.append("SELECT * Item FROM Item,User, UserItem");      //totes les files de la taula que tinguin el id=
         sb.append(" WHERE User.username = ?");
-        sb.append(" And  User.id = UserElement.id_user");
-        sb.append(" And  Element.id = UserElement.id_element");
+        sb.append(" And  User.id = UserItem.id_user");
+        sb.append(" And  Item.id = UserItem.id_item");
 
         return sb.toString();
     }
 
-    //consulta to GET tots els objectes de la shop
-    public static String createQueryElementShopSELECTbyUsername(String username) {
-        StringBuffer sb = new StringBuffer();
-        sb.append("SELECT Element.id, Element.name, Element.description, Element.price Element.description, Element.price Element FROM Element,User, UserElement");      //totes les files de la taula que tinguin el id=
-        sb.append(" WHERE User.username = ?");
-        sb.append(" And  User.id = UserElement.id_user");
-        sb.append(" And  Element.id = UserElement.id_element");
-        return sb.toString();
-    }
     //SELECT position and score FROM User WHERE username = "?"
     public static String createQueryUserPositionSELECTbyUsername()  {
 

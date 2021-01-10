@@ -1,5 +1,12 @@
 package edu.upc.dsa.orm.models;
+/*
 
+nose si fer Inventari (id_users, id_items, quantity)        cada Usuari te un inventari
+
+ Inventory(id_users, id_items, quantity) + UserPlayer(id_users,id_player)       cada Player té un inventari
+
+
+ */
 
 public class Inventory {                         //classe per objectes DINS del joc
 

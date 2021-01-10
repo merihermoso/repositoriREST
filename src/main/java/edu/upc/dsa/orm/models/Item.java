@@ -9,19 +9,24 @@ public class Item {     //classe per objectes DINS del inventari    (objectes co
     private int defense;
     private int healing;
     private int damage;
+    private String description;
+    private int price;
+    private String image;
 
     public Item() {
 
     }
 
-    public Item(String name, int hit, int defense, int healing, int damage) {
+    public Item(String name, int hit, int defense, int healing, int damage,  int price, String description, String image) {
 
-        this();
         setName(name);
         setHit(hit);
         setDefense(defense);
         setHealing(healing);
         setDamage(damage);
+        setDescription(description);
+        setPrice(price);
+        setImage(image);            //s'hauria de linkear Media/foto ????
     }
 
     public int getId() {
@@ -63,6 +68,14 @@ public class Item {     //classe per objectes DINS del inventari    (objectes co
     public void setDamage(int damage) {
         this.damage = damage;
     }
+
+    public int getPrice() {        return price;    }
+    public void setPrice(int price) {        this.price = price;    }
+    public String getDescription() {        return description;    }
+    public void setDescription(String description) {        this.description = description;    }
+
+    public String getImage() {        return image;    }
+    public void setImage(String image) {        this.image = image;    }
 
     @Override
     public String toString(){

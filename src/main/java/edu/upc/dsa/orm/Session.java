@@ -9,7 +9,6 @@ import edu.upc.dsa.orm.models.GameCredentials.GameCredentials;
 import edu.upc.dsa.orm.models.GameCredentials.ItemCredentials;
 import edu.upc.dsa.orm.models.GameCredentials.PlayerCredentials;
 import edu.upc.dsa.orm.models.adminCredentials.*;
-import edu.upc.dsa.orm.models.shopCredentials.ElementCredentials;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -32,7 +31,6 @@ public interface Session<E> {
     boolean userExists(String username);
 
     /*****************************      REGISTREM OBJECTES NOUS  (INSERT) *********************************************/
-    boolean registerElement(ElementCredentials elementCredentials);
     boolean registerGame(GameCredentials gameCredentials);
     boolean registerItem(ItemCredentials itemCredentials);
     boolean registerEnemy(EnemyCredentials enemyCredentials);
@@ -45,7 +43,7 @@ public interface Session<E> {
 
     /*****************************OBTENIM IDs A PARTIR DEL USERNAME/NAME ********no funcionan pq obtenen un INT *******/
     int getUserIdByUsername(String username);
-    int getElementIdByName(String name);
+    int getItemIdByName(String name);
 
     int getUserPositionByUsername(String username);
 
@@ -66,7 +64,7 @@ public interface Session<E> {
     /*****************************OBTENIM OBJECTES A PARTIR DEL USERNAME DEL USER*******************************/
     public Object getUserByUsername(Object theClass, String username) throws SQLException;
     public Object getGameByUsername(Object theClass, String username) throws SQLException;      //es podria optimitzar i aplicar a qualsevol clase (no nomes game)
-    public Object getElementByUsername(Object theClass, String username) throws SQLException;   //relaciona 3 taules User,Order,Element
+    public Object getItemByUsername(Object theClass, String username) throws SQLException;   //relaciona 3 taules User,Order,Element
     public Object getPlayerByUsername(Object theClass, String username) throws SQLException;
 
 

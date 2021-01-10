@@ -4,13 +4,11 @@ package edu.upc.dsa.orm.dao.item;
 
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
+import edu.upc.dsa.orm.models.*;
 import edu.upc.dsa.orm.models.GameCredentials.ItemCredentials;
-import edu.upc.dsa.orm.models.Item;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class ItemDAOImpl implements ItemDAO {
     private static ItemDAO instance;
@@ -51,13 +49,14 @@ public class ItemDAOImpl implements ItemDAO {
         return items.size();
     }
 
+
     /*****************************************  OBTENIM ITEM inventari *************************************************/
-    public Item getItemById(int itemID) throws SQLException {
+    public Item getItemById(int id_item) throws SQLException {
         Session session = null;
         Item item = new Item();
         try {
             session = FactorySession.openSession();
-            item = (Item) session.getById(item, itemID);
+            item = (Item) session.getById(item, id_item);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -84,9 +83,51 @@ public class ItemDAOImpl implements ItemDAO {
 
         return item;
     }
+    //Obtenim l'objecte element a partir del username del usuari propietari
+    public Item getItemByUsername(String username) throws SQLException {
+        Session session = null;
+        Item item = new Item();
+        try {
+            session = FactorySession.openSession();
+            item = (Item) session.getItemByUsername(item, username);          //com poso la relació game User?¿
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            session.close();
+        }
+
+        return item;
+    }
+
+    //Funció per obtenir el ID del element a partir del seu nom                                         //es pot unificar getIDbyNAME
+    public int getIdByName(String name) throws SQLException {
+
+        Session session = null;
+
+        int itemID = -1;
+
+        try {
+
+            session = FactorySession.openSession();
+            itemID = session.getItemIdByName(name);          //com poso la relació game User?¿
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            session.close();
+        }
+
+        return itemID;
+    }
+
+
 
     /*****************************************  REGISTRE ITEM     *************************************************/
-    public boolean registerItem(ItemCredentials itemCredentials) { //Afegeix el user com a obejcte
+    public boolean registerItem(ItemCredentials itemCredentials) throws SQLException{ //Afegeix el user com a obejcte
 
         Session session;
         boolean result = false;
@@ -104,6 +145,8 @@ public class ItemDAOImpl implements ItemDAO {
         return result;
 
     }
+
+
     /**********************************************************************************************************/
 
 }

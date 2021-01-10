@@ -1,7 +1,6 @@
 package edu.upc.dsa;
 
 import io.swagger.jaxrs.config.BeanConfig;
-import io.swagger.jersey.listing.ApiListingResourceJSON;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.server.StaticHttpHandler;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
@@ -10,16 +9,13 @@ import org.glassfish.jersey.server.ResourceConfig;
 import java.io.IOException;
 import java.net.URI;
 
-import edu.upc.dsa.orm.util.ObjectHelper;
-import edu.upc.dsa.orm.dao.*;
-
 /**
  * si da error por sesion null -> DBUtils> Cambiar password (Mazinger72) to (root)
  *si da error por bind null -> Main> Cambiar remote_machine = true/false;
  */
 public class Main {
 
-    private static final boolean remote_machine = true;
+    private static final boolean remote_machine = false;
 
     private static final String remote_ip = "147.83.7.207";
     private static final int remote_port = 8080;
