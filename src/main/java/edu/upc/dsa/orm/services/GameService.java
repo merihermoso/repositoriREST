@@ -12,10 +12,6 @@ import edu.upc.dsa.orm.dao.player.PlayerDAOImpl;
 import edu.upc.dsa.orm.dao.user.UserDAO;
 import edu.upc.dsa.orm.dao.user.UserDAOImpl;
 import edu.upc.dsa.orm.models.*;
-import edu.upc.dsa.orm.models.Credentials.ChangeEmailCredentials;
-import edu.upc.dsa.orm.models.Credentials.ChangePasswordCredentials;
-import edu.upc.dsa.orm.models.Credentials.GetUserCredentials;
-import edu.upc.dsa.orm.models.Credentials.LoginCredentials;
 import edu.upc.dsa.orm.models.GameCredentials.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -93,22 +89,23 @@ public class GameService {
 
 
     //Servicio para obtener la posición en el ranking del usuario
-    @POST
+    @GET
     @ApiOperation(value = "Get a user position in ranking")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = RankingPositionResponse.class),
             @ApiResponse(code = 601, message = "Need to fill in username field"),
             @ApiResponse(code = 404, message = "User not exists"),
     })
-    @Path("/getUserPositionByUsername")
+    @Path("/getUserPositionByUsername/{username}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUserPositionByUsername(GetUserCredentials getUserCredentials) throws SQLException {
+    public Response getUserPositionByUsername(@PathParam("username") String username) throws SQLException {
 
-        if (getUserCredentials.getUsername() == null) return Response.status(601).build();
+        if (username == null) return Response.status(601).build();
 
-        if (this.userDAO.userExists(getUserCredentials.getUsername())) {
+        if (this.userDAO.userExists(username)) {
 
-            RankingPositionResponse rankingPositionResponse = new RankingPositionResponse(this.userDAO.getUserPositionByUsername(getUserCredentials.getUsername()));
+            RankingPositionResponse rankingPositionResponse =
+                    new RankingPositionResponse(this.userDAO.getUserPositionByUsername(username));
 
             return Response.status(201).entity(rankingPositionResponse).build();
 

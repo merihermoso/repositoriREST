@@ -193,19 +193,20 @@ public class UserService {
 
     }
 
-    @POST
+
+    @GET
     @ApiOperation(value = "Check if a user exists")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "User exists"),
             @ApiResponse(code = 601, message = "Need to fill in username field"),
             @ApiResponse(code = 404, message = "User not exists"),
     })
-    @Path("/userExists")
-    public Response userExists(GetUserCredentials getUserCredentials) {
+    @Path("/userExists/{username}")
+    public Response userExists(@PathParam("username") String username) {
 
-        if (getUserCredentials.getUsername() == null) return Response.status(601).build();
+        if (username == null) return Response.status(601).build();
 
-        if (this.userDAO.userExists(getUserCredentials.getUsername())) {
+        if (this.userDAO.userExists(username)) {
 
             return Response.status(201).build();
 
@@ -240,7 +241,7 @@ public class UserService {
     }
 
 
-    @POST
+    @GET
     @ApiOperation(value = "Get a User given a username")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = User.class),
@@ -249,17 +250,17 @@ public class UserService {
             @ApiResponse(code = 503, message = "not working well...")
 
     })
-    @Path("/getUserByUsername")
+    @Path("/getUserByUsername/{username}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response getUserByUsername(GetUserCredentials getUserCredentials) {
+    public Response getUserByUsername(@PathParam("username") String username) {
 
-        if (getUserCredentials.getUsername() == null) return Response.status(601).build();
+        if (username == null) return Response.status(601).build();
 
-        if (this.userDAO.userExists(getUserCredentials.getUsername())) {
+        if (this.userDAO.userExists(username)) {
 
             try {
 
-                User user = this.userDAO.getUserByUsername(getUserCredentials.getUsername());
+                User user = this.userDAO.getUserByUsername(username);
                 return Response.status(200).entity(user).build();
 
             } catch (Exception e) {
@@ -282,9 +283,10 @@ public class UserService {
             @ApiResponse(code = 200, message = "Succesful", response = User.class),
             @ApiResponse(code = 503, message = "not working well...")
     })
-    @Path("/getUserById/{userID}")
+    @Path("/getUserById/{id}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response getUserById(@PathParam("userID") int id) {
+    public Response getUserById(@PathParam("id") int id) {
+
         try{
 
             User user = this.userDAO.getUserById(id);
@@ -298,22 +300,22 @@ public class UserService {
     }
 
 
-    @POST
+    @GET
     @ApiOperation(value = "Get a user ID")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = UserIdResponse.class),
             @ApiResponse(code = 601, message = "Need to fill in username field"),
             @ApiResponse(code = 404, message = "User not found"),
     })
-    @Path("/getIdByUserame")
+    @Path("/getIdByUsername/{username}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getIdByUsername(GetUserCredentials getUserCredentials) throws SQLException {
+    public Response getIdByUsername(@PathParam("username") String username) throws SQLException {
 
-        if (getUserCredentials.getUsername() == null) return Response.status(601).build();
+        if (username == null) return Response.status(601).build();
 
-        if (this.userDAO.userExists(getUserCredentials.getUsername())) {
+        if (this.userDAO.userExists(username)) {
 
-            UserIdResponse userIdResponse = new UserIdResponse(this.userDAO.getUserIdByUsername(getUserCredentials.getUsername()));
+            UserIdResponse userIdResponse = new UserIdResponse(this.userDAO.getUserIdByUsername(username));
 
             return Response.status(201).entity(userIdResponse).build();
 
