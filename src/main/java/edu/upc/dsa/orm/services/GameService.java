@@ -343,14 +343,14 @@ public class GameService {
     }
     // Servei per obtenir un element a partir del username del usuari
     @GET                                                                            //Servicio para obtener el elemento de un Usuario (USERNAME)
-    @ApiOperation(value = "get an Item by Username", notes = "Get all data 1 element")
+    @ApiOperation(value = "get an Item by Username", notes = "Ha de retornar l'inventari del jugador")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Item.class),
             @ApiResponse(code = 503, message = "not working well..."),
             @ApiResponse(code = 600, message = "Need to fill in username field.")
 
     })
-    @Path("/Element/getByUSERNAME/{username}")
+    @Path("/Item/getByUSERNAME/{username}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response GetItemFromUsername(@PathParam("username") String username) {
         try{
