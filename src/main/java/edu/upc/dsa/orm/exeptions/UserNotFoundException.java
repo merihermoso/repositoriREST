@@ -1,4 +1,4 @@
 package edu.upc.dsa.orm.exeptions;
 
-public class UserNotFoundException {
+public class UserNotFoundException extends Throwable {
 }

@@ -54,6 +54,21 @@ public class PlayerDAOImpl implements PlayerDAO {
     }
 
     /*****************************************  OBTENIM Player  ****************************************************/
+    public int getCoinsPlayer(int id_player) throws SQLException{
+        Session session = null;
+        int price = 0;
+        try {
+            session = FactorySession.openSession();
+            price = session.getCoinsPlayer(id_player);
+        } finally {
+            session.close();
+        }
+        return price;
+
+    }
+
+
+
 
     public Player getPlayerById(int playerID) throws SQLException {
         Session session = null;

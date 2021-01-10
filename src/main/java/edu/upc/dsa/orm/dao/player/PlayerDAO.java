@@ -17,6 +17,9 @@ public interface PlayerDAO {
     public Player getPlayerById(int playerID) throws SQLException;
     public Player getPlayerByUsername(String username) throws SQLException;
 
+
+    int getCoinsPlayer(int id_player) throws SQLException;
+
     /*****************************************  REGISTRE ITEM     *****************************************************/
     boolean registerPlayer(PlayerCredentials playerCredentials) throws SQLException;
 

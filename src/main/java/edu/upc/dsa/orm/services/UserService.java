@@ -343,21 +343,13 @@ public class UserService {
     @Path("/getIdByUsername/{username}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getIdByUsername(@PathParam("username") String username) throws SQLException {
-
         if (username == null) return Response.status(601).build();
-
         if (this.userDAO.userExists(username)) {
-
             IdResponse idResponse = new IdResponse(this.userDAO.getUserIdByUsername(username));
-
             return Response.status(201).entity(idResponse).build();
-
         } else {
-
             return Response.status(404).build();
-
         }
-
     }
 
 

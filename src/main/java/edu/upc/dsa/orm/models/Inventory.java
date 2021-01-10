@@ -1,12 +1,4 @@
 package edu.upc.dsa.orm.models;
-/*
-
-Inventari (id_users, id_items, quantity)        cada Usuari te un inventari
-
-Inventory(id_users, id_items, quantity) + UserPlayer(id_users,id_player)       cada Player té un inventari
-
-
- */
 
 public class Inventory {                         //classe per objectes DINS del joc
 
@@ -37,6 +29,6 @@ public class Inventory {                         //classe per objectes DINS del 
 
     @Override
     public String toString(){
-        return "Inventory { id_player"+id_user+",id_item :" +id_item+"quantity :"+quantity+"}";
+        return "Inventory{ id_user: "+id_user+",id_item: " +id_item+"quantity: "+quantity+"}";
     }
 }

@@ -1,5 +1,6 @@
 package edu.upc.dsa.orm;
 
+import edu.upc.dsa.orm.exeptions.UserNotFoundException;
 import edu.upc.dsa.orm.models.API.ChangeEmailCredentials;
 import edu.upc.dsa.orm.models.API.ChangePasswordCredentials;
 import edu.upc.dsa.orm.models.API.LoginCredentials;
@@ -28,6 +29,15 @@ public class SessionImpl implements Session {
     public SessionImpl(Connection conn) {
         this.conn = conn;
     }
+    /******************************************************************************************************************
+     *
+     *
+     *
+     *
+     *
+     *
+     *
+     * ****************************************************************************************************************/
 
     @Override                                           //Obtenir
     public void get(Object entity) {
@@ -121,80 +131,102 @@ public class SessionImpl implements Session {
     }
 /*********************************      CONSULTES llistats      *************************************************/
     public HashMap<Integer, Object> findAll(Class theClass) {           //obtener todos (aplicable a todas las funciones)
-
         HashMap<Integer, Object> result = new HashMap<>();
-
         String selectQuery = QueryHelper.createQuerySELECTAll(theClass);
-
         PreparedStatement pstm;
         ResultSet resultSet;
         Object object;
         int id;
         System.out.println(selectQuery);
-
         try {
-
             object = theClass.getDeclaredConstructor().newInstance();
             pstm = conn.prepareStatement(selectQuery);
             resultSet = pstm.executeQuery();
-
             while (resultSet.next()) {
-
                 ResultSetMetaData rsmd = resultSet.getMetaData();
-
                 for (int i = 1; i <= rsmd.getColumnCount(); i++) {
                     String field = rsmd.getColumnName(i);
                     ObjectHelper.setter(object, field, resultSet.getObject(i));
                 }
                 result.put((int) resultSet.getObject(1), object);
                 object = theClass.getDeclaredConstructor().newInstance();
-
             }
-
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
-
         } catch (NoSuchMethodException noSuchMethodException) {
             noSuchMethodException.printStackTrace();
-
         } catch (IllegalAccessException illegalAccessException) {
             illegalAccessException.printStackTrace();
-
         } catch (InstantiationException instantiationException) {
             instantiationException.printStackTrace();
-
         } catch (InvocationTargetException invocationTargetException) {
             invocationTargetException.printStackTrace();
         }
 
         return result;
-
     }
 
+    //Funcion que devuelve los objetos de un jugador
+    public HashMap<Integer, Inventory> getItemsUser(Class theClass, int id_user) throws UserNotFoundException {
+        String objetosQuery = "SELECT * FROM Inventory WHERE id_user='"+id_user+"'";
+        HashMap<Integer, Inventory> res = new HashMap<>();
+        ResultSet rs;
+        Object object;
+        Integer id = null;
+        Statement statement = null;
+
+        try {
+            object = theClass.getDeclaredConstructor().newInstance();
+            statement = this.conn.createStatement();
+            statement.execute(objetosQuery);
+            rs = statement.getResultSet();
+            System.out.println(rs);
+
+            //Obtenemos los objetos y leemos las columnas con metadata
+            //para ir guardando en cada objeto sus datos correspondientes
+            while(rs.next()) {
+                ResultSetMetaData rsmd = rs.getMetaData();
+                for (int i=1; i<=rsmd.getColumnCount(); i++) {
+                    String field = rsmd.getColumnName(i);
+                    System.out.println(object);
+                    ObjectHelper.setter(object, field, rs.getObject(i));
+                    if(i==1) id = (Integer) rs.getObject(i);
+                }
+                res.put(id, (Inventory) object);
+                object = theClass.getDeclaredConstructor().newInstance();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+
+        //Devolvemos la lista con los objetos encontrados
+        return res;
+    }
+
+
     public HashMap<Integer, Object> findTop(Class theClass) {           //findAll ordenado BY score
-
         HashMap<Integer, Object> result = new HashMap<>();
-
         String selectQuery = QueryHelper.createQuerySELECTtop20(theClass);
-
         PreparedStatement pstm;
         ResultSet resultSet;
         Object object;
-
         int id;
         System.out.println(selectQuery);
-
         try {
-
             object = theClass.getDeclaredConstructor().newInstance();
             pstm = conn.prepareStatement(selectQuery);
             resultSet = pstm.executeQuery();
-
             int pos = 1;
             while (resultSet.next()) {
-
                 ResultSetMetaData rsmd = resultSet.getMetaData();
-
                 for (int i = 1; i <= rsmd.getColumnCount(); i++) {
                     String field = rsmd.getColumnName(i);
                     ObjectHelper.setter(object, field, resultSet.getObject(i));
@@ -206,35 +238,62 @@ public class SessionImpl implements Session {
 
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
-
         } catch (NoSuchMethodException noSuchMethodException) {
             noSuchMethodException.printStackTrace();
-
         } catch (IllegalAccessException illegalAccessException) {
             illegalAccessException.printStackTrace();
-
         } catch (InstantiationException instantiationException) {
             instantiationException.printStackTrace();
-
         } catch (InvocationTargetException invocationTargetException) {
             invocationTargetException.printStackTrace();
         }
-
         return result;
-
     }
 
+    //Funció que retorna els coins de un PLAYER
+    public int getCoinsPlayer(String id_player) {
+        ResultSet rs;
+        int coins = 0;
+        Statement statement;
+        String selectQuery = "SELECT coins FROM Player WHERE id_player='"+id_player+"'";
+        try{
+            statement = this.conn.createStatement();
+            statement.execute(selectQuery);
+            rs = statement.getResultSet();
+            if(rs.next())
+                coins = (int) rs.getObject(1);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return coins;
+    }
+
+    //Funció que retorna el preu d'un Item
+    public int getPriceItem(int id_item){
+        ResultSet rs;
+        int price = 0;
+        Statement statement;
+        String selectQuery = QueryHelper.createQuerySELECTPriceItem(id_item);
+        try{
+            statement = this.conn.createStatement();
+            statement.execute(selectQuery);
+            rs = statement.getResultSet();
+            if (rs.next()) {
+                price = (int) rs.getObject(1);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return price;
+    }
+
+
     public boolean changePassword(ChangePasswordCredentials changePasswordCredentials) {
-
         try {
-
             String selectQuery = QueryHelper.createQueryUPDATEPasswordByUsername();
-
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(changePasswordCredentials.getNewPassword().getBytes(StandardCharsets.UTF_8));
-
             System.out.println(selectQuery);
-
             PreparedStatement pstm;
             ResultSet resultSet;
 
@@ -242,11 +301,9 @@ public class SessionImpl implements Session {
             pstm.setString(1, encodeHex(hash));
             pstm.setString(2, changePasswordCredentials.getUsername());
             resultSet = pstm.executeQuery();
-
             return true;
 
         } catch (SQLException | NoSuchAlgorithmException e) {
-
             e.printStackTrace();
             return false;
 
@@ -425,36 +482,24 @@ public class SessionImpl implements Session {
     }
 /**********************************     AUTENTICACIONS      *************************************************/
     public boolean registerUser(RegisterCredentials registerCredentials) {
-
         try {
-
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(registerCredentials.getPassword().getBytes(StandardCharsets.UTF_8));
-
             User user = new User(registerCredentials.getUsername(), registerCredentials.getEmail(), encodeHex(hash), registerCredentials.getBirthdate_day() + "/" + registerCredentials.getBirthdate_month() + "/" + registerCredentials.getBirthdate_year());
-
             String insertQuery = QueryHelper.createQueryINSERT(user);
-
             PreparedStatement pstm;
             System.out.println(insertQuery);
-
-
             pstm = conn.prepareStatement(insertQuery);
-
             int i = 1;
-
             for (String field : ObjectHelper.getFields(user)) {
                 pstm.setObject(i, ObjectHelper.getter(user, field));
                 i++;
             }
-
             pstm.executeQuery();
-
             return true;
 
         } catch (SQLException e) {
             e.printStackTrace();
-
             return false;
 
         } catch (NoSuchAlgorithmException e) {
@@ -465,39 +510,25 @@ public class SessionImpl implements Session {
     }
 
     public boolean loginUser(LoginCredentials loginCredentials) {
-
         try {
-
             String selectQuery = QueryHelper.createQueryUserSELECTPasswordByUsername();
-
             PreparedStatement pstm;
             ResultSet resultSet;
-
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(loginCredentials.getPassword().getBytes(StandardCharsets.UTF_8));
-
             pstm = conn.prepareStatement(selectQuery);
             pstm.setString(1, loginCredentials.getUsername());
             resultSet = pstm.executeQuery();
-
             if (resultSet.next()) {
-
-
                 return resultSet.getString(1).equals(encodeHex(hash));
-
             } else {
-
                 return false;
-
             }
-
         } catch (SQLException e) {
-
             e.printStackTrace();
             return false;
 
         } catch (NoSuchAlgorithmException e) {
-
             e.printStackTrace();
             return false;
 
@@ -506,26 +537,19 @@ public class SessionImpl implements Session {
     }
 
     public boolean userExists(String username) {            //busca per username i retorna true si existeix
-
         String selectQuery = QueryHelper.createQueryUserSELECTbyUsername(username);
-
         PreparedStatement pstm;
         ResultSet resultSet;
-
         try {
-
             pstm = conn.prepareStatement(selectQuery);
             pstm.setString(1, username);
             resultSet = pstm.executeQuery();
-
             return resultSet.next();
 
         } catch (SQLException e) {
             e.printStackTrace();
-
             return false;
         }
-
     }
 /*****************************************      CONSULTES  obtenim objectes     ***********************************************/
 

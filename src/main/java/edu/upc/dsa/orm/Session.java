@@ -1,5 +1,6 @@
 package edu.upc.dsa.orm;
 
+import edu.upc.dsa.orm.exeptions.UserNotFoundException;
 import edu.upc.dsa.orm.models.API.ChangeEmailCredentials;
 import edu.upc.dsa.orm.models.API.ChangePasswordCredentials;
 import edu.upc.dsa.orm.models.API.LoginCredentials;
@@ -30,23 +31,13 @@ public interface Session<E> {
     boolean loginUser(LoginCredentials loginCredentials);
     boolean userExists(String username);
 
-    /*****************************      REGISTREM OBJECTES NOUS  (INSERT) *********************************************/
+    /*****************************      REGISTREM OBJECTES NOUS  (save+Credentials) ***********************************/
     boolean registerGame(GameCredentials gameCredentials);
     boolean registerItem(ItemCredentials itemCredentials);
     boolean registerEnemy(EnemyCredentials enemyCredentials);
     boolean registerPlayer(PlayerCredentials playerCredentials);
 
-    /*****************************OBTENIM OBJECTES A PARTIR DEL USERNAME DEL USER**************************************/
-    public Object getById(Object theClass, int id) throws SQLException;             //obtenim objecte a partir del id
-    public Object getByName(Object theClass, String name) throws SQLException;      //obtenim objecte a partir del seu nom
-
-
-    /*****************************OBTENIM IDs A PARTIR DEL USERNAME/NAME ********no funcionan pq obtenen un INT *******/
-    int getUserIdByUsername(String username);
-    int getItemIdByName(String name);
-
-    int getUserPositionByUsername(String username);
-
+    /*****************************      MODIFICAR ATRIBUT (Credentials)          **************************************/
     //modificar camps user
     boolean changeEmail(ChangeEmailCredentials changeEmailCredentials);
     boolean changePassword(ChangePasswordCredentials changePasswordCredentials);
@@ -61,7 +52,20 @@ public interface Session<E> {
     boolean changePlayerSpeed(ChangePlayerSpeed changePlayerSpeed);
     boolean changePlayerCoins(ChangePlayerCoins changePlayerCoins);
 
-    /*****************************OBTENIM OBJECTES A PARTIR DEL USERNAME DEL USER*******************************/
+    /*****************************OBTENIM OBJECTES ********************************************************************/
+    public Object getById(Object theClass, int id) throws SQLException;
+    public Object getByName(Object theClass, String name) throws SQLException;
+
+
+    /*****************************OBTENIM IDs A PARTIR DEL USERNAME/NAME ********no funcionan pq obtenen un INT *******/
+    int getUserIdByUsername(String username);
+    int getItemIdByName(String name);
+
+    int getUserPositionByUsername(String username);
+
+
+
+    /*****************************  OBTENIM OBJECTES A PARTIR DEL USERNAME DEL USER (diferents relacions) *************/
     public Object getUserByUsername(Object theClass, String username) throws SQLException;
     public Object getGameByUsername(Object theClass, String username) throws SQLException;      //es podria optimitzar i aplicar a qualsevol clase (no nomes game)
     public Object getItemByUsername(Object theClass, String username) throws SQLException;   //relaciona 3 taules User,Order,Element
@@ -69,9 +73,18 @@ public interface Session<E> {
 
 
 
+//Obtenir atributs del player
+    //   public String getCoinsbyUsername(Object theClass, String username) throws SQLException;
+    //   public String getLevelbyUsername(Object theClass, String username) throws SQLException;
 
-    //   public String getCOINSbyUsername(Object theClass, String username) throws SQLException;
-    //   public String getLEVELbyUsername(Object theClass, String username) throws SQLException;
+    HashMap<Integer, Object> getItemsUser(Class theClass, int id_user) throws UserNotFoundException;
+
+
+    //Obtenir Atributs Item
+    int getPriceItem(int id_item);
+    int getCoinsPlayer(int id_player);
+
+
 
 
 }

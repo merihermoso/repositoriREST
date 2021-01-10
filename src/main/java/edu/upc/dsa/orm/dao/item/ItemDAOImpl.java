@@ -4,11 +4,14 @@ package edu.upc.dsa.orm.dao.item;
 
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
+import edu.upc.dsa.orm.exeptions.UserNotFoundException;
 import edu.upc.dsa.orm.models.*;
 import edu.upc.dsa.orm.models.GameCredentials.ItemCredentials;
 
 import java.sql.SQLException;
 import java.util.*;
+
+import static org.reflections.Reflections.log;
 
 public class ItemDAOImpl implements ItemDAO {
     private static ItemDAO instance;
@@ -51,6 +54,32 @@ public class ItemDAOImpl implements ItemDAO {
 
 
     /*****************************************  OBTENIM ITEM inventari *************************************************/
+    //Función que devuelve los objetos del jugador
+
+    @Override
+    public HashMap<Integer,Inventory> getItemsUser(String username) throws UserNotFoundException {
+        int id_user;
+        Session session = null;
+        HashMap<Integer, Inventory> items=null;
+        try {
+            session = FactorySession.openSession();
+            id_user = session.getUserIdByUsername(username);
+            items = session.getItemsUser(Inventory.class,id_user);
+            System.out.println(items);
+        }
+        catch (Exception e) {
+            log.error("Error");
+        }
+        finally {
+            session.close();
+        }
+
+        /*for(User u : usersList)
+            System.out.println(u.toString());*/
+        return items;
+    }
+
+
     public Item getItemById(int id_item) throws SQLException {
         Session session = null;
         Item item = new Item();
@@ -124,7 +153,18 @@ public class ItemDAOImpl implements ItemDAO {
         return itemID;
     }
 
-
+//Función que devuelve el precio de un objeto
+    public int getPriceItem(int id_item) throws SQLException {
+        Session session = null;
+        int price = 0;
+        try {
+            session = FactorySession.openSession();
+            price = session.getPriceItem(id_item);
+        } finally {
+            session.close();
+        }
+        return price;
+    }
 
     /*****************************************  REGISTRE ITEM     *************************************************/
     public boolean registerItem(ItemCredentials itemCredentials) throws SQLException{ //Afegeix el user com a obejcte

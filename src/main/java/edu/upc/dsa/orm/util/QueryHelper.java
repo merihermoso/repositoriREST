@@ -96,12 +96,9 @@ public class QueryHelper {
     /**************************     SELECT IDs     ************************************/
     //SELECT itemID FROM Item WHERE name = "?"
     public static String createQueryItemIdSELECTbyName()  {
-
         StringBuffer sb = new StringBuffer();
         sb.append("SELECT id FROM Item WHERE name = ? ");
-
         return sb.toString();
-
     }
 
     //SELECT idClass FROM Class WHERE name=?                        //generica per obtenir el id a partir del nom (not working yet)
@@ -115,12 +112,25 @@ public class QueryHelper {
 
     //SELECT userID FROM User WHERE username = "?"
     public static String createQueryIdSELECTbyUsername()  {
-
         StringBuffer sb = new StringBuffer();
         sb.append("SELECT id FROM User WHERE username = ? ");
-
         return sb.toString();
 
+    }
+//Select price from item
+    public static String createQuerySELECTPriceItem(int id_item){
+        StringBuffer sb = new StringBuffer("SELECT price FROM Item WHERE id_item='");
+        sb.append(id_item);
+        sb.append("'");
+        return sb.toString();
+    }
+
+    //Select coins from Player
+    public static String createQuerySELECTCoinsPlayer(int id_player){
+        StringBuffer sb = new StringBuffer("SELECT coins FROM Player WHERE id_player='");
+        sb.append(id_player);
+        sb.append("'");
+        return sb.toString();
     }
 
 
@@ -135,7 +145,6 @@ public class QueryHelper {
         sb.append(" And  Player.id = UserPlayer.id_player");
         sb.append(" And  Player.id = PlayerGame.id_player");
         sb.append(" And  Game.id = PlayerGame.id_game");
-
         return sb.toString();
     }
     //consulta to GET qualsevol objecte de la bbdd
@@ -145,18 +154,16 @@ public class QueryHelper {
         sb.append(" WHERE User.username = ?");
         sb.append(" And  User.id = UserPlayer.id_user");
         sb.append(" And  Player.id = UserPlayer.id_player");
-
         return sb.toString();
     }
                                                                              //DE MOMENT NOMES PRINTEA LA PRIMERA QUE TROBA...
     //consulta to GET qualsevol objecte de la bbdd
     public static String createQueryItemSELECTbyUsername(String username) {
         StringBuffer sb = new StringBuffer();
-        sb.append("SELECT * Item FROM Item,User, UserItem");      //totes les files de la taula que tinguin el id=
+        sb.append("SELECT * Item FROM Item,User, Inventory");      //totes les files de la taula que tinguin el id=
         sb.append(" WHERE User.username = ?");
-        sb.append(" And  User.id = UserItem.id_user");
-        sb.append(" And  Item.id = UserItem.id_item");
-
+        sb.append(" And  User.id = Inventory.id_user");
+        sb.append(" And  Item.id = Inventory.id_item");
         return sb.toString();
     }
 

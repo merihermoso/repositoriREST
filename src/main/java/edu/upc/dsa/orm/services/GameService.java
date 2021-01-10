@@ -11,6 +11,7 @@ import edu.upc.dsa.orm.dao.player.PlayerDAO;
 import edu.upc.dsa.orm.dao.player.PlayerDAOImpl;
 import edu.upc.dsa.orm.dao.user.UserDAO;
 import edu.upc.dsa.orm.dao.user.UserDAOImpl;
+import edu.upc.dsa.orm.exeptions.UserNotFoundException;
 import edu.upc.dsa.orm.models.*;
 import edu.upc.dsa.orm.models.API.ProfileResponse;
 import edu.upc.dsa.orm.models.API.RankingPositionResponse;
@@ -273,10 +274,12 @@ public class GameService {
     }
 
     /***************************************    modificacions Player    ***********************************************/
-    /*
-    *
-    *
-     */
+
+
+
+
+
+
 
 
 
@@ -298,18 +301,43 @@ public class GameService {
         GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(items) {
         };
         return Response.status(201).entity(entity).build();
-
     }
+
+
+    //Servicio que devuelve una lista con los objetos del jugador
+
+    @GET
+    @ApiOperation(value = "get items from user", notes = "Obtén los objetos de un jugador")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful", response = Inventory.class, responseContainer="List"),
+            @ApiResponse(code = 500, message = "Internal Server Error")
+    })
+    @Path("/itemsPlayer")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getItemsPlayer(@QueryParam("username") String username) throws UserNotFoundException {
+
+        HashMap<Integer,Inventory> items = null;
+        List<Inventory> o = new LinkedList<>();
+
+        items = this.itemDAO.getItemsUser(username);
+        for ( Integer key : items.keySet() ) {
+            o.add(items.get(key));
+        }
+
+        GenericEntity<List<Inventory>> entity = new GenericEntity<List<Inventory>>(o) {};
+
+        if(entity==null) return Response.status(500).build();
+        return Response.status(200).entity(entity).build();
+    }
+
+
     //Servicio para obtener un Item a partir del ID
     @GET
     @ApiOperation(value = "get an Item by its ID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Item.class),
             @ApiResponse(code = 503, message = "not working well...")
-
     })
-
-
     @Path("/Item/GetByID/{itemID}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response GetItemById(@PathParam("itemID") int itemID) {
@@ -317,17 +345,17 @@ public class GameService {
             Item item = this.itemDAO.getItemById(itemID);
             return Response.status(200).entity(item).build();
         } catch (Exception e) {
-
             return Response.status(503).build();
         }
     }
+
+
     //Servei per obtenir un item a partir del seu nom
     @GET
     @ApiOperation(value = "get an Item by its name")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Item.class),
             @ApiResponse(code = 503, message = "not working well...")
-
     })
     @Path("/Item/getByNAME/{name}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
@@ -337,33 +365,13 @@ public class GameService {
             return Response.status(200).entity(item).build();
         }
         catch (Exception e){
-
-            return Response.status(503).build();
-        }
-    }
-    // Servei per obtenir un element a partir del username del usuari
-    @GET                                                                            //Servicio para obtener el elemento de un Usuario (USERNAME)
-    @ApiOperation(value = "get an Item by Username", notes = "Ha de retornar l'inventari del jugador")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = Item.class),
-            @ApiResponse(code = 503, message = "not working well..."),
-            @ApiResponse(code = 600, message = "Need to fill in username field.")
-
-    })
-    @Path("/Item/getByUSERNAME/{username}")
-    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response GetItemFromUsername(@PathParam("username") String username) {
-        try{
-            if (username==null) return Response.status(600).build();
-            Item item = this.itemDAO.getItemByUsername(username);
-            return Response.status(200).entity(item).build();
-        }
-        catch (Exception e){
-
             return Response.status(503).build();
         }
     }
 
+
+
+    //Servei per obtenir l'ID d'un Item a partir del seu nom
     @POST
     @ApiOperation(value = "Get an item ID", notes = "Get itemID by its name")
     @ApiResponses(value = {
@@ -373,17 +381,16 @@ public class GameService {
     @Path("/Item/getIdByName")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getIdByName(GetItemCredentials getItemCredentials) throws SQLException {
-
         ObjectIdResponse objectIdResponse = new ObjectIdResponse(this.itemDAO.getIdByName(getItemCredentials.getName()));
-
         if (objectIdResponse.getObjectID() != -1) {
             return Response.status(201).entity(objectIdResponse).build();
         } else {
             return Response.status(404).entity(objectIdResponse).build();
         }
-
     }
-    //Serrvei per registrar un nou item
+
+
+    //Servei per registrar un nou item
     @POST
     @ApiOperation(value = "Register a new Item", notes = "Register a new item")
     @ApiResponses(value = {
@@ -413,15 +420,35 @@ public class GameService {
         return Response.status(201).entity(entity).build();
 
     }
+
+
+    //Servicio para obtener un Enemy a partir del ID
+    @GET
+    @ApiOperation(value = "get an Enemy by its ID")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Enemy.class),
+            @ApiResponse(code = 503, message = "not working well...")
+    })
+    @Path("/Enemy/GetByID/{itemID}")
+    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
+    public Response GetEnemyById(@PathParam("enemyID") int enemyID) {
+        try {
+            Enemy enemy = this.enemyDAO.getEnemyById(enemyID);
+            return Response.status(200).entity(enemy).build();
+        } catch (Exception e) {
+
+            return Response.status(503).build();
+        }
+    }
+
+
     //Servei per obtenir un enemic a partir del seu nom
     @GET
     @ApiOperation(value = "get an Enemy by its NAME", notes = "Get all data 1 item")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Enemy.class),
             @ApiResponse(code = 503, message = "not working well...")
-
     })
-
     @Path("/Enemy/GetByNAME/{name}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response GetEnemyByName(@PathParam("name") String name) {
@@ -429,10 +456,11 @@ public class GameService {
             Enemy enemy = this.enemyDAO.getEnemyByName(name);
             return Response.status(200).entity(enemy).build();
         } catch (Exception e) {
-
             return Response.status(503).build();
         }
     }
+
+
     //Servicio para registar un nuevo enemigo
     @POST
     @ApiOperation(value = "Register a new Enemy", notes = "Register a new item")
