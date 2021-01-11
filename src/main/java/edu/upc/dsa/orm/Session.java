@@ -19,9 +19,11 @@ public interface Session<E> {
     void get(Object entity);
     void save(Object entity) throws IllegalAccessException;
     void update(Object object) throws SQLException, IllegalAccessException;
-    void delete(Object object) throws IllegalAccessException;
+    void delete(Object object) throws IllegalAccessException, SQLException;
     void close();
 
+
+    void updateInventory(Object object) throws SQLException, IllegalAccessException;
     /*****************************      OBTENIR LLISTAT         *******************************************************/
     HashMap<Integer, Object> findAll(Class theClass);
     HashMap<Integer, Object> findTop(Class theClass);     //el hashmap ho desordena

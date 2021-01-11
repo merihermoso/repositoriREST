@@ -70,6 +70,8 @@ public class GameService {
      * /Enemy/findAll
      * /Enemy/GetByNAME/{name}
      * /Enemy/register
+     * /Enemy/update
+     * /Enemy/delete
      /*********************************************  RANKINGS    *******************************************************/
 
     //Servicio para obtener las 5 PARTIDAS CON MÁS SCORE
@@ -430,6 +432,8 @@ public class GameService {
             return Response.status(503).build();
         }
     }
+
+
 
 
     /**********************************************************************************************************/

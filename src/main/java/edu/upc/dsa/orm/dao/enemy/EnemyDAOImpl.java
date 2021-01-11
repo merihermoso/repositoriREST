@@ -109,8 +109,10 @@ public class EnemyDAOImpl implements EnemyDAO {
     }
 
     public int updateEnemy(Enemy enemy) throws SQLException {
+
         Session session = null;
         int res=1;
+
         try {
             session = FactorySession.openSession();
             session.update(enemy);
@@ -124,5 +126,24 @@ public class EnemyDAOImpl implements EnemyDAO {
             return res;
         }
     }
+
     /**********************************************************************************************************/
+
+    /*
+    public int deleteEnemy(Enemy enemy) throws SQLException {
+        Session session = null;
+        int res=1;
+        try {
+            session = FactorySession.openSession();
+            session.delete(enemy);
+            res =0;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            session.close();
+            return res;
+        }
+    }*/
 }

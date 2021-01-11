@@ -50,13 +50,26 @@ public class ObjectHelper {
         res="get"+property.substring(0,1).toUpperCase()+property.substring(1);
         return res;
     }
+    public static int getId(Object entity) throws IllegalAccessException {  /***/
 
-    public static Object getter(Object object, String property){
+        Class theClass = entity.getClass();
+
+        Field[] fields = theClass.getDeclaredFields();
+
+        String[] sFields = new String[fields.length];
+
+        Field ID = fields[0];
+        int id = ID.getInt(entity);
+
+        return id;
+    }
+
+    public static Object getter(Object object, String property){     /***/
         Method method = null;
-        Object res = null;
+        Object ressult = null;
         try {
             method = object.getClass().getDeclaredMethod(getGetter(property), null); //User.getIdUser()
-            res = method.invoke(object); //res = id
+            ressult = method.invoke(object); //ressult = id
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -64,9 +77,9 @@ public class ObjectHelper {
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
-        return res;
+        return ressult;
     }
-/*
+/*  //default
     public static Object getter(Object object, String property) throws IllegalAccessException {
         Object value = null;
         Class theClass = object.getClass();

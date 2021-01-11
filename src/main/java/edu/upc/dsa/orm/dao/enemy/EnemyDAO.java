@@ -14,6 +14,7 @@ public interface EnemyDAO {
     public List<Enemy> findAll();  //Enemies
     public int size();
     public int updateEnemy(Enemy enemy)throws SQLException;
+  //  public int deleteEnemy(Enemy enemy)throws SQLException;
 
     /***************************************** GET ***********************************************/
     public Enemy getEnemyById(int enemyID) throws SQLException;

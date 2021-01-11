@@ -4,6 +4,8 @@ import edu.upc.dsa.orm.dao.enemy.EnemyDAO;
 import edu.upc.dsa.orm.dao.enemy.EnemyDAOImpl;
 import edu.upc.dsa.orm.dao.game.GameDAO;
 import edu.upc.dsa.orm.dao.game.GameDAOImpl;
+import edu.upc.dsa.orm.dao.inventory.InventoryDAO;
+import edu.upc.dsa.orm.dao.inventory.InventoryDAOImpl;
 import edu.upc.dsa.orm.dao.item.ItemDAO;
 import edu.upc.dsa.orm.dao.item.ItemDAOImpl;
 import edu.upc.dsa.orm.dao.player.PlayerDAO;
@@ -34,15 +36,13 @@ import java.util.List;
 @Path("item")
 public class ItemService {
 
-    private final GameDAO gameDAO;
-    private final UserDAO userDAO;
+
     private final ItemDAO itemDAO;
-    private final PlayerDAO playerDAO;
+    private final InventoryDAO inventoryDAO;
 
     public ItemService() {
-        this.gameDAO = GameDAOImpl.getInstance();
-        this.userDAO = UserDAOImpl.getInstance();
-        this.playerDAO = PlayerDAOImpl.getInstance();
+
+        this.inventoryDAO = InventoryDAOImpl.getInstance();
         this.itemDAO = ItemDAOImpl.getInstance();
     }
 
@@ -200,7 +200,47 @@ public class ItemService {
         }
     }
 
-    /**********************************************************************************************************/
+    /********************************************** inventory  *****************************************/
+
+    //Servicio para obtener todos los items
+    @GET
+    @ApiOperation(value = "Get all items from BBDD")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = Item.class, responseContainer = "List"),
+    })
+    @Path("/Inventory/findAll")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getInventory() {
+
+        List<Inventory> inventory = this.inventoryDAO.findAll();
+
+        GenericEntity<List<Inventory>> entity = new GenericEntity<List<Inventory>>(inventory) {
+        };
+        return Response.status(201).entity(entity).build();
+    }
+    @PUT
+    @ApiOperation(value = "Update inventory", notes = "djhdghdgfhgd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 503, message = "Exception sql..."),
+            @ApiResponse(code = 400, message = "not found")
+    })
+    @Path("/Inventory/update")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response UpdateInventory(Inventory inventory) {
+        try{
+            int res = inventoryDAO.updateInventory(inventory);
+            if (res==0) {
+                return Response.status(200).build();
+            }
+            else{
+                return Response.status(400).build();
+            }
+        }
+        catch (Exception e){
+            return Response.status(503).build();
+        }
+    }
 
 }
 

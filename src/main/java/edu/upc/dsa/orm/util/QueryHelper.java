@@ -179,17 +179,29 @@ public class QueryHelper {
     /**************************CONSULTES AMB RELACIONS ENTRE DIFERENTS TAULES ************************************/
                                                                                         //  CONSULTES PER ELIMINAR     //
     //DELETE FROM Class WHERE ID = ?
-    public static String createQueryDELETE(Object entity){
+    public static String createQueryUPDATEtoInactive(Object entity){
         StringBuffer sb = new StringBuffer();
         sb.append("UPDATE "+entity.getClass().getSimpleName()+" SET status='inactive'");
         sb.append(" WHERE id"+entity.getClass().getSimpleName()+" = ?");
         return sb.toString();
     }
 
+    public static String createQueryDELETE(Object entity){
+        // FALTA CORREGIR
+
+        StringBuffer sb = new StringBuffer("DELETE FROM");
+        sb.append(entity.getClass().getSimpleName()).append(" ");
+        sb.append("WHERE");
+        sb.append("?").append(" = ");
+        sb.append("?").append(" ");
+
+        return sb.toString();
+    }
+
     /*************************      UPDATE      *****************************************************************/
 
     public static String createQueryUPDATE(Object entity){
-        // FALTA CORREGIR
+
         String [] fields = ObjectHelper.getFields(entity);
         StringBuffer sb = new StringBuffer("UPDATE ");
         sb.append(entity.getClass().getSimpleName()).append(" ");
@@ -204,6 +216,26 @@ public class QueryHelper {
         }
         sb.append(" = ?");
         sb.append(" WHERE ID = ?");
+
+        return sb.toString();
+    }
+
+    public static String createQueryUPDATEinventoryByUser(Object entity){
+
+        String [] fields = ObjectHelper.getFields(entity);
+        StringBuffer sb = new StringBuffer("UPDATE ");
+        sb.append(entity.getClass().getSimpleName()).append(" ");
+        sb.append("SET ");
+        String field;
+        int i =1;
+        while (i<fields.length){
+            field = fields[i];
+            if (i>1) sb.append(" = ?, ");
+            sb.append(field);
+            i++;
+        }
+        sb.append(" = ?");
+        sb.append(" WHERE id_user = ?");
 
         return sb.toString();
     }
@@ -287,6 +319,7 @@ public class QueryHelper {
         sb.append(" And  Player.id = UserPlayer.id_player");
         return sb.toString();
     }
+
 
 
 }

@@ -75,17 +75,58 @@ public class SessionImpl implements Session {
 
     }
 
+    public void updateInventory(Object object) throws SQLException, IllegalAccessException {
+        String updateQuery = QueryHelper.createQueryUPDATEinventoryByUser(object);
+
+        PreparedStatement pstm = null;
+
+        pstm = conn.prepareStatement(updateQuery);
+        String field;
+        int i =1;
+        while (i<ObjectHelper.getFields(object).length){
+            field = ObjectHelper.getFields(object)[i];
+            pstm.setObject(i++, ObjectHelper.getter(object, field));
+        }
+        pstm.setObject(i++, ObjectHelper.getter(object, ObjectHelper.getFields(object)[0]));
+        pstm.executeQuery();
+
+    }
+
+    @Override
+    public void close() {
+
+    }
+
+    public void delete(Object object) throws SQLException {
+        //FALTA POR CORREGIR
+        String deleteQuery = QueryHelper.createQueryDELETE(object);
+        PreparedStatement pstm = null;
+
+        try {
+            int ID = ObjectHelper.getId(object);
+            pstm = conn.prepareStatement(deleteQuery);
+            pstm.setObject(1, "ID");
+            pstm.setObject(2, ID);
+            pstm.executeQuery();
+
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+/*
     //Funcion que busca a un objeto y lo elimina
     public void delete(Object object) throws IllegalAccessException {
         String deleteQuery = QueryHelper.createQueryDELETE(object);
         PreparedStatement statement = null;
         String idValue = null;
         try{
-            /*if(object.getClass()==Inventario.class){
+            if(object.getClass()==Inventario.class){
                 statement = conn.prepareStatement("DELETE FROM Inventario WHERE idObjeto=? AND idJugador=?");
                 statement.setObject(1, ObjectHelper.getter(object, "idObjeto"));
                 statement.setObject(2, ObjectHelper.getter(object, "idJugador"));
-            } else {*/
+            } else {
                 statement = conn.prepareStatement(deleteQuery);
                 idValue = (String) ObjectHelper.getter(object, "id" + object.getClass().getSimpleName());
                 statement.setObject(1, ObjectHelper.getter(object, "id" + object.getClass().getSimpleName()));
@@ -100,7 +141,7 @@ public class SessionImpl implements Session {
     }
     public void close() {
 
-    }
+    }           */
 /*********************************      CONSULTES llistats      *************************************************/
     public HashMap<Integer, Object> findAll(Class theClass) {           //obtener todos (aplicable a todas las funciones)
         HashMap<Integer, Object> result = new HashMap<>();
