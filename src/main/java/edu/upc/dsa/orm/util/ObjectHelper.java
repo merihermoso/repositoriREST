@@ -66,4 +66,20 @@ public class ObjectHelper {
         }
         return res;
     }
+/*
+    public static Object getter(Object object, String property) throws IllegalAccessException {
+        Object value = null;
+        Class theClass = object.getClass();
+        Field[] fields = theClass.getDeclaredFields();
+        String[] sFields = new String[fields.length];
+
+        for (Field f: fields) {
+            if (f.getName() == property)
+                value = f.get(object);
+        }
+
+        return value;
+    }
+    */
+
 }

@@ -29,22 +29,13 @@ public class SessionImpl implements Session {
     public SessionImpl(Connection conn) {
         this.conn = conn;
     }
-    /******************************************************************************************************************
-     *
-     *
-     *
-     *
-     *
-     *
-     *
-     * ****************************************************************************************************************/
 
     @Override                                           //Obtenir
     public void get(Object entity) {
 
     }
 
-    public void save(Object entity) {                   //guardar
+    public void save(Object entity) throws IllegalAccessException {                   //guardar
 
         String insertQuery = QueryHelper.createQueryINSERT(entity);         //INSERTA
         PreparedStatement pstm = null;
@@ -65,46 +56,27 @@ public class SessionImpl implements Session {
         }
 
     }
-    //Funcion que actualiza los datos de un objeto con los atributos
-    //del objeto que le enviamos como parametro
-    public void update(Object object) {
+
+
+    public void update(Object object) throws SQLException, IllegalAccessException {
         String updateQuery = QueryHelper.createQueryUPDATE(object);
-        PreparedStatement statement = null;
-        int i = 1;
-        try{
-            statement = conn.prepareStatement(updateQuery);
-            String[] fields = ObjectHelper.getFields(object);
-            for(String field : fields){
-                /*if(object.getClass()== Inventario.class) {
-                    switch (field) {
-                        case "cantidad":
-                            statement.setObject(1, ObjectHelper.getter(object, field));
-                            break;
-                        case "idObjeto":
-                            statement.setObject(2, ObjectHelper.getter(object, field));
-                            break;
-                        case "idJugador":
-                            statement.setObject(3, ObjectHelper.getter(object, field));
-                            break;
-                    }
-                }
-                else{*/
-                    statement.setObject(i, ObjectHelper.getter(object, field));
-                    i++;
-             //   }
-            }
-            System.out.println(statement);
-            statement.executeQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            close();
+
+        PreparedStatement pstm = null;
+
+        pstm = conn.prepareStatement(updateQuery);
+        String field;
+        int i =1;
+        while (i<ObjectHelper.getFields(object).length){
+            field = ObjectHelper.getFields(object)[i];
+            pstm.setObject(i++, ObjectHelper.getter(object, field));
         }
-        System.out.println("Object updated : "+object.toString());
+        pstm.setObject(i++, ObjectHelper.getter(object, ObjectHelper.getFields(object)[0]));
+        pstm.executeQuery();
+
     }
 
     //Funcion que busca a un objeto y lo elimina
-    public void delete(Object object) {
+    public void delete(Object object) throws IllegalAccessException {
         String deleteQuery = QueryHelper.createQueryDELETE(object);
         PreparedStatement statement = null;
         String idValue = null;
@@ -501,7 +473,7 @@ public class SessionImpl implements Session {
         }
     }
 /**********************************     AUTENTICACIONS      *************************************************/
-    public boolean registerUser(RegisterCredentials registerCredentials) {
+    public boolean registerUser(RegisterCredentials registerCredentials) throws IllegalAccessException {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(registerCredentials.getPassword().getBytes(StandardCharsets.UTF_8));
@@ -799,7 +771,7 @@ public class SessionImpl implements Session {
 
 
     //Registrar nuevo Player
-    public boolean registerPlayer(PlayerCredentials playerCredentials) {
+    public boolean registerPlayer(PlayerCredentials playerCredentials) throws IllegalAccessException {
         Player player = new Player(playerCredentials.getStatus(),playerCredentials.getCoins(),playerCredentials.getScore(), playerCredentials.getNumLevel(), playerCredentials.getSpeed(), playerCredentials.getHit(), playerCredentials.getDefense(), playerCredentials.getHealing(), playerCredentials.getDamage());
         String insertQuery = QueryHelper.createQueryINSERT(player);
         PreparedStatement pstm;
@@ -819,7 +791,7 @@ public class SessionImpl implements Session {
         }
     }
 
-    public boolean registerGame(GameCredentials gameCredentials) {
+    public boolean registerGame(GameCredentials gameCredentials) throws IllegalAccessException {
         Game game = new Game(gameCredentials.getDateStart(), gameCredentials.getTimeStart(), gameCredentials.getDateEnd(), gameCredentials.getTimeEnd(), gameCredentials.getScore());
         String insertQuery = QueryHelper.createQueryINSERT(game);
         PreparedStatement pstm;
@@ -839,7 +811,7 @@ public class SessionImpl implements Session {
         }
     }
 
-    public boolean registerItem(ItemCredentials itemCredentials) {
+    public boolean registerItem(ItemCredentials itemCredentials) throws IllegalAccessException {
         Item item = new Item(itemCredentials.getName(), itemCredentials.getHit(), itemCredentials.getDefense(), itemCredentials.getHealing(), itemCredentials.getDamage(), itemCredentials.getPrice(), itemCredentials.getDescription(), itemCredentials.getImage());
         String insertQuery = QueryHelper.createQueryINSERT(item);
         PreparedStatement pstm;
@@ -859,7 +831,7 @@ public class SessionImpl implements Session {
         }
     }
 
-    public boolean registerEnemy(EnemyCredentials enemyCredentials) {
+    public boolean registerEnemy(EnemyCredentials enemyCredentials) throws IllegalAccessException {
         Enemy enemy = new Enemy(enemyCredentials.getName(), enemyCredentials.getHit(),enemyCredentials.getHealing(),enemyCredentials.getDamage(),enemyCredentials.getDefense());
         String insertQuery = QueryHelper.createQueryINSERT(enemy);
         PreparedStatement pstm;

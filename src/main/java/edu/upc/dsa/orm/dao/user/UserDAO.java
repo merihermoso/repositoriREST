@@ -7,6 +7,7 @@ import edu.upc.dsa.orm.models.API.ChangeEmailCredentials;
 import edu.upc.dsa.orm.models.API.ChangePasswordCredentials;
 import edu.upc.dsa.orm.models.API.LoginCredentials;
 import edu.upc.dsa.orm.models.API.RegisterCredentials;
+import edu.upc.dsa.orm.models.Game;
 import edu.upc.dsa.orm.models.User;
 import edu.upc.dsa.orm.models.adminCredentials.ChangeLevel;
 import edu.upc.dsa.orm.models.adminCredentials.ChangeScore;
@@ -14,7 +15,7 @@ import edu.upc.dsa.orm.models.adminCredentials.ChangeStatus;
 
 public interface UserDAO {
     /*****************************************  AUTHENTICATION USER   *************************************************/
-    boolean registerUser(RegisterCredentials registerCredentials);
+    boolean registerUser(RegisterCredentials registerCredentials) throws IllegalAccessException;
     boolean loginUser(LoginCredentials loginCredentials);
     boolean userExists(String username);
 
@@ -27,6 +28,9 @@ public interface UserDAO {
     int getMin_age();
 
     /*****************************************  modificacions USER   **************************************************/
+   // canviar user senser
+    public int updateUser(User user)throws SQLException;
+
     boolean changeUserPassword(ChangePasswordCredentials changePasswordCredentials);
     boolean changeUserEmail(ChangeEmailCredentials changeEmailCredentials);
 
@@ -47,6 +51,8 @@ public interface UserDAO {
 
     //Obtenim un atribut
     int getUserIdByUsername(String username) throws SQLException;
+
+
 
 
     //  public User deleteUserByUsername(String username) throws SQLException;

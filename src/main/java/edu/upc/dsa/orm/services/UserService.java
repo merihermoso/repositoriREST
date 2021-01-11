@@ -6,6 +6,7 @@ import edu.upc.dsa.orm.dao.game.GameDAOImpl;
 import edu.upc.dsa.orm.dao.user.UserDAO;
 import edu.upc.dsa.orm.dao.user.UserDAOImpl;
 import edu.upc.dsa.orm.models.API.*;
+import edu.upc.dsa.orm.models.Enemy;
 import edu.upc.dsa.orm.models.UserCredentialsParameters;
 import edu.upc.dsa.orm.models.User;
 import io.swagger.annotations.Api;
@@ -51,7 +52,7 @@ public class UserService {
             @ApiResponse(code = 607, message = "Too young to play")
     })
     @Path("/register")
-    public Response register(RegisterCredentials registerCredentials) {
+    public Response register(RegisterCredentials registerCredentials) throws IllegalAccessException {
 
         if (registerCredentials.getUsername() == null) return Response.status(600).build();
         if (registerCredentials.getPassword() == null) return Response.status(601).build();
@@ -352,6 +353,31 @@ public class UserService {
         }
     }
 
+    //Servei per modificar tot l'usuari
+    @PUT
+    @ApiOperation(value = "Update user", notes = "djhdghdgfhgd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 503, message = "Exception sql..."),
+            @ApiResponse(code = 400, message = "not found")
+    })
+    @Path("/update")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response UpdateUser(User user) {
+        try{
+            int res = userDAO.updateUser(user);
+            if (res==0) {
+                return Response.status(200).build();
+            }
+            else{
+                return Response.status(400).build();
+            }
+        }
+        catch (Exception e){
+
+            return Response.status(503).build();
+        }
+    }
 
     /*************************************************** POR HACER... *****************************************/
 /*

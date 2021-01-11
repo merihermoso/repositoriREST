@@ -111,6 +111,7 @@ public class GameService {
         return Response.status(201).entity(entity).build();
     }
 
+
     //Servicio para obtener la posición en el ranking del usuario
     @GET
     @ApiOperation(value = "Get a user position in ranking")
@@ -194,13 +195,41 @@ public class GameService {
             @ApiResponse(code = 201, message = "Successful! Game registered"),
     })
     @Path("/Game/register")
-    public Response gameRegister(GameCredentials gameCredentials) throws SQLException {
+    public Response gameRegister(GameCredentials gameCredentials) throws SQLException, IllegalAccessException {
 
         //   if (orderCredentials.getPrice()==null) return Response.status(602).build();
 
         this.gameDAO.registerGame(gameCredentials);
         return Response.status(201).build();
 
+    }
+
+    //Per modificar una partida sencera
+    @PUT
+    @ApiOperation(value = "Update game", notes = "djhdghdgfhgd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 503, message = "Exception sql..."),
+            @ApiResponse(code = 400, message = "not found")
+    })
+    @Path("/Game/update")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response UpdateGame(Game game) {
+
+        try{
+            int res = gameDAO.updateGame(game);
+            if (res==0) {
+                return Response.status(200).entity(game).build();
+            }
+            else
+            {
+                return Response.status(400).build();
+            }
+        }
+        catch (Exception e){
+
+            return Response.status(503).build();
+        }
     }
 
     /**************************************     PLAYER services ******************************************************/
@@ -265,7 +294,7 @@ public class GameService {
             @ApiResponse(code = 201, message = "Successful! Game registered"),
     })
     @Path("/Player/register")
-    public Response playerRegister(PlayerCredentials playerCredentials) throws SQLException {
+    public Response playerRegister(PlayerCredentials playerCredentials) throws SQLException, IllegalAccessException {
 
         //   if (orderCredentials.getPrice()==null) return Response.status(602).build();
 
@@ -273,134 +302,34 @@ public class GameService {
         return Response.status(201).build();
     }
 
-    /***************************************    modificacions Player    ***********************************************/
-
-
-
-
-
-
-
-
-
-
-
-/******************************************     ITEMS services  *******************************************************/
-    //Servicio para obtener todos los items
-    @GET
-    @ApiOperation(value = "Get all items from BBDD")
+    //Modificar partida
+    @PUT
+    @ApiOperation(value = "Update game", notes = "djhdghdgfhgd")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Item.class, responseContainer = "List"),
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 503, message = "Exception sql..."),
+            @ApiResponse(code = 400, message = "not found")
     })
-    @Path("/Items/findAll")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getItems() {
+    @Path("/Player/update")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response UpdatePlayer(Player player) {
 
-        List<Item> items = this.itemDAO.findAll();
-
-        GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(items) {
-        };
-        return Response.status(201).entity(entity).build();
-    }
-
-
-    //Servicio que devuelve una lista con los objetos del jugador
-
-    @GET
-    @ApiOperation(value = "get items from user", notes = "Obtén los objetos de un jugador")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successful", response = Inventory.class, responseContainer="List"),
-            @ApiResponse(code = 500, message = "Internal Server Error")
-    })
-    @Path("/itemsPlayer")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getItemsPlayer(@QueryParam("username") String username) throws UserNotFoundException {
-
-        HashMap<Integer,Inventory> items = null;
-        List<Inventory> o = new LinkedList<>();
-
-        items = this.itemDAO.getItemsUser(username);
-        for ( Integer key : items.keySet() ) {
-            o.add(items.get(key));
-        }
-
-        GenericEntity<List<Inventory>> entity = new GenericEntity<List<Inventory>>(o) {};
-
-        if(entity==null) return Response.status(500).build();
-        return Response.status(200).entity(entity).build();
-    }
-
-
-    //Servicio para obtener un Item a partir del ID
-    @GET
-    @ApiOperation(value = "get an Item by its ID")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = Item.class),
-            @ApiResponse(code = 503, message = "not working well...")
-    })
-    @Path("/Item/GetByID/{itemID}")
-    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response GetItemById(@PathParam("itemID") int itemID) {
-        try {
-            Item item = this.itemDAO.getItemById(itemID);
-            return Response.status(200).entity(item).build();
-        } catch (Exception e) {
-            return Response.status(503).build();
-        }
-    }
-
-
-    //Servei per obtenir un item a partir del seu nom
-    @GET
-    @ApiOperation(value = "get an Item by its name")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = Item.class),
-            @ApiResponse(code = 503, message = "not working well...")
-    })
-    @Path("/Item/getByNAME/{name}")
-    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response GetItemByName(@PathParam("name") String name) {
         try{
-            Item item = this.itemDAO.getItemByName(name);
-            return Response.status(200).entity(item).build();
+            int res = playerDAO.updatePlayer(player);
+            if (res==0) {
+                return Response.status(200).entity(player).build();
+            }
+            else
+            {
+                return Response.status(400).build();
+            }
         }
         catch (Exception e){
+
             return Response.status(503).build();
         }
     }
 
-
-
-    //Servei per obtenir l'ID d'un Item a partir del seu nom
-    @POST
-    @ApiOperation(value = "Get an item ID", notes = "Get itemID by its name")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = ObjectIdResponse.class),
-            @ApiResponse(code = 404, message = "User not found"),
-    })
-    @Path("/Item/getIdByName")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getIdByName(GetItemCredentials getItemCredentials) throws SQLException {
-        ObjectIdResponse objectIdResponse = new ObjectIdResponse(this.itemDAO.getIdByName(getItemCredentials.getName()));
-        if (objectIdResponse.getObjectID() != -1) {
-            return Response.status(201).entity(objectIdResponse).build();
-        } else {
-            return Response.status(404).entity(objectIdResponse).build();
-        }
-    }
-
-
-    //Servei per registrar un nou item
-    @POST
-    @ApiOperation(value = "Register a new Item", notes = "Register a new item")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful! Game registered"),
-    })
-    @Path("/Item/register")
-    public Response itemRegister(ItemCredentials itemCredentials) throws SQLException {
-        this.itemDAO.registerItem(itemCredentials);
-        return Response.status(201).build();
-    }
 
     /************************************************   ENEMIES services ***********************************************/
     //Servei per obtenir tots els enemics
@@ -469,11 +398,40 @@ public class GameService {
 
     })
     @Path("/Enemy/register")
-    public Response enemyRegister(EnemyCredentials enemyCredentials) throws SQLException {
+    public Response enemyRegister(EnemyCredentials enemyCredentials) throws SQLException, IllegalAccessException {
 
         this.enemyDAO.registerEnemy(enemyCredentials);
         return Response.status(201).build();
     }
+
+
+    @PUT
+    @ApiOperation(value = "Update an Enemy", notes = "djhdghdgfhgd")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 503, message = "Exception sql..."),
+            @ApiResponse(code = 400, message = "not found")
+    })
+    //Servei per modificar tot l'enemic
+    @Path("/Enemy/update")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response UpdateEnemy(Enemy enemy) {
+        try{
+            int res = enemyDAO.updateEnemy(enemy);
+            if (res==0) {
+                return Response.status(200).entity(enemy).build();
+            }
+            else{
+                return Response.status(400).build();
+            }
+        }
+        catch (Exception e){
+
+            return Response.status(503).build();
+        }
+    }
+
+
     /**********************************************************************************************************/
 
 }

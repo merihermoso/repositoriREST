@@ -13,13 +13,14 @@ public interface EnemyDAO {
     /*****************************************  FUNCIONS GENERALS    ***************************************************/
     public List<Enemy> findAll();  //Enemies
     public int size();
+    public int updateEnemy(Enemy enemy)throws SQLException;
 
     /***************************************** GET ***********************************************/
     public Enemy getEnemyById(int enemyID) throws SQLException;
     public Enemy getEnemyByName(String name) throws SQLException;
 
     /*********************************** REGISTRE ENEMICS *******************************************/
-    boolean  registerEnemy(EnemyCredentials enemyCredentials) throws SQLException;
+    boolean  registerEnemy(EnemyCredentials enemyCredentials) throws SQLException, IllegalAccessException;
 
 
 }

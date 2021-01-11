@@ -167,7 +167,7 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
     /*****************************************  REGISTRE ITEM     *************************************************/
-    public boolean registerItem(ItemCredentials itemCredentials) throws SQLException{ //Afegeix el user com a obejcte
+    public boolean registerItem(ItemCredentials itemCredentials) throws SQLException, IllegalAccessException { //Afegeix el user com a obejcte
 
         Session session;
         boolean result = false;
@@ -188,5 +188,20 @@ public class ItemDAOImpl implements ItemDAO {
 
 
     /**********************************************************************************************************/
-
+    public int updateItem(Item item) throws SQLException {
+        Session session = null;
+        int res=1;
+        try {
+            session = FactorySession.openSession();
+            session.update(item);
+            res =0;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            session.close();
+            return res;
+        }
+    }
 }

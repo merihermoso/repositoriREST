@@ -103,7 +103,7 @@ public class GameDAOImpl implements GameDAO {
     }
     /*****************************************   REGISTRE PARTIDAS   ************************************************/
 
-    public boolean registerGame(GameCredentials gameCredentials) { //Afegeix el user com a obejcte
+    public boolean registerGame(GameCredentials gameCredentials) throws IllegalAccessException { //Afegeix el user com a obejcte
 
         Session session;
         boolean result = false;
@@ -158,4 +158,21 @@ public class GameDAOImpl implements GameDAO {
     }
 
     /**********************************************************************************************************/
+
+    public int updateGame(Game game) throws SQLException {
+        Session session = null;
+        int res=1;
+        try {
+            session = FactorySession.openSession();
+            session.update(game);
+            res =0;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            session.close();
+            return res;
+        }
+    }
 }

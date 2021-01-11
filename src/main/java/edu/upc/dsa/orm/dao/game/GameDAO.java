@@ -12,6 +12,7 @@ public interface GameDAO {
       /*****************************************  FUNCIONS GENERALS    ************************************************/
       public List<Game> findAll();
       public int size();
+      public int updateGame(Game game)throws SQLException;
 
       /*****************************************  OBTENIM PARTIDA     *************************************************/
       public Game getGameById(int gameID) throws SQLException;
@@ -22,11 +23,13 @@ public interface GameDAO {
 
 
       /*****************************************   REGISTRE PARTIDAS   ************************************************/
-      boolean registerGame(GameCredentials gameCredentials) throws SQLException;
+      boolean registerGame(GameCredentials gameCredentials) throws SQLException, IllegalAccessException;
 
       /*****************************************  OBTENIM ranking     *************************************************/
       List<User> getUserRanking() throws SQLException;
       int getUserPositionByUsername(String username);
+
+
 
 
 

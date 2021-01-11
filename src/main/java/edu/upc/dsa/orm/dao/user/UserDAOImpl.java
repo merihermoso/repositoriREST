@@ -5,6 +5,7 @@ import edu.upc.dsa.orm.models.API.ChangeEmailCredentials;
 import edu.upc.dsa.orm.models.API.ChangePasswordCredentials;
 import edu.upc.dsa.orm.models.API.LoginCredentials;
 import edu.upc.dsa.orm.models.API.RegisterCredentials;
+import edu.upc.dsa.orm.models.Game;
 import edu.upc.dsa.orm.models.User;
 import edu.upc.dsa.orm.models.adminCredentials.ChangeLevel;
 import edu.upc.dsa.orm.models.adminCredentials.ChangeScore;
@@ -42,7 +43,7 @@ public class UserDAOImpl implements UserDAO {
     }
     /*****************************************  AUTHENTICATION USER   *************************************************/
 
-    public boolean registerUser(RegisterCredentials registerCredentials) { //Afegeix el user com a obejcte
+    public boolean registerUser(RegisterCredentials registerCredentials) throws IllegalAccessException { //Afegeix el user com a obejcte
 
         Session session;
         boolean result = false;
@@ -289,5 +290,20 @@ public class UserDAOImpl implements UserDAO {
     }
 */
     /**********************************************************************************************************/
-
+    public int updateUser(User user) throws SQLException {
+        Session session = null;
+        int res=1;
+        try {
+            session = FactorySession.openSession();
+            session.update(user);
+            res =0;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            session.close();
+            return res;
+        }
+    }
 }

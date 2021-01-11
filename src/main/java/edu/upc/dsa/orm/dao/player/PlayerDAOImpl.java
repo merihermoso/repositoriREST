@@ -4,6 +4,7 @@ package edu.upc.dsa.orm.dao.player;
 
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
+import edu.upc.dsa.orm.models.Game;
 import edu.upc.dsa.orm.models.GameCredentials.PlayerCredentials;
 import edu.upc.dsa.orm.models.Item;
 import edu.upc.dsa.orm.models.Player;
@@ -106,7 +107,7 @@ public class PlayerDAOImpl implements PlayerDAO {
     }
 
     /*****************************************  REGISTRE ITEM     *************************************************/
-    public boolean registerPlayer(PlayerCredentials playerCredentials) { //Afegeix el user com a obejcte
+    public boolean registerPlayer(PlayerCredentials playerCredentials) throws IllegalAccessException { //Afegeix el user com a obejcte
         Session session;
         boolean result = false;
 
@@ -173,5 +174,23 @@ public class PlayerDAOImpl implements PlayerDAO {
 
         return session.changePlayerCoins(changePlayerCoins);
 
+    }
+    /****************************************************************************************************************/
+
+    public int updatePlayer(Player player) throws SQLException {
+        Session session = null;
+        int res=1;
+        try {
+            session = FactorySession.openSession();
+            session.update(player);
+            res =0;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            session.close();
+            return res;
+        }
     }
 }

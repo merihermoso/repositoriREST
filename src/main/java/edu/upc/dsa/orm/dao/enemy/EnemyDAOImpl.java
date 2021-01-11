@@ -3,6 +3,7 @@ package edu.upc.dsa.orm.dao.enemy;
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
 import edu.upc.dsa.orm.models.Enemy;
+import edu.upc.dsa.orm.models.Game;
 import edu.upc.dsa.orm.models.GameCredentials.EnemyCredentials;
 import edu.upc.dsa.orm.models.User;
 
@@ -88,7 +89,7 @@ public class EnemyDAOImpl implements EnemyDAO {
     }
 
     /*********************************** REGISTRE ENEMICS *******************************************/
-    public boolean registerEnemy(EnemyCredentials enemyCredentials) { //Afegeix el user com a obejcte
+    public boolean registerEnemy(EnemyCredentials enemyCredentials) throws IllegalAccessException { //Afegeix el user com a obejcte
 
         Session session;
         boolean result = false;
@@ -105,6 +106,23 @@ public class EnemyDAOImpl implements EnemyDAO {
 
         return result;
 
+    }
+
+    public int updateEnemy(Enemy enemy) throws SQLException {
+        Session session = null;
+        int res=1;
+        try {
+            session = FactorySession.openSession();
+            session.update(enemy);
+            res =0;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            session.close();
+            return res;
+        }
     }
     /**********************************************************************************************************/
 }

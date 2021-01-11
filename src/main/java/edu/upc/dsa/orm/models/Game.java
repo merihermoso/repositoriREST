@@ -47,4 +47,5 @@ public class Game {
     public String toString(){
         return "Game { id"+id+",DateStart :" +dateStart+"TimeStart :"+timeStart+"DateEnd :"+dateEnd+"TimeEnd :"+timeEnd+"Score :"+score+"}";
     }
+
 }

@@ -188,26 +188,23 @@ public class QueryHelper {
 
     /*************************      UPDATE      *****************************************************************/
 
-    //NO IMPLEMENTADA ENCARA
-    //UPDATE User SET id = ?, nombre = ?, mail = ? WHERE ID = 'user.getId()'
-    public static String createQueryUPDATE(Object entity) {
+    public static String createQueryUPDATE(Object entity){
+        // FALTA CORREGIR
+        String [] fields = ObjectHelper.getFields(entity);
         StringBuffer sb = new StringBuffer("UPDATE ");
-        sb.append(entity.getClass().getSimpleName());
-        sb.append(" SET ");
-
-        String[] fields = ObjectHelper.getFields(entity);
-       /* if(entity.getClass()== Inventario.class){
-            sb.append("cantidad=? WHERE idObjeto=? AND idJugador=?");
+        sb.append(entity.getClass().getSimpleName()).append(" ");
+        sb.append("SET ");
+        String field;
+        int i =1;
+        while (i<fields.length){
+            field = fields[i];
+            if (i>1) sb.append(" = ?, ");
+            sb.append(field);
+            i++;
         }
-        else {*/
-            sb.append("id" + entity.getClass().getSimpleName() + " = ?");
+        sb.append(" = ?");
+        sb.append(" WHERE ID = ?");
 
-            for (String field : fields) {
-                if (!field.startsWith("id")) sb.append(", ").append(field).append(" = ?");
-            }
-            sb.append(" WHERE id" + entity.getClass().getSimpleName() + " = '" +
-                    ObjectHelper.getter(entity, "id" + entity.getClass().getSimpleName()) + "'");
-     //   }
         return sb.toString();
     }
 
