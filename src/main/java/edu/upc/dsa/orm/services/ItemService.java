@@ -81,7 +81,7 @@ public class ItemService {
     //Servicio que devuelve una lista con los objetos del jugador
 
     @GET
-    @ApiOperation(value = "get items from user", notes = "Obtén los objetos de un jugador")
+    @ApiOperation(value = "get items from user")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful", response = Inventory.class, responseContainer="List"),
             @ApiResponse(code = 500, message = "Internal Server Error")
@@ -147,7 +147,7 @@ public class ItemService {
 
     //Servei per obtenir l'ID d'un Item a partir del seu nom
     @POST
-    @ApiOperation(value = "Get an item ID", notes = "Get itemID by its name")
+    @ApiOperation(value = "Get an item ID")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = ObjectIdResponse.class),
             @ApiResponse(code = 404, message = "User not found"),
@@ -166,7 +166,7 @@ public class ItemService {
 
     //Servei per registrar un nou item
     @POST
-    @ApiOperation(value = "Register a new Item", notes = "Register a new item")
+    @ApiOperation(value = "Register a new Item")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful! Game registered"),
     })
@@ -177,7 +177,7 @@ public class ItemService {
     }
 
     @PUT
-    @ApiOperation(value = "Update an item", notes = "djhdghdgfhgd")
+    @ApiOperation(value = "Update an item")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 503, message = "Exception sql..."),
@@ -219,7 +219,7 @@ public class ItemService {
         return Response.status(201).entity(entity).build();
     }
     @PUT
-    @ApiOperation(value = "Update inventory", notes = "djhdghdgfhgd")
+    @ApiOperation(value = "Update inventory")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 503, message = "Exception sql..."),

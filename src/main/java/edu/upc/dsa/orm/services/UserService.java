@@ -9,10 +9,7 @@ import edu.upc.dsa.orm.models.API.*;
 import edu.upc.dsa.orm.models.Enemy;
 import edu.upc.dsa.orm.models.UserCredentialsParameters;
 import edu.upc.dsa.orm.models.User;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
@@ -268,7 +265,7 @@ public class UserService {
             @ApiResponse(code = 503, message = "not working well...")
 
     })
-    @Path("/getUserByUsername/{username}")
+    @Path("/{username}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response getUserByUsername(@PathParam("username") String username) {
 
@@ -355,7 +352,7 @@ public class UserService {
 
     //Servei per modificar tot l'usuari
     @PUT
-    @ApiOperation(value = "Update user", notes = "djhdghdgfhgd")
+    @ApiOperation(value = "Update user")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 503, message = "Exception sql..."),

@@ -41,7 +41,7 @@ public class Main {
             beanConfig.setHost(local_ip + ":" + remote_port);
         }
 
-        beanConfig.setBasePath("/dsaApp");
+        beanConfig.setBasePath("/api");
         beanConfig.setContact("support@grup5dsa.com");
         beanConfig.setDescription("REST API for GAME G5 Manager");
         beanConfig.setLicenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html");
@@ -54,9 +54,9 @@ public class Main {
         // create and start a new instance of grizzly http server
         // exposing the Jersey application
         if (remote_machine) {
-            return GrizzlyHttpServerFactory.createHttpServer(URI.create("http://" + remote_ip + ":" + remote_port + "/dsaApp/"), rc);
+            return GrizzlyHttpServerFactory.createHttpServer(URI.create("http://" + remote_ip + ":" + remote_port + "/api/"), rc);
         } else {
-            return GrizzlyHttpServerFactory.createHttpServer(URI.create("http://" + local_ip + ":" + local_port + "/dsaApp/"), rc);
+            return GrizzlyHttpServerFactory.createHttpServer(URI.create("http://" + local_ip + ":" + local_port + "/api/"), rc);
         }
     }
 
@@ -69,10 +69,10 @@ public class Main {
 
         if (remote_machine) {
         System.out.println("Jersey app started with WADL available at "
-                + "http://" + remote_ip + ":" + remote_port + "/dsaApp/application.wadl\nHit enter to stop it...");
+                + "http://" + remote_ip + ":" + remote_port + "/api/application.wadl\nHit enter to stop it...");
         } else {
             System.out.println("Jersey app started with WADL available at "
-                    + "http://" + local_ip + ":" + local_port + "/dsaApp/application.wadl\nHit enter to stop it...");
+                    + "http://" + local_ip + ":" + local_port + "/api/application.wadl\nHit enter to stop it...");
         }
 
         System.in.read();

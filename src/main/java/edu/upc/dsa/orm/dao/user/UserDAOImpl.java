@@ -5,7 +5,6 @@ import edu.upc.dsa.orm.models.API.ChangeEmailCredentials;
 import edu.upc.dsa.orm.models.API.ChangePasswordCredentials;
 import edu.upc.dsa.orm.models.API.LoginCredentials;
 import edu.upc.dsa.orm.models.API.RegisterCredentials;
-import edu.upc.dsa.orm.models.Game;
 import edu.upc.dsa.orm.models.User;
 import edu.upc.dsa.orm.models.adminCredentials.ChangeLevel;
 import edu.upc.dsa.orm.models.adminCredentials.ChangeScore;
@@ -266,6 +265,10 @@ public class UserDAOImpl implements UserDAO {
         }
 
         return userID;
+    }
+
+    private static void enviarConGMail(String destinatario, String asunto, String cuerpo) {
+
     }
 
 

@@ -32,7 +32,7 @@ public class AdminService {
 
 
     @POST
-    @ApiOperation(value = "Change user Status", notes = "Change the status of a user")
+    @ApiOperation(value = "Change user Status")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 603, message = "Incorrect status"),
@@ -53,7 +53,7 @@ public class AdminService {
     }
 
     @POST
-    @ApiOperation(value = "Change user Level", notes = "Change the status of a user")
+    @ApiOperation(value = "Change user Level")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 603, message = "Incorrect status"),
@@ -78,7 +78,7 @@ public class AdminService {
 
     }
     @POST
-    @ApiOperation(value = "Change user Score", notes = "Change the status of a user")
+    @ApiOperation(value = "Change user Score")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 603, message = "Incorrect score"),
@@ -102,7 +102,7 @@ public class AdminService {
     }
 /****************************************** modificacions player ******************************************************/
     @POST
-    @ApiOperation(value = "Change player Score", notes = "Change the score of a player")
+    @ApiOperation(value = "Change player Score")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful"),
 
@@ -117,7 +117,7 @@ public class AdminService {
 
     }
     @POST
-    @ApiOperation(value = "Change player Level", notes = "Change the score of a player")
+    @ApiOperation(value = "Change player Level")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 603, message = "Incorrect score"),
@@ -137,7 +137,7 @@ public class AdminService {
 
     }
     @POST
-    @ApiOperation(value = "Change player Coins", notes = "Change the score of a player")
+    @ApiOperation(value = "Change player Coins")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 603, message = "Incorrect score"),
@@ -159,7 +159,7 @@ public class AdminService {
 
     }
     @POST
-    @ApiOperation(value = "Change player Status", notes = "Change the status of a player")
+    @ApiOperation(value = "Change player Status")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 603, message = "Incorrect status"),
@@ -177,7 +177,7 @@ public class AdminService {
 
     }
     @POST
-    @ApiOperation(value = "Change player Speed", notes = "Change the status of a player")
+    @ApiOperation(value = "Change player Speed")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 603, message = "Incorrect score"),

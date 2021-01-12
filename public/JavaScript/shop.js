@@ -1,4 +1,4 @@
-var BASE_URI="/dsaApp";
+var BASE_URI="/api";
 var username = localStorage.getItem("username");
 var diamantes = localStorage.getItem("diamantes");
 if (username == null){

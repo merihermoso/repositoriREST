@@ -208,7 +208,7 @@ public class GameService {
 
     //Per modificar una partida sencera
     @PUT
-    @ApiOperation(value = "Update game", notes = "djhdghdgfhgd")
+    @ApiOperation(value = "Update game")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 503, message = "Exception sql..."),
@@ -306,7 +306,7 @@ public class GameService {
 
     //Modificar partida
     @PUT
-    @ApiOperation(value = "Update game", notes = "djhdghdgfhgd")
+    @ApiOperation(value = "Update game")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 503, message = "Exception sql..."),
@@ -336,7 +336,7 @@ public class GameService {
     /************************************************   ENEMIES services ***********************************************/
     //Servei per obtenir tots els enemics
     @GET                                                                    //OBTENEMOS TODAS LAS PARTIDAS
-    @ApiOperation(value = "Get all Enemy from BBDD", notes = "Get all enemies from BBDD")
+    @ApiOperation(value = "Get all Enemy from BBDD")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Enemy.class, responseContainer = "List"),
     })
@@ -375,7 +375,7 @@ public class GameService {
 
     //Servei per obtenir un enemic a partir del seu nom
     @GET
-    @ApiOperation(value = "get an Enemy by its NAME", notes = "Get all data 1 item")
+    @ApiOperation(value = "get an Enemy by its NAME")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Enemy.class),
             @ApiResponse(code = 503, message = "not working well...")
@@ -394,7 +394,7 @@ public class GameService {
 
     //Servicio para registar un nuevo enemigo
     @POST
-    @ApiOperation(value = "Register a new Enemy", notes = "Register a new item")
+    @ApiOperation(value = "Register a new Enemy")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful! Game registered"),
 
@@ -408,7 +408,7 @@ public class GameService {
 
 
     @PUT
-    @ApiOperation(value = "Update an Enemy", notes = "djhdghdgfhgd")
+    @ApiOperation(value = "Update an Enemy")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 503, message = "Exception sql..."),

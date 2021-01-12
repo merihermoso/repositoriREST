@@ -1,4 +1,4 @@
-var BASE_URI="/dsaApp";
+var BASE_URI="/api";
 
 $(document).ready(function() {
 
@@ -18,7 +18,7 @@ $(document).ready(function() {
                 201: function() {
                     alert("Has iniciado sesión correctamente\n");
                     window.localStorage.setItem("username", username);
-                    var url = "home.html";
+                    var url = "index.html";
                     window.open(url, "_self");
                 },
                 601: function() {
@@ -58,7 +58,7 @@ $(document).ready(function() {
                     201: function() {
                         alert("Te has registrado correctamente\n");
                         window.localStorage.setItem("username", username);
-                        var url = "home.html";
+                        var url = "index.html";
                         window.open(url, "_self");
                     },
                     600: function() {
