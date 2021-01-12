@@ -19,14 +19,6 @@ public interface UserDAO {
     boolean loginUser(LoginCredentials loginCredentials);
     boolean userExists(String username);
 
-    int getUsername_min_length();
-    int getUsername_max_length();
-    int getPassword_min_length();
-    int getPassword_max_length();
-    int getEmail_min_length();
-    int getEmail_max_length();
-    int getMin_age();
-
     /*****************************************  modificacions USER   **************************************************/
    // canviar user senser
     public int updateUser(User user)throws SQLException;

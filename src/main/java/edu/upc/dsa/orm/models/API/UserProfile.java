@@ -1,6 +1,6 @@
 package edu.upc.dsa.orm.models.API;
 
-public class ProfileResponse {
+public class UserProfile {
 
     private String username;
     private String email;
@@ -9,11 +9,11 @@ public class ProfileResponse {
     private int level;
     private int ranking_position;
 
-    public ProfileResponse() {
+    public UserProfile() {
 
     }
 
-    public ProfileResponse(String username, String email, String birthdate, int score, int level, int ranking_position) {
+    public UserProfile(String username, String email, String birthdate, int score, int level, int ranking_position) {
         this.username = username;
         this.email = email;
         this.birthdate = birthdate;

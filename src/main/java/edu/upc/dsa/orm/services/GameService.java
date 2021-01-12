@@ -11,10 +11,7 @@ import edu.upc.dsa.orm.dao.player.PlayerDAO;
 import edu.upc.dsa.orm.dao.player.PlayerDAOImpl;
 import edu.upc.dsa.orm.dao.user.UserDAO;
 import edu.upc.dsa.orm.dao.user.UserDAOImpl;
-import edu.upc.dsa.orm.exeptions.UserNotFoundException;
 import edu.upc.dsa.orm.models.*;
-import edu.upc.dsa.orm.models.API.ProfileResponse;
-import edu.upc.dsa.orm.models.API.RankingPositionResponse;
 import edu.upc.dsa.orm.models.GameCredentials.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -87,52 +84,6 @@ public class GameService {
         GenericEntity<List<Game>> entity = new GenericEntity<List<Game>>(games) {
         };
         return Response.status(201).entity(entity).build();
-    }
-
-
-    @GET
-    @ApiOperation(value = "Get the users with the most score")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = ProfileResponse.class, responseContainer = "List"),
-    })
-    @Path("/getTopUsers")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getTopUsers() throws SQLException {
-        List<User> users = this.gameDAO.getUserRanking();
-        List<ProfileResponse> profileResponses = new ArrayList<>();
-        for(User user : users) {
-            profileResponses.add(new ProfileResponse(user.getUsername(),
-                    user.getEmail(),
-                    user.getBirthdate(),
-                    user.getScore(),
-                    user.getLevel(),
-                    this.gameDAO.getUserPositionByUsername(user.getUsername())));
-        }
-        GenericEntity<List<ProfileResponse>> entity = new GenericEntity<List<ProfileResponse>>(profileResponses) {
-        };
-        return Response.status(201).entity(entity).build();
-    }
-
-
-    //Servicio para obtener la posición en el ranking del usuario
-    @GET
-    @ApiOperation(value = "Get a user position in ranking")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = RankingPositionResponse.class),
-            @ApiResponse(code = 601, message = "Need to fill in username field"),
-            @ApiResponse(code = 404, message = "User not exists"),
-    })
-    @Path("/getUserPositionByUsername/{username}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getUserPositionByUsername(@PathParam("username") String username) throws SQLException {
-        if (username == null) return Response.status(601).build();
-        if (this.userDAO.userExists(username)) {
-            RankingPositionResponse rankingPositionResponse =
-                    new RankingPositionResponse(this.gameDAO.getUserPositionByUsername(username));
-            return Response.status(201).entity(rankingPositionResponse).build();
-        } else {
-            return Response.status(404).build();
-        }
     }
 
     /**********************************************     GAMES (partidas) services   ***********************************/

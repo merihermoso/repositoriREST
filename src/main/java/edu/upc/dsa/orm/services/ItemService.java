@@ -1,20 +1,10 @@
 package edu.upc.dsa.orm.services;
 
-import edu.upc.dsa.orm.dao.enemy.EnemyDAO;
-import edu.upc.dsa.orm.dao.enemy.EnemyDAOImpl;
-import edu.upc.dsa.orm.dao.game.GameDAO;
-import edu.upc.dsa.orm.dao.game.GameDAOImpl;
 import edu.upc.dsa.orm.dao.inventory.InventoryDAO;
 import edu.upc.dsa.orm.dao.inventory.InventoryDAOImpl;
 import edu.upc.dsa.orm.dao.item.ItemDAO;
 import edu.upc.dsa.orm.dao.item.ItemDAOImpl;
-import edu.upc.dsa.orm.dao.player.PlayerDAO;
-import edu.upc.dsa.orm.dao.player.PlayerDAOImpl;
-import edu.upc.dsa.orm.dao.user.UserDAO;
-import edu.upc.dsa.orm.dao.user.UserDAOImpl;
 import edu.upc.dsa.orm.exeptions.UserNotFoundException;
-import edu.upc.dsa.orm.models.API.ProfileResponse;
-import edu.upc.dsa.orm.models.API.RankingPositionResponse;
 import edu.upc.dsa.orm.models.*;
 import edu.upc.dsa.orm.models.GameCredentials.*;
 import io.swagger.annotations.Api;
@@ -27,7 +17,6 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;

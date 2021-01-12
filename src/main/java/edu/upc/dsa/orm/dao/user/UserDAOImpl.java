@@ -16,23 +16,8 @@ import java.util.*;
 public class UserDAOImpl implements UserDAO {
     private static UserDAO instance;
 
-    private final int username_min_length;
-    private final int username_max_length;
-    private final int password_min_length;
-    private final int password_max_length;
-    private final int email_min_length;
-    private final int email_max_length;
-    private final int min_age;
-
     private UserDAOImpl() {
 
-        this.username_min_length = 4;
-        this.username_max_length = 20;
-        this.password_min_length = 4;
-        this.password_max_length = 20;
-        this.email_min_length = 4;
-        this.email_max_length = 30;
-        this.min_age = 15;
 
     }
 
@@ -95,34 +80,6 @@ public class UserDAOImpl implements UserDAO {
 
         return result;
 
-    }
-
-    public int getUsername_min_length() {
-        return username_min_length;
-    }
-
-    public int getUsername_max_length() {
-        return username_max_length;
-    }
-
-    public int getPassword_min_length() {
-        return password_min_length;
-    }
-
-    public int getPassword_max_length() {
-        return password_max_length;
-    }
-
-    public int getEmail_min_length() {
-        return email_min_length;
-    }
-
-    public int getEmail_max_length() {
-        return email_max_length;
-    }
-
-    public int getMin_age() {
-        return min_age;
     }
 
     /*****************************************  FUNCIONS BÀSIQUES   *************************************************/

@@ -6,8 +6,6 @@ import edu.upc.dsa.orm.dao.game.GameDAOImpl;
 import edu.upc.dsa.orm.dao.user.UserDAO;
 import edu.upc.dsa.orm.dao.user.UserDAOImpl;
 import edu.upc.dsa.orm.models.API.*;
-import edu.upc.dsa.orm.models.Enemy;
-import edu.upc.dsa.orm.models.UserCredentialsParameters;
 import edu.upc.dsa.orm.models.User;
 import io.swagger.annotations.*;
 
@@ -56,14 +54,17 @@ public class UserService {
 
         if (this.userDAO.userExists(registerCredentials.getUsername())) return Response.status(250).build();
 
-        if (registerCredentials.getUsername().length() < this.userDAO.getUsername_min_length() || registerCredentials.getUsername().length() > this.userDAO.getUsername_max_length()) return Response.status(604).build();
-        if (registerCredentials.getPassword().length() < this.userDAO.getPassword_min_length() || registerCredentials.getPassword().length() > this.userDAO.getPassword_max_length()) return Response.status(605).build();
-        if (registerCredentials.getEmail().length() < this.userDAO.getEmail_min_length() || registerCredentials.getEmail().length() > this.userDAO.getEmail_max_length()) return Response.status(606).build();
+        UserSettings userSettings = new UserSettings();
+
+
+        if (registerCredentials.getUsername().length() < userSettings.getUsername_min_length() || registerCredentials.getUsername().length() > userSettings.getUsername_max_length()) return Response.status(604).build();
+        if (registerCredentials.getPassword().length() < userSettings.getPassword_min_length() || registerCredentials.getPassword().length() > userSettings.getPassword_max_length()) return Response.status(605).build();
+        if (registerCredentials.getEmail().length() < userSettings.getEmail_min_length() || registerCredentials.getEmail().length() > userSettings.getEmail_max_length()) return Response.status(606).build();
 
         LocalDate l1 = LocalDate.of(registerCredentials.getBirthdate_year(), registerCredentials.getBirthdate_month(),  registerCredentials.getBirthdate_day());
         Period diff1 = Period.between(l1, LocalDate.now());
 
-        if (diff1.getYears() < this.userDAO.getMin_age()) return Response.status(607).build();
+        if (diff1.getYears() < userSettings.getMin_age()) return Response.status(607).build();
 
         this.userDAO.registerUser(registerCredentials);
         return Response.status(201).build();
@@ -182,48 +183,94 @@ public class UserService {
     @GET
     @ApiOperation(value = "Get all Users")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = ProfileResponse.class, responseContainer="List"),
+            @ApiResponse(code = 201, message = "Successful", response = User.class, responseContainer="List"),
     })
-    @Path("/getAllUsers")
+    @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllUsers() {
 
         List<User> users = this.userDAO.getAllUsers();
 
-        List<ProfileResponse> profileResponses = new ArrayList<>();
+        GenericEntity<List<User>> entity = new GenericEntity<List<User>>(users) {};
+        return Response.status(201).entity(entity).build();
 
+    }
+
+    @GET
+    @ApiOperation(value = "Get all users UserProfile")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = UserProfile.class, responseContainer="List"),
+    })
+    @Path("/profile")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllUsersProfile() {
+
+        List<User> users = this.userDAO.getAllUsers();
+
+        List<UserProfile> userProfileResponse = new ArrayList<>();
         for(User user : users) {
-
-            profileResponses.add(new ProfileResponse(user.getUsername(),
+            userProfileResponse.add(new UserProfile(user.getUsername(),
                     user.getEmail(),
                     user.getBirthdate(),
                     user.getScore(),
                     user.getLevel(),
                     this.gameDAO.getUserPositionByUsername(user.getUsername())));
-
         }
+        GenericEntity<List<UserProfile>> entity = new GenericEntity<List<UserProfile>>(userProfileResponse) {};
 
-        GenericEntity<List<ProfileResponse>> entity = new GenericEntity<List<ProfileResponse>>(profileResponses) {};
         return Response.status(201).entity(entity).build();
 
     }
 
 
     @GET
-    @ApiOperation(value = "Check if a user exists")
+    @ApiOperation(value = "Get user credentials settings")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "User exists"),
-            @ApiResponse(code = 601, message = "Need to fill in username field"),
-            @ApiResponse(code = 404, message = "User not exists"),
+            @ApiResponse(code = 201, message = "Successful", response = UserSettings.class),
     })
-    @Path("/userExists/{username}")
-    public Response userExists(@PathParam("username") String username) {
+    @Path("/settings")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUserSettings() {
+
+        return Response.status(201).entity(new UserSettings()).build();
+
+    }
+
+
+    @GET
+    @ApiOperation(value = "Get a user UserProfile given its username")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = UserProfile.class),
+            @ApiResponse(code = 404, message = "User not exists"),
+            @ApiResponse(code = 601, message = "Need to fill in username field"),
+            @ApiResponse(code = 503, message = "not working well...")
+
+    })
+    @Path("/{username}/profile")
+    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
+    public Response getUserProfileByUsername(@PathParam("username") String username) {
 
         if (username == null) return Response.status(601).build();
 
         if (this.userDAO.userExists(username)) {
 
-            return Response.status(201).build();
+            try {
+
+                User user = this.userDAO.getUserByUsername(username);
+
+                UserProfile userProfile = new UserProfile(user.getUsername(),
+                        user.getEmail(),
+                        user.getBirthdate(),
+                        user.getScore(),
+                        user.getLevel(),
+                        this.gameDAO.getUserPositionByUsername(user.getUsername()));
+
+                return Response.status(200).entity(userProfile).build();
+
+            } catch (Exception e) {
+
+                return Response.status(503).build();
+            }
 
         } else {
 
@@ -233,33 +280,11 @@ public class UserService {
 
     }
 
-    @GET
-    @ApiOperation(value = "Get user credentials parameters")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = UserCredentialsParameters.class),
-    })
-    @Path("/getUserCredentialsParameters")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getUserCredentialsParameters() {
-
-        UserCredentialsParameters userCredentialsParameters = new UserCredentialsParameters(
-                this.userDAO.getUsername_min_length(),
-                this.userDAO.getUsername_max_length(),
-                this.userDAO.getPassword_min_length(),
-                this.userDAO.getPassword_max_length(),
-                this.userDAO.getEmail_min_length(),
-                this.userDAO.getEmail_max_length(),
-                this.userDAO.getMin_age());
-
-        return Response.status(201).entity(userCredentialsParameters).build();
-
-    }
-
 
     @GET
-    @ApiOperation(value = "Get a User given a username")
+    @ApiOperation(value = "Get a User given its username")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = ProfileResponse.class),
+            @ApiResponse(code = 200, message = "OK", response = User.class),
             @ApiResponse(code = 404, message = "User not exists"),
             @ApiResponse(code = 601, message = "Need to fill in username field"),
             @ApiResponse(code = 503, message = "not working well...")
@@ -277,14 +302,7 @@ public class UserService {
 
                 User user = this.userDAO.getUserByUsername(username);
 
-                ProfileResponse profileResponse = new ProfileResponse(user.getUsername(),
-                        user.getEmail(),
-                        user.getBirthdate(),
-                        user.getScore(),
-                        user.getLevel(),
-                        this.gameDAO.getUserPositionByUsername(user.getUsername()));
-
-                return Response.status(200).entity(profileResponse).build();
+                return Response.status(200).entity(user).build();
 
             } catch (Exception e) {
 
@@ -299,14 +317,58 @@ public class UserService {
 
     }
 
+    @GET
+    @ApiOperation(value = "Get the users UserRanking with the most score. It returns the top 20 users by default")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = UserProfile.class, responseContainer = "List"),
+    })
+    @Path("/ranking")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getRanking() throws SQLException {
+        List<User> users = this.gameDAO.getUserRanking();
+        List<UserProfile> userProfileResponse = new ArrayList<>();
+        for(User user : users) {
+            userProfileResponse.add(new UserProfile(user.getUsername(),
+                    user.getEmail(),
+                    user.getBirthdate(),
+                    user.getScore(),
+                    user.getLevel(),
+                    this.gameDAO.getUserPositionByUsername(user.getUsername())));
+        }
+        GenericEntity<List<UserProfile>> entity = new GenericEntity<List<UserProfile>>(userProfileResponse) {};
+        return Response.status(201).entity(entity).build();
+    }
+
+
+    //Servicio para obtener la posición en el ranking del usuario
+    @GET
+    @ApiOperation(value = "Get user UserRanking given its username")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = UserRanking.class),
+            @ApiResponse(code = 601, message = "Need to fill in username field"),
+            @ApiResponse(code = 404, message = "User not exists"),
+    })
+    @Path("/{username}/ranking")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getRankingUser(@PathParam("username") String username) throws SQLException {
+        if (username == null) return Response.status(601).build();
+        if (this.userDAO.userExists(username)) {
+            UserRanking userRanking =
+                    new UserRanking(this.gameDAO.getUserPositionByUsername(username));
+            return Response.status(201).entity(userRanking).build();
+        } else {
+            return Response.status(404).build();
+        }
+    }
+
 
     @GET
-    @ApiOperation(value = "Get a User given an id")
+    @ApiOperation(value = "Get a User given its id")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Succesful", response = ProfileResponse.class),
+            @ApiResponse(code = 200, message = "Succesful", response = User.class),
             @ApiResponse(code = 503, message = "not working well...")
     })
-    @Path("/getUserById/{id}")
+    @Path("/id/{id}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response getUserById(@PathParam("id") int id) {
 
@@ -314,14 +376,7 @@ public class UserService {
 
             User user = this.userDAO.getUserById(id);
 
-            ProfileResponse profileResponse = new ProfileResponse(user.getUsername(),
-                    user.getEmail(),
-                    user.getBirthdate(),
-                    user.getScore(),
-                    user.getLevel(),
-                    this.gameDAO.getUserPositionByUsername(user.getUsername()));
-
-            return Response.status(200).entity(profileResponse).build();
+            return Response.status(200).entity(user).build();
 
         }
         catch (Exception e){
@@ -329,6 +384,37 @@ public class UserService {
             return Response.status(503).build();
         }
     }
+
+
+    @GET
+    @ApiOperation(value = "Get a user UserProfile given its id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Succesful", response = UserProfile.class),
+            @ApiResponse(code = 503, message = "not working well...")
+    })
+    @Path("/id/{id}/profile")
+    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
+    public Response getUserProfileById(@PathParam("id") int id) {
+
+        try{
+
+            User user = this.userDAO.getUserById(id);
+            UserProfile userProfile = new UserProfile(user.getUsername(),
+                    user.getEmail(),
+                    user.getBirthdate(),
+                    user.getScore(),
+                    user.getLevel(),
+                    this.gameDAO.getUserPositionByUsername(user.getUsername()));
+
+            return Response.status(200).entity(userProfile).build();
+
+        }
+        catch (Exception e){
+
+            return Response.status(503).build();
+        }
+    }
+
 
 
     @GET
@@ -358,7 +444,7 @@ public class UserService {
             @ApiResponse(code = 503, message = "Exception sql..."),
             @ApiResponse(code = 400, message = "not found")
     })
-    @Path("/update")
+    @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response UpdateUser(User user) {
         try{

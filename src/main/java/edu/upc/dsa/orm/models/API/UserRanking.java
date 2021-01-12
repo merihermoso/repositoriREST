@@ -1,14 +1,14 @@
 package edu.upc.dsa.orm.models.API;
 
-public class RankingPositionResponse {
+public class UserRanking {
 
     private int position;
 
-    public RankingPositionResponse() {
+    public UserRanking() {
 
     }
 
-    public RankingPositionResponse(int position) {
+    public UserRanking(int position) {
         this.position = position;
     }
 
