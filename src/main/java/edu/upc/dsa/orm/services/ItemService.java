@@ -56,7 +56,7 @@ public class ItemService {
     })
     @Path("/id/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getItemById(@PathParam("id") int id) {
+    public Response readItemById(@PathParam("id") int id) {
 
         Item item = itemDAO.readByParameter("id", id);
 
@@ -115,6 +115,7 @@ public class ItemService {
     }
 
 */
+    /*
     @PUT
     @ApiOperation(value = "Update an item")
     @ApiResponses(value = {
@@ -131,7 +132,7 @@ public class ItemService {
             return Response.status(400).build();
         }
 
-    }
+    }*/
 
 }
 
