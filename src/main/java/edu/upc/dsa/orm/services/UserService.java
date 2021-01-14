@@ -63,7 +63,7 @@ public class UserService {
 
         LocalDate l1 = LocalDate.of(registerCredentials.getBirthdate_year(), registerCredentials.getBirthdate_month(),  registerCredentials.getBirthdate_day());
         Period diff1 = Period.between(l1, LocalDate.now());
-
+        System.out.println(l1);
         if (diff1.getYears() < userSettings.getMin_age()) return Response.status(607).build();
 
         this.userDAO.registerUser(registerCredentials);

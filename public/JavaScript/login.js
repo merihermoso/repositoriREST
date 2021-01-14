@@ -44,9 +44,16 @@ $(document).ready(function() {
         var confirm = $("#registerConfirm").val();
         var birthdate = $("#registerBirth").val();
 
+        birthdate_fragment = birthdate.split('/');
+        birthdate_day = birthdate_fragment[0];
+        birthdate_month = birthdate_fragment[1];
+        birthdate_year = birthdate_fragment[2];
+
         if (password == confirm){
 
-            var user = {"username": username, "password": password, "email":email, "birthdate": birthdate};
+            var user = {"username": username, "password": password, "email":email,
+            "birthdate_year": birthdate_year, "birthdate_month": birthdate_month,
+            "birthdate_day": birthdate_day};
 
             $.ajax({
                 type: 'POST',
