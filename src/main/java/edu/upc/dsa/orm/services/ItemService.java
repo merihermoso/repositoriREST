@@ -41,7 +41,7 @@ public class ItemService {
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Item.class, responseContainer = "List"),
     })
-    @Path("/item")
+    @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getItems() {
 
@@ -60,7 +60,7 @@ public class ItemService {
             @ApiResponse(code = 200, message = "OK", response = Item.class),
             @ApiResponse(code = 503, message = "not working well...")
     })
-    @Path("/item/id/{id}")
+    @Path("/id/{id}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response GetItemById(@PathParam("id") int itemID) {
         try {
@@ -79,7 +79,7 @@ public class ItemService {
             @ApiResponse(code = 200, message = "OK", response = Item.class),
             @ApiResponse(code = 503, message = "not working well...")
     })
-    @Path("/item/{itemName}")
+    @Path("/{itemName}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response GetItemByName(@PathParam("name") String name) {
         try{
@@ -99,7 +99,7 @@ public class ItemService {
             @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 404, message = "User not found"),
     })
-    @Path("/item/{name}/parameter/{parameter}")
+    @Path("/{name}/parameter/{parameter}")
     @Produces(MediaType.TEXT_PLAIN)
     public Response getIdByName(@PathParam("name") String name, @PathParam("parameter") String parameter) {
 
@@ -123,7 +123,7 @@ public class ItemService {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 400, message = "not found")
     })
-    @Path("/item")
+    @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response UpdateItem(Item item) {
         if (itemDAO.update(item)) {

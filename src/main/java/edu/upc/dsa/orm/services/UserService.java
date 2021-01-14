@@ -299,23 +299,16 @@ public class UserService {
 
     })
     @Path("/{username}")
-    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getUserByUsername(@PathParam("username") String username) {
 
         if (username == null) return Response.status(601).build();
 
         if (userDAO.userExists(username)) {
 
-            try {
+            User user = userDAO.readByParameter("username", username);
 
-                User user = userDAO.readByParameter("username", username);
-
-                return Response.status(200).entity(user).build();
-
-            } catch (Exception e) {
-
-                return Response.status(503).build();
-            }
+            return Response.status(200).entity(user).build();
 
         } else {
 
@@ -430,7 +423,7 @@ public class UserService {
             @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 404, message = "User not found"),
     })
-    @Path("/user/{username}/parameter/{parameter}")
+    @Path("/{username}/parameter/{parameter}")
     @Produces(MediaType.TEXT_PLAIN)
     public Response readParameterByParameter(@PathParam("username") String username,
                                              @PathParam("parameter") String parameter) {
