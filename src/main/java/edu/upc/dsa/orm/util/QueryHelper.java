@@ -13,9 +13,9 @@ public class QueryHelper {
 
         String [] fields = ObjectHelper.getFields(object);
 
-        int i = 0;
+        int i = 1;
         for (String field: fields) {
-            if (i == 0) {
+            if (i == 2) {
                 sb.append(field);
             } else {
                 sb.append(", ").append(field);

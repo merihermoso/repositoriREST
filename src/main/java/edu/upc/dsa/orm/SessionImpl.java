@@ -28,12 +28,12 @@ public class SessionImpl implements Session {
 
         try {
 
-            String insertQuery = QueryHelper.createQueryINSERT(object.getClass());
+            String insertQuery = QueryHelper.createQueryINSERT(object);
             PreparedStatement pstm = null;
 
             pstm = conn.prepareStatement(insertQuery);
 
-            int i = 1;
+            int i = 2;
             for (String field : ObjectHelper.getFields(object)) {
                 pstm.setObject(i++, ObjectHelper.getter(object, field));
             }

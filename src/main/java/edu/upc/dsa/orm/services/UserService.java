@@ -37,11 +37,11 @@ public class UserService {
             @ApiResponse(code = 201, message = "Created"),
             @ApiResponse(code = 250, message = "User already exists")
     })
-    @Path("/")
+    @Path("/id")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createUser(User user) {
+    public Response createUserById(User user) {
 
-        if (!userDAO.existsId(user.getId())) {
+        if (!userDAO.exists(user.getUsername())) {
 
             userDAO.create(user);
             return Response.status(201).build();
