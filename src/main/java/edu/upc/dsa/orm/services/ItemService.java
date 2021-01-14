@@ -28,7 +28,7 @@ public class ItemService {
 
     }
 
-
+/*
     //Servicio para obtener todos los items
     @GET
     @ApiOperation(value = "Get all items from BBDD")
@@ -46,7 +46,7 @@ public class ItemService {
         return Response.status(201).entity(entity).build();
     }
 
-
+*/
     //Servicio para obtener un Item a partir del ID
     @GET
     @ApiOperation(value = "get an Item by its ID")
@@ -54,9 +54,9 @@ public class ItemService {
             @ApiResponse(code = 200, message = "OK", response = Item.class),
             @ApiResponse(code = 404, message = "Item not found")
     })
-    @Path("/id/{itemid}")
+    @Path("/id/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getItemById(@PathParam("itemid") String id) {
+    public Response getItemById(@PathParam("id") int id) {
 
         Item item = itemDAO.readByParameter("id", id);
 
