@@ -1,6 +1,5 @@
 package edu.upc.dsa.orm.services;
 
-
 import edu.upc.dsa.orm.dao.user.UserDAO;
 import edu.upc.dsa.orm.dao.user.UserDAOImpl;
 import edu.upc.dsa.orm.models.API.*;
@@ -32,7 +31,7 @@ public class UserService {
     @POST
     @ApiOperation(value = "Register a new User")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful! User registered"),
+            @ApiResponse(code = 200, message = "Successful! User registered"),
             @ApiResponse(code = 600, message = "Need to fill in username field"),
             @ApiResponse(code = 601, message = "Need to fill in password field"),
             @ApiResponse(code = 250, message = "User already exists"),
@@ -62,18 +61,18 @@ public class UserService {
         if (diff1.getYears() < userSettings.getMin_age()) return Response.status(607).build();
 
         userDAO.registerUser(registerCredentials);
-        return Response.status(201).build();
+        return Response.status(200).build();
 
     }
 
     @POST
     @ApiOperation(value = "Log in with a given username and password")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Login Successful!"),
+            @ApiResponse(code = 200, message = "Login Successful!"),
             @ApiResponse(code = 601, message = "Need to fill in username field"),
             @ApiResponse(code = 602, message = "Need to fill in password field"),
             @ApiResponse(code = 603, message = "Incorrect password"),
-            @ApiResponse(code = 250, message = "User not exists"),
+            @ApiResponse(code = 404, message = "User not found"),
 
     })
     @Path("/login")
@@ -81,18 +80,19 @@ public class UserService {
 
         if (loginCredentials.getUsername() == null) return Response.status(601).build();
         if (loginCredentials.getPassword() == null) return Response.status(602).build();
-        if (!userDAO.exists(loginCredentials.getUsername())) return Response.status(250).build();
+        if (!userDAO.exists(loginCredentials.getUsername())) return Response.status(404).build();
+
         if (userDAO.checkPassword(loginCredentials.getUsername()
                 , loginCredentials.getPassword())) return Response.status(603).build();
 
-        return Response.status(201).build();
+        return Response.status(200).build();
     }
 
 
     @PUT
     @ApiOperation(value = "Change user password")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 200, message = "Successful"),
             @ApiResponse(code = 404, message = "User not exists"),
             @ApiResponse(code = 601, message = "Need to fill in username field"),
             @ApiResponse(code = 602, message = "Need to fill in password field"),
@@ -115,7 +115,7 @@ public class UserService {
                         userDAO.getHashString(changePasswordCredentials.getNewPassword(), "SHA-256"),
                         "username", changePasswordCredentials.getUsername())) {
 
-                    return Response.status(201).build();
+                    return Response.status(200).build();
 
                 } else {
 
@@ -140,7 +140,7 @@ public class UserService {
     @PUT
     @ApiOperation(value = "Change user email")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 200, message = "Successful"),
             @ApiResponse(code = 603, message = "Incorrect password"),
             @ApiResponse(code = 601, message = "Need to fill in username field"),
             @ApiResponse(code = 602, message = "Need to fill in password field"),
@@ -162,7 +162,7 @@ public class UserService {
                 if (userDAO.updateParameterByParameter("email", changeEmailCredentials.getNewEmail(),
                         "username", changeEmailCredentials.getUsername())) {
 
-                    return Response.status(201).build();
+                    return Response.status(200).build();
 
                 } else {
 
@@ -188,7 +188,7 @@ public class UserService {
     @GET
     @ApiOperation(value = "Get all Users")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = User.class, responseContainer="List"),
+            @ApiResponse(code = 200, message = "Successful", response = User.class, responseContainer="List"),
     })
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
@@ -197,14 +197,14 @@ public class UserService {
         List<User> users = userDAO.readAll();
 
         GenericEntity<List<User>> entity = new GenericEntity<List<User>>(users) {};
-        return Response.status(201).entity(entity).build();
+        return Response.status(200).entity(entity).build();
 
     }
 
     @GET
     @ApiOperation(value = "Get all users UserProfile")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = UserProfile.class, responseContainer="List"),
+            @ApiResponse(code = 200, message = "Successful", response = UserProfile.class, responseContainer="List"),
     })
     @Path("/profile")
     @Produces(MediaType.APPLICATION_JSON)
@@ -223,7 +223,7 @@ public class UserService {
         }
         GenericEntity<List<UserProfile>> entity = new GenericEntity<List<UserProfile>>(userProfileResponse) {};
 
-        return Response.status(201).entity(entity).build();
+        return Response.status(200).entity(entity).build();
 
     }
 
@@ -231,13 +231,13 @@ public class UserService {
     @GET
     @ApiOperation(value = "Get user credentials settings")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = UserSettings.class),
+            @ApiResponse(code = 200, message = "Successful", response = UserSettings.class),
     })
     @Path("/settings")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUserSettings() {
 
-        return Response.status(201).entity(new UserSettings()).build();
+        return Response.status(200).entity(new UserSettings()).build();
 
     }
 
@@ -318,7 +318,7 @@ public class UserService {
     @GET
     @ApiOperation(value = "Get the users UserRanking with the most score. It returns the top 20 users by default")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = UserRanking.class, responseContainer = "List"),
+            @ApiResponse(code = 200, message = "Successful", response = UserRanking.class, responseContainer = "List"),
     })
     @Path("/ranking")
     @Produces(MediaType.APPLICATION_JSON)
@@ -327,7 +327,7 @@ public class UserService {
         List<UserRanking> userRanking = userDAO.readRanking();
 
         GenericEntity<List<UserRanking>> entity = new GenericEntity<List<UserRanking>>(userRanking) {};
-        return Response.status(201).entity(entity).build();
+        return Response.status(200).entity(entity).build();
 
     }
 
@@ -335,7 +335,7 @@ public class UserService {
     @GET
     @ApiOperation(value = "Get user UserRanking given its username")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = UserRanking.class),
+            @ApiResponse(code = 200, message = "Successful", response = UserRanking.class),
             @ApiResponse(code = 601, message = "Need to fill in username field"),
             @ApiResponse(code = 404, message = "User not exists"),
     })
@@ -353,7 +353,7 @@ public class UserService {
                     new UserRanking(user.getUsername(), user.getScore(),
                             userDAO.readRankingPositionByParameter("username", username));
 
-            return Response.status(201).entity(userRanking).build();
+            return Response.status(200).entity(userRanking).build();
 
         } else {
 
@@ -365,9 +365,9 @@ public class UserService {
 
 
     @GET
-    @ApiOperation(value = "Get user UserRanking given its username")
+    @ApiOperation(value = "Get user UserRanking given its id")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = UserRanking.class),
+            @ApiResponse(code = 200, message = "Successful", response = UserRanking.class),
             @ApiResponse(code = 601, message = "Need to fill in username field"),
             @ApiResponse(code = 404, message = "User not exists"),
     })
@@ -383,7 +383,7 @@ public class UserService {
                     new UserRanking(user.getUsername(), user.getScore(),
                             userDAO.readRankingPositionByParameter("id", id));
 
-            return Response.status(201).entity(userRanking).build();
+            return Response.status(200).entity(userRanking).build();
         } else {
             return Response.status(404).build();
         }
@@ -423,16 +423,12 @@ public class UserService {
             @ApiResponse(code = 404, message = "User not found")
     })
     @Path("/id/{id}/profile")
-    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
+    @Produces(MediaType.APPLICATION_JSON)
     public Response getUserProfileById(@PathParam("id") int id) {
 
-        User user = userDAO.readByParameter("id", id);
+        if (userDAO.existsId(id)) {
 
-        if (user == null) {
-
-            return Response.status(404).build();
-
-        } else {
+            User user = userDAO.readByParameter("id", id);
 
             UserProfile userProfile = new UserProfile(user.getUsername(),
                     user.getEmail(),
@@ -443,26 +439,71 @@ public class UserService {
 
             return Response.status(200).entity(userProfile).build();
 
+        } else {
+
+            return Response.status(404).build();
+
         }
+
+    }
+
+
+    @PUT
+    @ApiOperation(value = "Update a user parameter by its username")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 404, message = "User not found"),
+            @ApiResponse(code = 603, message = "Parameter not found")
+    })
+    @Path("/{username}/{parameter}")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateParameterByUsername(@PathParam("username") String username,
+                                             @PathParam("parameter") String parameter, Object object) {
+
+        if (userDAO.exists("username")) {
+
+            try {
+
+                if (User.class.getField(parameter).getType().isAssignableFrom(Integer.class)) {
+                    userDAO.updateParameterByParameter(parameter, (int) object, "username", username);
+                } else {
+                    userDAO.updateParameterByParameter(parameter, (String) object, "username", username);
+                }
+
+                return Response.status(200).build();
+
+            } catch (NoSuchFieldException noSuchFieldException) {
+
+                return Response.status(603).build();
+
+            }
+
+        } else {
+
+            return Response.status(404).build();
+
+        }
+
     }
 
 
     @GET
     @ApiOperation(value = "Get a user parameter by its username")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 200, message = "Successful"),
             @ApiResponse(code = 404, message = "Not found"),
     })
     @Path("/{username}/{parameter}")
     @Produces(MediaType.TEXT_PLAIN)
     public Response readParameterByUsername(@PathParam("username") String username,
-                                             @PathParam("parameter") String parameter) {
+                                            @PathParam("parameter") String parameter) {
 
         Object res = userDAO.readParameterByParameter(parameter, "username", username);
 
         if (res != null){
 
-            return Response.status(201).entity(res).build();
+            return Response.status(200).entity(res).build();
 
         } else {
 
@@ -475,7 +516,7 @@ public class UserService {
     @GET
     @ApiOperation(value = "Get a user parameter by its id")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 200, message = "Successful"),
             @ApiResponse(code = 404, message = "Not found"),
     })
     @Path("/id/{id}/{parameter}")
@@ -487,7 +528,7 @@ public class UserService {
 
         if (res != null){
 
-            return Response.status(201).entity(res).build();
+            return Response.status(200).entity(res).build();
 
         } else {
 
@@ -496,26 +537,52 @@ public class UserService {
 
     }
 
-
-    //Servei per modificar tot l'usuari
-    @PUT
-    @ApiOperation(value = "Update user")
+    //Servei per crear un usuari
+    @POST
+    @ApiOperation(value = "Create a user")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 404, message = "Not found")
+            @ApiResponse(code = 201, message = "Created"),
+            @ApiResponse(code = 250, message = "User already exists")
     })
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response UpdateUser(User user) {
+    public Response createUser(User user) {
 
-        if (userDAO.update(user)) {
+        if (!userDAO.existsId(user.getId())) {
 
+            userDAO.create(user);
+            return Response.status(201).build();
+
+        } else {
+
+            return Response.status(250).build();
+        }
+
+
+    }
+
+
+    //Servei per modificar un usuari
+    @PUT
+    @ApiOperation(value = "Update a user")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "User not found")
+    })
+    @Path("/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateUser(User user) {
+
+        if (userDAO.existsId(user.getId())) {
+
+            userDAO.update(user);
             return Response.status(200).build();
 
-        } else{
+        } else {
 
             return Response.status(404).build();
         }
+
 
     }
 

@@ -33,7 +33,7 @@ public class ItemService {
     @GET
     @ApiOperation(value = "Get all items from BBDD")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Item.class, responseContainer = "List"),
+            @ApiResponse(code = 200, message = "Successful", response = Item.class, responseContainer = "List"),
     })
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
@@ -43,7 +43,7 @@ public class ItemService {
 
         GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(items) {
         };
-        return Response.status(201).entity(entity).build();
+        return Response.status(200).entity(entity).build();
     }
 
 */
@@ -93,7 +93,7 @@ public class ItemService {
     @GET
     @ApiOperation(value = "Get an item parameter by its name")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 200, message = "Successful"),
             @ApiResponse(code = 404, message = "User not found"),
     })
     @Path("/{name}/{parameter}")
@@ -104,7 +104,7 @@ public class ItemService {
 
         if (res != null){
 
-            return Response.status(201).entity(res).build();
+            return Response.status(200).entity(res).build();
 
         } else {
 

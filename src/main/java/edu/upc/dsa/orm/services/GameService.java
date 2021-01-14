@@ -45,7 +45,7 @@ public class GameService {
     @GET
     @ApiOperation(value = "Get all Games from BBDD")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Game.class, responseContainer = "List"),
+            @ApiResponse(code = 200, message = "Successful", response = Game.class, responseContainer = "List"),
     })
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
@@ -53,7 +53,7 @@ public class GameService {
         List<Game> games = gameDAO.readAll();
         GenericEntity<List<Game>> entity = new GenericEntity<List<Game>>(games) {
         };
-        return Response.status(201).entity(entity).build();
+        return Response.status(200).entity(entity).build();
     }
 
     //Servicio para obtener la Partida a partir del Username (User)
@@ -99,15 +99,15 @@ public class GameService {
     @POST
     @ApiOperation(value = "Register a new Game")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful! Game registered"),
+            @ApiResponse(code = 200, message = "Successful! Game registered"),
     })
     @Path("/")
     public Response gameRegister(Game game) {
 
         if (gameDAO.create(game)) {
-            return Response.status(201).build();
+            return Response.status(200).build();
         } else {
-            return Response.status(201).build();
+            return Response.status(200).build();
         }
 
     }
@@ -136,7 +136,7 @@ public class GameService {
     @GET
     @ApiOperation(value = "Get all Players from BBDD")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Player.class, responseContainer = "List"),
+            @ApiResponse(code = 200, message = "Successful", response = Player.class, responseContainer = "List"),
     })
     @Path("/player")
     @Produces(MediaType.APPLICATION_JSON)
@@ -144,7 +144,7 @@ public class GameService {
         List<Player> players = this.playerDAO.readAll();
         GenericEntity<List<Player>> entity = new GenericEntity<List<Player>>(players) {
         };
-        return Response.status(201).entity(entity).build();
+        return Response.status(200).entity(entity).build();
     }
 
 
@@ -152,7 +152,7 @@ public class GameService {
     @ApiOperation(value = "Update player")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 400, message = "not found")
+            @ApiResponse(code = 404, message = "Player not found")
     })
     @Path("/player")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -175,7 +175,7 @@ public class GameService {
     @GET                                                                    //OBTENEMOS TODAS LAS PARTIDAS
     @ApiOperation(value = "Get all Enemy from BBDD")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Enemy.class, responseContainer = "List"),
+            @ApiResponse(code = 200, message = "Successful", response = Enemy.class, responseContainer = "List"),
     })
     @Path("/enemy")
     @Produces(MediaType.APPLICATION_JSON)
@@ -185,7 +185,7 @@ public class GameService {
 
         GenericEntity<List<Enemy>> entity = new GenericEntity<List<Enemy>>(enemy) {
         };
-        return Response.status(201).entity(entity).build();
+        return Response.status(200).entity(entity).build();
 
     }
 

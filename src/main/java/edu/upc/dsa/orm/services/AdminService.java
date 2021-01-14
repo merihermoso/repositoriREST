@@ -26,7 +26,7 @@ public class AdminService {
     @POST
     @ApiOperation(value = "Change user Status")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 200, message = "Successful"),
             @ApiResponse(code = 603, message = "Incorrect status"),
     })
 
@@ -38,7 +38,7 @@ public class AdminService {
         loginCredentials.setPassword(changeStatusCredentials.getPassword());
         if (this.userDAO.loginUser(loginCredentials)) {         //fer if user status = Admin (que pugui fer tot)
             this.userDAO.changeUserStatus(changeStatusCredentials);
-            return Response.status(201).build();
+            return Response.status(200).build();
         } else {
             return Response.status(603).build();
         }
@@ -47,7 +47,7 @@ public class AdminService {
     @POST
     @ApiOperation(value = "Change user Level")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 200, message = "Successful"),
             @ApiResponse(code = 603, message = "Incorrect status"),
     })
     @Path("/changeLevel")
@@ -60,7 +60,7 @@ public class AdminService {
 
         if (this.userDAO.loginUser(loginCredentials)) {         //fer if user status = Admin (que pugui fer tot)
             this.userDAO.changeUserLevel(changeLevelCredentials);
-            return Response.status(201).build();
+            return Response.status(200).build();
 
         } else {
 
@@ -72,7 +72,7 @@ public class AdminService {
     @POST
     @ApiOperation(value = "Change user Score")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 200, message = "Successful"),
             @ApiResponse(code = 603, message = "Incorrect score"),
     })
     @Path("/changeScore")
@@ -84,7 +84,7 @@ public class AdminService {
 
         if (this.userDAO.loginUser(loginCredentials)) {         //fer if user status = Admin (que pugui fer tot)
             this.userDAO.changeUserScore(changeScoreCredentials);
-            return Response.status(201).build();
+            return Response.status(200).build();
 
         } else {
             return Response.status(603).build();
@@ -96,7 +96,7 @@ public class AdminService {
     /*@POST
     @ApiOperation(value = "Change player Score")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 200, message = "Successful"),
 
     })
     @Path("/changePlayerScore")
@@ -104,14 +104,14 @@ public class AdminService {
     public Response changePlayerScore(ChangePlayerScore changePlayerScore) throws SQLException {
           //fer if user status = Admin (que pugui fer tot)
             this.playerDAO.changePlayerScore(changePlayerScore);
-            return Response.status(201).build();
+            return Response.status(200).build();
 
 
     }
     @POST
     @ApiOperation(value = "Change player Level")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 200, message = "Successful"),
             @ApiResponse(code = 603, message = "Incorrect score"),
     })
     @Path("/changePlayerLevel")
@@ -120,7 +120,7 @@ public class AdminService {
 
 
         if (this.playerDAO.changePlayerScore(changePlayerScore)) {         //fer if user status = Admin (que pugui fer tot)
-            return Response.status(201).build();
+            return Response.status(200).build();
 
         } else {
             return Response.status(603).build();
@@ -131,7 +131,7 @@ public class AdminService {
     @POST
     @ApiOperation(value = "Change player Coins")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 200, message = "Successful"),
             @ApiResponse(code = 603, message = "Incorrect score"),
     })
     @Path("/changePlayerCoins")
@@ -142,7 +142,7 @@ public class AdminService {
 
         if (this.userDAO.loginUser(loginCredentials)) {         //fer if user status = Admin (que pugui fer tot)
             this.playerDAO.changePlayerCoins(changePlayerCoins);
-            return Response.status(201).build();
+            return Response.status(200).build();
 
         } else {
             return Response.status(603).build();
@@ -153,14 +153,14 @@ public class AdminService {
     @POST
     @ApiOperation(value = "Change player Status")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 200, message = "Successful"),
             @ApiResponse(code = 603, message = "Incorrect status"),
     })
     @Path("/changePlayerStatus")
     @Produces(MediaType.APPLICATION_JSON)
     public Response changePlayerStatus(ChangePlayerStatus changePlayerStatus) throws SQLException {
         if (this.playerDAO.changePlayerStatus(changePlayerStatus)) {         //fer if user status = Admin (que pugui fer tot)
-            return Response.status(201).build();
+            return Response.status(200).build();
 
         } else {
             return Response.status(603).build();
@@ -171,7 +171,7 @@ public class AdminService {
     @POST
     @ApiOperation(value = "Change player Speed")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 200, message = "Successful"),
             @ApiResponse(code = 603, message = "Incorrect score"),
     })
     @Path("/changePlayerSpeed")
@@ -182,7 +182,7 @@ public class AdminService {
 
         if (this.userDAO.loginUser(loginCredentials)) {         //fer if user status = Admin (que pugui fer tot)
             this.playerDAO.changePlayerSpeed(changePlayerSpeed);
-            return Response.status(201).build();
+            return Response.status(200).build();
 
         } else {
             return Response.status(603).build();
