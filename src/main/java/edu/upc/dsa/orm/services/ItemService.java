@@ -60,8 +60,6 @@ public class ItemService {
 
         Item item = itemDAO.readByParameter("id", id);
 
-        System.out.println("HECHO2");
-
         if (item == null) {
             return Response.status(404).build();
         } else {

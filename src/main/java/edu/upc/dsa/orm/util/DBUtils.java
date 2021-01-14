@@ -15,7 +15,7 @@ public class DBUtils {
     public static Connection getConnection() throws SQLException {
 
         Connection connection = DriverManager.getConnection("jdbc:mariadb://" + DB_HOST + ":" + DB_PORT + "/" +
-                DB_NAME + "?user=" + DB_USER + "&password=" + DB_PASS);
+                DB_NAME + "?user=" + DB_USER + "&password=" + DB_PASS + "&autoReconnect=true");
 
         return connection;
 
