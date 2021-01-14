@@ -1,48 +1,33 @@
 package edu.upc.dsa.orm.dao.user;
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
-import edu.upc.dsa.orm.models.API.ChangeEmailCredentials;
-import edu.upc.dsa.orm.models.API.ChangePasswordCredentials;
-import edu.upc.dsa.orm.models.API.LoginCredentials;
 import edu.upc.dsa.orm.models.API.RegisterCredentials;
 import edu.upc.dsa.orm.models.User;
-import edu.upc.dsa.orm.models.adminCredentials.ChangeLevel;
-import edu.upc.dsa.orm.models.adminCredentials.ChangeScore;
-import edu.upc.dsa.orm.models.adminCredentials.ChangeStatus;
-
-import java.sql.SQLException;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 public class UserDAOImpl implements UserDAO {
+
     private static UserDAO instance;
+    private final Session session;
 
     private UserDAOImpl() {
 
+       session = FactorySession.openSession();
 
     }
 
     public static UserDAO getInstance() {
-        if ( instance==null) instance = new UserDAOImpl();
+        if (instance == null) instance = new UserDAOImpl();
         return instance;
     }
-    /*****************************************  AUTHENTICATION USER   *************************************************/
 
-    public boolean registerUser(RegisterCredentials registerCredentials) throws IllegalAccessException { //Afegeix el user com a obejcte
 
-        Session session;
-        boolean result = false;
+    public boolean create(User user) {
 
-        try {
-
-            session = FactorySession.openSession();
-            result = session.registerUser(registerCredentials);
-            session.close();
-
-        } finally {
-
-        }
-
-        return result;
+        return session.create(user);
 
     }
 
@@ -50,220 +35,141 @@ public class UserDAOImpl implements UserDAO {
 
     public boolean userExists(String username) {
 
-        Session session;
-        boolean result = false;
-
-        try {
-
-            session = FactorySession.openSession();
-            result = session.userExists(username);
-            session.close();
-
-        } finally {
-        }
-        return result;
+        return (session.readByParameter(User.class, "username", username) != null);
 
     }
 
-    public boolean loginUser(LoginCredentials loginCredentials) {
+    public boolean checkPassword(String username, String password) {
 
-        Session session;
-        boolean result = false;
+        String passwordHash = getHashString(password, "SHA-256");
 
-        try {
-            session = FactorySession.openSession();
-            result = session.loginUser(loginCredentials);
-            session.close();
-        } finally {
+        String savedPasswordHash = (String) readParameterByParameter("password",
+                "username", username);
 
-        }
-
-        return result;
+        return passwordHash.equals(savedPasswordHash);
 
     }
 
-    /*****************************************  FUNCIONS BÀSIQUES   *************************************************/
+    public boolean registerUser(RegisterCredentials registerCredentials) {
 
-    public List<User> getAllUsers(){
-        Session session;
+        String birthdate = registerCredentials.getBirthdate_day() + "/" + registerCredentials.getBirthdate_month() + "/"
+                + registerCredentials.getBirthdate_year();
+
+        User user = new User(registerCredentials.getUsername(), registerCredentials.getEmail(), registerCredentials.getPassword(), birthdate);
+
+        return session.create(user);
+
+    }
+
+    public User readByParameter(String byParameter, Object byParameterValue) {
+
+        return ((User) session.readByParameter(User.class, byParameter, byParameterValue));
+
+    }
+
+    public Object readParameterByParameter(String parameter, String byParameter, Object byParameterValue) {
+
+        return session.readParameterByParameter(User.class, parameter, byParameter, byParameterValue);
+
+    }
+
+    public List<User> readAll(){
+
         List<User> userList;
-        HashMap<Integer, User> result;
+        HashMap<Integer, Object> result;
 
-        session = FactorySession.openSession();
-        result = session.findAll(User.class);
+        result = session.readAll(User.class);
 
-        userList = new ArrayList<>(result.values());
-        session.close();
+        userList = new ArrayList<>();
+
+        for (Object object : result.values()) {
+            userList.add((User) object);
+        }
 
         return userList;
     }
-    public int size() {
-        Session session;
-        HashMap<String,User> users = null;
-        try{
-            session = FactorySession.openSession();
-            users = session.findAll(User.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return users.size();
-    }
 
-    /*****************************************  modificacions USUARI   *************************************************/
-    //Funció per modificar userEmail
-    public boolean changeUserEmail(ChangeEmailCredentials changeEmailCredentials) {
 
-        Session session;
+    public List<User> readUserRanking(){
 
-        session = FactorySession.openSession();
-        session.close();
+        List<User> usersList;
 
-        return session.changeEmail(changeEmailCredentials);
+        HashMap<Integer, User> result;
 
-    }
-    //Funció per modificar userEmail
-    public boolean changeUserPassword(ChangePasswordCredentials changePasswordCredentials) {
+        result = session.readUserRanking(20);
 
-        Session session;
+        usersList = new ArrayList<>(result.values());
 
-        session = FactorySession.openSession();
-        session.close();
-
-        return session.changePassword(changePasswordCredentials);
+        return usersList;
 
     }
 
-    //Funció per modificar userStatus
-    public boolean changeUserStatus(ChangeStatus changeStatusCredentials) {
+    public int readUserRankingPositionByUsername(String username) {
 
-        Session session;
-
-        session = FactorySession.openSession();
-        session.close();
-
-        return session.changeStatus(changeStatusCredentials);
+        return session.readUserRankingPositionByUsername(username);
 
     }
-    //Funció per modificar userEmail
-    public boolean changeUserScore(ChangeScore changeScoreCredentials) {
 
-        Session session;
+    // UPDATE
 
-        session = FactorySession.openSession();
-        session.close();
+    public boolean update(User user) {
 
-        return session.changeScore(changeScoreCredentials);
+        return session.update(user);
 
     }
-    //Funció per modificar userEmail
-    public boolean changeUserLevel(ChangeLevel changeLevelCredentials) {
 
-        Session session;
+    public boolean updateByParameter(String byParameter, Object byParameterValue) {
 
-        session = FactorySession.openSession();
-        session.close();
-
-        return session.changeLevel(changeLevelCredentials);
+        return session.updateByParameter(User.class, byParameter, byParameterValue);
 
     }
-    /***********************************************  OBTENIM USUARI  *************************************************/
 
-    public User getUserById( int userID) throws SQLException {
-        Session session = null;
-        User user = new User();
-        try {
-            session = FactorySession.openSession();
-            user = (User) session.getById(user, userID);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        finally {
-            session.close();
-        }
+    public boolean updateParameterByParameter(String parameter, Object parameterValue
+            , String byParameter, Object byParameterValue) {
 
-        return user;
-    }
-    public User getUserByUsername( String username) throws SQLException {
-        Session session = null;
-        User user = new User();
-        try {
-            session = FactorySession.openSession();
-            user = (User) session.getUserByUsername(user, username);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        finally {
-            session.close();
-        }
+        return session.updateParameterByParameter(User.class, parameter, parameterValue, byParameter, byParameterValue);
 
-        return user;
     }
 
-    //Funció per obtenir userID a partir del seu username
-    public int getUserIdByUsername(String username) throws SQLException {
 
-        Session session = null;
+    // DELETE
 
-        int userID = -1;
+    public boolean delete(User user) {
+
+        return session.delete(user);
+
+    }
+
+    public boolean deleteByParameter(String byParameter, Object byParameterValue) {
+
+        return session.deleteByParameter(User.class, byParameter, byParameterValue);
+
+    }
+
+
+
+    public String getHashString(String string, String hashType) {
 
         try {
 
-            session = FactorySession.openSession();
-            userID = session.getUserIdByUsername(username);          //com poso la relació game User?¿
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(string.getBytes(StandardCharsets.UTF_8));
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < hash.length; i++) {
+                sb.append(Integer.toString((hash[i] & 0xff) + 0x100, 16).substring(1));
+            }
+
+            return sb.toString();
+
+
+        } catch (NoSuchAlgorithmException noSuchAlgorithmException) {
+
+            noSuchAlgorithmException.printStackTrace();
+            return null;
 
         }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        finally {
-            session.close();
-        }
 
-        return userID;
     }
 
-    private static void enviarConGMail(String destinatario, String asunto, String cuerpo) {
-
-    }
-
-
-/***************************************** to do ***************************************************************/
-                                                                                        // DELETES  //
-/*
-    public User deleteUserByUsername(String username) throws SQLException {
-        Session session = null;
-        User user = new User();
-        try {
-            session = FactorySession.openSession();
-            user = (User) session.deleteUserByUsername(user, username);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        finally {
-            session.close();
-        }
-
-        return user;
-    }
-*/
-    /**********************************************************************************************************/
-    public int updateUser(User user) throws SQLException {
-        Session session = null;
-        int res=1;
-        try {
-            session = FactorySession.openSession();
-            session.update(user);
-            res =0;
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        finally {
-            session.close();
-            return res;
-        }
-    }
 }

@@ -25,12 +25,10 @@ import java.util.List;
 public class UserService {
 
     private final UserDAO userDAO;
-    private final GameDAO gameDAO;
 
     public UserService() {
 
-        this.userDAO = UserDAOImpl.getInstance();
-        this.gameDAO = GameDAOImpl.getInstance();
+        userDAO = UserDAOImpl.getInstance();
 
     }
 
@@ -52,7 +50,7 @@ public class UserService {
         if (registerCredentials.getUsername() == null) return Response.status(600).build();
         if (registerCredentials.getPassword() == null) return Response.status(601).build();
 
-        if (this.userDAO.userExists(registerCredentials.getUsername())) return Response.status(250).build();
+        if (userDAO.userExists(registerCredentials.getUsername())) return Response.status(250).build();
 
         UserSettings userSettings = new UserSettings();
 
@@ -63,10 +61,10 @@ public class UserService {
 
         LocalDate l1 = LocalDate.of(registerCredentials.getBirthdate_year(), registerCredentials.getBirthdate_month(),  registerCredentials.getBirthdate_day());
         Period diff1 = Period.between(l1, LocalDate.now());
-        System.out.println(l1);
+
         if (diff1.getYears() < userSettings.getMin_age()) return Response.status(607).build();
 
-        this.userDAO.registerUser(registerCredentials);
+        userDAO.registerUser(registerCredentials);
         return Response.status(201).build();
 
     }
@@ -84,16 +82,17 @@ public class UserService {
     @Path("/login")
     public Response login(LoginCredentials loginCredentials) {
 
-        if (loginCredentials.getUsername()==null) return Response.status(601).build();
-        if (loginCredentials.getPassword()==null) return Response.status(602).build();
-        if (!this.userDAO.userExists(loginCredentials.getUsername())) return Response.status(250).build();
-        if (!this.userDAO.loginUser(loginCredentials)) return Response.status(603).build();
+        if (loginCredentials.getUsername() == null) return Response.status(601).build();
+        if (loginCredentials.getPassword() == null) return Response.status(602).build();
+        if (!userDAO.userExists(loginCredentials.getUsername())) return Response.status(250).build();
+        if (userDAO.checkPassword(loginCredentials.getUsername()
+                , loginCredentials.getPassword())) return Response.status(603).build();
 
         return Response.status(201).build();
     }
 
 
-    @POST
+    @PUT
     @ApiOperation(value = "Change user password")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful"),
@@ -111,16 +110,21 @@ public class UserService {
         if (changePasswordCredentials.getPassword() == null) return Response.status(602).build();
         if (changePasswordCredentials.getNewPassword() == null) return Response.status(604).build();
 
-        if (this.userDAO.userExists(changePasswordCredentials.getUsername())) {
+        if (userDAO.userExists(changePasswordCredentials.getUsername())) {
 
-            LoginCredentials loginCredentials = new LoginCredentials();
-            loginCredentials.setUsername(changePasswordCredentials.getUsername());
-            loginCredentials.setPassword(changePasswordCredentials.getPassword());
+            if (userDAO.checkPassword(changePasswordCredentials.getUsername(), changePasswordCredentials.getPassword())) {
 
-            if (this.userDAO.loginUser(loginCredentials)) {
+                if (userDAO.updateParameterByParameter("password",
+                        userDAO.getHashString(changePasswordCredentials.getNewPassword(), "SHA-256"),
+                        "username", changePasswordCredentials.getUsername())) {
 
-                this.userDAO.changeUserPassword(changePasswordCredentials);
-                return Response.status(201).build();
+                    return Response.status(201).build();
+
+                } else {
+
+                    return Response.status(500).build();
+
+                }
 
             } else {
 
@@ -136,7 +140,7 @@ public class UserService {
 
     }
 
-    @POST
+    @PUT
     @ApiOperation(value = "Change user email")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful"),
@@ -154,16 +158,20 @@ public class UserService {
         if (changeEmailCredentials.getPassword() == null) return Response.status(602).build();
         if (changeEmailCredentials.getNewEmail() == null) return Response.status(604).build();
 
-        if (this.userDAO.userExists(changeEmailCredentials.getUsername())) {
+        if (userDAO.userExists(changeEmailCredentials.getUsername())) {
 
-            LoginCredentials loginCredentials = new LoginCredentials();
-            loginCredentials.setUsername(changeEmailCredentials.getUsername());
-            loginCredentials.setPassword(changeEmailCredentials.getPassword());
+            if (userDAO.checkPassword(changeEmailCredentials.getUsername(), changeEmailCredentials.getPassword())) {
 
-            if (this.userDAO.loginUser(loginCredentials)) {
+                if (userDAO.updateParameterByParameter("email", changeEmailCredentials.getNewEmail(),
+                        "username", changeEmailCredentials.getUsername())) {
 
-                this.userDAO.changeUserEmail(changeEmailCredentials);
-                return Response.status(201).build();
+                    return Response.status(201).build();
+
+                } else {
+
+                    return Response.status(500).build();
+
+                }
 
             } else {
 
@@ -189,7 +197,7 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllUsers() {
 
-        List<User> users = this.userDAO.getAllUsers();
+        List<User> users = userDAO.readAll();
 
         GenericEntity<List<User>> entity = new GenericEntity<List<User>>(users) {};
         return Response.status(201).entity(entity).build();
@@ -205,7 +213,7 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllUsersProfile() {
 
-        List<User> users = this.userDAO.getAllUsers();
+        List<User> users = userDAO.readAll();
 
         List<UserProfile> userProfileResponse = new ArrayList<>();
         for(User user : users) {
@@ -214,7 +222,7 @@ public class UserService {
                     user.getBirthdate(),
                     user.getScore(),
                     user.getLevel(),
-                    this.gameDAO.getUserPositionByUsername(user.getUsername())));
+                    userDAO.readUserRankingPositionByUsername(user.getUsername())));
         }
         GenericEntity<List<UserProfile>> entity = new GenericEntity<List<UserProfile>>(userProfileResponse) {};
 
@@ -252,18 +260,18 @@ public class UserService {
 
         if (username == null) return Response.status(601).build();
 
-        if (this.userDAO.userExists(username)) {
+        if (userDAO.userExists(username)) {
 
             try {
 
-                User user = this.userDAO.getUserByUsername(username);
+                User user = userDAO.readByParameter("username", username);
 
                 UserProfile userProfile = new UserProfile(user.getUsername(),
                         user.getEmail(),
                         user.getBirthdate(),
                         user.getScore(),
                         user.getLevel(),
-                        this.gameDAO.getUserPositionByUsername(user.getUsername()));
+                        userDAO.readUserRankingPositionByUsername(user.getUsername()));
 
                 return Response.status(200).entity(userProfile).build();
 
@@ -296,11 +304,11 @@ public class UserService {
 
         if (username == null) return Response.status(601).build();
 
-        if (this.userDAO.userExists(username)) {
+        if (userDAO.userExists(username)) {
 
             try {
 
-                User user = this.userDAO.getUserByUsername(username);
+                User user = userDAO.readByParameter("username", username);
 
                 return Response.status(200).entity(user).build();
 
@@ -325,7 +333,7 @@ public class UserService {
     @Path("/ranking")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRanking() throws SQLException {
-        List<User> users = this.gameDAO.getUserRanking();
+        List<User> users = userDAO.readUserRanking();
         List<UserProfile> userProfileResponse = new ArrayList<>();
         for(User user : users) {
             userProfileResponse.add(new UserProfile(user.getUsername(),
@@ -333,7 +341,7 @@ public class UserService {
                     user.getBirthdate(),
                     user.getScore(),
                     user.getLevel(),
-                    this.gameDAO.getUserPositionByUsername(user.getUsername())));
+                    userDAO.readUserRankingPositionByUsername(user.getUsername())));
         }
         GenericEntity<List<UserProfile>> entity = new GenericEntity<List<UserProfile>>(userProfileResponse) {};
         return Response.status(201).entity(entity).build();
@@ -352,9 +360,9 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRankingUser(@PathParam("username") String username) throws SQLException {
         if (username == null) return Response.status(601).build();
-        if (this.userDAO.userExists(username)) {
+        if (userDAO.userExists(username)) {
             UserRanking userRanking =
-                    new UserRanking(this.gameDAO.getUserPositionByUsername(username));
+                    new UserRanking(userDAO.readUserRankingPositionByUsername(username));
             return Response.status(201).entity(userRanking).build();
         } else {
             return Response.status(404).build();
@@ -374,7 +382,7 @@ public class UserService {
 
         try{
 
-            User user = this.userDAO.getUserById(id);
+            User user = userDAO.readByParameter("id", id);
 
             return Response.status(200).entity(user).build();
 
@@ -398,13 +406,13 @@ public class UserService {
 
         try{
 
-            User user = this.userDAO.getUserById(id);
+            User user = userDAO.readByParameter("id", id);
             UserProfile userProfile = new UserProfile(user.getUsername(),
                     user.getEmail(),
                     user.getBirthdate(),
                     user.getScore(),
                     user.getLevel(),
-                    this.gameDAO.getUserPositionByUsername(user.getUsername()));
+                    userDAO.readUserRankingPositionByUsername(user.getUsername()));
 
             return Response.status(200).entity(userProfile).build();
 
@@ -416,77 +424,50 @@ public class UserService {
     }
 
 
-
     @GET
-    @ApiOperation(value = "Get a user ID")
+    @ApiOperation(value = "Get a user parameter by its username")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = IdResponse.class),
-            @ApiResponse(code = 601, message = "Need to fill in username field"),
+            @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 404, message = "User not found"),
     })
-    @Path("/getIdByUsername/{username}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getIdByUsername(@PathParam("username") String username) throws SQLException {
-        if (username == null) return Response.status(601).build();
-        if (this.userDAO.userExists(username)) {
-            IdResponse idResponse = new IdResponse(this.userDAO.getUserIdByUsername(username));
-            return Response.status(201).entity(idResponse).build();
+    @Path("/user/{username}/parameter/{paramName}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response getIdByName(@PathParam("username") String username, @PathParam("paramName") String paramName) {
+
+        Object res = userDAO.readParameterByParameter(paramName, "username", username);
+
+        if (res != null){
+
+            return Response.status(201).entity(res).build();
+
         } else {
+
             return Response.status(404).build();
         }
+
     }
+
 
     //Servei per modificar tot l'usuari
     @PUT
     @ApiOperation(value = "Update user")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 503, message = "Exception sql..."),
-            @ApiResponse(code = 400, message = "not found")
+            @ApiResponse(code = 400, message = "Not found")
     })
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response UpdateUser(User user) {
-        try{
-            int res = userDAO.updateUser(user);
-            if (res==0) {
-                return Response.status(200).build();
-            }
-            else{
-                return Response.status(400).build();
-            }
-        }
-        catch (Exception e){
 
-            return Response.status(503).build();
+        if (userDAO.update(user)) {
+
+            return Response.status(200).build();
+
+        } else{
+
+            return Response.status(404).build();
         }
+
     }
-
-    /*************************************************** POR HACER... *****************************************/
-/*
-        NO HARIA EL DELETE... CAMBIARIA EL STATUS-> DELETED
-
-        HAY QUE HACER IFs status...     (tener en cuenta el status del admin...)
-        hay que hacer if( username = Admin, password= Admin) -> para que vaya a AdmingSettings.html
-
-
-
-
-
- //servicio para encontrar usuario a partir del username
-    @Path("/delete/{username}")
-    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response deleteUserByUsername(@PathParam("username") String username) {
-        try{
-            User user = this.userDAO.deleteUserByUsername(username);
-            return Response.status(200).entity(user).build();
-        }
-        catch (Exception e){
-
-            return Response.status(503).build();
-        }
-    }
-*/
-    /**********************************************************************************************************/
 
 }

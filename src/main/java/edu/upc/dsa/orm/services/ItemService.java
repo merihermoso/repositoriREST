@@ -55,42 +55,15 @@ public class ItemService {
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Item.class, responseContainer = "List"),
     })
-    @Path("/Items/findAll")
+    @Path("/item")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getItems() {
 
-        List<Item> items = this.itemDAO.findAll();
+        List<Item> items = this.itemDAO.readAll();
 
         GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(items) {
         };
         return Response.status(201).entity(entity).build();
-    }
-
-
-    //Servicio que devuelve una lista con los objetos del jugador
-
-    @GET
-    @ApiOperation(value = "get items from user")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successful", response = Inventory.class, responseContainer="List"),
-            @ApiResponse(code = 500, message = "Internal Server Error")
-    })
-    @Path("/itemsPlayer")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getItemsPlayer(@QueryParam("username") String username) throws UserNotFoundException {
-
-        HashMap<Integer,Inventory> items = null;
-        List<Inventory> o = new LinkedList<>();
-
-        items = this.itemDAO.getItemsUser(username);
-        for ( Integer key : items.keySet() ) {
-            o.add(items.get(key));
-        }
-
-        GenericEntity<List<Inventory>> entity = new GenericEntity<List<Inventory>>(o) {};
-
-        if(entity==null) return Response.status(500).build();
-        return Response.status(200).entity(entity).build();
     }
 
 
@@ -101,11 +74,11 @@ public class ItemService {
             @ApiResponse(code = 200, message = "OK", response = Item.class),
             @ApiResponse(code = 503, message = "not working well...")
     })
-    @Path("/Item/GetByID/{itemID}")
+    @Path("/item/id/{itemID}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response GetItemById(@PathParam("itemID") int itemID) {
         try {
-            Item item = this.itemDAO.getItemById(itemID);
+            Item item = this.itemDAO.readByParameter("id", itemID);
             return Response.status(200).entity(item).build();
         } catch (Exception e) {
             return Response.status(503).build();
@@ -120,11 +93,11 @@ public class ItemService {
             @ApiResponse(code = 200, message = "OK", response = Item.class),
             @ApiResponse(code = 503, message = "not working well...")
     })
-    @Path("/Item/getByNAME/{name}")
+    @Path("/item/{itemName}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response GetItemByName(@PathParam("name") String name) {
         try{
-            Item item = this.itemDAO.getItemByName(name);
+            Item item = this.itemDAO.readByParameter("name", name);
             return Response.status(200).entity(item).build();
         }
         catch (Exception e){
@@ -134,101 +107,46 @@ public class ItemService {
 
 
 
-    //Servei per obtenir l'ID d'un Item a partir del seu nom
-    @POST
-    @ApiOperation(value = "Get an item ID")
+    @GET
+    @ApiOperation(value = "Get an item parameter by its name")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = ObjectIdResponse.class),
+            @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 404, message = "User not found"),
     })
-    @Path("/Item/getIdByName")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getIdByName(GetItemCredentials getItemCredentials) throws SQLException {
-        ObjectIdResponse objectIdResponse = new ObjectIdResponse(this.itemDAO.getIdByName(getItemCredentials.getName()));
-        if (objectIdResponse.getObjectID() != -1) {
-            return Response.status(201).entity(objectIdResponse).build();
+    @Path("/item/{itemName}/parameter/{paramName}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response getIdByName(@PathParam("itemName") String itemName, @PathParam("paramName") String paramName) {
+
+        Object res = itemDAO.readParameterByParameter(paramName, "name", itemName);
+
+        if (res != null){
+
+            return Response.status(201).entity(res).build();
+
         } else {
-            return Response.status(404).entity(objectIdResponse).build();
+
+            return Response.status(404).build();
         }
+
     }
 
-
-    //Servei per registrar un nou item
-    @POST
-    @ApiOperation(value = "Register a new Item")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful! Game registered"),
-    })
-    @Path("/Item/register")
-    public Response itemRegister(ItemCredentials itemCredentials) throws SQLException, IllegalAccessException {
-        this.itemDAO.registerItem(itemCredentials);
-        return Response.status(201).build();
-    }
 
     @PUT
     @ApiOperation(value = "Update an item")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 503, message = "Exception sql..."),
             @ApiResponse(code = 400, message = "not found")
     })
-    @Path("/Item/update")
+    @Path("/item")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response UpdateItem(Item item) {
-        try{
-            int res = itemDAO.updateItem(item);
-            if (res==0) {
-                return Response.status(200).build();
-            }
-            else{
-                return Response.status(400).build();
-            }
+        if (itemDAO.update(item)) {
+            return Response.status(200).build();
         }
-        catch (Exception e){
-            return Response.status(503).build();
+        else{
+            return Response.status(400).build();
         }
-    }
 
-    /********************************************** inventory  *****************************************/
-
-    //Servicio para obtener todos los items
-    @GET
-    @ApiOperation(value = "Get all items from BBDD")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Item.class, responseContainer = "List"),
-    })
-    @Path("/Inventory/findAll")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getInventory() {
-
-        List<Inventory> inventory = this.inventoryDAO.findAll();
-
-        GenericEntity<List<Inventory>> entity = new GenericEntity<List<Inventory>>(inventory) {
-        };
-        return Response.status(201).entity(entity).build();
-    }
-    @PUT
-    @ApiOperation(value = "Update inventory")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 503, message = "Exception sql..."),
-            @ApiResponse(code = 400, message = "not found")
-    })
-    @Path("/Inventory/update")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response UpdateInventory(Inventory inventory) {
-        try{
-            int res = inventoryDAO.updateInventory(inventory);
-            if (res==0) {
-                return Response.status(200).build();
-            }
-            else{
-                return Response.status(400).build();
-            }
-        }
-        catch (Exception e){
-            return Response.status(503).build();
-        }
     }
 
 }

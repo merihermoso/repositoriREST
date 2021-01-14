@@ -36,7 +36,7 @@ public class GameService {
     private final PlayerDAO playerDAO;
 
     public GameService() {
-        this.gameDAO = GameDAOImpl.getInstance();
+        gameDAO = GameDAOImpl.getInstance();
         this.userDAO = UserDAOImpl.getInstance();
         this.playerDAO = PlayerDAOImpl.getInstance();
         this.itemDAO = ItemDAOImpl.getInstance();
@@ -71,20 +71,6 @@ public class GameService {
      * /Enemy/delete
      /*********************************************  RANKINGS    *******************************************************/
 
-    //Servicio para obtener las 5 PARTIDAS CON MÁS SCORE
-    @GET
-    @ApiOperation(value = "Get TOP Games")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = Game.class, responseContainer = "List"),
-    })
-    @Path("/getTopGames")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getTopGames() throws SQLException {
-        List<Game> games = this.gameDAO.getGameRanking();
-        GenericEntity<List<Game>> entity = new GenericEntity<List<Game>>(games) {
-        };
-        return Response.status(201).entity(entity).build();
-    }
 
     /**********************************************     GAMES (partidas) services   ***********************************/
     //Servicio para obtener todas las partidas
@@ -93,10 +79,10 @@ public class GameService {
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Game.class, responseContainer = "List"),
     })
-    @Path("/Games/findAll")
+    @Path("/game")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getGames() {
-        List<Game> games = this.gameDAO.findAll();
+        List<Game> games = gameDAO.readAll();
         GenericEntity<List<Game>> entity = new GenericEntity<List<Game>>(games) {
         };
         return Response.status(201).entity(entity).build();
@@ -110,11 +96,11 @@ public class GameService {
             @ApiResponse(code = 503, message = "not working well...")
 
     })
-    @Path("/Game/getByUSERNAME/{username}")                                             //Partida By Username
+    @Path("/game/{username}")                                             //Partida By Username
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response GetGameByUsername(@PathParam("username") String username) {
         try {
-            Game game = this.gameDAO.getGameByUsername(username);
+            Game game = gameDAO.readByParameter("username", username);
             return Response.status(200).entity(game).build();
         } catch (Exception e) {
             return Response.status(503).build();
@@ -128,11 +114,11 @@ public class GameService {
             @ApiResponse(code = 200, message = "OK", response = Game.class),
             @ApiResponse(code = 503, message = "not working well...")
     })
-        @Path("/Game/getByID/{gameID}")    //servicio que obtenia la Partida a partir del ID
+        @Path("/game/id/{gameID}")    //servicio que obtenia la Partida a partir del ID
         @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-        public Response GetGameById(@PathParam("gameID") int gameID) {
+        public Response GetGameById(@PathParam("gameID") int id) {
             try{
-                Game game = this.gameDAO.getGameById(gameID);
+                Game game = gameDAO.readByParameter("id", id);
                 return Response.status(200).entity(game).build();
             }
             catch (Exception e){
@@ -147,13 +133,14 @@ public class GameService {
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful! Game registered"),
     })
-    @Path("/Game/register")
-    public Response gameRegister(GameCredentials gameCredentials) throws SQLException, IllegalAccessException {
+    @Path("/game")
+    public Response gameRegister(Game game) {
 
-        //   if (orderCredentials.getPrice()==null) return Response.status(602).build();
-
-        this.gameDAO.registerGame(gameCredentials);
-        return Response.status(201).build();
+        if (gameDAO.create(game)) {
+            return Response.status(201).build();
+        } else {
+            return Response.status(201).build();
+        }
 
     }
 
@@ -165,23 +152,14 @@ public class GameService {
             @ApiResponse(code = 503, message = "Exception sql..."),
             @ApiResponse(code = 400, message = "not found")
     })
-    @Path("/Game/update")
+    @Path("/game")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response UpdateGame(Game game) {
 
-        try{
-            int res = gameDAO.updateGame(game);
-            if (res==0) {
-                return Response.status(200).entity(game).build();
-            }
-            else
-            {
-                return Response.status(400).build();
-            }
-        }
-        catch (Exception e){
-
-            return Response.status(503).build();
+        if (gameDAO.update(game)) {
+            return Response.status(200).entity(game).build();
+        } else {
+            return Response.status(400).build();
         }
     }
 
@@ -193,10 +171,10 @@ public class GameService {
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Player.class, responseContainer = "List"),
     })
-    @Path("/Players/findAll")
+    @Path("/player")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getPlayers() {
-        List<Player> players = this.playerDAO.findAll();
+        List<Player> players = this.playerDAO.readAll();
         GenericEntity<List<Player>> entity = new GenericEntity<List<Player>>(players) {
         };
         return Response.status(201).entity(entity).build();
@@ -209,11 +187,11 @@ public class GameService {
             @ApiResponse(code = 200, message = "OK", response = Game.class),
             @ApiResponse(code = 503, message = "not working well...")
     })
-    @Path("/Player/getByUSERNAME/{username}")                                             //Partida By Username
+    @Path("/player/{username}")                                             //Partida By Username
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response GetPlayerByUsername(@PathParam("username") String username) {
         try {
-            Player player = this.playerDAO.getPlayerByUsername(username);
+            Player player = playerDAO.readByParameter("username", username);
             return Response.status(200).entity(player).build();
         } catch (Exception e) {
             return Response.status(503).build();
@@ -231,7 +209,7 @@ public class GameService {
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response GetPlayerById(@PathParam("playerID") int playerID) {
         try{
-            Player player = this.playerDAO.getPlayerById(playerID);
+            Player player = playerDAO.readByParameter("id", playerID);
             return Response.status(200).entity(player).build();
         }
         catch (Exception e){
@@ -239,50 +217,28 @@ public class GameService {
         }
     }
 
-
-    // Servicio para registrar una nueva partida
-    @POST
-    @ApiOperation(value = "Register a new Player")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful! Game registered"),
-    })
-    @Path("/Player/register")
-    public Response playerRegister(PlayerCredentials playerCredentials) throws SQLException, IllegalAccessException {
-
-        //   if (orderCredentials.getPrice()==null) return Response.status(602).build();
-
-        this.playerDAO.registerPlayer(playerCredentials);
-        return Response.status(201).build();
-    }
-
     //Modificar partida
     @PUT
     @ApiOperation(value = "Update game")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 503, message = "Exception sql..."),
             @ApiResponse(code = 400, message = "not found")
     })
-    @Path("/Player/update")
+    @Path("/player")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response UpdatePlayer(Player player) {
 
-        try{
-            int res = playerDAO.updatePlayer(player);
-            if (res==0) {
-                return Response.status(200).entity(player).build();
-            }
-            else
-            {
-                return Response.status(400).build();
-            }
-        }
-        catch (Exception e){
+        if (playerDAO.update(player)) {
 
-            return Response.status(503).build();
+            return Response.status(200).entity(player).build();
+
+        } else {
+
+            return Response.status(400).build();
+
         }
+
     }
-
 
     /************************************************   ENEMIES services ***********************************************/
     //Servei per obtenir tots els enemics
@@ -291,11 +247,11 @@ public class GameService {
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response = Enemy.class, responseContainer = "List"),
     })
-    @Path("Enemy/findAll")
+    @Path("/enemy")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getEnemies() {
 
-        List<Enemy> enemy = this.enemyDAO.findAll();
+        List<Enemy> enemy = enemyDAO.readAll();
 
         GenericEntity<List<Enemy>> entity = new GenericEntity<List<Enemy>>(enemy) {
         };
@@ -311,11 +267,11 @@ public class GameService {
             @ApiResponse(code = 200, message = "OK", response = Enemy.class),
             @ApiResponse(code = 503, message = "not working well...")
     })
-    @Path("/Enemy/GetByID/{itemID}")
+    @Path("/enemy/id/{itemID}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response GetEnemyById(@PathParam("enemyID") int enemyID) {
         try {
-            Enemy enemy = this.enemyDAO.getEnemyById(enemyID);
+            Enemy enemy = enemyDAO.readByParameter("id", enemyID);
             return Response.status(200).entity(enemy).build();
         } catch (Exception e) {
 
@@ -331,30 +287,15 @@ public class GameService {
             @ApiResponse(code = 200, message = "OK", response = Enemy.class),
             @ApiResponse(code = 503, message = "not working well...")
     })
-    @Path("/Enemy/GetByNAME/{name}")
+    @Path("/enemy/{name}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response GetEnemyByName(@PathParam("name") String name) {
         try {
-            Enemy enemy = this.enemyDAO.getEnemyByName(name);
+            Enemy enemy = enemyDAO.readByParameter("name", name);
             return Response.status(200).entity(enemy).build();
         } catch (Exception e) {
             return Response.status(503).build();
         }
-    }
-
-
-    //Servicio para registar un nuevo enemigo
-    @POST
-    @ApiOperation(value = "Register a new Enemy")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful! Game registered"),
-
-    })
-    @Path("/Enemy/register")
-    public Response enemyRegister(EnemyCredentials enemyCredentials) throws SQLException, IllegalAccessException {
-
-        this.enemyDAO.registerEnemy(enemyCredentials);
-        return Response.status(201).build();
     }
 
 
@@ -366,28 +307,19 @@ public class GameService {
             @ApiResponse(code = 400, message = "not found")
     })
     //Servei per modificar tot l'enemic
-    @Path("/Enemy/update")
+    @Path("/enemy")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response UpdateEnemy(Enemy enemy) {
-        try{
-            int res = enemyDAO.updateEnemy(enemy);
-            if (res==0) {
-                return Response.status(200).entity(enemy).build();
-            }
-            else{
-                return Response.status(400).build();
-            }
-        }
-        catch (Exception e){
 
-            return Response.status(503).build();
+        if (enemyDAO.update(enemy)) {
+            return Response.status(200).entity(enemy).build();
         }
+        else{
+            return Response.status(400).build();
+        }
+
     }
 
-
-
-
-    /**********************************************************************************************************/
 
 }
 

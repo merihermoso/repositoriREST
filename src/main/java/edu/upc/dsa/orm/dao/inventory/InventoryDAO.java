@@ -1,22 +1,34 @@
 package edu.upc.dsa.orm.dao.inventory;
 
 import edu.upc.dsa.orm.models.Inventory;
+import edu.upc.dsa.orm.models.Inventory;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public interface InventoryDAO {
 
-    /*****************************************  FUNCIONS GENERALS    ***************************************************/
-    public List<Inventory> findAll();
-    public int size();
-    public int updateInventory(Inventory inventory)throws SQLException;
-  //  public int updateInventory(Item item)throws SQLException;     s'ha de fer per parametre!!!
+    // CRUD Functions (Create, Read, Update and Delete)
 
-    /*****************************************  OBTENIM ITEM inventari *************************************************/
-  //  public Inventory getItemByIdUser(int itemID) throws SQLException;
-  //  public Inventory getItemByIdItem(int itemID) throws SQLException;
+    // CREATE
+    boolean create(Inventory inventory);
 
+    // READ
+    List<Inventory> readAll();
+    Inventory readByParameter(String byParameter, Object byParameterValue);
+    Object readParameterByParameter(String parameter, String byParameter, Object byParameterValue);
+
+
+    // UPDATE
+    boolean update(Inventory inventory);
+    boolean updateByParameter(String byParameter, Object byParameterValue);
+    boolean updateParameterByParameter(String parameter, Object parameterValue
+            , String byParameter, Object byParameterValue);
+
+
+    // DELETE
+    boolean delete(Inventory inventory);
+    boolean deleteByParameter(String byParameter, Object byParameterValue);
 
 
 }

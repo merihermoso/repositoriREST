@@ -29,7 +29,7 @@ public class AdminService {
 
     }
 /**********************************************     modificaciones USER      *******************************************/
-
+/*
 
     @POST
     @ApiOperation(value = "Change user Status")
@@ -101,7 +101,7 @@ public class AdminService {
 
     }
 /****************************************** modificacions player ******************************************************/
-    @POST
+    /*@POST
     @ApiOperation(value = "Change player Score")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful"),

@@ -12,24 +12,27 @@ import java.util.List;
 
 public interface ItemDAO {
 
-    /*****************************************  FUNCIONS GENERALS    ***************************************************/
-    public List<Item> findAll();
-    public int size();
-    public int updateItem(Item item)throws SQLException;
+    // CRUD Functions (Create, Read, Update and Delete)
 
-    /*****************************************  OBTENIM ITEM inventari *************************************************/
-    public Item getItemById(int itemID) throws SQLException;
-    public Item getItemByName(String name) throws SQLException;
+    // CREATE
+    boolean create(Item item);
 
- //   public Item getItemByUsername(String username) throws SQLException; //només retorna el primer i no va bé ARREGLAR
-    public HashMap<Integer, Inventory> getItemsUser(String username) throws UserNotFoundException;
-
-    int getPriceItem(int id_item) throws SQLException;  //Falta la part de SERVEI
+    // READ
+    List<Item> readAll();
+    Item readByParameter(String byParameter, Object byParameterValue);
+    Object readParameterByParameter(String parameter, String byParameter, Object byParameterValue);
 
 
-    int getIdByName(String name) throws SQLException;
-    /*****************************************  REGISTRE ITEM     *************************************************/
-    boolean registerItem(ItemCredentials itemCredentials) throws SQLException, IllegalAccessException;
+    // UPDATE
+    boolean update(Item item);
+    boolean updateByParameter(String byParameter, Object byParameterValue);
+    boolean updateParameterByParameter(String parameter, Object parameterValue
+            , String byParameter, Object byParameterValue);
+
+
+    // DELETE
+    boolean delete(Item item);
+    boolean deleteByParameter(String byParameter, Object byParameterValue);
 
 
 }

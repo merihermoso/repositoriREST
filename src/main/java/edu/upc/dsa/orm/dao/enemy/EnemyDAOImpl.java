@@ -3,147 +3,100 @@ package edu.upc.dsa.orm.dao.enemy;
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
 import edu.upc.dsa.orm.models.Enemy;
-import edu.upc.dsa.orm.models.Game;
-import edu.upc.dsa.orm.models.GameCredentials.EnemyCredentials;
-import edu.upc.dsa.orm.models.User;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class EnemyDAOImpl implements EnemyDAO {
+
     private static EnemyDAO instance;
+    private final Session session;
 
     private EnemyDAOImpl() {
+        session = FactorySession.openSession();
     }
 
-    public static EnemyDAO getInstance() {                    //DA ERROR
+    public static EnemyDAO getInstance() {
         if (instance==null) instance = new EnemyDAOImpl();
         return instance;
     }
     /*****************************************  FUNCIONS GENERALS    ***************************************************/
 
-    public List<Enemy> findAll(){
+    public boolean create(Enemy enemy) {
+
+        return session.create(enemy);
+
+    }
+
+    // READ
+    public List<Enemy> readAll(){
 
         Session session;
         List<Enemy> enemyList;
 
-        HashMap<Integer, Enemy> result;
+        HashMap<Integer, Object> result;
 
         session = FactorySession.openSession();
-        result = session.findAll(Enemy.class);
+        result = session.readAll(Enemy.class);
 
-        enemyList = new ArrayList<>(result.values());
+        enemyList = new ArrayList<>();
+
+        for (Object object : result.values()) {
+            enemyList.add((Enemy) object);
+        }
 
         session.close();
 
         return enemyList;
     }
-    public int size() {
-        Session session;
-        HashMap<String, Enemy> enemies = null;
-        try{
-            session = FactorySession.openSession();
-            enemies = session.findAll(Enemy.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return enemies.size();
-    }
-    /***************************************** GET ***********************************************/
 
 
-    public Enemy getEnemyById(int enemyID) throws SQLException {
-        Session session = null;
-        Enemy enemy = new Enemy();
-        try {
-            session = FactorySession.openSession();
-            enemy = (Enemy) session.getById(enemy, enemyID);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        finally {
-            session.close();
-        }
+    public Enemy readByParameter(String byParameter, Object byParameterValue) {
 
-        return enemy;
-    }
-
-    public Enemy getEnemyByName(String name) throws SQLException {
-        Session session = null;
-        Enemy enemy = new Enemy();
-        try {
-            session = FactorySession.openSession();
-            enemy = (Enemy) session.getByName(enemy, name);          //com poso la relació game User?¿
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        finally {
-            session.close();
-        }
-
-        return enemy;
-    }
-
-    /*********************************** REGISTRE ENEMICS *******************************************/
-    public boolean registerEnemy(EnemyCredentials enemyCredentials) throws IllegalAccessException { //Afegeix el user com a obejcte
-
-        Session session;
-        boolean result = false;
-
-        try {
-
-            session = FactorySession.openSession();
-            result = session.registerEnemy(enemyCredentials);
-            session.close();
-
-        } finally {
-
-        }
-
-        return result;
+        return ((Enemy) session.readByParameter(Enemy.class, byParameter, byParameterValue));
 
     }
 
-    public int updateEnemy(Enemy enemy) throws SQLException {
+    public Object readParameterByParameter(String parameter, String byParameter, Object byParameterValue) {
 
-        Session session = null;
-        int res=1;
+        return session.readParameterByParameter(Enemy.class, parameter, byParameter, byParameterValue);
 
-        try {
-            session = FactorySession.openSession();
-            session.update(enemy);
-            res =0;
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        finally {
-            session.close();
-            return res;
-        }
     }
 
-    /**********************************************************************************************************/
 
-    /*
-    public int deleteEnemy(Enemy enemy) throws SQLException {
-        Session session = null;
-        int res=1;
-        try {
-            session = FactorySession.openSession();
-            session.delete(enemy);
-            res =0;
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        finally {
-            session.close();
-            return res;
-        }
-    }*/
+
+    // UPDATE
+
+    public boolean update(Enemy enemy) {
+
+        return session.update(enemy);
+
+    }
+
+    public boolean updateByParameter(String byParameter, Object byParameterValue) {
+
+        return session.updateByParameter(Enemy.class, byParameter, byParameterValue);
+
+    }
+
+    public boolean updateParameterByParameter(String parameter, Object parameterValue
+            , String byParameter, Object byParameterValue) {
+
+        return session.updateParameterByParameter(Enemy.class, parameter, parameterValue, byParameter, byParameterValue);
+
+    }
+
+
+    public boolean delete(Enemy enemy) {
+
+        return session.delete(enemy);
+
+    }
+
+    public boolean deleteByParameter(String byParameter, Object byParameterValue) {
+
+        return session.deleteByParameter(Enemy.class, byParameter, byParameterValue);
+
+    }
 }

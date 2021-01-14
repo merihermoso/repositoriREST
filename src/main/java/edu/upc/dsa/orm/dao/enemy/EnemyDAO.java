@@ -1,27 +1,33 @@
 package edu.upc.dsa.orm.dao.enemy;
 
 import edu.upc.dsa.orm.models.Enemy;
-import edu.upc.dsa.orm.models.Game;
-import edu.upc.dsa.orm.models.GameCredentials.EnemyCredentials;
-import edu.upc.dsa.orm.models.GameCredentials.GameCredentials;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface EnemyDAO {
 
-    /*****************************************  FUNCIONS GENERALS    ***************************************************/
-    public List<Enemy> findAll();  //Enemies
-    public int size();
-    public int updateEnemy(Enemy enemy)throws SQLException;
-  //  public int deleteEnemy(Enemy enemy)throws SQLException;
 
-    /***************************************** GET ***********************************************/
-    public Enemy getEnemyById(int enemyID) throws SQLException;
-    public Enemy getEnemyByName(String name) throws SQLException;
+    // CRUD Functions (Create, Read, Update and Delete)
 
-    /*********************************** REGISTRE ENEMICS *******************************************/
-    boolean  registerEnemy(EnemyCredentials enemyCredentials) throws SQLException, IllegalAccessException;
+    // CREATE
+    boolean create(Enemy enemy);
+
+    // READ
+    List<Enemy> readAll();
+    Enemy readByParameter(String byParameter, Object byParameterValue);
+    Object readParameterByParameter(String parameter, String byParameter, Object byParameterValue);
+
+
+    // UPDATE
+    boolean update(Enemy enemy);
+    boolean updateByParameter(String byParameter, Object byParameterValue);
+    boolean updateParameterByParameter(String parameter, Object parameterValue
+            , String byParameter, Object byParameterValue);
+
+
+    // DELETE
+    boolean delete(Enemy enemy);
+    boolean deleteByParameter(String byParameter, Object byParameterValue);
 
 
 }

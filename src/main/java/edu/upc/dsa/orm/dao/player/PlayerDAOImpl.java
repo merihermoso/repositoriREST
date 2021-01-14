@@ -4,193 +4,102 @@ package edu.upc.dsa.orm.dao.player;
 
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
-import edu.upc.dsa.orm.models.Game;
-import edu.upc.dsa.orm.models.GameCredentials.PlayerCredentials;
-import edu.upc.dsa.orm.models.Item;
 import edu.upc.dsa.orm.models.Player;
-import edu.upc.dsa.orm.models.adminCredentials.*;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class PlayerDAOImpl implements PlayerDAO {
+
     private static PlayerDAO instance;
+    private final Session session;
 
     private PlayerDAOImpl() {
+
+        session = FactorySession.openSession();
+
     }
 
     public static PlayerDAO getInstance() {                    //DA ERROR
         if (instance==null) instance = new PlayerDAOImpl();
         return instance;
     }
-    /*****************************************  FUNCIONS GENERALS    ***************************************************/
-    public List<Player> findAll(){
+
+    public boolean create(Player player) {
+
+        return session.create(player);
+
+    }
+
+    // READ
+    public List<Player> readAll(){
 
         Session session;
-        List<Player> playersList;
+        List<Player> playerList;
 
-        HashMap<Integer, Player> result;
+        HashMap<Integer, Object> result;
 
         session = FactorySession.openSession();
-        result = session.findAll(Player.class);
+        result = session.readAll(Player.class);
 
-        playersList = new ArrayList<>(result.values());
+        playerList = new ArrayList<>();
+
+        for (Object object : result.values()) {
+            playerList.add((Player) object);
+        }
 
         session.close();
 
-        return playersList;
-    }
-    public int size() {
-        Session session;
-        HashMap<String, Player> players = null;
-        try{
-            session = FactorySession.openSession();
-            players = session.findAll(Item.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return players.size();
+        return playerList;
     }
 
-    /*****************************************  OBTENIM Player  ****************************************************/
-    public int getCoinsPlayer(int id_player) throws SQLException{
-        Session session = null;
-        int price = 0;
-        try {
-            session = FactorySession.openSession();
-            price = session.getCoinsPlayer(id_player);
-        } finally {
-            session.close();
-        }
-        return price;
+
+    public Player readByParameter(String byParameter, Object byParameterValue) {
+
+        return ((Player) session.readByParameter(Player.class, byParameter, byParameterValue));
+
+    }
+
+    public Object readParameterByParameter(String parameter, String byParameter, Object byParameterValue) {
+
+        return session.readParameterByParameter(Player.class, parameter, byParameter, byParameterValue);
 
     }
 
 
 
+    // UPDATE
 
-    public Player getPlayerById(int playerID) throws SQLException {
-        Session session = null;
-        Player player = new Player();
-        try {
-            session = FactorySession.openSession();
-            player = (Player) session.getById(player, playerID);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        finally {
-            session.close();
-        }
+    public boolean update(Player player) {
 
-        return player;
-    }
-
-    //Obtenim l'objecte element a partir del username del usuari propietari
-    public Player getPlayerByUsername(String username) throws SQLException {
-        Session session = null;
-        Player player = new Player();
-        try {
-            session = FactorySession.openSession();
-            player = (Player) session.getPlayerByUsername(player, username);          //com poso la relació game User?¿
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        finally {
-            session.close();
-        }
-
-        return player;
-    }
-
-    /*****************************************  REGISTRE ITEM     *************************************************/
-    public boolean registerPlayer(PlayerCredentials playerCredentials) throws IllegalAccessException { //Afegeix el user com a obejcte
-        Session session;
-        boolean result = false;
-
-        try {
-            session = FactorySession.openSession();
-            result = session.registerPlayer(playerCredentials);
-            session.close();
-        } finally {
-        }
-        return result;
-    }
-    /**********************************************************************************************************/
-//Funció per modificar playerStatus
-    public boolean changePlayerStatus(ChangePlayerStatus changePlayerStatus) {
-
-        Session session;
-
-        session = FactorySession.openSession();
-        session.close();
-
-        return session.changePlayerStatus(changePlayerStatus);
+        return session.update(player);
 
     }
-    //Funció per modificar playerScore
-    public boolean changePlayerScore(ChangePlayerScore changePlayerScore) {
 
-        Session session;
+    public boolean updateByParameter(String byParameter, Object byParameterValue) {
 
-        session = FactorySession.openSession();
-        session.close();
-
-        return session.changePlayerScore(changePlayerScore);
+        return session.updateByParameter(Player.class, byParameter, byParameterValue);
 
     }
-    //Funció per modificar playerLevel
-    public boolean changePlayerLevel(ChangePlayerLevel changePlayerLevel) {
 
-        Session session;
+    public boolean updateParameterByParameter(String parameter, Object parameterValue
+            , String byParameter, Object byParameterValue) {
 
-        session = FactorySession.openSession();
-        session.close();
-
-        return session.changePlayerLevel(changePlayerLevel);
+        return session.updateParameterByParameter(Player.class, parameter, parameterValue, byParameter, byParameterValue);
 
     }
-    //Funció per modificar playerScore
-    public boolean changePlayerSpeed(ChangePlayerSpeed changePlayerSpeed) {
 
-        Session session;
 
-        session = FactorySession.openSession();
-        session.close();
+    public boolean delete(Player player) {
 
-        return session.changePlayerSpeed(changePlayerSpeed);
+        return session.delete(player);
 
     }
-    //Funció per modificar playerLevel
-    public boolean changePlayerCoins(ChangePlayerCoins changePlayerCoins) {
 
-        Session session;
+    public boolean deleteByParameter(String byParameter, Object byParameterValue) {
 
-        session = FactorySession.openSession();
-        session.close();
+        return session.deleteByParameter(Player.class, byParameter, byParameterValue);
 
-        return session.changePlayerCoins(changePlayerCoins);
-
-    }
-    /****************************************************************************************************************/
-
-    public int updatePlayer(Player player) throws SQLException {
-        Session session = null;
-        int res=1;
-        try {
-            session = FactorySession.openSession();
-            session.update(player);
-            res =0;
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        finally {
-            session.close();
-            return res;
-        }
     }
 }

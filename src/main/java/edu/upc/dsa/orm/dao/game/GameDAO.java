@@ -1,5 +1,6 @@
 package edu.upc.dsa.orm.dao.game;
 
+import edu.upc.dsa.orm.models.API.RegisterCredentials;
 import edu.upc.dsa.orm.models.Game;
 import edu.upc.dsa.orm.models.GameCredentials.GameCredentials;
 import edu.upc.dsa.orm.models.User;
@@ -9,28 +10,27 @@ import java.util.List;
 
 public interface GameDAO {
 
-      /*****************************************  FUNCIONS GENERALS    ************************************************/
-      public List<Game> findAll();
-      public int size();
-      public int updateGame(Game game)throws SQLException;
+      // CRUD Functions (Create, Read, Update and Delete)
 
-      /*****************************************  OBTENIM PARTIDA     *************************************************/
-      public Game getGameById(int gameID) throws SQLException;
-      public Game getGameByUsername(String username) throws SQLException;
+      // CREATE
+      boolean create(Game game);
 
-      /*****************************************  OBTENIM ranking     *************************************************/
-      public List<Game> getGameRanking() throws SQLException;
+      // READ
+      List<Game> readAll();
+      Game readByParameter(String byParameter, Object byParameterValue);
+      Object readParameterByParameter(String parameter, String byParameter, Object byParameterValue);
 
 
-      /*****************************************   REGISTRE PARTIDAS   ************************************************/
-      boolean registerGame(GameCredentials gameCredentials) throws SQLException, IllegalAccessException;
-
-      /*****************************************  OBTENIM ranking     *************************************************/
-      List<User> getUserRanking() throws SQLException;
-      int getUserPositionByUsername(String username);
-
+      // UPDATE
+      boolean update(Game game);
+      boolean updateByParameter(String byParameter, Object byParameterValue);
+      boolean updateParameterByParameter(String parameter, Object parameterValue
+              , String byParameter, Object byParameterValue);
 
 
+      // DELETE
+      boolean delete(Game game);
+      boolean deleteByParameter(String byParameter, Object byParameterValue);
 
 
 }

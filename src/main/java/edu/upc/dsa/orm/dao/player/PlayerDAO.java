@@ -3,6 +3,7 @@ package edu.upc.dsa.orm.dao.player;
 import edu.upc.dsa.orm.models.Game;
 import edu.upc.dsa.orm.models.GameCredentials.PlayerCredentials;
 import edu.upc.dsa.orm.models.Player;
+import edu.upc.dsa.orm.models.Player;
 import edu.upc.dsa.orm.models.adminCredentials.*;
 
 import java.sql.SQLException;
@@ -10,26 +11,27 @@ import java.util.List;
 
 public interface PlayerDAO {
 
-    /*****************************************  FUNCIONS GENERALS    ***************************************************/
-    public List<Player> findAll();
-    public int size();
-    public int updatePlayer(Player player)throws SQLException;
+    // CRUD Functions (Create, Read, Update and Delete)
 
-    /*****************************************  OBTENIM ITEM inventari  ************************************************/
-    public Player getPlayerById(int playerID) throws SQLException;
-    public Player getPlayerByUsername(String username) throws SQLException;
+    // CREATE
+    boolean create(Player player);
+
+    // READ
+    List<Player> readAll();
+    Player readByParameter(String byParameter, Object byParameterValue);
+    Object readParameterByParameter(String parameter, String byParameter, Object byParameterValue);
 
 
-    int getCoinsPlayer(int id_player) throws SQLException;
+    // UPDATE
+    boolean update(Player player);
+    boolean updateByParameter(String byParameter, Object byParameterValue);
+    boolean updateParameterByParameter(String parameter, Object parameterValue
+            , String byParameter, Object byParameterValue);
 
-    /*****************************************  REGISTRE ITEM     *****************************************************/
-    boolean registerPlayer(PlayerCredentials playerCredentials) throws SQLException, IllegalAccessException;
 
-    /***************************************** funcions per modificar *************************************************/
-    boolean changePlayerStatus(ChangePlayerStatus changePStatus);
-    boolean changePlayerCoins(ChangePlayerCoins changePCoins);
-    boolean changePlayerScore(ChangePlayerScore changePScore);
-    boolean changePlayerLevel(ChangePlayerLevel changePLevel);
-    boolean changePlayerSpeed(ChangePlayerSpeed changePSpeed);
+    // DELETE
+    boolean delete(Player player);
+    boolean deleteByParameter(String byParameter, Object byParameterValue);
+
 
 }

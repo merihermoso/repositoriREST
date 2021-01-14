@@ -14,39 +14,35 @@ import edu.upc.dsa.orm.models.adminCredentials.ChangeScore;
 import edu.upc.dsa.orm.models.adminCredentials.ChangeStatus;
 
 public interface UserDAO {
-    /*****************************************  AUTHENTICATION USER   *************************************************/
-    boolean registerUser(RegisterCredentials registerCredentials) throws IllegalAccessException;
-    boolean loginUser(LoginCredentials loginCredentials);
+
+    // CRUD Functions (Create, Read, Update and Delete)
+
+    // CREATE
+    boolean create(User user);
+    boolean registerUser(RegisterCredentials registerCredentials);
+
+    // READ
+    List<User> readAll();
+    User readByParameter(String byParameter, Object byParameterValue);
+    Object readParameterByParameter(String parameter, String byParameter, Object byParameterValue);
+
     boolean userExists(String username);
+    boolean checkPassword(String username, String password);
+    List<User> readUserRanking();
+    int readUserRankingPositionByUsername(String username);
 
-    /*****************************************  modificacions USER   **************************************************/
-   // canviar user senser
-    public int updateUser(User user)throws SQLException;
+    // UPDATE
+    boolean update(User user);
+    boolean updateByParameter(String byParameter, Object byParameterValue);
+    boolean updateParameterByParameter(String parameter, Object parameterValue
+            , String byParameter, Object byParameterValue);
 
-    boolean changeUserPassword(ChangePasswordCredentials changePasswordCredentials);
-    boolean changeUserEmail(ChangeEmailCredentials changeEmailCredentials);
-
-    //funcions admin
-    boolean changeUserStatus(ChangeStatus changeStatusCredentials);
-    boolean changeUserScore(ChangeScore changeScoreCredentials);
-    boolean changeUserLevel(ChangeLevel changeLevelCredentials);
-
-
-    /*****************************************  FUNCIONS BÀSIQUES    **************************************************/
-    List<User> getAllUsers();
-    int size();
-
-    /*****************************************  OBTENIM USUARI       **************************************************/
-   //Obtenim objecte
-    User getUserById( int userID) throws SQLException;
-    User getUserByUsername( String username) throws SQLException;
-
-    //Obtenim un atribut
-    int getUserIdByUsername(String username) throws SQLException;
+    // DELETE
+    boolean delete(User user);
+    boolean deleteByParameter(String byParameter, Object byParameterValue);
 
 
-
-
-    //  public User deleteUserByUsername(String username) throws SQLException;
+    // OTHERS
+    String getHashString(String string, String hashType);
 
 }

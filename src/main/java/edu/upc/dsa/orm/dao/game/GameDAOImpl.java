@@ -12,167 +12,97 @@ import java.util.*;
 
 public class GameDAOImpl implements GameDAO {
     private static GameDAO instance;
+    private final Session session;
 
     private GameDAOImpl() {
+
+        session = FactorySession.openSession();
+
     }
 
     public static GameDAO getInstance() {                    //DA ERROR
         if (instance==null) instance = new GameDAOImpl();
         return instance;
     }
-    /*****************************************  FUNCIONS GENERALS    ************************************************/
-    public List<Game> findAll(){
+
+
+
+    public boolean create(Game game) {
+
+        return session.create(game);
+
+    }
+
+    // READ
+    public List<Game> readAll(){
 
         Session session;
         List<Game> gameList;
 
-        HashMap<Integer, Game> result;
+        HashMap<Integer, Object> result;
 
         session = FactorySession.openSession();
-        result = session.findAll(Game.class);
+        result = session.readAll(Game.class);
 
-        gameList = new ArrayList<>(result.values());
+        gameList = new ArrayList<>();
+
+        for (Object object : result.values()) {
+            gameList.add((Game) object);
+        }
 
         session.close();
 
         return gameList;
     }
-    public int size() {
-        Session session;
-        HashMap<String, Game> games = null;
-        try{
-            session = FactorySession.openSession();
-            games = session.findAll(Game.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return games.size();
-    }
 
-    /*****************************************  OBTENIM PARTIDA     *************************************************/
-        public Game getGameById(int gameID) throws SQLException {
-        Session session = null;
-        Game game = new Game();
-        try {
-            session = FactorySession.openSession();
-            game = (Game) session.getById(game, gameID);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        finally {
-            session.close();
-        }
 
-        return game;
-    }
+    public Game readByParameter(String byParameter, Object byParameterValue) {
 
-    public Game getGameByUsername(String username) throws SQLException {
-        Session session = null;
-        Game game = new Game();
-      // User user = new User();
-        try {
-            session = FactorySession.openSession();
-            game = (Game) session.getGameByUsername(game, username);          //com poso la relació game User?¿
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        finally {
-            session.close();
-        }
-
-        return game;
-    }
-    /*****************************************  OBTENIM ranking     *************************************************/
-    public List<Game> getGameRanking(){
-
-        Session session;
-        List<Game> gamesList;
-
-        HashMap<Integer, Game> result;
-
-        session = FactorySession.openSession();
-        result = session.findTop(Game.class);
-
-        gamesList = new ArrayList<>(result.values());
-
-        session.close();
-
-        return gamesList;
-    }
-    /*****************************************   REGISTRE PARTIDAS   ************************************************/
-
-    public boolean registerGame(GameCredentials gameCredentials) throws IllegalAccessException { //Afegeix el user com a obejcte
-
-        Session session;
-        boolean result = false;
-
-        try {
-
-            session = FactorySession.openSession();
-            result = session.registerGame(gameCredentials);
-            session.close();
-
-        } finally {
-
-        }
-
-        return result;
+        return ((Game) session.readByParameter(Game.class, byParameter, byParameterValue));
 
     }
 
-    public List<User> getUserRanking(){         //obtenim el rankin de usuaris amb més puntuació
+    public Object readParameterByParameter(String parameter, String byParameter, Object byParameterValue) {
 
-        Session session;
-        List<User> usersList;
+       return session.readParameterByParameter(Game.class, parameter, byParameter, byParameterValue);
 
-        HashMap<Integer, User> result;
-
-        session = FactorySession.openSession();
-        result = session.findTop(User.class);
-
-        usersList = new ArrayList<>(result.values());
-
-        session.close();
-
-        return usersList;
     }
 
-    public int getUserPositionByUsername(String username) {
 
-        Session session = null;
 
-        int pos;
+    // UPDATE
 
-        try {
+    public boolean update(Game game) {
 
-            session = FactorySession.openSession();
-            pos = session.getUserPositionByUsername(username);
+        return session.update(game);
 
-        } finally {
-            session.close();
-        }
-
-        return pos;
     }
 
-    /**********************************************************************************************************/
+    public boolean updateByParameter(String byParameter, Object byParameterValue) {
 
-    public int updateGame(Game game) throws SQLException {
-        Session session = null;
-        int res=1;
-        try {
-            session = FactorySession.openSession();
-            session.update(game);
-            res =0;
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        finally {
-            session.close();
-            return res;
-        }
+        return session.updateByParameter(Game.class, byParameter, byParameterValue);
+
     }
+
+    public boolean updateParameterByParameter(String parameter, Object parameterValue
+            , String byParameter, Object byParameterValue) {
+
+        return session.updateParameterByParameter(Game.class, parameter, parameterValue, byParameter, byParameterValue);
+
+    }
+
+
+    public boolean delete(Game game) {
+
+        return session.delete(game);
+
+    }
+
+    public boolean deleteByParameter(String byParameter, Object byParameterValue) {
+
+        return session.deleteByParameter(Game.class, byParameter, byParameterValue);
+
+    }
+
+
 }
