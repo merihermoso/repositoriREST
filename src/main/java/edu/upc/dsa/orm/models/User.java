@@ -85,7 +85,17 @@ public class User {
     }
 
     @Override
-    public String toString(){
-        return "User { id: "+id+",Username:" +username+", Email:"+email+", Password:"+password+", Birthdate:"+birthdate+ ", Score:"+score+", Level:"+level+"}";
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", birthdate='" + birthdate + '\'' +
+                ", status='" + status + '\'' +
+                ", score=" + score +
+                ", level=" + level +
+                '}';
     }
+
 }

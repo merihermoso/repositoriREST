@@ -356,6 +356,7 @@ public class UserService {
 
             UserRanking userRanking =
                     new UserRanking(user.getUsername(), user.getScore(), userDAO.readUserRankingPositionByUsername(username));
+
             return Response.status(201).entity(userRanking).build();
         } else {
             return Response.status(404).build();

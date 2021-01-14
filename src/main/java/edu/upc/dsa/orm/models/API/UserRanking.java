@@ -37,4 +37,13 @@ public class UserRanking {
     public void setScore(int score) {
         this.score = score;
     }
+
+    @Override
+    public String toString() {
+        return "UserRanking{" +
+                "username='" + username + '\'' +
+                ", score=" + score +
+                ", position=" + position +
+                '}';
+    }
 }
