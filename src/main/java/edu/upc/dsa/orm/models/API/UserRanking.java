@@ -6,6 +6,11 @@ public class UserRanking {
     private int score;
     private int position;
 
+    public UserRanking() {
+
+
+    }
+
     public UserRanking(String username, int score, int position) {
 
         this.username = username;
@@ -38,12 +43,4 @@ public class UserRanking {
         this.score = score;
     }
 
-    @Override
-    public String toString() {
-        return "UserRanking{" +
-                "username='" + username + '\'' +
-                ", score=" + score +
-                ", position=" + position +
-                '}';
-    }
 }

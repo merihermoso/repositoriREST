@@ -7,7 +7,6 @@ public class User {
     private String email;
     private String password;
     private String birthdate;
-    private String status;
     private int score;
     private int level;
 
@@ -15,9 +14,8 @@ public class User {
 
     }
 
-    public User(String username, String email, String password, String birthdate){      //int creditCard
+    public User(String username, String email, String password, String birthdate){
 
-        this();
         setId(0);
         setUsername(username);
         setEmail(email);
@@ -56,13 +54,6 @@ public class User {
         this.password = password;
     }
 
-    public String getStatus() {
-        return status;
-    }
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public String getBirthdate() {
         return birthdate;
     }
@@ -82,20 +73,6 @@ public class User {
     }
     public void setLevel(int level) {
         this.level = level;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", birthdate='" + birthdate + '\'' +
-                ", status='" + status + '\'' +
-                ", score=" + score +
-                ", level=" + level +
-                '}';
     }
 
 }

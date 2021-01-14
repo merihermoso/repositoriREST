@@ -318,22 +318,19 @@ public class UserService {
     @GET
     @ApiOperation(value = "Get the users UserRanking with the most score. It returns the top 20 users by default")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful", response = UserProfile.class, responseContainer = "List"),
+            @ApiResponse(code = 201, message = "Successful", response = UserRanking.class, responseContainer = "List"),
     })
     @Path("/ranking")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRanking() {
         List<User> users = userDAO.readUserRanking();
-        List<UserProfile> userProfileResponse = new ArrayList<>();
+        List<UserRanking> userRankingResponse = new ArrayList<>();
         for(User user : users) {
-            userProfileResponse.add(new UserProfile(user.getUsername(),
-                    user.getEmail(),
-                    user.getBirthdate(),
+            userRankingResponse.add(new UserRanking(user.getUsername(),
                     user.getScore(),
-                    user.getLevel(),
                     userDAO.readUserRankingPositionByUsername(user.getUsername())));
         }
-        GenericEntity<List<UserProfile>> entity = new GenericEntity<List<UserProfile>>(userProfileResponse) {};
+        GenericEntity<List<UserRanking>> entity = new GenericEntity<List<UserRanking>>(userRankingResponse) {};
         return Response.status(201).entity(entity).build();
     }
 

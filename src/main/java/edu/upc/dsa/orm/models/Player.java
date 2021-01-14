@@ -16,7 +16,9 @@ public class Player {
 
 
     public Player() {
+
     }
+
     public Player(String status, int coins, int score, int level, int speed, int hit, int defense, int healing, int damage) {
         setStatus(status);
         setCoins(coins);

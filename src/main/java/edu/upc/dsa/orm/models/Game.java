@@ -43,9 +43,4 @@ public class Game {
     public int getScore() {        return score;    }
     public void setScore(int score) {        this.score = score;    }
 
-    @Override
-    public String toString(){
-        return "Game { id"+id+",DateStart :" +dateStart+"TimeStart :"+timeStart+"DateEnd :"+dateEnd+"TimeEnd :"+timeEnd+"Score :"+score+"}";
-    }
-
 }

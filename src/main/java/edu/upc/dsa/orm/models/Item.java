@@ -77,9 +77,5 @@ public class Item {     //classe per objectes DINS del inventari    (objectes co
     public String getImage() {        return image;    }
     public void setImage(String image) {        this.image = image;    }
 
-    @Override
-    public String toString(){
-        return "User { id: "+id+",Name:" +name+", Hit:"+hit+", Defense:"+defense+", Healing:"+healing+ ", Damage:"+damage+"}";
-    }
 
 }

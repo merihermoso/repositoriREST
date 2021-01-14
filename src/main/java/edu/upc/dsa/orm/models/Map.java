@@ -8,7 +8,9 @@ public class Map {              //classe per objectes de la botiga
     private int price;
 
     public Map() {
+
     }
+
     public Map(String name, String description, int price) {
         setName(name);
         setDescription(description);
@@ -30,8 +32,4 @@ public class Map {              //classe per objectes de la botiga
     public int getPrice() {        return price;    }
     public void setPrice(int price) {        this.price = price;    }
 
-    @Override
-    public String toString(){
-        return "Map { id: "+id+",Name:" +name+", Description:"+description+", Price:"+price+ "}";
-    }
 }
