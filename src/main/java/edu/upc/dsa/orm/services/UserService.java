@@ -29,6 +29,31 @@ public class UserService {
 
     }
 
+    // CREATE
+
+    @POST
+    @ApiOperation(value = "Create a user")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Created"),
+            @ApiResponse(code = 250, message = "User already exists")
+    })
+    @Path("/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createUser(User user) {
+
+        if (!userDAO.existsId(user.getId())) {
+
+            userDAO.create(user);
+            return Response.status(201).build();
+
+        } else {
+
+            return Response.status(250).build();
+        }
+
+    }
+
+
     @POST
     @ApiOperation(value = "Register a new User")
     @ApiResponses(value = {
@@ -39,7 +64,8 @@ public class UserService {
             @ApiResponse(code = 604, message = "Username too short or too long"),
             @ApiResponse(code = 605, message = "Password too short or too long"),
             @ApiResponse(code = 606, message = "Email too short or too long"),
-            @ApiResponse(code = 607, message = "Too young to play")
+            @ApiResponse(code = 607, message = "Too young to play"),
+            @ApiResponse(code = 608, message = "Email already in use")
     })
     @Path("/register")
     public Response register(RegisterCredentials registerCredentials) {
@@ -48,6 +74,7 @@ public class UserService {
         if (registerCredentials.getPassword() == null) return Response.status(601).build();
 
         if (userDAO.exists(registerCredentials.getUsername())) return Response.status(250).build();
+        if (userDAO.existsEmail(registerCredentials.getEmail())) return Response.status(608).build();
 
         UserSettings userSettings = new UserSettings();
 
@@ -75,6 +102,8 @@ public class UserService {
 
     }
 
+    // READ
+
     @POST
     @ApiOperation(value = "Log in with a given username and password")
     @ApiResponses(value = {
@@ -96,55 +125,6 @@ public class UserService {
                 , loginCredentials.getPassword())) return Response.status(603).build();
 
         return Response.status(200).build();
-    }
-
-
-    @PUT
-    @ApiOperation(value = "Change user password")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successful"),
-            @ApiResponse(code = 404, message = "User not exists"),
-            @ApiResponse(code = 601, message = "Need to fill in username field"),
-            @ApiResponse(code = 602, message = "Need to fill in password field"),
-            @ApiResponse(code = 604, message = "Need to fill in new password field"),
-            @ApiResponse(code = 603, message = "Incorrect password"),
-    })
-    @Path("/changePassword")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response changePassword(ChangePasswordCredentials changePasswordCredentials) {
-
-        if (changePasswordCredentials.getUsername() == null) return Response.status(601).build();
-        if (changePasswordCredentials.getPassword() == null) return Response.status(602).build();
-        if (changePasswordCredentials.getNewPassword() == null) return Response.status(604).build();
-
-        if (userDAO.exists(changePasswordCredentials.getUsername())) {
-
-            if (userDAO.checkPassword(changePasswordCredentials.getUsername(), changePasswordCredentials.getPassword())) {
-
-                if (userDAO.updateParameterByParameter("password",
-                        userDAO.getHashString(changePasswordCredentials.getNewPassword(), "SHA-256"),
-                        "username", changePasswordCredentials.getUsername())) {
-
-                    return Response.status(200).build();
-
-                } else {
-
-                    return Response.status(500).build();
-
-                }
-
-            } else {
-
-                return Response.status(603).build();
-
-            }
-
-        } else {
-
-            return Response.status(404).build();
-
-        }
-
     }
 
 
@@ -394,47 +374,6 @@ public class UserService {
     }
 
 
-    @PUT
-    @ApiOperation(value = "Update a user parameter by its username")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successful"),
-            @ApiResponse(code = 404, message = "User not found"),
-            @ApiResponse(code = 603, message = "Parameter not found")
-    })
-    @Path("/{username}/{parameter}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response updateParameterByUsername(@PathParam("username") String username,
-                                             @PathParam("parameter") String parameter,
-                                              String parameterValue) {
-
-        if (userDAO.exists(username)) {
-
-            try {
-
-                if (User.class.getDeclaredField(parameter).getType().isAssignableFrom(Integer.class)) {
-                    userDAO.updateParameterByParameter(parameter, Integer.parseInt(parameterValue)
-                            , "username", username);
-
-                } else {
-                    userDAO.updateParameterByParameter(parameter, parameterValue, "username", username);
-                }
-
-                return Response.status(200).build();
-
-            } catch (NoSuchFieldException noSuchFieldException) {
-
-                return Response.status(603).build();
-
-            }
-
-        } else {
-
-            return Response.status(404).build();
-
-        }
-
-    }
-
 
     @GET
     @ApiOperation(value = "Get a user parameter by its username")
@@ -496,31 +435,9 @@ public class UserService {
 
     }
 
-    //Servei per crear un usuari
-    @POST
-    @ApiOperation(value = "Create a user")
-    @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Created"),
-            @ApiResponse(code = 250, message = "User already exists")
-    })
-    @Path("/")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response createUser(User user) {
 
-        if (!userDAO.existsId(user.getId())) {
+    //UPDATE
 
-            userDAO.create(user);
-            return Response.status(201).build();
-
-        } else {
-
-            return Response.status(250).build();
-        }
-
-    }
-
-
-    //Servei per modificar un usuari
     @PUT
     @ApiOperation(value = "Update a user")
     @ApiResponses(value = {
@@ -541,6 +458,144 @@ public class UserService {
             return Response.status(404).build();
         }
 
+
+    }
+
+
+    @PUT
+    @ApiOperation(value = "Update a user parameter by its username")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 404, message = "User not found"),
+            @ApiResponse(code = 603, message = "Parameter not found")
+    })
+    @Path("/{username}/{parameter}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateParameterByUsername(@PathParam("username") String username,
+                                              @PathParam("parameter") String parameter,
+                                              String parameterValue) {
+
+        if (userDAO.exists(username)) {
+
+            try {
+
+                if (User.class.getDeclaredField(parameter).getType().isAssignableFrom(Integer.class)) {
+                    userDAO.updateParameterByParameter(parameter, Integer.parseInt(parameterValue)
+                            , "username", username);
+
+                } else {
+                    userDAO.updateParameterByParameter(parameter, parameterValue, "username", username);
+                }
+
+                return Response.status(200).build();
+
+            } catch (NoSuchFieldException noSuchFieldException) {
+
+                return Response.status(603).build();
+
+            }
+
+        } else {
+
+            return Response.status(404).build();
+
+        }
+
+    }
+
+
+    @PUT
+    @ApiOperation(value = "Update a user parameter by its id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 404, message = "User not found"),
+            @ApiResponse(code = 603, message = "Parameter not found")
+    })
+    @Path("/id/{id}/{parameter}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateParameterById(@PathParam("id") int id,
+                                              @PathParam("parameter") String parameter,
+                                              String parameterValue) {
+
+        if (userDAO.existsId(id)) {
+
+            try {
+
+                if (User.class.getDeclaredField(parameter).getType().isAssignableFrom(Integer.class)) {
+                    userDAO.updateParameterByParameter(parameter, Integer.parseInt(parameterValue)
+                            , "id", id);
+
+                } else {
+                    userDAO.updateParameterByParameter(parameter, parameterValue, "id", id);
+                }
+
+                return Response.status(200).build();
+
+            } catch (NoSuchFieldException noSuchFieldException) {
+
+                return Response.status(603).build();
+
+            }
+
+        } else {
+
+            return Response.status(404).build();
+
+        }
+
+    }
+
+
+    @PUT
+    @ApiOperation(value = "Update a user password by its username")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 404, message = "User not found"),
+    })
+    @Path("/{username}/password")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updatePasswordByUsername(@PathParam("username") String username,
+                                              String newPassword) {
+
+        if (userDAO.exists(username)) {
+
+            String newPasswordHash = userDAO.getHashString(newPassword, "SHA-256");
+
+            userDAO.updateParameterByParameter("password", newPasswordHash, "username", username);
+            return Response.status(200).build();
+
+        } else {
+
+            return Response.status(404).build();
+
+        }
+
+    }
+
+
+    @PUT
+    @ApiOperation(value = "Update a user password by its id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 404, message = "User not found"),
+    })
+    @Path("/id/{id}/password")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updatePasswordById(@PathParam("id") int id,
+                                             String newPassword) {
+
+        if (userDAO.existsId(id)) {
+
+            String newPasswordHash = userDAO.getHashString(newPassword, "SHA-256");
+
+            userDAO.updateParameterByParameter("password", newPasswordHash, "id", id);
+            return Response.status(200).build();
+
+        } else {
+
+            return Response.status(404).build();
+
+        }
 
     }
 

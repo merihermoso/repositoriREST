@@ -46,6 +46,12 @@ public class UserDAOImpl implements UserDAO {
 
     }
 
+    public boolean existsEmail(String email) {
+
+        return (session.readByParameter(User.class, "email", email) != null);
+
+    }
+
     public boolean checkPassword(String username, String password) {
 
         String passwordHash = getHashString(password, "SHA-256");

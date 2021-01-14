@@ -19,6 +19,7 @@ public interface UserDAO {
 
     boolean exists(String username);
     boolean existsId(int id);
+    boolean existsEmail(String email);
     boolean checkPassword(String username, String password);
     List<UserRanking> readRanking();
     int readRankingPositionByParameter(String byParameter, Object byParameterValue);
