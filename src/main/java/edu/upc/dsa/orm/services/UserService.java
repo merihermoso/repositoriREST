@@ -8,7 +8,6 @@ import edu.upc.dsa.orm.dao.user.UserDAOImpl;
 import edu.upc.dsa.orm.models.API.*;
 import edu.upc.dsa.orm.models.User;
 import io.swagger.annotations.*;
-import javafx.scene.control.TextFormatter;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
