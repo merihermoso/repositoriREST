@@ -58,17 +58,22 @@ public class ItemService {
     @ApiOperation(value = "get an Item by its ID")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Item.class),
-            @ApiResponse(code = 503, message = "not working well...")
+            @ApiResponse(code = 404, message = "Item not found")
     })
     @Path("/id/{id}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response GetItemById(@PathParam("id") int itemID) {
-        try {
-            Item item = this.itemDAO.readByParameter("id", itemID);
+    public Response GetItemById(@PathParam("id") int id) {
+
+        Item item = itemDAO.readByParameter("id", id);
+
+        System.out.println(item.toString());
+
+        if (item == null) {
+            return Response.status(404).build();
+        } else {
             return Response.status(200).entity(item).build();
-        } catch (Exception e) {
-            return Response.status(503).build();
         }
+
     }
 
 /*
