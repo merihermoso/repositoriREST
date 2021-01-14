@@ -1,24 +1,18 @@
 package edu.upc.dsa.orm.services;
 
-import edu.upc.dsa.orm.dao.inventory.InventoryDAO;
-import edu.upc.dsa.orm.dao.inventory.InventoryDAOImpl;
 import edu.upc.dsa.orm.dao.item.ItemDAO;
 import edu.upc.dsa.orm.dao.item.ItemDAOImpl;
-import edu.upc.dsa.orm.exeptions.UserNotFoundException;
 import edu.upc.dsa.orm.models.*;
-import edu.upc.dsa.orm.models.GameCredentials.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.eclipse.persistence.annotations.Convert;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 @Api(value = "/item")
@@ -60,9 +54,9 @@ public class ItemService {
             @ApiResponse(code = 200, message = "OK", response = Item.class),
             @ApiResponse(code = 404, message = "Item not found")
     })
-    @Path("/id/{id}")
-    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response GetItemById(@PathParam("id") int id) {
+    @Path("/id/{itemid}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response GetItemById(@PathParam("itemid") String id) {
 
         Item item = itemDAO.readByParameter("id", id);
 
