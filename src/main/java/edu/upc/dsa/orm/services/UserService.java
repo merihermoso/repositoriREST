@@ -426,7 +426,7 @@ public class UserService {
             @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 404, message = "Not found"),
     })
-    @Path("/{username}/parameter/{parameter}")
+    @Path("/{username}/{parameter}")
     @Produces(MediaType.TEXT_PLAIN)
     public Response readParameterByParameter(@PathParam("username") String username,
                                              @PathParam("parameter") String parameter) {

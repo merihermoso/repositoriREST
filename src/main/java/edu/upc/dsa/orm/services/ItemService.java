@@ -96,7 +96,7 @@ public class ItemService {
             @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 404, message = "User not found"),
     })
-    @Path("/{name}/parameter/{parameter}")
+    @Path("/{name}/{parameter}")
     @Produces(MediaType.TEXT_PLAIN)
     public Response getIdByName(@PathParam("name") String name, @PathParam("parameter") String parameter) {
 
