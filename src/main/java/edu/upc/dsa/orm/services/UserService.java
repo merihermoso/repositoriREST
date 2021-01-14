@@ -10,6 +10,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -209,35 +210,24 @@ public class UserService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = UserProfile.class),
             @ApiResponse(code = 404, message = "User not exists"),
-            @ApiResponse(code = 601, message = "Need to fill in username field"),
-            @ApiResponse(code = 503, message = "not working well...")
 
     })
     @Path("/{username}/profile")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response getUserProfileByUsername(@PathParam("username") String username) {
 
-        if (username == null) return Response.status(601).build();
-
         if (userDAO.exists(username)) {
 
-            try {
+            User user = userDAO.readByParameter("username", username);
 
-                User user = userDAO.readByParameter("username", username);
+            UserProfile userProfile = new UserProfile(user.getUsername(),
+                    user.getEmail(),
+                    user.getBirthdate(),
+                    user.getScore(),
+                    user.getLevel(),
+                    userDAO.readRankingPositionByParameter("username", username));
 
-                UserProfile userProfile = new UserProfile(user.getUsername(),
-                        user.getEmail(),
-                        user.getBirthdate(),
-                        user.getScore(),
-                        user.getLevel(),
-                        userDAO.readRankingPositionByParameter("username", username));
-
-                return Response.status(200).entity(userProfile).build();
-
-            } catch (Exception e) {
-
-                return Response.status(503).build();
-            }
+            return Response.status(200).entity(userProfile).build();
 
         } else {
 
@@ -253,15 +243,11 @@ public class UserService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = User.class),
             @ApiResponse(code = 404, message = "User not exists"),
-            @ApiResponse(code = 601, message = "Need to fill in username field"),
-            @ApiResponse(code = 503, message = "not working well...")
 
     })
     @Path("/{username}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUserByUsername(@PathParam("username") String username) {
-
-        if (username == null) return Response.status(601).build();
 
         if (userDAO.exists(username)) {
 
@@ -298,14 +284,11 @@ public class UserService {
     @ApiOperation(value = "Get user UserRanking given its username")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful", response = UserRanking.class),
-            @ApiResponse(code = 601, message = "Need to fill in username field"),
             @ApiResponse(code = 404, message = "User not exists"),
     })
     @Path("/{username}/ranking")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRankingUserByUsername(@PathParam("username") String username) {
-
-        if (username == null) return Response.status(601).build();
 
         if (userDAO.exists(username)) {
 
@@ -346,8 +329,11 @@ public class UserService {
                             userDAO.readRankingPositionByParameter("id", id));
 
             return Response.status(200).entity(userRanking).build();
+
         } else {
+
             return Response.status(404).build();
+
         }
     }
 
@@ -362,18 +348,16 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response getUserById(@PathParam("id") int id) {
 
-        User user = userDAO.readByParameter("id", id);
+        if (userDAO.existsId(id)) {
 
-        if (user == null) {
-
-            return Response.status(404).build();
+            User user = userDAO.readByParameter("id", id);
+            return Response.status(200).entity(user).build();
 
         } else {
 
-            return Response.status(200).entity(user).build();
+            return Response.status(404).build();
 
         }
-
 
     }
 
@@ -456,6 +440,7 @@ public class UserService {
     @ApiOperation(value = "Get a user parameter by its username")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 603, message = "Parameter not found"),
             @ApiResponse(code = 404, message = "Not found"),
     })
     @Path("/{username}/{parameter}")
@@ -463,15 +448,25 @@ public class UserService {
     public Response readParameterByUsername(@PathParam("username") String username,
                                             @PathParam("parameter") String parameter) {
 
-        Object res = userDAO.readParameterByParameter(parameter, "username", username);
+        if (userDAO.exists(username)) {
 
-        if (res != null){
+            try {
 
-            return Response.status(200).entity(res).build();
+                Field field = User.class.getDeclaredField(parameter);
+
+                Object res = userDAO.readParameterByParameter(parameter, "username", username);
+                return Response.status(200).entity(res).build();
+
+            } catch (NoSuchFieldException noSuchFieldException) {
+
+                return Response.status(603).build();
+
+            }
 
         } else {
 
             return Response.status(404).build();
+
         }
 
     }
@@ -488,15 +483,15 @@ public class UserService {
     public Response readParameterById(@PathParam("id") int id,
                                              @PathParam("parameter") String parameter) {
 
-        Object res = userDAO.readParameterByParameter(parameter, "id", id);
+        if (userDAO.existsId(id)) {
 
-        if (res != null){
-
+            Object res = userDAO.readParameterByParameter(parameter, "id", id);
             return Response.status(200).entity(res).build();
 
         } else {
 
             return Response.status(404).build();
+
         }
 
     }
@@ -521,7 +516,6 @@ public class UserService {
 
             return Response.status(250).build();
         }
-
 
     }
 
