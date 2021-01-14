@@ -4,17 +4,9 @@ import edu.upc.dsa.orm.dao.player.PlayerDAO;
 import edu.upc.dsa.orm.dao.player.PlayerDAOImpl;
 import edu.upc.dsa.orm.dao.user.UserDAO;
 import edu.upc.dsa.orm.dao.user.UserDAOImpl;
-import edu.upc.dsa.orm.models.API.LoginCredentials;
-import edu.upc.dsa.orm.models.adminCredentials.*;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.sql.SQLException;
 
 @Api(value = "/admin")
 @Path("admin")

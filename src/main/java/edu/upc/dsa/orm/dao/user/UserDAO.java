@@ -1,17 +1,7 @@
 package edu.upc.dsa.orm.dao.user;
-
-import java.sql.SQLException;
 import java.util.List;
-
-import edu.upc.dsa.orm.models.API.ChangeEmailCredentials;
-import edu.upc.dsa.orm.models.API.ChangePasswordCredentials;
-import edu.upc.dsa.orm.models.API.LoginCredentials;
 import edu.upc.dsa.orm.models.API.RegisterCredentials;
-import edu.upc.dsa.orm.models.Game;
 import edu.upc.dsa.orm.models.User;
-import edu.upc.dsa.orm.models.adminCredentials.ChangeLevel;
-import edu.upc.dsa.orm.models.adminCredentials.ChangeScore;
-import edu.upc.dsa.orm.models.adminCredentials.ChangeStatus;
 
 public interface UserDAO {
 

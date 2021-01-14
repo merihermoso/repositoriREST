@@ -230,11 +230,13 @@ public class SessionImpl implements Session {
 
     public Object readByParameter(Class theClass, String byParameter, Object byParameterValue) {
 
+        String selectQuery = QueryHelper.createQuerySELECTbyParameter(theClass, byParameter);
+
         try {
 
-            String selectQuery = QueryHelper.createQuerySELECTbyParameter(theClass, byParameter);
             PreparedStatement pstm = null;
             Object object = theClass.getDeclaredConstructor().newInstance();
+
             pstm = conn.prepareStatement(selectQuery);
             pstm.setObject(1, byParameterValue);
             pstm.executeQuery();

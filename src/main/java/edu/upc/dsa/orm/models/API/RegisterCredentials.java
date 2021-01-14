@@ -9,6 +9,10 @@ public class RegisterCredentials {
     private int birthdate_month;
     private int birthdate_day;
 
+    public RegisterCredentials(){
+
+    }
+
     public String getUsername() {
         return username;
     }

@@ -1,13 +1,6 @@
 package edu.upc.dsa.orm.dao.item;
 
-import edu.upc.dsa.orm.exeptions.UserNotFoundException;
-import edu.upc.dsa.orm.models.Game;
-import edu.upc.dsa.orm.models.GameCredentials.ItemCredentials;
-import edu.upc.dsa.orm.models.Inventory;
 import edu.upc.dsa.orm.models.Item;
-
-import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
 
 public interface ItemDAO {

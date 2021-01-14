@@ -57,6 +57,7 @@ public class ItemDAOImpl implements ItemDAO {
 
     public Item readByParameter(String byParameter, Object byParameterValue) {
 
+        Session session = FactorySession.openSession();
         return ((Item) session.readByParameter(Item.class, byParameter, byParameterValue));
 
     }

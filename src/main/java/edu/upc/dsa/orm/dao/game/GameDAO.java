@@ -1,11 +1,6 @@
 package edu.upc.dsa.orm.dao.game;
 
-import edu.upc.dsa.orm.models.API.RegisterCredentials;
 import edu.upc.dsa.orm.models.Game;
-import edu.upc.dsa.orm.models.GameCredentials.GameCredentials;
-import edu.upc.dsa.orm.models.User;
-
-import java.sql.SQLException;
 import java.util.List;
 
 public interface GameDAO {

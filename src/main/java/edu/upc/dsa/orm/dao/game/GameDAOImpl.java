@@ -3,11 +3,6 @@ package edu.upc.dsa.orm.dao.game;
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
 import edu.upc.dsa.orm.models.Game;
-import edu.upc.dsa.orm.models.GameCredentials.GameCredentials;
-import edu.upc.dsa.orm.models.User;
-//import jdk.incubator.jpackage.internal.Log;
-
-import java.sql.SQLException;
 import java.util.*;
 
 public class GameDAOImpl implements GameDAO {

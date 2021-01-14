@@ -60,7 +60,7 @@ public class ItemService {
 
         Item item = itemDAO.readByParameter("id", id);
 
-        System.out.println(item.toString());
+        System.out.println("HECHO2");
 
         if (item == null) {
             return Response.status(404).build();
@@ -70,7 +70,6 @@ public class ItemService {
 
     }
 
-/*
     //Servei per obtenir un item a partir del seu nom
     @GET
     @ApiOperation(value = "get an Item by its name")
@@ -114,7 +113,6 @@ public class ItemService {
 
     }
 
-*/
     /*
     @PUT
     @ApiOperation(value = "Update an item")
