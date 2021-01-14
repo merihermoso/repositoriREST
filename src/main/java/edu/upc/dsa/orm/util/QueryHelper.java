@@ -145,7 +145,7 @@ public class QueryHelper {
 
     public static String createQueryUPDATEparameterByParameter(Class theClass, String parameter, String byParameter) {
         StringBuffer sb = new StringBuffer();
-        sb.append("UPDATE " + theClass.getSimpleName() + " SET " + parameter + " = ? ");
+        sb.append("UPDATE " + theClass.getSimpleName() + " SET " + parameter + " = ?");
         sb.append(" WHERE " + byParameter + " = ? ");
 
         System.out.println(sb);

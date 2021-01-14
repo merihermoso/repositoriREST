@@ -118,11 +118,12 @@ public class SessionImpl implements Session {
             String updateQuery = QueryHelper.createQueryUPDATEparameterByParameter(theClass, parameter, byParameter);
 
             PreparedStatement pstm;
-            ResultSet resultSet;
 
             pstm = conn.prepareStatement(updateQuery);
             pstm.setObject(1, parameterValue);
             pstm.setObject(2, byParameterValue);
+            pstm.executeQuery();
+
             return true;
 
         } catch (SQLException exception) {
