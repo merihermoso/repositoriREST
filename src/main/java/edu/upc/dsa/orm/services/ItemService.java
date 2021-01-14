@@ -71,7 +71,7 @@ public class ItemService {
         }
     }
 
-
+/*
     //Servei per obtenir un item a partir del seu nom
     @GET
     @ApiOperation(value = "get an Item by its name")
@@ -90,7 +90,6 @@ public class ItemService {
             return Response.status(503).build();
         }
     }
-
 
 
     @GET
@@ -116,7 +115,7 @@ public class ItemService {
 
     }
 
-
+*/
     @PUT
     @ApiOperation(value = "Update an item")
     @ApiResponses(value = {
