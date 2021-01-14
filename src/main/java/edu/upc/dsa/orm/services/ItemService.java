@@ -7,7 +7,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.eclipse.persistence.annotations.Convert;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
@@ -28,7 +27,7 @@ public class ItemService {
 
     }
 
-/*
+
     //Servicio para obtener todos los items
     @GET
     @ApiOperation(value = "Get all items from BBDD")
@@ -46,7 +45,7 @@ public class ItemService {
         return Response.status(200).entity(entity).build();
     }
 
-*/
+
     //Servicio para obtener un Item a partir del ID
     @GET
     @ApiOperation(value = "get an Item by its ID")
@@ -113,7 +112,6 @@ public class ItemService {
 
     }
 
-    /*
     @PUT
     @ApiOperation(value = "Update an item")
     @ApiResponses(value = {
@@ -122,7 +120,7 @@ public class ItemService {
     })
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response UpdateItem(Item item) {
+    public Response updateItem(Item item) {
         if (itemDAO.update(item)) {
             return Response.status(200).build();
         }
@@ -130,7 +128,7 @@ public class ItemService {
             return Response.status(400).build();
         }
 
-    }*/
+    }
 
 }
 

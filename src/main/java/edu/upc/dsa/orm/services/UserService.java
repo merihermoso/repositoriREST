@@ -50,12 +50,21 @@ public class UserService {
 
         UserSettings userSettings = new UserSettings();
 
+        if (registerCredentials.getUsername().length() < userSettings.getUsername_min_length()
+                || registerCredentials.getUsername().length() > userSettings.getUsername_max_length())
+            return Response.status(604).build();
 
-        if (registerCredentials.getUsername().length() < userSettings.getUsername_min_length() || registerCredentials.getUsername().length() > userSettings.getUsername_max_length()) return Response.status(604).build();
-        if (registerCredentials.getPassword().length() < userSettings.getPassword_min_length() || registerCredentials.getPassword().length() > userSettings.getPassword_max_length()) return Response.status(605).build();
-        if (registerCredentials.getEmail().length() < userSettings.getEmail_min_length() || registerCredentials.getEmail().length() > userSettings.getEmail_max_length()) return Response.status(606).build();
+        if (registerCredentials.getPassword().length() < userSettings.getPassword_min_length()
+                || registerCredentials.getPassword().length() > userSettings.getPassword_max_length())
+            return Response.status(605).build();
 
-        LocalDate l1 = LocalDate.of(registerCredentials.getBirthdate_year(), registerCredentials.getBirthdate_month(),  registerCredentials.getBirthdate_day());
+        if (registerCredentials.getEmail().length() < userSettings.getEmail_min_length()
+                || registerCredentials.getEmail().length() > userSettings.getEmail_max_length())
+            return Response.status(606).build();
+
+        LocalDate l1 = LocalDate.of(registerCredentials.getBirthdate_year(), registerCredentials.getBirthdate_month(),
+                registerCredentials.getBirthdate_day());
+
         Period diff1 = Period.between(l1, LocalDate.now());
 
         if (diff1.getYears() < userSettings.getMin_age()) return Response.status(607).build();
