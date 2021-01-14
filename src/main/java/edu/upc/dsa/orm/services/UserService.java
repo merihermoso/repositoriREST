@@ -47,7 +47,7 @@ public class UserService {
         if (registerCredentials.getUsername() == null) return Response.status(600).build();
         if (registerCredentials.getPassword() == null) return Response.status(601).build();
 
-        if (userDAO.userExists(registerCredentials.getUsername())) return Response.status(250).build();
+        if (userDAO.exists(registerCredentials.getUsername())) return Response.status(250).build();
 
         UserSettings userSettings = new UserSettings();
 
@@ -81,7 +81,7 @@ public class UserService {
 
         if (loginCredentials.getUsername() == null) return Response.status(601).build();
         if (loginCredentials.getPassword() == null) return Response.status(602).build();
-        if (!userDAO.userExists(loginCredentials.getUsername())) return Response.status(250).build();
+        if (!userDAO.exists(loginCredentials.getUsername())) return Response.status(250).build();
         if (userDAO.checkPassword(loginCredentials.getUsername()
                 , loginCredentials.getPassword())) return Response.status(603).build();
 
@@ -107,7 +107,7 @@ public class UserService {
         if (changePasswordCredentials.getPassword() == null) return Response.status(602).build();
         if (changePasswordCredentials.getNewPassword() == null) return Response.status(604).build();
 
-        if (userDAO.userExists(changePasswordCredentials.getUsername())) {
+        if (userDAO.exists(changePasswordCredentials.getUsername())) {
 
             if (userDAO.checkPassword(changePasswordCredentials.getUsername(), changePasswordCredentials.getPassword())) {
 
@@ -155,7 +155,7 @@ public class UserService {
         if (changeEmailCredentials.getPassword() == null) return Response.status(602).build();
         if (changeEmailCredentials.getNewEmail() == null) return Response.status(604).build();
 
-        if (userDAO.userExists(changeEmailCredentials.getUsername())) {
+        if (userDAO.exists(changeEmailCredentials.getUsername())) {
 
             if (userDAO.checkPassword(changeEmailCredentials.getUsername(), changeEmailCredentials.getPassword())) {
 
@@ -219,7 +219,7 @@ public class UserService {
                     user.getBirthdate(),
                     user.getScore(),
                     user.getLevel(),
-                    userDAO.readUserRankingPositionByUsername(user.getUsername())));
+                    userDAO.readRankingPositionByParameter("username", user.getUsername())));
         }
         GenericEntity<List<UserProfile>> entity = new GenericEntity<List<UserProfile>>(userProfileResponse) {};
 
@@ -257,7 +257,7 @@ public class UserService {
 
         if (username == null) return Response.status(601).build();
 
-        if (userDAO.userExists(username)) {
+        if (userDAO.exists(username)) {
 
             try {
 
@@ -268,7 +268,7 @@ public class UserService {
                         user.getBirthdate(),
                         user.getScore(),
                         user.getLevel(),
-                        userDAO.readUserRankingPositionByUsername(user.getUsername()));
+                        userDAO.readRankingPositionByParameter("username", username));
 
                 return Response.status(200).entity(userProfile).build();
 
@@ -301,7 +301,7 @@ public class UserService {
 
         if (username == null) return Response.status(601).build();
 
-        if (userDAO.userExists(username)) {
+        if (userDAO.exists(username)) {
 
             User user = userDAO.readByParameter("username", username);
 
@@ -323,19 +323,15 @@ public class UserService {
     @Path("/ranking")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getRanking() {
-        List<User> users = userDAO.readUserRanking();
-        List<UserRanking> userRankingResponse = new ArrayList<>();
-        for(User user : users) {
-            userRankingResponse.add(new UserRanking(user.getUsername(),
-                    user.getScore(),
-                    userDAO.readUserRankingPositionByUsername(user.getUsername())));
-        }
-        GenericEntity<List<UserRanking>> entity = new GenericEntity<List<UserRanking>>(userRankingResponse) {};
+
+        List<UserRanking> userRanking = userDAO.readRanking();
+
+        GenericEntity<List<UserRanking>> entity = new GenericEntity<List<UserRanking>>(userRanking) {};
         return Response.status(201).entity(entity).build();
+
     }
 
 
-    //Servicio para obtener la posición en el ranking del usuario
     @GET
     @ApiOperation(value = "Get user UserRanking given its username")
     @ApiResponses(value = {
@@ -345,14 +341,47 @@ public class UserService {
     })
     @Path("/{username}/ranking")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getRankingUser(@PathParam("username") String username) {
+    public Response getRankingUserByUsername(@PathParam("username") String username) {
+
         if (username == null) return Response.status(601).build();
-        if (userDAO.userExists(username)) {
+
+        if (userDAO.exists(username)) {
 
             User user = userDAO.readByParameter("username", username);
 
             UserRanking userRanking =
-                    new UserRanking(user.getUsername(), user.getScore(), userDAO.readUserRankingPositionByUsername(username));
+                    new UserRanking(user.getUsername(), user.getScore(),
+                            userDAO.readRankingPositionByParameter("username", username));
+
+            return Response.status(201).entity(userRanking).build();
+
+        } else {
+
+            return Response.status(404).build();
+
+        }
+    }
+
+
+
+    @GET
+    @ApiOperation(value = "Get user UserRanking given its username")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = UserRanking.class),
+            @ApiResponse(code = 601, message = "Need to fill in username field"),
+            @ApiResponse(code = 404, message = "User not exists"),
+    })
+    @Path("/id/{id}/ranking")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getRankingUserById(@PathParam("id") int id) {
+
+        if (userDAO.existsId(id)) {
+
+            User user = userDAO.readByParameter("id", id);
+
+            UserRanking userRanking =
+                    new UserRanking(user.getUsername(), user.getScore(),
+                            userDAO.readRankingPositionByParameter("id", id));
 
             return Response.status(201).entity(userRanking).build();
         } else {
@@ -410,7 +439,7 @@ public class UserService {
                     user.getBirthdate(),
                     user.getScore(),
                     user.getLevel(),
-                    userDAO.readUserRankingPositionByUsername(user.getUsername()));
+                    userDAO.readRankingPositionByParameter("username", user.getUsername()));
 
             return Response.status(200).entity(userProfile).build();
 
@@ -426,10 +455,35 @@ public class UserService {
     })
     @Path("/{username}/{parameter}")
     @Produces(MediaType.TEXT_PLAIN)
-    public Response readParameterByParameter(@PathParam("username") String username,
+    public Response readParameterByUsername(@PathParam("username") String username,
                                              @PathParam("parameter") String parameter) {
 
         Object res = userDAO.readParameterByParameter(parameter, "username", username);
+
+        if (res != null){
+
+            return Response.status(201).entity(res).build();
+
+        } else {
+
+            return Response.status(404).build();
+        }
+
+    }
+
+
+    @GET
+    @ApiOperation(value = "Get a user parameter by its id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 404, message = "Not found"),
+    })
+    @Path("/id/{id}/{parameter}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response readParameterById(@PathParam("id") int id,
+                                             @PathParam("parameter") String parameter) {
+
+        Object res = userDAO.readParameterByParameter(parameter, "id", id);
 
         if (res != null){
 

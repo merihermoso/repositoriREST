@@ -1,6 +1,7 @@
 package edu.upc.dsa.orm.dao.user;
 import java.util.List;
 import edu.upc.dsa.orm.models.API.RegisterCredentials;
+import edu.upc.dsa.orm.models.API.UserRanking;
 import edu.upc.dsa.orm.models.User;
 
 public interface UserDAO {
@@ -16,10 +17,11 @@ public interface UserDAO {
     User readByParameter(String byParameter, Object byParameterValue);
     Object readParameterByParameter(String parameter, String byParameter, Object byParameterValue);
 
-    boolean userExists(String username);
+    boolean exists(String username);
+    boolean existsId(int id);
     boolean checkPassword(String username, String password);
-    List<User> readUserRanking();
-    int readUserRankingPositionByUsername(String username);
+    List<UserRanking> readRanking();
+    int readRankingPositionByParameter(String byParameter, Object byParameterValue);
 
     // UPDATE
     boolean update(User user);

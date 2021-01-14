@@ -268,17 +268,17 @@ public class SessionImpl implements Session {
 
     }
 
-    public int readUserRankingPositionByUsername(String username) {
+    public int readUserRankingPositionByParameter(String byParameter, Object byParameterValue) {
 
         try {
 
-            String selectQuery = QueryHelper.createQueryUserPositionSELECTbyUsername();
+            String selectQuery = QueryHelper.createQueryUserPositionSELECTbyParameter(byParameter);
 
             PreparedStatement pstm;
             ResultSet resultSet;
 
             pstm = conn.prepareStatement(selectQuery);
-            pstm.setString(1, username);
+            pstm.setObject(1, byParameterValue);
             resultSet = pstm.executeQuery();
 
             if (resultSet.next()) {

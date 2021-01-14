@@ -29,6 +29,6 @@ public interface Session {
 
     /*****************************     Exclusivo Users    ******************************************************/
     HashMap<Integer, User> readUserRanking(int limit);
-    int readUserRankingPositionByUsername(String username);
+    int readUserRankingPositionByParameter(String byParameter, Object byParameterValue);
 
 }

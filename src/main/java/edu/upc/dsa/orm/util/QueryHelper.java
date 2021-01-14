@@ -86,17 +86,16 @@ public class QueryHelper {
     }
 
     //SELECT position and score FROM User WHERE username = "?"
-    public static String createQueryUserPositionSELECTbyUsername()  {
+    public static String createQueryUserPositionSELECTbyParameter(String byParameter)  {
 
         StringBuffer sb = new StringBuffer();
-        sb.append("SELECT 1 + (SELECT count( * ) FROM User a WHERE a.score > b.score ) AS rank FROM User b WHERE username = ? ORDER BY rank LIMIT 1");
+        sb.append("SELECT 1 + (SELECT count( * ) FROM User a WHERE a.score > b.score ) AS rank FROM User b WHERE " + byParameter + " = ? ORDER BY rank LIMIT 1");
 
         System.out.println(sb);
-        System.out.println(sb);
+
         return sb.toString();
 
     }
-
 
     // UPDATE
 

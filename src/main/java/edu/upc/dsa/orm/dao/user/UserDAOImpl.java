@@ -2,6 +2,7 @@ package edu.upc.dsa.orm.dao.user;
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
 import edu.upc.dsa.orm.models.API.RegisterCredentials;
+import edu.upc.dsa.orm.models.API.UserRanking;
 import edu.upc.dsa.orm.models.User;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -33,9 +34,15 @@ public class UserDAOImpl implements UserDAO {
 
 
 
-    public boolean userExists(String username) {
+    public boolean exists(String username) {
 
         return (session.readByParameter(User.class, "username", username) != null);
+
+    }
+
+    public boolean existsId(int id) {
+
+        return (session.readByParameter(User.class, "id", id) != null);
 
     }
 
@@ -90,23 +97,29 @@ public class UserDAOImpl implements UserDAO {
     }
 
 
-    public List<User> readUserRanking(){
-
-        List<User> usersList;
+    public List<UserRanking> readRanking(){
 
         HashMap<Integer, User> result;
-
         result = session.readUserRanking(20);
 
-        usersList = new ArrayList<>(result.values());
+        List<UserRanking> userRankingResponse = new ArrayList<>();
 
-        return usersList;
+        int i = 1;
+
+        for(User user : result.values()) {
+            userRankingResponse.add(new UserRanking(user.getUsername(),
+                    user.getScore(),
+                    i));
+            i++;
+        }
+
+        return userRankingResponse;
 
     }
 
-    public int readUserRankingPositionByUsername(String username) {
+    public int readRankingPositionByParameter(String byParameter, Object byParameterValue) {
 
-        return session.readUserRankingPositionByUsername(username);
+        return session.readUserRankingPositionByParameter(byParameter, byParameterValue);
 
     }
 
