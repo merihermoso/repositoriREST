@@ -21,7 +21,7 @@ public interface InventoryDAO {
 
     // UPDATE
     boolean update(Inventory inventory);
-    boolean updateByParameter(String byParameter, Object byParameterValue);
+    boolean updateByParameter(Inventory inventory, String byParameter, Object byParameterValue);
     boolean updateParameterByParameter(String parameter, Object parameterValue
             , String byParameter, Object byParameterValue);
 

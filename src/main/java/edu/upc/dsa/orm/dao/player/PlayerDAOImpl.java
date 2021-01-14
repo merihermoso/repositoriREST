@@ -77,9 +77,9 @@ public class PlayerDAOImpl implements PlayerDAO {
 
     }
 
-    public boolean updateByParameter(String byParameter, Object byParameterValue) {
+    public boolean updateByParameter(Player player, String byParameter, Object byParameterValue) {
 
-        return session.updateByParameter(Player.class, byParameter, byParameterValue);
+        return session.updateByParameter(player, byParameter, byParameterValue);
 
     }
 

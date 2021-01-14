@@ -74,9 +74,9 @@ public class EnemyDAOImpl implements EnemyDAO {
 
     }
 
-    public boolean updateByParameter(String byParameter, Object byParameterValue) {
+    public boolean updateByParameter(Enemy enemy, String byParameter, Object byParameterValue) {
 
-        return session.updateByParameter(Enemy.class, byParameter, byParameterValue);
+        return session.updateByParameter(enemy, byParameter, byParameterValue);
 
     }
 

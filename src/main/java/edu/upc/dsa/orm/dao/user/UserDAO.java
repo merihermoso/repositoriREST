@@ -26,7 +26,7 @@ public interface UserDAO {
 
     // UPDATE
     boolean update(User user);
-    boolean updateByParameter(String byParameter, Object byParameterValue);
+    boolean updateByParameter(User user, String byParameter, Object byParameterValue);
     boolean updateParameterByParameter(String parameter, Object parameterValue
             , String byParameter, Object byParameterValue);
 

@@ -73,9 +73,9 @@ public class GameDAOImpl implements GameDAO {
 
     }
 
-    public boolean updateByParameter(String byParameter, Object byParameterValue) {
+    public boolean updateByParameter(Game game, String byParameter, Object byParameterValue) {
 
-        return session.updateByParameter(Game.class, byParameter, byParameterValue);
+        return session.updateByParameter(game, byParameter, byParameterValue);
 
     }
 

@@ -37,11 +37,11 @@ public class UserService {
             @ApiResponse(code = 201, message = "Created"),
             @ApiResponse(code = 250, message = "User already exists")
     })
-    @Path("/id")
+    @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createUserById(User user) {
 
-        if (!userDAO.exists(user.getUsername())) {
+        if (!userDAO.exists(user.getUsername()) && !userDAO.existsEmail(user.getEmail())) {
 
             userDAO.create(user);
             return Response.status(201).build();
@@ -439,18 +439,40 @@ public class UserService {
     //UPDATE
 
     @PUT
+    @ApiOperation(value = "Update a user by its id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "User not found")
+    })
+    @Path("/id/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateUserById(@PathParam("id") int id, User user) {
+
+        if (userDAO.existsId(id)) {
+
+            userDAO.update(user);
+            return Response.status(200).build();
+
+        } else {
+
+            return Response.status(404).build();
+        }
+
+    }
+
+    @PUT
     @ApiOperation(value = "Update a user")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 404, message = "User not found")
     })
-    @Path("/")
+    @Path("/{username}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateUser(User user) {
+    public Response updateUserByUsername(@PathParam("username") String username, User user) {
 
-        if (userDAO.existsId(user.getId())) {
+        if (userDAO.exists(username)) {
 
-            userDAO.update(user);
+            userDAO.updateByParameter(user,"username", username);
             return Response.status(200).build();
 
         } else {

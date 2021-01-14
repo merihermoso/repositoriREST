@@ -137,9 +137,9 @@ public class UserDAOImpl implements UserDAO {
 
     }
 
-    public boolean updateByParameter(String byParameter, Object byParameterValue) {
+    public boolean updateByParameter(User user, String byParameter, Object byParameterValue) {
 
-        return session.updateByParameter(User.class, byParameter, byParameterValue);
+        return session.updateByParameter(user, byParameter, byParameterValue);
 
     }
 

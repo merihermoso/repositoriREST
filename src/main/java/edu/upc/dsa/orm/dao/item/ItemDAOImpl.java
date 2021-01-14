@@ -77,9 +77,9 @@ public class ItemDAOImpl implements ItemDAO {
 
     }
 
-    public boolean updateByParameter(String byParameter, Object byParameterValue) {
+    public boolean updateByParameter(Item item, String byParameter, Object byParameterValue) {
 
-        return session.updateByParameter(Item.class, byParameter, byParameterValue);
+        return session.updateByParameter(item, byParameter, byParameterValue);
 
     }
 

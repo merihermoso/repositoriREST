@@ -18,7 +18,7 @@ public interface GameDAO {
 
       // UPDATE
       boolean update(Game game);
-      boolean updateByParameter(String byParameter, Object byParameterValue);
+      boolean updateByParameter(Game game, String byParameter, Object byParameterValue);
       boolean updateParameterByParameter(String parameter, Object parameterValue
               , String byParameter, Object byParameterValue);
 

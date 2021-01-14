@@ -18,7 +18,7 @@ public interface ItemDAO {
 
     // UPDATE
     boolean update(Item item);
-    boolean updateByParameter(String byParameter, Object byParameterValue);
+    boolean updateByParameter(Item item, String byParameter, Object byParameterValue);
     boolean updateParameterByParameter(String parameter, Object parameterValue
             , String byParameter, Object byParameterValue);
 

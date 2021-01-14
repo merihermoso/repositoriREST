@@ -76,9 +76,9 @@ public class InventoryDAOImpl implements InventoryDAO {
 
     }
 
-    public boolean updateByParameter(String byParameter, Object byParameterValue) {
+    public boolean updateByParameter(Inventory inventory, String byParameter, Object byParameterValue) {
 
-        return session.updateByParameter(Inventory.class, byParameter, byParameterValue);
+        return session.updateByParameter(inventory, byParameter, byParameterValue);
 
     }
 

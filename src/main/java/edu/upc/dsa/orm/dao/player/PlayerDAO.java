@@ -19,7 +19,7 @@ public interface PlayerDAO {
 
     // UPDATE
     boolean update(Player player);
-    boolean updateByParameter(String byParameter, Object byParameterValue);
+    boolean updateByParameter(Player player, String byParameter, Object byParameterValue);
     boolean updateParameterByParameter(String parameter, Object parameterValue
             , String byParameter, Object byParameterValue);
 

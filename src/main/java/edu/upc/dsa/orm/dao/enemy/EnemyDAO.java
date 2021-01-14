@@ -20,7 +20,7 @@ public interface EnemyDAO {
 
     // UPDATE
     boolean update(Enemy enemy);
-    boolean updateByParameter(String byParameter, Object byParameterValue);
+    boolean updateByParameter(Enemy enemy, String byParameter, Object byParameterValue);
     boolean updateParameterByParameter(String parameter, Object parameterValue
             , String byParameter, Object byParameterValue);
 
