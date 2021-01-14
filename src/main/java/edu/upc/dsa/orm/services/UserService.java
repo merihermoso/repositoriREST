@@ -82,7 +82,7 @@ public class UserService {
         if (loginCredentials.getPassword() == null) return Response.status(602).build();
         if (!userDAO.exists(loginCredentials.getUsername())) return Response.status(404).build();
 
-        if (userDAO.checkPassword(loginCredentials.getUsername()
+        if (!userDAO.checkPassword(loginCredentials.getUsername()
                 , loginCredentials.getPassword())) return Response.status(603).build();
 
         return Response.status(200).build();
@@ -462,7 +462,7 @@ public class UserService {
                                              @PathParam("parameter") String parameter,
                                               UpdateParameterValue updateParameterValue) {
 
-        if (userDAO.exists("username")) {
+        if (userDAO.exists(username)) {
 
             try {
 
