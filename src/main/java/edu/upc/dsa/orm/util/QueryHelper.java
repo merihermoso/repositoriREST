@@ -5,8 +5,8 @@ import edu.upc.dsa.orm.models.User;
 public class QueryHelper {
 
     // CREATE
-                                                                    //consulta general (serveix per insertar on sigui)
-    public static String createQueryINSERT(Object object) {         //consultes que han de insertar qualsevol objecte a la bbdd
+
+    public static String createQueryINSERT(Object object) {
         StringBuffer sb = new StringBuffer("INSERT INTO ");
         sb.append(object.getClass().getSimpleName()).append(" ");
         sb.append("(");
@@ -44,9 +44,9 @@ public class QueryHelper {
 
     // READ
 
-    public static String createQuerySELECTbyParameter(Object entity, String byParameter) {
+    public static String createQuerySELECTbyParameter(Class theClass, String byParameter) {
         StringBuffer sb = new StringBuffer();
-        sb.append("SELECT * FROM ").append(entity.getClass().getSimpleName());
+        sb.append("SELECT * FROM ").append(theClass.getSimpleName());
         sb.append(" WHERE " + byParameter + " = ?");
 
         System.out.println(sb);
@@ -54,10 +54,10 @@ public class QueryHelper {
         return sb.toString();
     }
 
-    public static String createQuerySELECTparameterByParameter(Object entity, String parameter, String byParameter) {
+    public static String createQuerySELECTparameterByParameter(Class theClass, String parameter, String byParameter) {
         StringBuffer sb = new StringBuffer();
         sb.append("SELECT " + parameter + " FROM ");
-        sb.append(entity.getClass().getSimpleName());
+        sb.append(theClass.getSimpleName());
         sb.append(" WHERE " + byParameter + " = ?");
 
         System.out.println(sb);
@@ -144,9 +144,9 @@ public class QueryHelper {
         return sb.toString();
     }
 
-    public static String createQueryUPDATEparameterByParameter(Object entity, String parameter, String byParameter) {
+    public static String createQueryUPDATEparameterByParameter(Class theClass, String parameter, String byParameter) {
         StringBuffer sb = new StringBuffer();
-        sb.append("UPDATE " + entity.getClass().getSimpleName() + " SET " + parameter + " = ? ");
+        sb.append("UPDATE " + theClass.getSimpleName() + " SET " + parameter + " = ? ");
         sb.append(" WHERE " + byParameter + " = ? ");
 
         System.out.println(sb);

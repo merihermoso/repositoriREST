@@ -180,36 +180,18 @@ public class GameService {
         return Response.status(201).entity(entity).build();
     }
 
-    //Servicio para obtener el player a partir del Username (User)
-    @GET
-    @ApiOperation(value = "get the Player by Username")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = Game.class),
-            @ApiResponse(code = 503, message = "not working well...")
-    })
-    @Path("/player/{username}")                                             //Partida By Username
-    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response GetPlayerByUsername(@PathParam("username") String username) {
-        try {
-            Player player = playerDAO.readByParameter("username", username);
-            return Response.status(200).entity(player).build();
-        } catch (Exception e) {
-            return Response.status(503).build();
-        }
-    }
 
-    //Servicio para obtener la Partida a partir del Username (User)
     @GET
     @ApiOperation(value = "get a Game by its ID")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = Game.class),
+            @ApiResponse(code = 200, message = "OK", response = Player.class),
             @ApiResponse(code = 503, message = "not working well...")
     })
-    @Path("/Player/getByID/{playerID}")    //servicio que obtenia la Partida a partir del ID
-    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response GetPlayerById(@PathParam("playerID") int playerID) {
+    @Path("/player/id/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response GetPlayerById(@PathParam("id") int id) {
         try{
-            Player player = playerDAO.readByParameter("id", playerID);
+            Player player = playerDAO.readByParameter("id", id);
             return Response.status(200).entity(player).build();
         }
         catch (Exception e){
@@ -217,9 +199,9 @@ public class GameService {
         }
     }
 
-    //Modificar partida
+
     @PUT
-    @ApiOperation(value = "Update game")
+    @ApiOperation(value = "Update player")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 400, message = "not found")
@@ -267,11 +249,11 @@ public class GameService {
             @ApiResponse(code = 200, message = "OK", response = Enemy.class),
             @ApiResponse(code = 503, message = "not working well...")
     })
-    @Path("/enemy/id/{itemID}")
+    @Path("/enemy/id/{id}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response GetEnemyById(@PathParam("enemyID") int enemyID) {
+    public Response GetEnemyById(@PathParam("id") int id) {
         try {
-            Enemy enemy = enemyDAO.readByParameter("id", enemyID);
+            Enemy enemy = enemyDAO.readByParameter("id", id);
             return Response.status(200).entity(enemy).build();
         } catch (Exception e) {
 

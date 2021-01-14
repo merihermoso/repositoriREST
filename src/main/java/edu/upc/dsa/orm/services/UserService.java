@@ -8,6 +8,7 @@ import edu.upc.dsa.orm.dao.user.UserDAOImpl;
 import edu.upc.dsa.orm.models.API.*;
 import edu.upc.dsa.orm.models.User;
 import io.swagger.annotations.*;
+import javafx.scene.control.TextFormatter;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
@@ -430,11 +431,12 @@ public class UserService {
             @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 404, message = "User not found"),
     })
-    @Path("/user/{username}/parameter/{paramName}")
+    @Path("/user/{username}/parameter/{parameter}")
     @Produces(MediaType.TEXT_PLAIN)
-    public Response getIdByName(@PathParam("username") String username, @PathParam("paramName") String paramName) {
+    public Response readParameterByParameter(@PathParam("username") String username,
+                                             @PathParam("parameter") String parameter) {
 
-        Object res = userDAO.readParameterByParameter(paramName, "username", username);
+        Object res = userDAO.readParameterByParameter(parameter, "username", username);
 
         if (res != null){
 

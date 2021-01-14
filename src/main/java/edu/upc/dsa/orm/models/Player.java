@@ -1,9 +1,9 @@
 package edu.upc.dsa.orm.models;
 
-public class Player {              //classe per objectes de la botiga
+public class Player {
 
-    private int id;                 //s'hauria de vincular amb el userID
-  //  private String username;            //s'hauria de relacionar amb username del user
+    private int id;
+    private String name;
     private String status;
     private int coins;
     private int score;
@@ -62,4 +62,11 @@ public class Player {              //classe per objectes de la botiga
     public int getDamage() {        return damage;    }
     public void setDamage(int damage) {        this.damage = damage;    }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

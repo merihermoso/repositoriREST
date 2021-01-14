@@ -27,28 +27,14 @@ public class ItemService {
 
 
     private final ItemDAO itemDAO;
-    private final InventoryDAO inventoryDAO;
 
     public ItemService() {
 
-        this.inventoryDAO = InventoryDAOImpl.getInstance();
         this.itemDAO = ItemDAOImpl.getInstance();
+
     }
 
-    /*********************************************  resum    *******************************************************/
-    /***
-     * /Items/findAll
-     * /Item/GetByID/{itemID}
-     * /Item/getByNAME/{name}
-     * /Item/register
-     *
-     /*********************************************  falta per fer    *******************************************************/
 
-    //ordenar per preu
-
-
-
-/******************************************     ITEMS services  *******************************************************/
     //Servicio para obtener todos los items
     @GET
     @ApiOperation(value = "Get all items from BBDD")
@@ -74,9 +60,9 @@ public class ItemService {
             @ApiResponse(code = 200, message = "OK", response = Item.class),
             @ApiResponse(code = 503, message = "not working well...")
     })
-    @Path("/item/id/{itemID}")
+    @Path("/item/id/{id}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response GetItemById(@PathParam("itemID") int itemID) {
+    public Response GetItemById(@PathParam("id") int itemID) {
         try {
             Item item = this.itemDAO.readByParameter("id", itemID);
             return Response.status(200).entity(item).build();
@@ -113,11 +99,11 @@ public class ItemService {
             @ApiResponse(code = 201, message = "Successful"),
             @ApiResponse(code = 404, message = "User not found"),
     })
-    @Path("/item/{itemName}/parameter/{paramName}")
+    @Path("/item/{name}/parameter/{parameter}")
     @Produces(MediaType.TEXT_PLAIN)
-    public Response getIdByName(@PathParam("itemName") String itemName, @PathParam("paramName") String paramName) {
+    public Response getIdByName(@PathParam("name") String name, @PathParam("parameter") String parameter) {
 
-        Object res = itemDAO.readParameterByParameter(paramName, "name", itemName);
+        Object res = itemDAO.readParameterByParameter(parameter, "name", name);
 
         if (res != null){
 
