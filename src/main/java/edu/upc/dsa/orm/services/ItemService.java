@@ -56,7 +56,7 @@ public class ItemService {
     })
     @Path("/id/{itemid}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response GetItemById(@PathParam("itemid") String id) {
+    public Response getItemById(@PathParam("itemid") String id) {
 
         Item item = itemDAO.readByParameter("id", id);
 
