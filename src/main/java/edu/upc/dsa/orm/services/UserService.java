@@ -137,53 +137,6 @@ public class UserService {
 
     }
 
-    @PUT
-    @ApiOperation(value = "Change user email")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successful"),
-            @ApiResponse(code = 603, message = "Incorrect password"),
-            @ApiResponse(code = 601, message = "Need to fill in username field"),
-            @ApiResponse(code = 602, message = "Need to fill in password field"),
-            @ApiResponse(code = 604, message = "Need to fill in new email field"),
-            @ApiResponse(code = 404, message = "User not exists"),
-    })
-    @Path("/changeEmail")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response changeEmail(ChangeEmailCredentials changeEmailCredentials) {
-
-        if (changeEmailCredentials.getUsername() == null) return Response.status(601).build();
-        if (changeEmailCredentials.getPassword() == null) return Response.status(602).build();
-        if (changeEmailCredentials.getNewEmail() == null) return Response.status(604).build();
-
-        if (userDAO.exists(changeEmailCredentials.getUsername())) {
-
-            if (userDAO.checkPassword(changeEmailCredentials.getUsername(), changeEmailCredentials.getPassword())) {
-
-                if (userDAO.updateParameterByParameter("email", changeEmailCredentials.getNewEmail(),
-                        "username", changeEmailCredentials.getUsername())) {
-
-                    return Response.status(200).build();
-
-                } else {
-
-                    return Response.status(500).build();
-
-                }
-
-            } else {
-
-                return Response.status(603).build();
-
-            }
-
-        } else {
-
-            return Response.status(404).build();
-
-        }
-
-    }
-
 
     @GET
     @ApiOperation(value = "Get all Users")
@@ -456,22 +409,21 @@ public class UserService {
             @ApiResponse(code = 603, message = "Parameter not found")
     })
     @Path("/{username}/{parameter}")
-    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateParameterByUsername(@PathParam("username") String username,
                                              @PathParam("parameter") String parameter,
-                                              UpdateParameterValue updateParameterValue) {
+                                              String parameterValue) {
 
         if (userDAO.exists(username)) {
 
             try {
 
                 if (User.class.getDeclaredField(parameter).getType().isAssignableFrom(Integer.class)) {
-                    userDAO.updateParameterByParameter(parameter, Integer.parseInt(updateParameterValue.getValue())
+                    userDAO.updateParameterByParameter(parameter, Integer.parseInt(parameterValue)
                             , "username", username);
 
                 } else {
-                    userDAO.updateParameterByParameter(parameter, updateParameterValue.getValue(), "username", username);
+                    userDAO.updateParameterByParameter(parameter, parameterValue, "username", username);
                 }
 
                 return Response.status(200).build();
