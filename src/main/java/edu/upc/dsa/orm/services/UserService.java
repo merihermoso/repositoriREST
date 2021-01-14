@@ -1,8 +1,6 @@
 package edu.upc.dsa.orm.services;
 
 
-import edu.upc.dsa.orm.dao.game.GameDAO;
-import edu.upc.dsa.orm.dao.game.GameDAOImpl;
 import edu.upc.dsa.orm.dao.user.UserDAO;
 import edu.upc.dsa.orm.dao.user.UserDAOImpl;
 import edu.upc.dsa.orm.models.API.*;
@@ -13,7 +11,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -45,7 +42,7 @@ public class UserService {
             @ApiResponse(code = 607, message = "Too young to play")
     })
     @Path("/register")
-    public Response register(RegisterCredentials registerCredentials) throws IllegalAccessException {
+    public Response register(RegisterCredentials registerCredentials) {
 
         if (registerCredentials.getUsername() == null) return Response.status(600).build();
         if (registerCredentials.getPassword() == null) return Response.status(601).build();
@@ -104,7 +101,7 @@ public class UserService {
     })
     @Path("/changePassword")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response changePassword(ChangePasswordCredentials changePasswordCredentials) throws SQLException {
+    public Response changePassword(ChangePasswordCredentials changePasswordCredentials) {
 
         if (changePasswordCredentials.getUsername() == null) return Response.status(601).build();
         if (changePasswordCredentials.getPassword() == null) return Response.status(602).build();
@@ -152,7 +149,7 @@ public class UserService {
     })
     @Path("/changeEmail")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response changeEmail(ChangeEmailCredentials changeEmailCredentials) throws SQLException {
+    public Response changeEmail(ChangeEmailCredentials changeEmailCredentials) {
 
         if (changeEmailCredentials.getUsername() == null) return Response.status(601).build();
         if (changeEmailCredentials.getPassword() == null) return Response.status(602).build();
@@ -325,7 +322,7 @@ public class UserService {
     })
     @Path("/ranking")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getRanking() throws SQLException {
+    public Response getRanking() {
         List<User> users = userDAO.readUserRanking();
         List<UserProfile> userProfileResponse = new ArrayList<>();
         for(User user : users) {
@@ -351,11 +348,14 @@ public class UserService {
     })
     @Path("/{username}/ranking")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getRankingUser(@PathParam("username") String username) throws SQLException {
+    public Response getRankingUser(@PathParam("username") String username) {
         if (username == null) return Response.status(601).build();
         if (userDAO.userExists(username)) {
+
+            User user = userDAO.readByParameter("username", username);
+
             UserRanking userRanking =
-                    new UserRanking(userDAO.readUserRankingPositionByUsername(username));
+                    new UserRanking(user.getUsername(), user.getScore(), userDAO.readUserRankingPositionByUsername(username));
             return Response.status(201).entity(userRanking).build();
         } else {
             return Response.status(404).build();
@@ -367,23 +367,25 @@ public class UserService {
     @ApiOperation(value = "Get a User given its id")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Succesful", response = User.class),
-            @ApiResponse(code = 503, message = "not working well...")
+            @ApiResponse(code = 404, message = "User not found")
     })
     @Path("/id/{id}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response getUserById(@PathParam("id") int id) {
 
-        try{
+        User user = userDAO.readByParameter("id", id);
 
-            User user = userDAO.readByParameter("id", id);
+        if (user == null) {
+
+            return Response.status(404).build();
+
+        } else {
 
             return Response.status(200).entity(user).build();
 
         }
-        catch (Exception e){
 
-            return Response.status(503).build();
-        }
+
     }
 
 
@@ -391,15 +393,20 @@ public class UserService {
     @ApiOperation(value = "Get a user UserProfile given its id")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Succesful", response = UserProfile.class),
-            @ApiResponse(code = 503, message = "not working well...")
+            @ApiResponse(code = 404, message = "User not found")
     })
     @Path("/id/{id}/profile")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response getUserProfileById(@PathParam("id") int id) {
 
-        try{
+        User user = userDAO.readByParameter("id", id);
 
-            User user = userDAO.readByParameter("id", id);
+        if (user == null) {
+
+            return Response.status(404).build();
+
+        } else {
+
             UserProfile userProfile = new UserProfile(user.getUsername(),
                     user.getEmail(),
                     user.getBirthdate(),
@@ -410,10 +417,6 @@ public class UserService {
             return Response.status(200).entity(userProfile).build();
 
         }
-        catch (Exception e){
-
-            return Response.status(503).build();
-        }
     }
 
 
@@ -421,7 +424,7 @@ public class UserService {
     @ApiOperation(value = "Get a user parameter by its username")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful"),
-            @ApiResponse(code = 404, message = "User not found"),
+            @ApiResponse(code = 404, message = "Not found"),
     })
     @Path("/{username}/parameter/{parameter}")
     @Produces(MediaType.TEXT_PLAIN)
@@ -447,7 +450,7 @@ public class UserService {
     @ApiOperation(value = "Update user")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 400, message = "Not found")
+            @ApiResponse(code = 404, message = "Not found")
     })
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
