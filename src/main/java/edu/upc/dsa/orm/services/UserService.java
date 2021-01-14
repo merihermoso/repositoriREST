@@ -456,19 +456,22 @@ public class UserService {
             @ApiResponse(code = 603, message = "Parameter not found")
     })
     @Path("/{username}/{parameter}")
-    @Consumes(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateParameterByUsername(@PathParam("username") String username,
-                                             @PathParam("parameter") String parameter, Object object) {
+                                             @PathParam("parameter") String parameter,
+                                              UpdateParameterValue updateParameterValue) {
 
         if (userDAO.exists("username")) {
 
             try {
 
                 if (User.class.getField(parameter).getType().isAssignableFrom(Integer.class)) {
-                    userDAO.updateParameterByParameter(parameter, (int) object, "username", username);
+                    userDAO.updateParameterByParameter(parameter, Integer.parseInt(updateParameterValue.getValue())
+                            , "username", username);
+
                 } else {
-                    userDAO.updateParameterByParameter(parameter, (String) object, "username", username);
+                    userDAO.updateParameterByParameter(parameter, updateParameterValue.getValue(), "username", username);
                 }
 
                 return Response.status(200).build();
