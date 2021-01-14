@@ -466,7 +466,7 @@ public class UserService {
 
             try {
 
-                if (User.class.getField(parameter).getType().isAssignableFrom(Integer.class)) {
+                if (User.class.getDeclaredField(parameter).getType().isAssignableFrom(Integer.class)) {
                     userDAO.updateParameterByParameter(parameter, Integer.parseInt(updateParameterValue.getValue())
                             , "username", username);
 
