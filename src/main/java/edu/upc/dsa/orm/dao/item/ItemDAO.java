@@ -12,7 +12,7 @@ public interface ItemDAO {
 
     // READ
     List<Item> readAll();
-    Item readByParameter(String byParameter, Object byParameterValue);
+    Object readByParameter(String byParameter, Object byParameterValue);
     Object readParameterByParameter(String parameter, String byParameter, Object byParameterValue);
 
 

@@ -58,12 +58,12 @@ public class ItemService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response readItemById(@PathParam("id") int id) {
 
-        Item item = itemDAO.readByParameter("id", id);
+        Object object = itemDAO.readByParameter("id", id);
 
-        if (item == null) {
+        if (object == null) {
             return Response.status(404).build();
         } else {
-            return Response.status(200).entity(item).build();
+            return Response.status(200).entity(object).build();
         }
 
     }
@@ -73,18 +73,20 @@ public class ItemService {
     @ApiOperation(value = "get an Item by its name")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Item.class),
-            @ApiResponse(code = 503, message = "not working well...")
+            @ApiResponse(code = 404, message = "Item not found")
     })
-    @Path("/{itemName}")
+    @Path("/{name}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response GetItemByName(@PathParam("name") String name) {
-        try{
-            Item item = this.itemDAO.readByParameter("name", name);
-            return Response.status(200).entity(item).build();
+
+        Object object = this.itemDAO.readByParameter("name", name);
+
+        if (object == null) {
+            return Response.status(404).build();
+        } else {
+            return Response.status(200).entity(object).build();
         }
-        catch (Exception e){
-            return Response.status(503).build();
-        }
+
     }
 
 
