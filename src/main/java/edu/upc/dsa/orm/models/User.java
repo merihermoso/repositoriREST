@@ -10,6 +10,13 @@ public class User {
     private int score;
     private int level;
 
+    private int coins;
+    private int speed;
+    private int hit;
+    private int defense;
+    private int healing;
+    private int damage;
+
     public User() {
 
     }
@@ -75,4 +82,51 @@ public class User {
         this.level = level;
     }
 
+    public int getCoins() {
+        return coins;
+    }
+
+    public void setCoins(int coins) {
+        this.coins = coins;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public int getHit() {
+        return hit;
+    }
+
+    public void setHit(int hit) {
+        this.hit = hit;
+    }
+
+    public int getDefense() {
+        return defense;
+    }
+
+    public void setDefense(int defense) {
+        this.defense = defense;
+    }
+
+    public int getHealing() {
+        return healing;
+    }
+
+    public void setHealing(int healing) {
+        this.healing = healing;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
 }

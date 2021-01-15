@@ -7,8 +7,6 @@ import edu.upc.dsa.orm.dao.game.GameDAOImpl;
 
 import edu.upc.dsa.orm.dao.item.ItemDAO;
 import edu.upc.dsa.orm.dao.item.ItemDAOImpl;
-import edu.upc.dsa.orm.dao.player.PlayerDAO;
-import edu.upc.dsa.orm.dao.player.PlayerDAOImpl;
 import edu.upc.dsa.orm.dao.user.UserDAO;
 import edu.upc.dsa.orm.dao.user.UserDAOImpl;
 import edu.upc.dsa.orm.models.*;
@@ -31,12 +29,10 @@ public class GameService {
     private final UserDAO userDAO;
     private final ItemDAO itemDAO;
     private final EnemyDAO enemyDAO;
-    private final PlayerDAO playerDAO;
 
     public GameService() {
         gameDAO = GameDAOImpl.getInstance();
         this.userDAO = UserDAOImpl.getInstance();
-        this.playerDAO = PlayerDAOImpl.getInstance();
         this.itemDAO = ItemDAOImpl.getInstance();
         this.enemyDAO = EnemyDAOImpl.getInstance();
     }
@@ -128,46 +124,6 @@ public class GameService {
         } else {
             return Response.status(404).build();
         }
-    }
-
-    /**************************************     PLAYER services ******************************************************/
-
-    //Servicio para obtener todas los players
-    @GET
-    @ApiOperation(value = "Get all Players from BBDD")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successful", response = Player.class, responseContainer = "List"),
-    })
-    @Path("/player")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getPlayers() {
-        List<Player> players = this.playerDAO.readAll();
-        GenericEntity<List<Player>> entity = new GenericEntity<List<Player>>(players) {
-        };
-        return Response.status(200).entity(entity).build();
-    }
-
-
-    @PUT
-    @ApiOperation(value = "Update player")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 404, message = "Player not found")
-    })
-    @Path("/player")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response UpdatePlayer(Player player) {
-
-        if (playerDAO.update(player)) {
-
-            return Response.status(200).entity(player).build();
-
-        } else {
-
-            return Response.status(400).build();
-
-        }
-
     }
 
     /************************************************   ENEMIES services ***********************************************/

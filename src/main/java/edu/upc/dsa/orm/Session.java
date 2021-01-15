@@ -8,6 +8,8 @@ public interface Session {
 
     void close();
 
+    // CRUD
+
     // CREATE
     boolean create(Object object);
 
@@ -19,7 +21,6 @@ public interface Session {
     // UPDATE
     boolean update(Object object);
     boolean updateByParameter(Object object, String byParameter, Object byParameterValue);
-
     boolean updateParameterByParameter(Class theClass, String parameter,
                                               Object parameterValue, String byParameter, Object byParameterValue);
 
