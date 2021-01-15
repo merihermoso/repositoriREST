@@ -8,17 +8,20 @@ public class Game {
     private String dateEnd;
     private String timeEnd;
     private int score;
+    private int userID;
+
 
     public Game() {
 
     }
-    public Game(String dateStart, String timeStart, String dateEnd, String timeEnd, int score) {
+    public Game(String dateStart, String timeStart, String dateEnd, String timeEnd, int score, int userID) {
 
         setDateStart(dateStart);
         setTimeStart(timeStart);
         setDateStart(dateEnd);
         setTimeEnd(timeEnd);
         setScore(score);
+        setUserID(userID);
 
     }
     public int getId() {
@@ -42,5 +45,8 @@ public class Game {
 
     public int getScore() {        return score;    }
     public void setScore(int score) {        this.score = score;    }
+
+    public int getUserID() { return userID; }
+    public void setUserID(int userID) { this.userID = userID; }
 
 }

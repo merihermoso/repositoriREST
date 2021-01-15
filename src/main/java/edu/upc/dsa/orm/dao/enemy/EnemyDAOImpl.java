@@ -3,6 +3,7 @@ package edu.upc.dsa.orm.dao.enemy;
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
 import edu.upc.dsa.orm.models.Enemy;
+import edu.upc.dsa.orm.models.Item;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +27,20 @@ public class EnemyDAOImpl implements EnemyDAO {
     public boolean create(Enemy enemy) {
 
         return session.create(enemy);
+
+    }
+
+
+    public boolean exists(String name) {
+
+        return (session.readByParameter(Item.class, "name", name) != null);
+
+    }
+
+
+    public boolean existsId(int id) {
+
+        return (session.readByParameter(Item.class, "id", id) != null);
 
     }
 

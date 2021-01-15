@@ -16,6 +16,7 @@ public interface GameDAO {
       Object readParameterByParameter(String parameter, String byParameter, Object byParameterValue);
 
 
+      boolean existsId(int id);
       // UPDATE
       boolean update(Game game);
       boolean updateByParameter(Game game, String byParameter, Object byParameterValue);
