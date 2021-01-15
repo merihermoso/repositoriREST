@@ -31,6 +31,12 @@ public class InventoryDAOImpl implements InventoryDAO {
 
     }
 
+    public boolean existsId(int id) {
+
+        return (session.readByParameter(Item.class, "id", id) != null);
+
+    }
+
     // READ
     public List<Inventory> readAll(){
 

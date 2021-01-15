@@ -1,10 +1,13 @@
 package edu.upc.dsa.orm.services;
 
+import edu.upc.dsa.orm.dao.inventory.InventoryDAO;
+import edu.upc.dsa.orm.dao.inventory.InventoryDAOImpl;
 import edu.upc.dsa.orm.dao.item.ItemDAO;
 import edu.upc.dsa.orm.dao.item.ItemDAOImpl;
 import edu.upc.dsa.orm.dao.user.UserDAO;
 import edu.upc.dsa.orm.dao.user.UserDAOImpl;
 import edu.upc.dsa.orm.models.API.*;
+import edu.upc.dsa.orm.models.Inventory;
 import edu.upc.dsa.orm.models.Item;
 import edu.upc.dsa.orm.models.User;
 import io.swagger.annotations.Api;
@@ -28,10 +31,13 @@ import java.util.List;
 public class ShopService {
 
     private final ItemDAO itemDAO;
+    private final InventoryDAO inventoryDAO;
+
 
     public ShopService() {
 
         itemDAO = ItemDAOImpl.getInstance();
+        inventoryDAO = InventoryDAOImpl.getInstance();
 
     }
 
@@ -43,7 +49,7 @@ public class ShopService {
             @ApiResponse(code = 201, message = "Created"),
             @ApiResponse(code = 250, message = "Item already exists")
     })
-    @Path("/")
+    @Path("/item/")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createItemById(Item item) {
 
@@ -68,7 +74,7 @@ public class ShopService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful", response = Item.class, responseContainer="List"),
     })
-    @Path("/")
+    @Path("/item/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllItems() {
 
@@ -85,7 +91,7 @@ public class ShopService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful", response = ItemProfile.class, responseContainer="List"),
     })
-    @Path("/profile")
+    @Path("/item/profile")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllItemProfile() {
 
@@ -132,7 +138,7 @@ public class ShopService {
             @ApiResponse(code = 404, message = "Item not exists"),
 
     })
-    @Path("/{name}/profile")
+    @Path("/item/{name}/profile")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response getItemProfileByName(@PathParam("name") String name) {
 
@@ -168,7 +174,7 @@ public class ShopService {
             @ApiResponse(code = 404, message = "User not exists"),
 
     })
-    @Path("/{name}")
+    @Path("/item/{name}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getItemByName(@PathParam("name") String name) {
 
@@ -199,7 +205,7 @@ public class ShopService {
             @ApiResponse(code = 200, message = "Succesful", response = Item.class),
             @ApiResponse(code = 404, message = "Item not found")
     })
-    @Path("/id/{id}")
+    @Path("/item/id/{id}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response getItemById(@PathParam("id") int id) {
 
@@ -223,7 +229,7 @@ public class ShopService {
             @ApiResponse(code = 200, message = "Succesful", response = ItemProfile.class),
             @ApiResponse(code = 404, message = "Item not found")
     })
-    @Path("/id/{id}/profile")
+    @Path("/item/id/{id}/profile")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getItemProfileById(@PathParam("id") int id) {
 
@@ -259,7 +265,7 @@ public class ShopService {
             @ApiResponse(code = 603, message = "Parameter not found"),
             @ApiResponse(code = 404, message = "Not found"),
     })
-    @Path("/{name}/{parameter}")
+    @Path("/item/{name}/{parameter}")
     @Produces(MediaType.TEXT_PLAIN)
     public Response readParameterByName(@PathParam("name") String name,
                                             @PathParam("parameter") String parameter) {
@@ -294,7 +300,7 @@ public class ShopService {
             @ApiResponse(code = 200, message = "Successful"),
             @ApiResponse(code = 404, message = "Not found"),
     })
-    @Path("/id/{id}/{parameter}")
+    @Path("/item/id/{id}/{parameter}")
     @Produces(MediaType.TEXT_PLAIN)
     public Response readParameterById(@PathParam("id") int id,
                                              @PathParam("parameter") String parameter) {
@@ -321,7 +327,7 @@ public class ShopService {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 404, message = "Item not found")
     })
-    @Path("/id/{id}")
+    @Path("/item/id/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateItemById(@PathParam("id") int id, Item item) {
 
@@ -343,7 +349,7 @@ public class ShopService {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 404, message = "User not found")
     })
-    @Path("/{name}")
+    @Path("/item/{name}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateItemByName(@PathParam("name") String name, Item item) {
 
@@ -368,7 +374,7 @@ public class ShopService {
             @ApiResponse(code = 404, message = "User not found"),
             @ApiResponse(code = 603, message = "Parameter not found")
     })
-    @Path("/{name}/{parameter}")
+    @Path("/item/{name}/{parameter}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateParameterByName(@PathParam("name") String name,
                                               @PathParam("parameter") String parameter,
@@ -410,7 +416,7 @@ public class ShopService {
             @ApiResponse(code = 404, message = "Item not found"),
             @ApiResponse(code = 603, message = "Parameter not found")
     })
-    @Path("/id/{id}/{parameter}")
+    @Path("/item/id/{id}/{parameter}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateParameterById(@PathParam("id") int id,
                                               @PathParam("parameter") String parameter,
@@ -454,7 +460,7 @@ public class ShopService {
             @ApiResponse(code = 200, message = "Successful"),
             @ApiResponse(code = 404, message = "Item not found"),
     })
-    @Path("/id/{id}")
+    @Path("/item/id/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteById(@PathParam("id") int id) {
 
@@ -478,7 +484,7 @@ public class ShopService {
             @ApiResponse(code = 200, message = "Successful"),
             @ApiResponse(code = 404, message = "Item not found"),
     })
-    @Path("/{name}")
+    @Path("/item/{name}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteByName(@PathParam("name") String name) {
 
@@ -496,5 +502,232 @@ public class ShopService {
         }
 
     }
+
+    /**************************************  inventory service  *******************************************************/
+
+    // CREATE
+
+    @POST
+    @ApiOperation(value = "Create a Inventory (shop)")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Created"),
+            @ApiResponse(code = 250, message = "Item already exists")       //aumentem quantitat?
+    })
+    @Path("/inventory/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createInventoryById(Inventory inventory) {
+
+        if (!inventoryDAO.existsId(inventory.getUserID())) {
+
+            inventoryDAO.create(inventory);
+            return Response.status(201).build();
+
+        } else {
+
+            return Response.status(250).build();
+        }
+
+    }
+
+
+
+    @GET
+    @ApiOperation(value = "Get all inventories")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful", response = Inventory.class, responseContainer="List"),
+    })
+    @Path("/inventory/")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllInventories() {
+
+        List<Inventory> inventories = inventoryDAO.readAll();
+
+        GenericEntity<List<Inventory>> entity = new GenericEntity<List<Inventory>>(inventories) {};
+        return Response.status(200).entity(entity).build();
+
+    }
+
+
+    @GET
+    @ApiOperation(value = "Get an inventory given its id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Succesful", response = Item.class),
+            @ApiResponse(code = 404, message = "Inventory not found")
+    })
+    @Path("/inventory/id/{userID}")
+    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
+    public Response getInventoryById(@PathParam("userID") int userID) {
+
+        if (itemDAO.existsId(userID)) {
+
+            Item item = itemDAO.readByParameter("userID", userID);
+            return Response.status(200).entity(item).build();
+
+        } else {
+
+            return Response.status(404).build();
+
+        }
+
+    }
+
+/*
+    @GET
+    @ApiOperation(value = "Get a user ItemProfile given its id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Succesful", response = ItemProfile.class),
+            @ApiResponse(code = 404, message = "Item not found")
+    })
+    @Path("/id/{id}/profile")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getItemProfileById(@PathParam("id") int id) {
+
+        if (itemDAO.existsId(id)) {
+
+            Item item = itemDAO.readByParameter("id", id);
+
+            ItemProfile itemProfile = new ItemProfile((item.getName()),
+                    item.getHit(),
+                    item.getDefense(),
+                    item.getHealing(),
+                    item.getDamage(),
+                    item.getPrice(),
+                    item.getDescription(),
+                    item.getImage());
+
+            return Response.status(200).entity(itemProfile).build();
+
+        } else {
+
+            return Response.status(404).build();
+
+        }
+
+    }
+
+*/
+
+/*
+    @GET                                                                                            // DONA ERROR
+    @ApiOperation(value = "Get an inventory parameter by its userID")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 404, message = "Not found"),
+    })
+    @Path("/id/{userID}/{parameter}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response readParameterById(@PathParam("userID") int userID,
+                                      @PathParam("parameter") String parameter) {
+
+        if (itemDAO.existsId(userID)) {
+
+            Object res = itemDAO.readParameterByParameter(parameter, "userID", userID);
+            return Response.status(200).entity(res).build();
+
+        } else {
+
+            return Response.status(404).build();
+
+        }
+
+    }
+*/
+
+    //UPDATE
+
+    @PUT
+    @ApiOperation(value = "Update an inventory by its userID")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "Inventory not found")
+    })
+    @Path("/inventory/id/{userID}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateInventoryById(@PathParam("userID") int userID, Inventory inventory) {
+
+        if (inventoryDAO.existsId(userID) && userID == inventory.getUserID()) {
+
+            inventoryDAO.update(inventory);
+            return Response.status(200).build();
+
+        } else {
+
+            return Response.status(404).build();
+        }
+
+    }
+
+
+
+
+    @PUT
+    @ApiOperation(value = "Update an inventory parameter by its userID")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 404, message = "Item not found"),
+            @ApiResponse(code = 603, message = "Parameter not found")
+    })
+    @Path("/inventory/id/{userID}/{parameter}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateInventoryParameterById(@PathParam("userID") int userID,
+                                        @PathParam("parameter") String parameter,
+                                        String parameterValue) {
+
+        if (itemDAO.existsId(userID)) {
+
+            try {
+
+                if (Inventory.class.getDeclaredField(parameter).getType().isAssignableFrom(Integer.class)) {
+                    inventoryDAO.updateParameterByParameter(parameter, Integer.parseInt(parameterValue)
+                            , "userID", userID);
+
+                } else {
+                    inventoryDAO.updateParameterByParameter(parameter, parameterValue, "userID", userID);
+                }
+
+                return Response.status(200).build();
+
+            } catch (NoSuchFieldException noSuchFieldException) {
+
+                return Response.status(603).build();
+
+            }
+
+        } else {
+
+            return Response.status(404).build();
+
+        }
+
+    }
+
+
+
+    // DELETE
+
+    @DELETE
+    @ApiOperation(value = "Delete an inventory by its userID")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 404, message = "Inventory not found"),
+    })
+    @Path("/inventory/id/{userID}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteInventoryById(@PathParam("userID") int userID) {
+
+        if (inventoryDAO.existsId(userID)) {
+
+            inventoryDAO.deleteByParameter("userID", userID);
+            return Response.status(200).build();
+
+        } else {
+
+            return Response.status(404).build();
+
+        }
+
+    }
+
+
 
 }

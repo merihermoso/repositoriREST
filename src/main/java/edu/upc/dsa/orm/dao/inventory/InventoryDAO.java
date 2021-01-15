@@ -18,7 +18,7 @@ public interface InventoryDAO {
     Inventory readByParameter(String byParameter, Object byParameterValue);
     Object readParameterByParameter(String parameter, String byParameter, Object byParameterValue);
 
-
+    boolean existsId(int id);
     // UPDATE
     boolean update(Inventory inventory);
     boolean updateByParameter(Inventory inventory, String byParameter, Object byParameterValue);
