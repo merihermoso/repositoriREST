@@ -55,6 +55,8 @@ $(document).ready(function() {
             "birthdate_year": birthdate_year, "birthdate_month": birthdate_month,
             "birthdate_day": birthdate_day};
 
+            console.log(user);
+
             $.ajax({
                 type: 'POST',
                 url: BASE_URI.concat("/user/register"),
