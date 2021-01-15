@@ -9,8 +9,8 @@ public class Item {     //classe per objectes DINS del inventari    (objectes co
     private int defense;
     private int healing;
     private int damage;
-    private String description;
     private int price;
+    private String description;
     private String image;
 
     public Item() {

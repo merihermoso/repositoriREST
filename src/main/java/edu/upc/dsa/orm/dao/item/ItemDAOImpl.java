@@ -55,9 +55,9 @@ public class ItemDAOImpl implements ItemDAO {
     }
 
 
-    public Object readByParameter(String byParameter, Object byParameterValue) {
+    public Item readByParameter(String byParameter, Object byParameterValue) {
 
-        return session.readByParameter(Item.class, byParameter, byParameterValue);
+        return ((Item) session.readByParameter(Item.class, byParameter, byParameterValue));
 
     }
 
@@ -67,7 +67,17 @@ public class ItemDAOImpl implements ItemDAO {
 
     }
 
+    public boolean exists(String name) {
 
+        return (session.readByParameter(Item.class, "name", name) != null);
+
+    }
+
+    public boolean existsId(int id) {
+
+        return (session.readByParameter(Item.class, "id", id) != null);
+
+    }
 
     // UPDATE
 

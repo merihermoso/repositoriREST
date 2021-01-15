@@ -4,12 +4,12 @@ import edu.upc.dsa.orm.dao.enemy.EnemyDAO;
 import edu.upc.dsa.orm.dao.enemy.EnemyDAOImpl;
 import edu.upc.dsa.orm.dao.game.GameDAO;
 import edu.upc.dsa.orm.dao.game.GameDAOImpl;
-
 import edu.upc.dsa.orm.dao.item.ItemDAO;
 import edu.upc.dsa.orm.dao.item.ItemDAOImpl;
-import edu.upc.dsa.orm.dao.user.UserDAO;
-import edu.upc.dsa.orm.dao.user.UserDAOImpl;
-import edu.upc.dsa.orm.models.*;
+import edu.upc.dsa.orm.models.Enemy;
+import edu.upc.dsa.orm.models.Game;
+import edu.upc.dsa.orm.models.Item;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -19,195 +19,404 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.*;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Api(value = "/game")
 @Path("game")
 public class GameService {
 
     private final GameDAO gameDAO;
-    private final UserDAO userDAO;
-    private final ItemDAO itemDAO;
     private final EnemyDAO enemyDAO;
 
     public GameService() {
+
         gameDAO = GameDAOImpl.getInstance();
-        this.userDAO = UserDAOImpl.getInstance();
-        this.itemDAO = ItemDAOImpl.getInstance();
-        this.enemyDAO = EnemyDAOImpl.getInstance();
+        enemyDAO = EnemyDAOImpl.getInstance();
+
+    }
+
+    // CREATE
+
+    @POST
+    @ApiOperation(value = "Create a game")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Created"),
+            @ApiResponse(code = 250, message = "Game already exists")
+    })
+    @Path("/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createGameById(Game game) {
+
+        if (!gameDAO.existsId(game.getUserID())) {
+
+            gameDAO.create(game);
+            return Response.status(201).build();
+
+        } else {
+
+            return Response.status(250).build();
+        }
+
     }
 
 
+
+
+
     @GET
-    @ApiOperation(value = "Get all Games from BBDD")
+    @ApiOperation(value = "Get all Games")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successful", response = Game.class, responseContainer = "List"),
+            @ApiResponse(code = 200, message = "Successful", response = Game.class, responseContainer="List"),
     })
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getGames() {
+    public Response getAllGames() {
+
         List<Game> games = gameDAO.readAll();
-        GenericEntity<List<Game>> entity = new GenericEntity<List<Game>>(games) {
-        };
+
+        GenericEntity<List<Game>> entity = new GenericEntity<List<Game>>(games) {};
         return Response.status(200).entity(entity).build();
+
     }
 
-    //Servicio para obtener la Partida a partir del Username (User)
-    @GET
-    @ApiOperation(value = "get a Game by Username")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = Game.class),
-            @ApiResponse(code = 503, message = "not working well...")
 
-    })
-    @Path("/{username}")                                             //Partida By Username
-    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response GetGameByUsername(@PathParam("username") String username) {
-        try {
-            Game game = gameDAO.readByParameter("username", username);
-            return Response.status(200).entity(game).build();
-        } catch (Exception e) {
-            return Response.status(503).build();
-        }
-    }
-
-    //Servicio para obtener la Partida a partir del Username (User)
     @GET
-    @ApiOperation(value = "get a Game by its ID")
+    @ApiOperation(value = "Get a Game given its id")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = Game.class),
-            @ApiResponse(code = 503, message = "not working well...")
+            @ApiResponse(code = 200, message = "Succesful", response = Game.class),
+            @ApiResponse(code = 404, message = "Item not found")
     })
-    @Path("/id/{id}")    //servicio que obtenia la Partida a partir del ID
+    @Path("/id/{id}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response GetGameById(@PathParam("id") int id) {
-        try{
+    public Response getItemById(@PathParam("id") int id) {
+
+        if (gameDAO.existsId(id)) {
+
             Game game = gameDAO.readByParameter("id", id);
             return Response.status(200).entity(game).build();
-        }
-        catch (Exception e){
 
-            return Response.status(503).build();
-        }
-    }
-
-    // Servicio para registrar una nueva partida
-    @POST
-    @ApiOperation(value = "Register a new Game")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successful! Game registered"),
-    })
-    @Path("/")
-    public Response gameRegister(Game game) {
-
-        if (gameDAO.create(game)) {
-            return Response.status(200).build();
         } else {
-            return Response.status(200).build();
+
+            return Response.status(404).build();
+
         }
 
     }
 
-    //Per modificar una partida sencera
+
+
+
+    @GET
+    @ApiOperation(value = "Get a game parameter by its id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 404, message = "Not found"),
+    })
+    @Path("/id/{id}/{parameter}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response readParameterById(@PathParam("id") int id,
+                                             @PathParam("parameter") String parameter) {
+
+        if (gameDAO.existsId(id)) {
+
+            Object res = gameDAO.readParameterByParameter(parameter, "id", id);
+            return Response.status(200).entity(res).build();
+
+        } else {
+
+            return Response.status(404).build();
+
+        }
+
+    }
+
+
+    //UPDATE
+
     @PUT
-    @ApiOperation(value = "Update game")
+    @ApiOperation(value = "Update a game by its id")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 404, message = "Game not found")
     })
-    @Path("/")
+    @Path("/id/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response UpdateGame(Game game) {
+    public Response updateGameById(@PathParam("id") int id, Game game) {
 
-        if (gameDAO.update(game)) {
-            return Response.status(200).entity(game).build();
+        if (gameDAO.existsId(id) && id == game.getId()) {
+
+            gameDAO.update(game);
+            return Response.status(200).build();
+
         } else {
+
             return Response.status(404).build();
         }
+
     }
 
-    /************************************************   ENEMIES services ***********************************************/
-    //Servei per obtenir tots els enemics
-    @GET                                                                    //OBTENEMOS TODAS LAS PARTIDAS
-    @ApiOperation(value = "Get all Enemy from BBDD")
+
+    @PUT
+    @ApiOperation(value = "Update a game parameter by its id")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successful", response = Enemy.class, responseContainer = "List"),
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 404, message = "Game not found"),
+            @ApiResponse(code = 603, message = "Parameter not found")
     })
-    @Path("/enemy")
+    @Path("/id/{id}/{parameter}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getEnemies() {
+    public Response updateParameterById(@PathParam("id") int id,
+                                              @PathParam("parameter") String parameter,
+                                              String parameterValue) {
 
-        List<Enemy> enemy = enemyDAO.readAll();
+        if (gameDAO.existsId(id)) {
 
-        GenericEntity<List<Enemy>> entity = new GenericEntity<List<Enemy>>(enemy) {
-        };
+            try {
+
+                if (Game.class.getDeclaredField(parameter).getType().isAssignableFrom(Integer.class)) {
+                    gameDAO.updateParameterByParameter(parameter, Integer.parseInt(parameterValue)
+                            , "id", id);
+
+                } else {
+                    gameDAO.updateParameterByParameter(parameter, parameterValue, "id", id);
+                }
+
+                return Response.status(200).build();
+
+            } catch (NoSuchFieldException noSuchFieldException) {
+
+                return Response.status(603).build();
+
+            }
+
+        } else {
+
+            return Response.status(404).build();
+
+        }
+
+    }
+
+
+
+    // DELETE
+
+    @DELETE
+    @ApiOperation(value = "Delete a game by its id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 404, message = "Game not found"),
+    })
+    @Path("/id/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteById(@PathParam("id") int id) {
+
+        if (gameDAO.existsId(id)) {
+
+            gameDAO.deleteByParameter("id", id);
+            return Response.status(200).build();
+
+        } else {
+
+            return Response.status(404).build();
+
+        }
+
+    }
+
+    // CREATE
+
+    @POST
+    @ApiOperation(value = "Create an enemy")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Created"),
+            @ApiResponse(code = 250, message = "Enemy already exists")
+    })
+    @Path("/enemy/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createEnemyById(Enemy enemy) {
+
+        if (!enemyDAO.exists(enemy.getName())) {
+
+            enemyDAO.create(enemy);
+            return Response.status(201).build();
+
+        } else {
+
+            return Response.status(250).build();
+        }
+
+    }
+
+
+
+
+
+    @GET
+    @ApiOperation(value = "Get all Enemies")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful", response = Enemy.class, responseContainer="List"),
+    })
+    @Path("/enemy/")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllEnemies() {
+
+        List<Enemy> enemies = enemyDAO.readAll();
+
+        GenericEntity<List<Enemy>> entity = new GenericEntity<List<Enemy>>(enemies) {};
         return Response.status(200).entity(entity).build();
 
     }
 
 
-    //Servicio para obtener un Enemy a partir del ID
     @GET
-    @ApiOperation(value = "get an Enemy by its ID")
+    @ApiOperation(value = "Get an Enemy given its id")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = Enemy.class),
-            @ApiResponse(code = 503, message = "not working well...")
+            @ApiResponse(code = 200, message = "Succesful", response = Enemy.class),
+            @ApiResponse(code = 404, message = "Enemy not found")
     })
     @Path("/enemy/id/{id}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response GetEnemyById(@PathParam("id") int id) {
-        try {
+    public Response getEnemyById(@PathParam("id") int id) {
+
+        if (enemyDAO.existsId(id)) {
+
             Enemy enemy = enemyDAO.readByParameter("id", id);
             return Response.status(200).entity(enemy).build();
-        } catch (Exception e) {
 
-            return Response.status(503).build();
+        } else {
+
+            return Response.status(404).build();
+
         }
+
     }
 
 
-    //Servei per obtenir un enemic a partir del seu nom
+
+
     @GET
-    @ApiOperation(value = "get an Enemy by its NAME")
+    @ApiOperation(value = "Get an enemy parameter by its id")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = Enemy.class),
-            @ApiResponse(code = 503, message = "not working well...")
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 404, message = "Not found"),
     })
-    @Path("/enemy/{name}")
-    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response GetEnemyByName(@PathParam("name") String name) {
-        try {
-            Enemy enemy = enemyDAO.readByParameter("name", name);
-            return Response.status(200).entity(enemy).build();
-        } catch (Exception e) {
-            return Response.status(503).build();
+    @Path("/enemy/id/{id}/{parameter}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response readEnemyParameterById(@PathParam("id") int id,
+                                      @PathParam("parameter") String parameter) {
+
+        if (enemyDAO.existsId(id)) {
+
+            Object res = enemyDAO.readParameterByParameter(parameter, "id", id);
+            return Response.status(200).entity(res).build();
+
+        } else {
+
+            return Response.status(404).build();
+
         }
+
+    }
+
+
+    //UPDATE
+
+    @PUT
+    @ApiOperation(value = "Update an enemy by its id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "Enemy not found")
+    })
+    @Path("/enemy/id/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateEnemyById(@PathParam("id") int id, Enemy enemy) {
+
+        if (enemyDAO.existsId(id) && id == enemy.getId()) {
+
+            enemyDAO.update(enemy);
+            return Response.status(200).build();
+
+        } else {
+
+            return Response.status(404).build();
+        }
+
     }
 
 
     @PUT
-    @ApiOperation(value = "Update an Enemy")
+    @ApiOperation(value = "Update an enemy parameter by its id")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 503, message = "Exception sql..."),
-            @ApiResponse(code = 400, message = "not found")
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 404, message = "Game not found"),
+            @ApiResponse(code = 603, message = "Parameter not found")
     })
-    //Servei per modificar tot l'enemic
-    @Path("/enemy")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response UpdateEnemy(Enemy enemy) {
+    @Path("/enemy/id/{id}/{parameter}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateEnemyParameterById(@PathParam("id") int id,
+                                        @PathParam("parameter") String parameter,
+                                        String parameterValue) {
 
-        if (enemyDAO.update(enemy)) {
-            return Response.status(200).entity(enemy).build();
-        }
-        else{
-            return Response.status(400).build();
+        if (enemyDAO.existsId(id)) {
+
+            try {
+
+                if (Enemy.class.getDeclaredField(parameter).getType().isAssignableFrom(Integer.class)) {
+                    enemyDAO.updateParameterByParameter(parameter, Integer.parseInt(parameterValue)
+                            , "id", id);
+
+                } else {
+                    enemyDAO.updateParameterByParameter(parameter, parameterValue, "id", id);
+                }
+
+                return Response.status(200).build();
+
+            } catch (NoSuchFieldException noSuchFieldException) {
+
+                return Response.status(603).build();
+
+            }
+
+        } else {
+
+            return Response.status(404).build();
+
         }
 
     }
 
 
+
+    // DELETE
+
+    @DELETE
+    @ApiOperation(value = "Delete an enemy by its id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 404, message = "Enemy not found"),
+    })
+    @Path("/enemy/id/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteEnemyById(@PathParam("id") int id) {
+
+        if (enemyDAO.existsId(id)) {
+
+            enemyDAO.deleteByParameter("id", id);
+            return Response.status(200).build();
+
+        } else {
+
+            return Response.status(404).build();
+
+        }
+
+    }
+
+
+
+
 }
-
-
-

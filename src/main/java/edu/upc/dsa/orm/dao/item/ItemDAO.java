@@ -12,10 +12,11 @@ public interface ItemDAO {
 
     // READ
     List<Item> readAll();
-    Object readByParameter(String byParameter, Object byParameterValue);
+    Item readByParameter(String byParameter, Object byParameterValue);
     Object readParameterByParameter(String parameter, String byParameter, Object byParameterValue);
 
-
+    boolean existsId(int id);
+    boolean exists(String name);
     // UPDATE
     boolean update(Item item);
     boolean updateByParameter(Item item, String byParameter, Object byParameterValue);

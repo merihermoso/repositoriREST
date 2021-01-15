@@ -17,6 +17,8 @@ public interface EnemyDAO {
     Enemy readByParameter(String byParameter, Object byParameterValue);
     Object readParameterByParameter(String parameter, String byParameter, Object byParameterValue);
 
+    boolean existsId(int id);
+    boolean exists(String name);
 
     // UPDATE
     boolean update(Enemy enemy);
