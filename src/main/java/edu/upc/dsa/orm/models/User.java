@@ -29,7 +29,9 @@ public class User {
         setBirthdate(birthdate);
         setScore(0);
         setLevel(1);
+
         setCoins(0);
+        setSpeed(2);
         setDefense(10);
         setHealing(5);
         setDamage(2);
