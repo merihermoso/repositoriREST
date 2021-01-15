@@ -12,7 +12,6 @@ public class User {
 
     private int coins;
     private int speed;
-    private int hit;
     private int defense;
     private int healing;
     private int damage;
@@ -30,6 +29,10 @@ public class User {
         setBirthdate(birthdate);
         setScore(0);
         setLevel(1);
+        setCoins(0);
+        setDefense(10);
+        setHealing(5);
+        setDamage(2);
 
     }
 
@@ -96,14 +99,6 @@ public class User {
 
     public void setSpeed(int speed) {
         this.speed = speed;
-    }
-
-    public int getHit() {
-        return hit;
-    }
-
-    public void setHit(int hit) {
-        this.hit = hit;
     }
 
     public int getDefense() {
