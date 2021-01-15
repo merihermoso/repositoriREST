@@ -68,7 +68,10 @@ public class UserDAOImpl implements UserDAO {
         String birthdate = registerCredentials.getBirthdate_day() + "/" + registerCredentials.getBirthdate_month() + "/"
                 + registerCredentials.getBirthdate_year();
 
-        User user = new User(registerCredentials.getUsername(), registerCredentials.getEmail(), registerCredentials.getPassword(), birthdate);
+        String passwordHash = getHashString(registerCredentials.getPassword(), "SHA-256");
+
+        User user = new User(registerCredentials.getUsername(), registerCredentials.getEmail(),
+                passwordHash, birthdate);
 
         return session.create(user);
 
