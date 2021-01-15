@@ -15,7 +15,7 @@ public class QueryHelper {
 
         int i = 1;
         for (String field: fields) {
-            if (i == 2) {
+            if (i == 1) {
                 sb.append(field);
             } else {
                 sb.append(", ").append(field);
