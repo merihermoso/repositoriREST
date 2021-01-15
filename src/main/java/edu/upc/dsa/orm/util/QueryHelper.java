@@ -106,7 +106,8 @@ public class QueryHelper {
         sb.append(object.getClass().getSimpleName()).append(" ");
         sb.append("SET ");
         String field;
-        int i =1;
+
+        int i = 1;
         while (i<fields.length){
             field = fields[i];
             if (i>1) sb.append(" = ?, ");
@@ -128,7 +129,8 @@ public class QueryHelper {
         sb.append(object.getClass().getSimpleName()).append(" ");
         sb.append("SET ");
         String field;
-        int i =1;
+
+        int i = 1;
         while (i<fields.length){
             field = fields[i];
             if (i>1) sb.append(" = ?, ");

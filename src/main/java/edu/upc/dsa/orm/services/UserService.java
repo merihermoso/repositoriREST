@@ -660,7 +660,9 @@ public class UserService {
 
         if (userDAO.exists(username)) {
 
-            userDAO.deleteByParameter("username", username);
+            int id = (int) userDAO.readParameterByParameter("id", "username", username);
+
+            userDAO.deleteByParameter("id", id);
             return Response.status(200).build();
 
         } else {
