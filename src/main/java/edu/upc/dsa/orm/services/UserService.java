@@ -649,7 +649,7 @@ public class UserService {
 
 
     @DELETE
-    @ApiOperation(value = "Delete a user by its id")
+    @ApiOperation(value = "Delete a user by its username")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful"),
             @ApiResponse(code = 404, message = "User not found"),
@@ -660,7 +660,7 @@ public class UserService {
 
         if (userDAO.exists(username)) {
 
-            userDAO.deleteByParameter("id", username);
+            userDAO.deleteByParameter("username", username);
             return Response.status(200).build();
 
         } else {
