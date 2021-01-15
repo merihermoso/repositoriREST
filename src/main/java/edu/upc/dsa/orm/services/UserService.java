@@ -448,7 +448,7 @@ public class UserService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateUserById(@PathParam("id") int id, User user) {
 
-        if (userDAO.existsId(id)) {
+        if (userDAO.existsId(id) && id == user.getId()) {
 
             userDAO.update(user);
             return Response.status(200).build();
@@ -461,7 +461,7 @@ public class UserService {
     }
 
     @PUT
-    @ApiOperation(value = "Update a user")
+    @ApiOperation(value = "Update a user by its username")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 404, message = "User not found")
@@ -470,7 +470,7 @@ public class UserService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateUserByUsername(@PathParam("username") String username, User user) {
 
-        if (userDAO.exists(username)) {
+        if (userDAO.exists(username) && username.equals(user.getUsername())) {
 
             userDAO.updateByParameter(user,"username", username);
             return Response.status(200).build();
@@ -611,6 +611,56 @@ public class UserService {
             String newPasswordHash = userDAO.getHashString(newPassword, "SHA-256");
 
             userDAO.updateParameterByParameter("password", newPasswordHash, "id", id);
+            return Response.status(200).build();
+
+        } else {
+
+            return Response.status(404).build();
+
+        }
+
+    }
+
+
+    // DELETE
+
+    @DELETE
+    @ApiOperation(value = "Delete a user by its id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 404, message = "User not found"),
+    })
+    @Path("/id/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteById(@PathParam("id") int id) {
+
+        if (userDAO.existsId(id)) {
+
+            userDAO.deleteByParameter("id", id);
+            return Response.status(200).build();
+
+        } else {
+
+            return Response.status(404).build();
+
+        }
+
+    }
+
+
+    @DELETE
+    @ApiOperation(value = "Delete a user by its id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 404, message = "User not found"),
+    })
+    @Path("/{username}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteByUsername(@PathParam("username") String username) {
+
+        if (userDAO.exists(username)) {
+
+            userDAO.deleteByParameter("id", username);
             return Response.status(200).build();
 
         } else {
