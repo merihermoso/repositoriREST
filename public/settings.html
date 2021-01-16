@@ -120,50 +120,28 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="card">
-                                <div class="card-header" id="headingThree">
-                                    <h2 class="mb-0">
-                                        <button class="btn btn-block text-left collapsed" id="fuente-eli" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                            ELIMINAR
-                                        </button>
-                                    </h2>
-                                </div>
-                                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-                                    <div class="card-body">
-
-                                        <div class="alert alert-danger" id="card-panel-control2" role="alert">
-                                            <div>
-                                                <p id="eliminar2">Eliminar usuario</p>
-
-                                                <form action="@{DeleteUser()}" method="get">
-
-                                                    <p>Escribe el ID del usuario a eliminar:</p>
-
-                                                    <div class="form-group col-md-5">
-                                                        <label for="userID3" class="mr-sm-2" id="familia">ID del usuario a eliminar:</label>
-                                                        <input type="text" class="form-control" placeholder="User ID" id="userID3" name="userID3" required>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" id="gridCheck2" required>
-                                                            <label class="form-check-label" for="gridCheck2">
-                                                                Estás eliminando definitivamente tu cuenta de usuario. ¿Deseas continuar?
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group col-md-3">
-                                                        <button type="submit" class="btn btn-danger" id="familia">Eliminar cuenta</button>
-                                                    </div>
-                                                </form>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <!-- ESPACIO -->
+
+                        <div class="row">
+                            <div class='col-4'></div>
+                            <div class='col-4'>
+                                <!-- Bottones -->
+                                <div class="row mt-5 ml-5">
+                                    <button id="cerrar_session" onclick="return false" class="btn btn-danger">
+                                        Cerrrar Sesion
+                                    </button>
+                                </div>    
+
+                                <div class="row mt-3 ml-5">
+                                    <button id="eliminar_usuario" class="btn btn-danger">
+                                        Eliminar Usuario
+                                    </button>
+                                </div>
+                                <!-- /Bottones -->
+                            </div>
+                            <div class='col-4'></div>
+                        </div>
 
                     </div>
 
