@@ -3,8 +3,8 @@ package edu.upc.dsa.orm.models;
 public class Game {
 
     private int id;
-    private int id_user;
-    private int id_map;
+    private int userID;
+    private int mapID;
     private String dateStart;
     private String timeStart;
     private String dateEnd;
@@ -26,8 +26,8 @@ public class Game {
                 int score, int coins, int speed, int defense, int healing, int damage, int health) {
 
         this.id = id;
-        this.id_user = id_user;
-        this.id_map = id_map;
+        this.userID = id_user;
+        this.mapID = id_map;
         this.dateStart = dateStart;
         this.timeStart = timeStart;
         this.dateEnd = dateEnd;
@@ -50,20 +50,20 @@ public class Game {
         this.id = id;
     }
 
-    public int getId_user() {
-        return id_user;
+    public int getUserID() {
+        return userID;
     }
 
-    public void setId_user(int id_user) {
-        this.id_user = id_user;
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
-    public int getId_map() {
-        return id_map;
+    public int getMapID() {
+        return mapID;
     }
 
-    public void setId_map(int id_map) {
-        this.id_map = id_map;
+    public void setMapID(int mapID) {
+        this.mapID = mapID;
     }
 
     public String getDateStart() {

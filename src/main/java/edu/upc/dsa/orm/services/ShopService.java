@@ -4,11 +4,14 @@ import edu.upc.dsa.orm.dao.inventory.InventoryDAO;
 import edu.upc.dsa.orm.dao.inventory.InventoryDAOImpl;
 import edu.upc.dsa.orm.dao.item.ItemDAO;
 import edu.upc.dsa.orm.dao.item.ItemDAOImpl;
+import edu.upc.dsa.orm.dao.orders.OrdersDAO;
+import edu.upc.dsa.orm.dao.orders.OrdersDAOImpl;
 import edu.upc.dsa.orm.dao.user.UserDAO;
 import edu.upc.dsa.orm.dao.user.UserDAOImpl;
 import edu.upc.dsa.orm.models.API.*;
 import edu.upc.dsa.orm.models.Inventory;
 import edu.upc.dsa.orm.models.Item;
+import edu.upc.dsa.orm.models.Orders;
 import edu.upc.dsa.orm.models.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,12 +35,14 @@ public class ShopService {
 
     private final ItemDAO itemDAO;
     private final InventoryDAO inventoryDAO;
+    private final OrdersDAO ordersDAO;
 
 
     public ShopService() {
 
         itemDAO = ItemDAOImpl.getInstance();
         inventoryDAO = InventoryDAOImpl.getInstance();
+        ordersDAO = OrdersDAOImpl.getInstance();
 
     }
 
@@ -433,11 +438,11 @@ public class ShopService {
     })
     @Path("/inventory/id/{userID}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response getInventoryById(@PathParam("id_user") int userID) {
+    public Response getInventoryById(@PathParam("userID") int userID) {
 
         if (itemDAO.existsId(userID)) {
 
-            Item item = itemDAO.readByParameter("id_user", userID);
+            Item item = itemDAO.readByParameter("userID", userID);
             return Response.status(200).entity(item).build();
 
         } else {
@@ -484,7 +489,7 @@ public class ShopService {
     })
     @Path("/inventory/id/{userID}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateInventoryById(@PathParam("id_user") int userID, Inventory inventory) {
+    public Response updateInventoryById(@PathParam("userID") int userID, Inventory inventory) {
 
         inventoryDAO.update(inventory);
         return Response.status(200).build();
@@ -502,7 +507,7 @@ public class ShopService {
     })
     @Path("/inventory/id/{userID}/{parameter}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateInventoryParameterById(@PathParam("id_user") int userID,
+    public Response updateInventoryParameterById(@PathParam("userID") int userID,
                                         @PathParam("parameter") String parameter,
                                         String parameterValue) {
 
@@ -512,10 +517,10 @@ public class ShopService {
 
                 if (Inventory.class.getDeclaredField(parameter).getType().isAssignableFrom(Integer.class)) {
                     inventoryDAO.updateParameterByParameter(parameter, Integer.parseInt(parameterValue)
-                            , "id_user", userID);
+                            , "userID", userID);
 
                 } else {
-                    inventoryDAO.updateParameterByParameter(parameter, parameterValue, "id_user", userID);
+                    inventoryDAO.updateParameterByParameter(parameter, parameterValue, "userID", userID);
                 }
 
                 return Response.status(200).build();
@@ -546,11 +551,11 @@ public class ShopService {
     })
     @Path("/inventory/id/{userID}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteInventoryById(@PathParam("id_user") int userID) {
+    public Response deleteInventoryById(@PathParam("userID") int userID) {
 
         if (inventoryDAO.existsId(userID)) {
 
-            inventoryDAO.deleteByParameter("id_user", userID);
+            inventoryDAO.deleteByParameter("userID", userID);
             return Response.status(200).build();
 
         } else {
@@ -560,7 +565,155 @@ public class ShopService {
         }
 
     }
+/****************************************** orders service ************************************************************/
 
+
+// CREATE
+
+@POST
+@ApiOperation(value = "Add an item to Order (SHOP)")
+@ApiResponses(value = {
+        @ApiResponse(code = 201, message = "Created"),
+        @ApiResponse(code = 250, message = "Item already exists")       //aumentem quantitat?
+})
+@Path("/orders")
+@Consumes(MediaType.APPLICATION_JSON)
+public Response createOrdersById(Orders orders) {
+
+    ordersDAO.create(orders);
+    return Response.status(201).build();
+
+}
+
+
+
+    @GET
+    @ApiOperation(value = "Get all orders")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful", response = Orders.class, responseContainer="List"),
+    })
+    @Path("/order")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllOrders() {
+
+        List<Orders> orders = ordersDAO.readAll();
+
+        GenericEntity<List<Orders>> entity = new GenericEntity<List<Orders>>(orders) {};
+        return Response.status(200).entity(entity).build();
+
+    }
+
+
+    @GET
+    @ApiOperation(value = "Get an order given its userID    (ERROR)")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Succesful", response = Item.class),
+            @ApiResponse(code = 404, message = "Order not found")
+    })
+    @Path("/order/id/{userID}")
+    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
+    public Response getOrderById(@PathParam("userID") int userID) {
+
+        if (itemDAO.existsId(userID)) {
+
+            Item item = itemDAO.readByParameter("userID", userID);
+            return Response.status(200).entity(item).build();
+
+        } else {
+
+            return Response.status(404).build();
+
+        }
+
+    }
+
+
+    //UPDATE
+
+    @PUT
+    @ApiOperation(value = "Update an order by its userID")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "Order not found")
+    })
+    @Path("/order/id/{userID}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateOrderById(@PathParam("userID") int userID, Orders orders) {
+
+        ordersDAO.update(orders);
+        return Response.status(200).build();
+
+    }
+
+
+
+    @PUT
+    @ApiOperation(value = "Update an order parameter by its userID")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 404, message = "Item not found"),
+            @ApiResponse(code = 603, message = "Parameter not found")
+    })
+    @Path("/order/id/{userID}/{parameter}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateOrderParameterById(@PathParam("userID") int userID,
+                                                 @PathParam("parameter") String parameter,
+                                                 String parameterValue) {
+
+        if (itemDAO.existsId(userID)) {
+
+            try {
+
+                if (Inventory.class.getDeclaredField(parameter).getType().isAssignableFrom(Integer.class)) {
+                    ordersDAO.updateParameterByParameter(parameter, Integer.parseInt(parameterValue)
+                            , "userID", userID);
+
+                } else {
+                    ordersDAO.updateParameterByParameter(parameter, parameterValue, "userID", userID);
+                }
+
+                return Response.status(200).build();
+
+            } catch (NoSuchFieldException noSuchFieldException) {
+
+                return Response.status(603).build();
+
+            }
+
+        } else {
+
+            return Response.status(404).build();
+
+        }
+
+    }
+
+
+
+    // DELETE
+
+    @DELETE
+    @ApiOperation(value = "Delete an order by its userID")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 404, message = "Order not found"),
+    })
+    @Path("/order/id/{userID}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteOrderById(@PathParam("userID") int userID) {
+
+        if (ordersDAO.existsId(userID)) {
+
+            ordersDAO.deleteByParameter("userID", userID);
+            return Response.status(200).build();
+
+        } else {
+
+            return Response.status(404).build();
+
+        }
+
+    }
 
 
 }

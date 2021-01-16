@@ -1,27 +1,27 @@
 package edu.upc.dsa.orm.models;
 
-public class Inventory {
+public class Orders {
 
-    private int gameID;
+    private int userID;
     private int itemID;
     private int quantity;
 
-    public Inventory() {
+    public Orders() {
 
     }
 
-    public Inventory(int id_game, int id_item, int quantity) {
-        this.gameID = id_game;
+    public Orders(int id_game, int id_item, int quantity) {
+        this.userID = id_game;
         this.itemID = id_item;
         this.quantity = quantity;
     }
 
-    public int getGameID() {
-        return gameID;
+    public int getUserID() {
+        return userID;
     }
 
-    public void setGameID(int gameID) {
-        this.gameID = gameID;
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
     public int getItemID() {
