@@ -695,7 +695,9 @@ public class UserService {
 
         if (userDAO.exists(username)) {
 
-            List<Inventory> inventoryItems = inventoryDAO.readAll();
+            int id = (int) userDAO.readParameterByParameter("id", "username", username);
+
+            List<Inventory> inventoryItems = inventoryDAO.readAllByParameter("id_user", id);
 
             GenericEntity<List<Inventory>> entity = new GenericEntity<List<Inventory>>(inventoryItems) {
             };
@@ -720,7 +722,7 @@ public class UserService {
 
         if (userDAO.existsId(id)) {
 
-            List<Inventory> inventoryItems = inventoryDAO.readAll();
+            List<Inventory> inventoryItems = inventoryDAO.readAllByParameter("id_user", id);
 
             GenericEntity<List<Inventory>> entity = new GenericEntity<List<Inventory>>(inventoryItems) {
             };
