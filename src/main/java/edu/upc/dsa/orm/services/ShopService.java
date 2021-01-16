@@ -54,7 +54,7 @@ public class ShopService {
             @ApiResponse(code = 201, message = "Created"),
             @ApiResponse(code = 250, message = "Item already exists")
     })
-    @Path("/item/")
+    @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createItemById(Item item) {
 

@@ -12,6 +12,7 @@ public interface GameDAO {
 
       // READ
       List<Game> readAll();
+      List<Game> readAllByParameter(String byParameter, Object byParameterValue);
       Game readByParameter(String byParameter, Object byParameterValue);
       Object readParameterByParameter(String parameter, String byParameter, Object byParameterValue);
 

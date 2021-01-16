@@ -4,11 +4,11 @@ import edu.upc.dsa.orm.dao.enemy.EnemyDAO;
 import edu.upc.dsa.orm.dao.enemy.EnemyDAOImpl;
 import edu.upc.dsa.orm.dao.game.GameDAO;
 import edu.upc.dsa.orm.dao.game.GameDAOImpl;
-import edu.upc.dsa.orm.dao.item.ItemDAO;
-import edu.upc.dsa.orm.dao.item.ItemDAOImpl;
+import edu.upc.dsa.orm.dao.inventory.InventoryDAO;
+import edu.upc.dsa.orm.dao.inventory.InventoryDAOImpl;
 import edu.upc.dsa.orm.models.Enemy;
 import edu.upc.dsa.orm.models.Game;
-import edu.upc.dsa.orm.models.Item;
+import edu.upc.dsa.orm.models.Inventory;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,8 +19,6 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -30,11 +28,13 @@ public class GameService {
 
     private final GameDAO gameDAO;
     private final EnemyDAO enemyDAO;
+    private final InventoryDAO inventoryDAO;
 
     public GameService() {
 
         gameDAO = GameDAOImpl.getInstance();
         enemyDAO = EnemyDAOImpl.getInstance();
+        inventoryDAO = InventoryDAOImpl.getInstance();
 
     }
 
@@ -311,6 +311,31 @@ public class GameService {
 
             return Response.status(404).build();
 
+        }
+
+    }
+
+
+    @GET
+    @ApiOperation(value = "Get a game inventory given its id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful", response = Inventory.class, responseContainer="List"),
+            @ApiResponse(code = 404, message = "User not found")
+    })
+    @Path("/id/{id}/inventory")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUserInventory(@PathParam("id") int id) {
+
+        if (gameDAO.existsId(id)) {
+
+            List<Inventory> inventoryItems = inventoryDAO.readAllByParameter("id_game", id);
+
+            GenericEntity<List<Inventory>> entity = new GenericEntity<List<Inventory>>(inventoryItems) {
+            };
+            return Response.status(200).entity(entity).build();
+
+        } else {
+            return Response.status(404).build();
         }
 
     }

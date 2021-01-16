@@ -59,6 +59,28 @@ public class GameDAOImpl implements GameDAO {
     }
 
 
+    public List<Game> readAllByParameter(String byParameter, Object byParameterValue){
+
+        Session session;
+        List<Game> gameList;
+
+        HashMap<Integer, Object> result;
+
+        session = FactorySession.openSession();
+        result = session.readAllByParameter(Game.class, byParameter, byParameterValue);
+
+        gameList = new ArrayList<>();
+
+        for (Object object : result.values()) {
+            gameList.add((Game) object);
+        }
+
+        session.close();
+
+        return gameList;
+    }
+
+
     public Game readByParameter(String byParameter, Object byParameterValue) {
 
         return ((Game) session.readByParameter(Game.class, byParameter, byParameterValue));
