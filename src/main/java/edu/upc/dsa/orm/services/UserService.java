@@ -470,7 +470,7 @@ public class UserService {
             @ApiResponse(code = 200, message = "Successful", response = Game.class, responseContainer="List"),
             @ApiResponse(code = 404, message = "User not found")
     })
-    @Path("/id/{username}/game")
+    @Path("/{username}/game")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUserGamesByUsername(@PathParam("username") String username) {
 

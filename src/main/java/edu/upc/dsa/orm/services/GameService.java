@@ -57,8 +57,6 @@ public class GameService {
 
 
 
-
-
     @GET
     @ApiOperation(value = "Get all Games")
     @ApiResponses(value = {
@@ -320,11 +318,11 @@ public class GameService {
     @ApiOperation(value = "Get a game inventory given its id")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful", response = Inventory.class, responseContainer="List"),
-            @ApiResponse(code = 404, message = "User not found")
+            @ApiResponse(code = 404, message = "Game not found")
     })
     @Path("/id/{id}/inventory")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getUserInventory(@PathParam("id") int id) {
+    public Response getGameInventory(@PathParam("id") int id) {
 
         if (gameDAO.existsId(id)) {
 
