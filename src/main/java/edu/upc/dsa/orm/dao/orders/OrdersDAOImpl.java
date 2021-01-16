@@ -1,6 +1,5 @@
 package edu.upc.dsa.orm.dao.orders;
 
-//import com.sun.tools.javac.jvm.Items;
 
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
@@ -62,11 +61,42 @@ public class OrdersDAOImpl implements OrdersDAO {
     }
 
 
+    @Override
+    public List<Orders> readAllByParameter(String id_user, int id) {
+        System.out.println("función incorrecta... OrdersDAOImp linea 66");
+        return null;
+    }
+
+    public List<Orders> readAllByParameter(String byParameter, Object byParameterValue){
+
+        Session session;
+        List<Orders> ordersList;
+
+        HashMap<Integer, Object> result;
+
+        session = FactorySession.openSession();
+        result = session.readAllByParameter(Orders.class, byParameter, byParameterValue);
+
+        ordersList = new ArrayList<>();
+
+        for (Object object : result.values()) {
+            ordersList.add((Orders) object);
+        }
+
+        session.close();
+
+        return ordersList;
+    }
+
+
+
     public Orders readByParameter(String byParameter, Object byParameterValue) {
 
         return ((Orders) session.readByParameter(Orders.class, byParameter, byParameterValue));
 
     }
+
+
 
     public Object readParameterByParameter(String parameter, String byParameter, Object byParameterValue) {
 
@@ -98,6 +128,9 @@ public class OrdersDAOImpl implements OrdersDAO {
     }
 
 
+
+    //DELETE
+
     public boolean delete(Orders orders) {
 
         return session.delete(orders);
@@ -109,5 +142,7 @@ public class OrdersDAOImpl implements OrdersDAO {
         return session.deleteByParameter(Orders.class, byParameter, byParameterValue);
 
     }
-    
+
+
+
 }

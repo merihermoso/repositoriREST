@@ -10,6 +10,7 @@ import edu.upc.dsa.orm.models.Enemy;
 import edu.upc.dsa.orm.models.Game;
 import edu.upc.dsa.orm.models.Inventory;
 
+import edu.upc.dsa.orm.models.Orders;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -314,29 +315,6 @@ public class GameService {
     }
 
 
-    @GET
-    @ApiOperation(value = "Get a game inventory given its id")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successful", response = Inventory.class, responseContainer="List"),
-            @ApiResponse(code = 404, message = "Game not found")
-    })
-    @Path("/id/{id}/inventory")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getGameInventory(@PathParam("id") int id) {
-
-        if (gameDAO.existsId(id)) {
-
-            List<Inventory> inventoryItems = inventoryDAO.readAllByParameter("id_game", id);
-
-            GenericEntity<List<Inventory>> entity = new GenericEntity<List<Inventory>>(inventoryItems) {
-            };
-            return Response.status(200).entity(entity).build();
-
-        } else {
-            return Response.status(404).build();
-        }
-
-    }
 
 
     //UPDATE
@@ -431,6 +409,118 @@ public class GameService {
         }
 
     }
+/**********************************     Inventory service       *******************************************************/
 
+@GET
+@ApiOperation(value = "Get a game inventory given its id")
+@ApiResponses(value = {
+        @ApiResponse(code = 200, message = "Successful", response = Inventory.class, responseContainer="List"),
+        @ApiResponse(code = 404, message = "Game not found")
+})
+@Path("/id/{id}/inventory")
+@Produces(MediaType.APPLICATION_JSON)
+public Response getGameInventory(@PathParam("id") int id) {
+
+    if (gameDAO.existsId(id)) {
+
+        List<Inventory> inventoryItems = inventoryDAO.readAllByParameter("id_game", id);
+
+        GenericEntity<List<Inventory>> entity = new GenericEntity<List<Inventory>>(inventoryItems) {
+        };
+        return Response.status(200).entity(entity).build();
+
+    } else {
+        return Response.status(404).build();
+    }
+
+}
+
+
+    //UPDATE
+
+    @PUT
+    @ApiOperation(value = "Update a game inventory by its userID")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "Inventory not found")
+    })
+    @Path("/id/{id}/inventory")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateInventoryById(@PathParam("id") int gameID, Inventory inventory) {
+
+        inventoryDAO.update(inventory);
+        return Response.status(200).build();
+
+    }
+
+
+
+    @PUT
+    @ApiOperation(value = "Update an inventory parameter by its gameID")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 404, message = "Inventory not found"),
+            @ApiResponse(code = 603, message = "Parameter not found")
+    })
+    @Path("/id/{id}/{parameter}/inventory")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateInventoryParameterById(@PathParam("id") int gameID,
+                                             @PathParam("parameter") String parameter,
+                                             String parameterValue) {
+
+        if (inventoryDAO.existsId(gameID)) {
+
+            try {
+
+                if (Inventory.class.getDeclaredField(parameter).getType().isAssignableFrom(Integer.class)) {
+                    inventoryDAO.updateParameterByParameter(parameter, Integer.parseInt(parameterValue)
+                            , "id_game", gameID);
+
+                } else {
+                    inventoryDAO.updateParameterByParameter(parameter, parameterValue, "id_user", gameID);
+                }
+
+                return Response.status(200).build();
+
+            } catch (NoSuchFieldException noSuchFieldException) {
+
+                return Response.status(603).build();
+
+            }
+
+        } else {
+
+            return Response.status(404).build();
+
+        }
+
+    }
+
+
+
+    // DELETE
+
+    @DELETE
+    @ApiOperation(value = "Delete an inventory by its gameID")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 404, message = "Inventory not found"),
+    })
+    @Path("/id/{id}/inventory")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteOrderById(@PathParam("id") int gameID) {
+
+        if (inventoryDAO.existsId(gameID)) {
+
+            inventoryDAO.deleteByParameter("id_game", gameID);
+            return Response.status(200).build();
+
+        } else {
+
+            return Response.status(404).build();
+
+        }
+
+    }
 
 }

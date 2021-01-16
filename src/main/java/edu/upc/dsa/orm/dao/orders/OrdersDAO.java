@@ -1,5 +1,6 @@
 package edu.upc.dsa.orm.dao.orders;
 
+import edu.upc.dsa.orm.models.Inventory;
 import edu.upc.dsa.orm.models.Orders;
 
 import java.util.List;
@@ -16,6 +17,8 @@ public interface OrdersDAO {
     Orders readByParameter(String byParameter, Object byParameterValue);
     Object readParameterByParameter(String parameter, String byParameter, Object byParameterValue);
 
+
+
     boolean existsId(int id);
     // UPDATE
     boolean update(Orders orders);
@@ -29,4 +32,5 @@ public interface OrdersDAO {
     boolean deleteByParameter(String byParameter, Object byParameterValue);
 
 
+    List<Orders> readAllByParameter(String id_user, int id);
 }
