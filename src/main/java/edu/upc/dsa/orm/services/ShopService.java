@@ -433,11 +433,11 @@ public class ShopService {
     })
     @Path("/inventory/id/{userID}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response getInventoryById(@PathParam("userID") int userID) {
+    public Response getInventoryById(@PathParam("id_user") int userID) {
 
         if (itemDAO.existsId(userID)) {
 
-            Item item = itemDAO.readByParameter("userID", userID);
+            Item item = itemDAO.readByParameter("id_user", userID);
             return Response.status(200).entity(item).build();
 
         } else {
@@ -457,12 +457,12 @@ public class ShopService {
     })
     @Path("/id/{userID}/{parameter}")
     @Produces(MediaType.TEXT_PLAIN)
-    public Response readParameterById(@PathParam("userID") int userID,
+    public Response readParameterById(@PathParam("id_user") int userID,
                                       @PathParam("parameter") String parameter) {
 
         if (itemDAO.existsId(userID)) {
 
-            Object res = itemDAO.readParameterByParameter(parameter, "userID", userID);
+            Object res = itemDAO.readParameterByParameter(parameter, "id_user", userID);
             return Response.status(200).entity(res).build();
 
         } else {
@@ -484,7 +484,7 @@ public class ShopService {
     })
     @Path("/inventory/id/{userID}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateInventoryById(@PathParam("userID") int userID, Inventory inventory) {
+    public Response updateInventoryById(@PathParam("id_user") int userID, Inventory inventory) {
 
         inventoryDAO.update(inventory);
         return Response.status(200).build();
@@ -502,7 +502,7 @@ public class ShopService {
     })
     @Path("/inventory/id/{userID}/{parameter}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateInventoryParameterById(@PathParam("userID") int userID,
+    public Response updateInventoryParameterById(@PathParam("id_user") int userID,
                                         @PathParam("parameter") String parameter,
                                         String parameterValue) {
 
@@ -512,10 +512,10 @@ public class ShopService {
 
                 if (Inventory.class.getDeclaredField(parameter).getType().isAssignableFrom(Integer.class)) {
                     inventoryDAO.updateParameterByParameter(parameter, Integer.parseInt(parameterValue)
-                            , "userID", userID);
+                            , "id_user", userID);
 
                 } else {
-                    inventoryDAO.updateParameterByParameter(parameter, parameterValue, "userID", userID);
+                    inventoryDAO.updateParameterByParameter(parameter, parameterValue, "id_user", userID);
                 }
 
                 return Response.status(200).build();
@@ -546,11 +546,11 @@ public class ShopService {
     })
     @Path("/inventory/id/{userID}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteInventoryById(@PathParam("userID") int userID) {
+    public Response deleteInventoryById(@PathParam("id_user") int userID) {
 
         if (inventoryDAO.existsId(userID)) {
 
-            inventoryDAO.deleteByParameter("userID", userID);
+            inventoryDAO.deleteByParameter("id_user", userID);
             return Response.status(200).build();
 
         } else {
