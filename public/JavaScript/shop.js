@@ -79,6 +79,7 @@ $(document).ready(function() {
         $("#numero1").text(cantidad1);
     })
 
+
     $('#s2').click(function (){
         cantidad2= cantidad2 + 1;
         $("#numero2").text(cantidad2);
@@ -88,6 +89,7 @@ $(document).ready(function() {
         $("#numero2").text(cantidad2);
     })
 
+
     $('#s3').click(function (){
         cantidad3= cantidad3 + 1;
         $("#numero3").text(cantidad3);
@@ -95,8 +97,8 @@ $(document).ready(function() {
     $('#r3').click(function () {
         if(cantidad3 != 1) cantidad3 = cantidad3 - 1;
         $("#numero3").text(cantidad3);
-
     })
+
 
     $('#s4').click(function (){
         cantidad4= cantidad4 + 1;
@@ -107,6 +109,7 @@ $(document).ready(function() {
         $("#numero4").text(cantidad4);
     })
 
+
     $('#s5').click(function (){
         cantidad5= cantidad5 + 1;
         $("#numero5").text(cantidad5);
@@ -116,6 +119,7 @@ $(document).ready(function() {
         $("#numero5").text(cantidad5);
     })
 
+    
     $('#s6').click(function (){
         cantidad6= cantidad6 + 1;
         $("#numero6").text(cantidad6);
@@ -124,6 +128,7 @@ $(document).ready(function() {
         if(cantidad6 != 1) cantidad6 = cantidad6 - 1;
         $("#numero6").text(cantidad6);
     })
+
 
     $('#s7').click(function (){
         cantidad7= cantidad7 + 1;
@@ -134,6 +139,7 @@ $(document).ready(function() {
         $("#numero7").text(cantidad7);
     })
 
+
     $('#s8').click(function (){
         cantidad8= cantidad8 + 1;
         $("#numero8").text(cantidad8);
@@ -142,6 +148,7 @@ $(document).ready(function() {
         if(cantidad8 != 1) cantidad8 = cantidad8 - 1;
         $("#numero8").text(cantidad8);
     })
+
 
     $('#s9').click(function (){
         cantidad9= cantidad9 + 1;
@@ -159,14 +166,14 @@ $(document).ready(function() {
         var inventario = {"idObjeto": 2, "cantidad": cantidad2, "idJugador": idJugador};
         console.log(inventario);
         compraObjeto(inventario);
-        diamantes = diamantes - 150*cantidad2;
+        diamantes = diamantes - 150 * cantidad2;
         window.sessionStorage.setItem("diamantes", diamantes);
         $("#m").text(diamantes);
         $("#numero2").text(1);
         cantidad2 = 1;
     });
 
-    $('#hacha').click(function () {
+    $('#venda').click(function () {
         var inventario = {"idObjeto": 2, "cantidad": cantidad2, "idJugador": idJugador};
         console.log(inventario);
         compraObjeto(inventario);
@@ -177,7 +184,7 @@ $(document).ready(function() {
         cantidad2 = 1;
     });
 
-    $('#vacuna').click(function () {
+    $('#agua').click(function () {
         var inventario = {"idObjeto": 3, "cantidad": cantidad3, "idJugador": idJugador};
         console.log(inventario);
         compraObjeto(inventario);
@@ -188,7 +195,7 @@ $(document).ready(function() {
         cantidad3 = 1;
     });
 
-    $('#cuerda').click(function () {
+    $('#escudo').click(function () {
         var inventario = {"idObjeto": 4, "cantidad": cantidad4, "idJugador": idJugador};
         console.log(inventario);
         compraObjeto(inventario);
@@ -199,7 +206,7 @@ $(document).ready(function() {
         cantidad4 = 1;
     });
 
-    $('#casco').click(function () {
+    $('#mascara').click(function () {
         var inventario = {"idObjeto": 5, "cantidad": cantidad5, "idJugador": idJugador};
         console.log(inventario);
         compraObjeto(inventario);
@@ -214,14 +221,70 @@ $(document).ready(function() {
         var inventario = {"idObjeto": 6, "cantidad": cantidad6, "idJugador": idJugador};
         console.log(inventario);
         compraObjeto(inventario);
-        diamantes = diamantes - 25*cantidad6;
+        diamantes = diamantes - 25 * cantidad6;
         window.sessionStorage.setItem("diamantes", diamantes);
         $("#m").text(diamantes);
         $("#numero6").text(1)
         cantidad6 = 1;
     });
 
-    function compraObjeto(inventario) {
+    $('#extintor').click(function () {
+        var inventario = {"idObjeto": 4, "cantidad": cantidad4, "idJugador": idJugador};
+        console.log(inventario);
+        compraObjeto(inventario);
+        diamantes = diamantes - 20*cantidad4;
+        window.sessionStorage.setItem("diamantes", diamantes);
+        $("#m").text(diamantes);
+        $("#numero4").text(1);
+        cantidad4 = 1;
+    });
+
+    $('#mangera').click(function () {
+        var inventario = {"idObjeto": 5, "cantidad": cantidad5, "idJugador": idJugador};
+        console.log(inventario);
+        compraObjeto(inventario);
+        diamantes = diamantes - 100*cantidad5;
+        window.sessionStorage.setItem("diamantes", diamantes);
+        $("#m").text(diamantes);
+        $("#numero5").text(1);
+        cantidad5 = 1;
+    });
+
+    $('#hacha').click(function () {
+        var inventario = {"idObjeto": 6, "cantidad": cantidad6, "idJugador": idJugador};
+        compraObjeto(inventario);
+        //diamantes = diamantes - 25 * cantidad6;
+        //window.sessionStorage.setItem("diamantes", diamantes);
+        //$("#m").text(diamantes);
+        $("#numero6").text("1");
+        cantidad6 = 1;
+    });
+
+
+    $('#cerrar_sesion').click(function () {
+        window.localStorage.setItem("", username);
+    });
+
+
+    compraObjeto(inventario) 
+    {
+        console.log("comprando objeto", inventario);
+        $.ajax({
+            type: 'POST',
+            url: BASE_URI.concat("/user/register"), //Modificar antes de copiar en cada funcion
+            headers: {'content-type': 'application/json'},
+            data: JSON.stringify(inventario),
+            dataType: 'json',
+            statusCode: {
+                201: function() {
+                    alert("Comprado correctamente\n");
+                    //window.localStorage.setItem("username", username);
+                }
+            }
+        })
+    }
+    
+    /*function compraObjeto(inventario) {
         console.log("comprando objeto",inventario);
         $.ajax({
             type: 'POST',
@@ -236,5 +299,5 @@ $(document).ready(function() {
                 console.log(e.message);
             }
         });
-    }
+    }*/
 });

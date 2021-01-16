@@ -5,11 +5,13 @@
     <title>Tienda</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
     <!-- Boostrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="shortcut icon" href="Media/logofuego.png"/>
     <link rel="stylesheet" href="CSS/shop.css" type="text/css">
+    
     <!-- FONT AWESOME, para poner los simbolos en nuestra web -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
           integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
@@ -280,7 +282,8 @@
 <footer>
 
     <div class="usuario-activo">
-        Has iniciado sesión como: ${userConnected} | <a href="@{Logout()}">Cerrar sesión</a>
+        <p id="cerrar_sesion"><a href="login.html">Cerrar sesion</a></p>
+        <!--Has iniciado sesión como: ${userConnected} | <a href="@{Logout()}">Cerrar sesión</a>-->
     </div>
     <!-- Copyright -->
     <div class="copyright">

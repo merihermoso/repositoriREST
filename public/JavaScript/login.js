@@ -15,7 +15,7 @@ $(document).ready(function() {
             dataType: 'json',
             headers: {'content-type': 'application/json'},
             statusCode: {
-                201: function() {
+                200: function() {
                     alert("Has iniciado sesión correctamente\n");
                     window.localStorage.setItem("username", username);
                     var url = "index.html";
@@ -64,7 +64,7 @@ $(document).ready(function() {
                 data: JSON.stringify(user),
                 dataType: 'json',
                 statusCode: {
-                    201: function() {
+                    200: function() {
                         alert("Te has registrado correctamente\n");
                         window.localStorage.setItem("username", username);
                         var url = "index.html";
