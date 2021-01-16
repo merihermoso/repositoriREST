@@ -11,6 +11,7 @@ $(document).ready(function() {
     console.log(username);
     console.log(diamantes);
     $("#m").text(diamantes);
+    $("#nav_username").text(username);
 
     var cantidad1 = parseInt($("#numero1").text());
     var cantidad2 = parseInt($("#numero2").text());
@@ -24,7 +25,7 @@ $(document).ready(function() {
 
 
     $.ajax({
-        url: BASE_URI.concat("/item"),
+        url: BASE_URI.concat("/shop/item"),
 
         success: function(respuesta) {
             console.log(respuesta);

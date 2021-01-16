@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+    
 <head>
     <meta charset="UTF-8">
     <title>Firefighter Adventure</title>
@@ -17,6 +18,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="JavaScript/login.js"></script>
 </head>
+
 <body>
   <!-- Cabecera -->
   <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #EB984E;">
@@ -24,9 +26,11 @@
           <a class="navbar-brand" href="index.html">
               <img src="Media/logocabecera.png" style="width: 30%;">
           </a>
+
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
           </button>
+
           <div class="collapse navbar-collapse" id="navbarNav">
               <ul class="navbar-nav ml-auto">
                   <li class="nav-item active">
@@ -56,12 +60,14 @@
             <button type="button" class="toggle-btn" onclick="gotoLogin()">Log in</button>
             <button type="button" class="toggle-btn" onclick="gotoRegister()">Register</button>
         </div>
+
         <form id="login" class="input-group">
             <input type="text" class="input-field" id="loginName" placeholder="Username" required>
             <input type="password" class="input-field" id="loginPassword" placeholder="Password" required>
             <input type="checkbox" class="check-box"><span>Recordar contraseña</span>
             <button type="submit" class="submit-btn" id="loginbtn" onclick="return false">Log in</button>
         </form>
+
         <form id="register" class="input-group">
             <input type="text" class="input-field" id="registerName" placeholder="Username" required>
             <input type="email" class="input-field" id="registerMail" placeholder="Email" required>
@@ -73,6 +79,7 @@
         </form>
     </div>
 </div>
+
 <script>
     var x = document.getElementById("login");
     var y = document.getElementById("register");

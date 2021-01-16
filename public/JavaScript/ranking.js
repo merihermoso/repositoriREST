@@ -10,8 +10,6 @@ if (username == null){
 $(document).ready(function() {
     console.log(username);
     console.log(diamantes);
-
-    $("#set_username").text("¡Tu id de usuario es : ".concat(username));
     $("#nav_username").text(username);
     
 })

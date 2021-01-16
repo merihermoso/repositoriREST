@@ -5,18 +5,21 @@
     <title>Ranking</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
     <!-- Boostrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="shortcut icon" href="Media/logofuego.png"/>
     <link rel="stylesheet" href="CSS/ranking.css" type="text/css">
+
     <!-- FONT AWESOME, para poner los simbolos en nuestra web -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
           integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="JavaScript/shop.js"></script>
+    <script type="text/javascript" src="JavaScript/ranking.js"></script>
 </head>
+
 <body>
 <!-- Cabecera -->
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #EB984E;">
@@ -35,14 +38,20 @@
                 <li class="nav-item">
                     <a class="nav-link" href="shop.html">Store</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Ranking</a>
+                <li class="nav-item mr-">
+                    <a class="nav-link mr-3" href="ranking.html">Ranking</a>
+                </li>
+
+                <!-- Logo -->
+                <li class="nav-item ">
+                    <a href="settings.html">
+                    <img src="Media/user.jpg" class="img-fluid rounded-circle w-3 h-3">
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="login.html">Login/Register</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="settings.html">Settings</a>
+                    <a href="settings.html" class="nav-link">
+                        <p tabindex="-1" aria-disabled="true" id="nav_username"></p>
+                    </a>
                 </li>
             </ul>
         </div>
