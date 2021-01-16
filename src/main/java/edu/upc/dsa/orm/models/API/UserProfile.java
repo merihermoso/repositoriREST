@@ -6,19 +6,17 @@ public class UserProfile {
     private String email;
     private String birthdate;
     private int score;
-    private int level;
     private int ranking_position;
 
     public UserProfile() {
 
     }
 
-    public UserProfile(String username, String email, String birthdate, int score, int level, int ranking_position) {
+    public UserProfile(String username, String email, String birthdate, int score, int ranking_position) {
         this.username = username;
         this.email = email;
         this.birthdate = birthdate;
         this.score = score;
-        this.level = level;
         this.ranking_position = ranking_position;
     }
 
@@ -49,13 +47,6 @@ public class UserProfile {
     }
     public void setScore(int score) {
         this.score = score;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-    public void setLevel(int level) {
-        this.level = level;
     }
 
     public int getRanking_position() {

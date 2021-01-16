@@ -39,7 +39,7 @@ public class UserService {
     })
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createUserById(User user) {
+    public Response createUser(User user) {
 
         if (!userDAO.exists(user.getUsername()) && !userDAO.existsEmail(user.getEmail())) {
 
@@ -161,7 +161,6 @@ public class UserService {
                     user.getEmail(),
                     user.getBirthdate(),
                     user.getScore(),
-                    user.getLevel(),
                     userDAO.readRankingPositionByParameter("username", user.getUsername())));
         }
         GenericEntity<List<UserProfile>> entity = new GenericEntity<List<UserProfile>>(userProfileResponse) {};
@@ -204,7 +203,6 @@ public class UserService {
                     user.getEmail(),
                     user.getBirthdate(),
                     user.getScore(),
-                    user.getLevel(),
                     userDAO.readRankingPositionByParameter("username", username));
 
             return Response.status(200).entity(userProfile).build();
@@ -360,7 +358,6 @@ public class UserService {
                     user.getEmail(),
                     user.getBirthdate(),
                     user.getScore(),
-                    user.getLevel(),
                     userDAO.readRankingPositionByParameter("username", user.getUsername()));
 
             return Response.status(200).entity(userProfile).build();

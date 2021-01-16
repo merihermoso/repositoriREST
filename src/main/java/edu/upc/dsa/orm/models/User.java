@@ -8,13 +8,6 @@ public class User {
     private String password;
     private String birthdate;
     private int score;
-    private int level;
-
-    private int coins;
-    private int speed;
-    private int defense;
-    private int healing;
-    private int damage;
 
     public User() {
 
@@ -28,13 +21,6 @@ public class User {
         setPassword(password);
         setBirthdate(birthdate);
         setScore(0);
-        setLevel(1);
-
-        setCoins(0);
-        setSpeed(2);
-        setDefense(10);
-        setHealing(5);
-        setDamage(2);
 
     }
 
@@ -80,50 +66,4 @@ public class User {
         this.score = score;
     }
 
-    public int getLevel() {
-        return level;
-    }
-    public void setLevel(int level) {
-        this.level = level;
-    }
-
-    public int getCoins() {
-        return coins;
-    }
-
-    public void setCoins(int coins) {
-        this.coins = coins;
-    }
-
-    public int getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
-
-    public int getDefense() {
-        return defense;
-    }
-
-    public void setDefense(int defense) {
-        this.defense = defense;
-    }
-
-    public int getHealing() {
-        return healing;
-    }
-
-    public void setHealing(int healing) {
-        this.healing = healing;
-    }
-
-    public int getDamage() {
-        return damage;
-    }
-
-    public void setDamage(int damage) {
-        this.damage = damage;
-    }
 }

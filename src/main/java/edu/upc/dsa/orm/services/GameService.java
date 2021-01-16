@@ -44,21 +44,14 @@ public class GameService {
     @ApiOperation(value = "Create a game")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Created"),
-            @ApiResponse(code = 250, message = "Game already exists")
+            @ApiResponse(code = 404, message = "User not exists")
     })
     @Path("/game/")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createGameById(Game game) {
 
-        if (!gameDAO.existsId(game.getUserID())) {
-
-            gameDAO.create(game);
-            return Response.status(201).build();
-
-        } else {
-
-            return Response.status(250).build();
-        }
+        gameDAO.create(game);
+        return Response.status(201).build();
 
     }
 

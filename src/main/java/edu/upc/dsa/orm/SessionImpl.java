@@ -1,6 +1,5 @@
 package edu.upc.dsa.orm;
 
-import edu.upc.dsa.orm.exeptions.UserNotFoundException;
 import edu.upc.dsa.orm.models.*;
 import edu.upc.dsa.orm.util.ObjectHelper;
 import edu.upc.dsa.orm.util.QueryHelper;

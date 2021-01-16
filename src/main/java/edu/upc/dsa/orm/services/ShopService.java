@@ -67,8 +67,6 @@ public class ShopService {
 
 
 
-
-
     @GET
     @ApiOperation(value = "Get all Items")
     @ApiResponses(value = {
@@ -82,87 +80,6 @@ public class ShopService {
 
         GenericEntity<List<Item>> entity = new GenericEntity<List<Item>>(items) {};
         return Response.status(200).entity(entity).build();
-
-    }
-
-
-    @GET
-    @ApiOperation(value = "Get all items ItemsProfile")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successful", response = ItemProfile.class, responseContainer="List"),
-    })
-    @Path("/item/profile")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllItemProfile() {
-
-        List<Item> items = itemDAO.readAll();
-
-        List<ItemProfile> itemProfileResponse = new ArrayList<>();
-        for(Item item : items) {
-            itemProfileResponse.add(new ItemProfile(item.getName(),
-                    item.getHit(),
-                    item.getDefense(),
-                    item.getHealing(),
-                    item.getDamage(),
-                    item.getPrice(),
-                    item.getDescription(),
-                    item.getImage()));
-                  //  itemDAO.readRankingPositionByParameter("username", item.getUsername())
-
-        }
-        GenericEntity<List<ItemProfile>> entity = new GenericEntity<List<ItemProfile>>(itemProfileResponse) {};
-
-        return Response.status(200).entity(entity).build();
-
-    }
-
-/*
-    @GET
-    @ApiOperation(value = "Get user credentials settings")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successful", response = UserSettings.class),
-    })
-    @Path("/settings")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getUserSettings() {
-
-        return Response.status(200).entity(new UserSettings()).build();
-
-    }
-
-*/
-    @GET
-    @ApiOperation(value = "Get a item ItemProfile given its name")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = ItemProfile.class),
-            @ApiResponse(code = 404, message = "Item not exists"),
-
-    })
-    @Path("/item/{name}/profile")
-    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response getItemProfileByName(@PathParam("name") String name) {
-
-        if (itemDAO.exists(name)) {
-
-            Item item = itemDAO.readByParameter("name", name);
-
-            ItemProfile itemProfile = new ItemProfile(item.getName(),
-                    item.getHit(),
-                    item.getDefense(),
-                    item.getHealing(),
-                    item.getDamage(),
-                    item.getPrice(),
-                    item.getDescription(),
-                    item.getImage());
-                   // userDAO.readRankingPositionByParameter("username", username)
-
-            return Response.status(200).entity(itemProfile).build();
-
-        } else {
-
-            return Response.status(404).build();
-
-        }
 
     }
 
@@ -222,39 +139,6 @@ public class ShopService {
 
     }
 
-
-    @GET
-    @ApiOperation(value = "Get a user ItemProfile given its id")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Succesful", response = ItemProfile.class),
-            @ApiResponse(code = 404, message = "Item not found")
-    })
-    @Path("/item/id/{id}/profile")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getItemProfileById(@PathParam("id") int id) {
-
-        if (itemDAO.existsId(id)) {
-
-            Item item = itemDAO.readByParameter("id", id);
-
-            ItemProfile itemProfile = new ItemProfile((item.getName()),
-                    item.getHit(),
-                    item.getDefense(),
-                    item.getHealing(),
-                    item.getDamage(),
-                    item.getPrice(),
-                    item.getDescription(),
-                    item.getImage());
-
-            return Response.status(200).entity(itemProfile).build();
-
-        } else {
-
-            return Response.status(404).build();
-
-        }
-
-    }
 
 
 
@@ -508,24 +392,17 @@ public class ShopService {
     // CREATE
 
     @POST
-    @ApiOperation(value = "Create a Inventory (shop)")
+    @ApiOperation(value = "Add an item to Inventory")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Created"),
             @ApiResponse(code = 250, message = "Item already exists")       //aumentem quantitat?
     })
-    @Path("/inventory/")
+    @Path("/inventory")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createInventoryById(Inventory inventory) {
 
-        if (!inventoryDAO.existsId(inventory.getUserID())) {
-
-            inventoryDAO.create(inventory);
-            return Response.status(201).build();
-
-        } else {
-
-            return Response.status(250).build();
-        }
+        inventoryDAO.create(inventory);
+        return Response.status(201).build();
 
     }
 
@@ -571,43 +448,7 @@ public class ShopService {
 
     }
 
-/*
-    @GET
-    @ApiOperation(value = "Get a user ItemProfile given its id")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Succesful", response = ItemProfile.class),
-            @ApiResponse(code = 404, message = "Item not found")
-    })
-    @Path("/id/{id}/profile")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getItemProfileById(@PathParam("id") int id) {
-
-        if (itemDAO.existsId(id)) {
-
-            Item item = itemDAO.readByParameter("id", id);
-
-            ItemProfile itemProfile = new ItemProfile((item.getName()),
-                    item.getHit(),
-                    item.getDefense(),
-                    item.getHealing(),
-                    item.getDamage(),
-                    item.getPrice(),
-                    item.getDescription(),
-                    item.getImage());
-
-            return Response.status(200).entity(itemProfile).build();
-
-        } else {
-
-            return Response.status(404).build();
-
-        }
-
-    }
-
-*/
-
-/*
+    /*
     @GET                                                                                            // DONA ERROR
     @ApiOperation(value = "Get an inventory parameter by its userID")
     @ApiResponses(value = {
@@ -645,18 +486,10 @@ public class ShopService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateInventoryById(@PathParam("userID") int userID, Inventory inventory) {
 
-        if (inventoryDAO.existsId(userID) && userID == inventory.getUserID()) {
-
-            inventoryDAO.update(inventory);
-            return Response.status(200).build();
-
-        } else {
-
-            return Response.status(404).build();
-        }
+        inventoryDAO.update(inventory);
+        return Response.status(200).build();
 
     }
-
 
 
 
