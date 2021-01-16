@@ -72,7 +72,7 @@ public class ShopService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful", response = Item.class, responseContainer="List"),
     })
-    @Path("/item/")
+    @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllItems() {
 
@@ -91,7 +91,7 @@ public class ShopService {
             @ApiResponse(code = 404, message = "User not exists"),
 
     })
-    @Path("/item/{name}")
+    @Path("/{name}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getItemByName(@PathParam("name") String name) {
 
@@ -122,7 +122,7 @@ public class ShopService {
             @ApiResponse(code = 200, message = "Succesful", response = Item.class),
             @ApiResponse(code = 404, message = "Item not found")
     })
-    @Path("/item/id/{id}")
+    @Path("/id/{id}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response getItemById(@PathParam("id") int id) {
 
@@ -149,7 +149,7 @@ public class ShopService {
             @ApiResponse(code = 603, message = "Parameter not found"),
             @ApiResponse(code = 404, message = "Not found"),
     })
-    @Path("/item/{name}/{parameter}")
+    @Path("/{name}/{parameter}")
     @Produces(MediaType.TEXT_PLAIN)
     public Response readParameterByName(@PathParam("name") String name,
                                             @PathParam("parameter") String parameter) {
@@ -184,7 +184,7 @@ public class ShopService {
             @ApiResponse(code = 200, message = "Successful"),
             @ApiResponse(code = 404, message = "Not found"),
     })
-    @Path("/item/id/{id}/{parameter}")
+    @Path("/id/{id}/{parameter}")
     @Produces(MediaType.TEXT_PLAIN)
     public Response readParameterById(@PathParam("id") int id,
                                              @PathParam("parameter") String parameter) {
@@ -211,7 +211,7 @@ public class ShopService {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 404, message = "Item not found")
     })
-    @Path("/item/id/{id}")
+    @Path("/id/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateItemById(@PathParam("id") int id, Item item) {
 
@@ -233,7 +233,7 @@ public class ShopService {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 404, message = "User not found")
     })
-    @Path("/item/{name}")
+    @Path("/{name}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateItemByName(@PathParam("name") String name, Item item) {
 
@@ -258,7 +258,7 @@ public class ShopService {
             @ApiResponse(code = 404, message = "User not found"),
             @ApiResponse(code = 603, message = "Parameter not found")
     })
-    @Path("/item/{name}/{parameter}")
+    @Path("/{name}/{parameter}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateParameterByName(@PathParam("name") String name,
                                               @PathParam("parameter") String parameter,
@@ -300,7 +300,7 @@ public class ShopService {
             @ApiResponse(code = 404, message = "Item not found"),
             @ApiResponse(code = 603, message = "Parameter not found")
     })
-    @Path("/item/id/{id}/{parameter}")
+    @Path("/id/{id}/{parameter}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateParameterById(@PathParam("id") int id,
                                               @PathParam("parameter") String parameter,
@@ -344,7 +344,7 @@ public class ShopService {
             @ApiResponse(code = 200, message = "Successful"),
             @ApiResponse(code = 404, message = "Item not found"),
     })
-    @Path("/item/id/{id}")
+    @Path("/id/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteById(@PathParam("id") int id) {
 
@@ -368,7 +368,7 @@ public class ShopService {
             @ApiResponse(code = 200, message = "Successful"),
             @ApiResponse(code = 404, message = "Item not found"),
     })
-    @Path("/item/{name}")
+    @Path("/{name}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteByName(@PathParam("name") String name) {
 
@@ -413,7 +413,7 @@ public class ShopService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful", response = Inventory.class, responseContainer="List"),
     })
-    @Path("/inventory/")
+    @Path("/inventory")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllInventories() {
 
