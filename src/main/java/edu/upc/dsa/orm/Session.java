@@ -15,6 +15,7 @@ public interface Session {
 
     // READ
     HashMap<Integer, Object> readAll(Class theClass);
+    HashMap<Integer, Object> readAllByParameter(Class theClass, String byParameter, Object byParameterValue);
     Object readByParameter(Class theClass, String byParameter, Object byParameterValue);
     Object readParameterByParameter(Class theClass, String parameter, String byParameter, Object byParameterValue);
 

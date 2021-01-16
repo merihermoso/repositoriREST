@@ -436,13 +436,13 @@ public class ShopService {
             @ApiResponse(code = 200, message = "Succesful", response = Item.class),
             @ApiResponse(code = 404, message = "Inventory not found")
     })
-    @Path("/inventory/id/{userID}")
+    @Path("/inventory/id/{id}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response getInventoryById(@PathParam("userID") int userID) {
+    public Response getInventoryById(@PathParam("id") int userID) {
 
         if (itemDAO.existsId(userID)) {
 
-            Item item = itemDAO.readByParameter("userID", userID);
+            Item item = itemDAO.readByParameter("id_user", userID);
             return Response.status(200).entity(item).build();
 
         } else {
@@ -460,9 +460,9 @@ public class ShopService {
             @ApiResponse(code = 200, message = "Successful"),
             @ApiResponse(code = 404, message = "Not found"),
     })
-    @Path("/id/{userID}/{parameter}")
+    @Path("/id/{id}/{parameter}")
     @Produces(MediaType.TEXT_PLAIN)
-    public Response readParameterById(@PathParam("id_user") int userID,
+    public Response readParameterById(@PathParam("id") int userID,
                                       @PathParam("parameter") String parameter) {
 
         if (itemDAO.existsId(userID)) {
@@ -487,9 +487,9 @@ public class ShopService {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 404, message = "Inventory not found")
     })
-    @Path("/inventory/id/{userID}")
+    @Path("/inventory/id/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateInventoryById(@PathParam("userID") int userID, Inventory inventory) {
+    public Response updateInventoryById(@PathParam("id") int userID, Inventory inventory) {
 
         inventoryDAO.update(inventory);
         return Response.status(200).build();
@@ -505,9 +505,9 @@ public class ShopService {
             @ApiResponse(code = 404, message = "Item not found"),
             @ApiResponse(code = 603, message = "Parameter not found")
     })
-    @Path("/inventory/id/{userID}/{parameter}")
+    @Path("/inventory/id/{id}/{parameter}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateInventoryParameterById(@PathParam("userID") int userID,
+    public Response updateInventoryParameterById(@PathParam("id") int userID,
                                         @PathParam("parameter") String parameter,
                                         String parameterValue) {
 
@@ -517,10 +517,10 @@ public class ShopService {
 
                 if (Inventory.class.getDeclaredField(parameter).getType().isAssignableFrom(Integer.class)) {
                     inventoryDAO.updateParameterByParameter(parameter, Integer.parseInt(parameterValue)
-                            , "userID", userID);
+                            , "id_user", userID);
 
                 } else {
-                    inventoryDAO.updateParameterByParameter(parameter, parameterValue, "userID", userID);
+                    inventoryDAO.updateParameterByParameter(parameter, parameterValue, "id_user", userID);
                 }
 
                 return Response.status(200).build();
@@ -549,13 +549,13 @@ public class ShopService {
             @ApiResponse(code = 200, message = "Successful"),
             @ApiResponse(code = 404, message = "Inventory not found"),
     })
-    @Path("/inventory/id/{userID}")
+    @Path("/inventory/id/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteInventoryById(@PathParam("userID") int userID) {
+    public Response deleteInventoryById(@PathParam("id") int userID) {
 
         if (inventoryDAO.existsId(userID)) {
 
-            inventoryDAO.deleteByParameter("userID", userID);
+            inventoryDAO.deleteByParameter("id_user", userID);
             return Response.status(200).build();
 
         } else {
@@ -610,13 +610,13 @@ public Response createOrdersById(Orders orders) {
             @ApiResponse(code = 200, message = "Succesful", response = Item.class),
             @ApiResponse(code = 404, message = "Order not found")
     })
-    @Path("/order/id/{userID}")
+    @Path("/order/id/{id}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response getOrderById(@PathParam("userID") int userID) {
+    public Response getOrderById(@PathParam("id") int userID) {
 
         if (itemDAO.existsId(userID)) {
 
-            Item item = itemDAO.readByParameter("userID", userID);
+            Item item = itemDAO.readByParameter("id_user", userID);
             return Response.status(200).entity(item).build();
 
         } else {
@@ -636,9 +636,9 @@ public Response createOrdersById(Orders orders) {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 404, message = "Order not found")
     })
-    @Path("/order/id/{userID}")
+    @Path("/order/id/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateOrderById(@PathParam("userID") int userID, Orders orders) {
+    public Response updateOrderById(@PathParam("id") int userID, Orders orders) {
 
         ordersDAO.update(orders);
         return Response.status(200).build();
@@ -654,9 +654,9 @@ public Response createOrdersById(Orders orders) {
             @ApiResponse(code = 404, message = "Item not found"),
             @ApiResponse(code = 603, message = "Parameter not found")
     })
-    @Path("/order/id/{userID}/{parameter}")
+    @Path("/order/id/{id}/{parameter}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateOrderParameterById(@PathParam("userID") int userID,
+    public Response updateOrderParameterById(@PathParam("id") int userID,
                                                  @PathParam("parameter") String parameter,
                                                  String parameterValue) {
 
@@ -666,10 +666,10 @@ public Response createOrdersById(Orders orders) {
 
                 if (Inventory.class.getDeclaredField(parameter).getType().isAssignableFrom(Integer.class)) {
                     ordersDAO.updateParameterByParameter(parameter, Integer.parseInt(parameterValue)
-                            , "userID", userID);
+                            , "id_user", userID);
 
                 } else {
-                    ordersDAO.updateParameterByParameter(parameter, parameterValue, "userID", userID);
+                    ordersDAO.updateParameterByParameter(parameter, parameterValue, "id_user", userID);
                 }
 
                 return Response.status(200).build();
@@ -698,13 +698,13 @@ public Response createOrdersById(Orders orders) {
             @ApiResponse(code = 200, message = "Successful"),
             @ApiResponse(code = 404, message = "Order not found"),
     })
-    @Path("/order/id/{userID}")
+    @Path("/order/id/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteOrderById(@PathParam("userID") int userID) {
+    public Response deleteOrderById(@PathParam("id") int userID) {
 
         if (ordersDAO.existsId(userID)) {
 
-            ordersDAO.deleteByParameter("userID", userID);
+            ordersDAO.deleteByParameter("id_user", userID);
             return Response.status(200).build();
 
         } else {

@@ -2,34 +2,34 @@ package edu.upc.dsa.orm.models;
 
 public class Orders {
 
-    private int userID;
-    private int itemID;
+    private int id_user;
+    private int id_item;
     private int quantity;
 
     public Orders() {
 
     }
 
-    public Orders(int id_game, int id_item, int quantity) {
-        this.userID = id_game;
-        this.itemID = id_item;
+    public Orders(int id_user, int id_item, int quantity) {
+        this.id_user = id_user;
+        this.id_item = id_item;
         this.quantity = quantity;
     }
 
-    public int getUserID() {
-        return userID;
+    public int getId_user() {
+        return id_user;
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public void setId_user(int id_user) {
+        this.id_user = id_user;
     }
 
-    public int getItemID() {
-        return itemID;
+    public int getId_item() {
+        return id_item;
     }
 
-    public void setItemID(int itemID) {
-        this.itemID = itemID;
+    public void setId_item(int id_item) {
+        this.id_item = id_item;
     }
 
     public int getQuantity() {
@@ -39,5 +39,4 @@ public class Orders {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-
 }

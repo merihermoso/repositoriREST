@@ -15,6 +15,7 @@ public interface InventoryDAO {
 
     // READ
     List<Inventory> readAll();
+    List<Inventory> readAllByParameter(String byParameter, Object byParameterValue);
     Inventory readByParameter(String byParameter, Object byParameterValue);
     Object readParameterByParameter(String parameter, String byParameter, Object byParameterValue);
 

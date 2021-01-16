@@ -1,8 +1,11 @@
 package edu.upc.dsa.orm.services;
 
+import edu.upc.dsa.orm.dao.inventory.InventoryDAO;
+import edu.upc.dsa.orm.dao.inventory.InventoryDAOImpl;
 import edu.upc.dsa.orm.dao.user.UserDAO;
 import edu.upc.dsa.orm.dao.user.UserDAOImpl;
 import edu.upc.dsa.orm.models.API.*;
+import edu.upc.dsa.orm.models.Inventory;
 import edu.upc.dsa.orm.models.User;
 import io.swagger.annotations.*;
 
@@ -22,10 +25,12 @@ import java.util.List;
 public class UserService {
 
     private final UserDAO userDAO;
+    private final InventoryDAO inventoryDAO;
 
     public UserService() {
 
         userDAO = UserDAOImpl.getInstance();
+        inventoryDAO = InventoryDAOImpl.getInstance();
 
     }
 
@@ -669,5 +674,64 @@ public class UserService {
         }
 
     }
+
+
+
+
+
+    ////////////
+
+    /**************************************  inventory service  *******************************************************/
+
+    @GET
+    @ApiOperation(value = "Get a user inventory given its username")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful", response = Inventory.class, responseContainer="List"),
+            @ApiResponse(code = 404, message = "User not found")
+    })
+    @Path("/{username}/inventory")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUserInventory(@PathParam("username") String username) {
+
+        if (userDAO.exists(username)) {
+
+            List<Inventory> inventoryItems = inventoryDAO.readAll();
+
+            GenericEntity<List<Inventory>> entity = new GenericEntity<List<Inventory>>(inventoryItems) {
+            };
+            return Response.status(200).entity(entity).build();
+
+        } else {
+            return Response.status(404).build();
+        }
+
+    }
+
+
+    @GET
+    @ApiOperation(value = "Get a user inventory given its id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful", response = Inventory.class, responseContainer="List"),
+            @ApiResponse(code = 404, message = "User not found")
+    })
+    @Path("/id/{id}/inventory")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUserInventory(@PathParam("id") int id) {
+
+        if (userDAO.existsId(id)) {
+
+            List<Inventory> inventoryItems = inventoryDAO.readAll();
+
+            GenericEntity<List<Inventory>> entity = new GenericEntity<List<Inventory>>(inventoryItems) {
+            };
+            return Response.status(200).entity(entity).build();
+
+        } else {
+            return Response.status(404).build();
+        }
+
+    }
+
+
 
 }
