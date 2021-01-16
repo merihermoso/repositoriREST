@@ -2,6 +2,7 @@ package edu.upc.dsa.orm.models;
 
 public class Inventory {
 
+    private int id;
     private int id_game;
     private int id_item;
     private int quantity;
@@ -10,10 +11,19 @@ public class Inventory {
 
     }
 
-    public Inventory(int id_game, int id_item, int quantity) {
+    public Inventory(int id, int id_game, int id_item, int quantity) {
+        this.id = id;
         this.id_game = id_game;
         this.id_item = id_item;
         this.quantity = quantity;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getId_game() {

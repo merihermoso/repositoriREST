@@ -392,199 +392,26 @@ public class ShopService {
 
     }
 
-    /**************************************  inventory service  *******************************************************/
+
+/****************************************** orders service ************************************************************/
+
 
     // CREATE
 
     @POST
-    @ApiOperation(value = "Add an item to Inventory")
+    @ApiOperation(value = "Add an item to Order (SHOP)")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Created"),
             @ApiResponse(code = 250, message = "Item already exists")       //aumentem quantitat?
     })
-    @Path("/inventory")
+    @Path("/orders")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createInventoryById(Inventory inventory) {
+    public Response createOrdersById(Orders orders) {
 
-        inventoryDAO.create(inventory);
+        ordersDAO.create(orders);
         return Response.status(201).build();
 
     }
-
-
-
-    @GET
-    @ApiOperation(value = "Get all inventories")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successful", response = Inventory.class, responseContainer="List"),
-    })
-    @Path("/inventory")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllInventories() {
-
-        List<Inventory> inventories = inventoryDAO.readAll();
-
-        GenericEntity<List<Inventory>> entity = new GenericEntity<List<Inventory>>(inventories) {};
-        return Response.status(200).entity(entity).build();
-
-    }
-
-
-    @GET
-    @ApiOperation(value = "Get an inventory given its id")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Succesful", response = Item.class),
-            @ApiResponse(code = 404, message = "Inventory not found")
-    })
-    @Path("/inventory/id/{id}")
-    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response getInventoryById(@PathParam("id") int userID) {
-
-        if (itemDAO.existsId(userID)) {
-
-            Item item = itemDAO.readByParameter("id_user", userID);
-            return Response.status(200).entity(item).build();
-
-        } else {
-
-            return Response.status(404).build();
-
-        }
-
-    }
-
-    /*
-    @GET                                                                                            // DONA ERROR
-    @ApiOperation(value = "Get an inventory parameter by its userID")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successful"),
-            @ApiResponse(code = 404, message = "Not found"),
-    })
-    @Path("/id/{id}/{parameter}")
-    @Produces(MediaType.TEXT_PLAIN)
-    public Response readParameterById(@PathParam("id") int userID,
-                                      @PathParam("parameter") String parameter) {
-
-        if (itemDAO.existsId(userID)) {
-
-            Object res = itemDAO.readParameterByParameter(parameter, "id_user", userID);
-            return Response.status(200).entity(res).build();
-
-        } else {
-
-            return Response.status(404).build();
-
-        }
-
-    }
-*/
-
-    //UPDATE
-
-    @PUT
-    @ApiOperation(value = "Update an inventory by its userID")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 404, message = "Inventory not found")
-    })
-    @Path("/inventory/id/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateInventoryById(@PathParam("id") int userID, Inventory inventory) {
-
-        inventoryDAO.update(inventory);
-        return Response.status(200).build();
-
-    }
-
-
-
-    @PUT
-    @ApiOperation(value = "Update an inventory parameter by its userID")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successful"),
-            @ApiResponse(code = 404, message = "Item not found"),
-            @ApiResponse(code = 603, message = "Parameter not found")
-    })
-    @Path("/inventory/id/{id}/{parameter}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response updateInventoryParameterById(@PathParam("id") int userID,
-                                        @PathParam("parameter") String parameter,
-                                        String parameterValue) {
-
-        if (itemDAO.existsId(userID)) {
-
-            try {
-
-                if (Inventory.class.getDeclaredField(parameter).getType().isAssignableFrom(Integer.class)) {
-                    inventoryDAO.updateParameterByParameter(parameter, Integer.parseInt(parameterValue)
-                            , "id_user", userID);
-
-                } else {
-                    inventoryDAO.updateParameterByParameter(parameter, parameterValue, "id_user", userID);
-                }
-
-                return Response.status(200).build();
-
-            } catch (NoSuchFieldException noSuchFieldException) {
-
-                return Response.status(603).build();
-
-            }
-
-        } else {
-
-            return Response.status(404).build();
-
-        }
-
-    }
-
-
-
-    // DELETE
-
-    @DELETE
-    @ApiOperation(value = "Delete an inventory by its userID")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successful"),
-            @ApiResponse(code = 404, message = "Inventory not found"),
-    })
-    @Path("/inventory/id/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteInventoryById(@PathParam("id") int userID) {
-
-        if (inventoryDAO.existsId(userID)) {
-
-            inventoryDAO.deleteByParameter("id_user", userID);
-            return Response.status(200).build();
-
-        } else {
-
-            return Response.status(404).build();
-
-        }
-
-    }
-/****************************************** orders service ************************************************************/
-
-
-// CREATE
-
-@POST
-@ApiOperation(value = "Add an item to Order (SHOP)")
-@ApiResponses(value = {
-        @ApiResponse(code = 201, message = "Created"),
-        @ApiResponse(code = 250, message = "Item already exists")       //aumentem quantitat?
-})
-@Path("/orders")
-@Consumes(MediaType.APPLICATION_JSON)
-public Response createOrdersById(Orders orders) {
-
-    ordersDAO.create(orders);
-    return Response.status(201).build();
-
-}
-
 
 
     @GET
