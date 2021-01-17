@@ -17,13 +17,15 @@ public class Game {
     private int healing;
     private int damage;
     private int health;
+    private int x;
+    private int y;
 
     public Game() {
 
     }
 
     public Game(int id, int id_user, int id_map, String dateStart, String timeStart, String dateEnd, String timeEnd,
-                int score, int coins, int speed, int defense, int healing, int damage, int health) {
+                int score, int coins, int speed, int defense, int healing, int damage, int health, int x, int y) {
 
         this.id = id;
         this.id_user = id_user;
@@ -39,6 +41,8 @@ public class Game {
         this.healing = healing;
         this.damage = damage;
         this.health = health;
+        this.x = x;
+        this.y = y;
 
     }
 
@@ -152,5 +156,21 @@ public class Game {
 
     public void setHealth(int health) {
         this.health = health;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 }
