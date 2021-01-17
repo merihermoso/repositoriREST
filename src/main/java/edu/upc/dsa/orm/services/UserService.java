@@ -556,7 +556,7 @@ public class UserService {
 
         if (userDAO.exists(username)) {
 
-            if (parameterValue.equals("")) {
+            if (!parameterValue.equals("")) {
 
                 try {
 
