@@ -549,11 +549,12 @@ public class UserService {
             @ApiResponse(code = 604, message = "You must enter a new parameter value")
     })
     @Path("/{username}/{parameter}")
-    @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateParameterByUsername(@PathParam("username") String username,
                                               @PathParam("parameter") String parameter,
-                                              String parameterValue) {
+                                              UpdateParameterRequest updateParameterRequest) {
+
+        String parameterValue = updateParameterRequest.getParameterValue();
 
         if (userDAO.exists(username)) {
 
@@ -602,7 +603,9 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateParameterById(@PathParam("id") int id,
                                               @PathParam("parameter") String parameter,
-                                              String parameterValue) {
+                                              UpdateParameterRequest updateParameterRequest) {
+
+        String parameterValue = updateParameterRequest.getParameterValue();
 
         if (userDAO.existsId(id)) {
 
@@ -642,7 +645,9 @@ public class UserService {
     @Path("/{username}/password")
     @Produces(MediaType.APPLICATION_JSON)
     public Response updatePasswordByUsername(@PathParam("username") String username,
-                                              String newPassword) {
+                                              UpdateParameterRequest updateParameterRequest) {
+
+        String newPassword = updateParameterRequest.getParameterValue();
 
         if (userDAO.exists(username)) {
 
@@ -669,7 +674,9 @@ public class UserService {
     @Path("/id/{id}/password")
     @Produces(MediaType.APPLICATION_JSON)
     public Response updatePasswordById(@PathParam("id") int id,
-                                             String newPassword) {
+                                             UpdateParameterRequest updateParameterRequest) {
+
+        String newPassword = updateParameterRequest.getParameterValue();
 
         if (userDAO.existsId(id)) {
 

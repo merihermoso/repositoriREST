@@ -6,6 +6,7 @@ import edu.upc.dsa.orm.dao.item.ItemDAO;
 import edu.upc.dsa.orm.dao.item.ItemDAOImpl;
 import edu.upc.dsa.orm.dao.orders.OrdersDAO;
 import edu.upc.dsa.orm.dao.orders.OrdersDAOImpl;
+import edu.upc.dsa.orm.models.API.UpdateParameterRequest;
 import edu.upc.dsa.orm.models.Inventory;
 import edu.upc.dsa.orm.models.Item;
 import edu.upc.dsa.orm.models.Orders;
@@ -132,8 +133,10 @@ public class OrdersService {
     @Path("/id/{id}/{parameter}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateOrderParameterById(@PathParam("id") int userID,
-                                                 @PathParam("parameter") String parameter,
-                                                 String parameterValue) {
+                                             @PathParam("parameter") String parameter,
+                                             UpdateParameterRequest updateParameterRequest) {
+
+        String parameterValue = updateParameterRequest.getParameterValue();
 
         if (itemDAO.existsId(userID)) {
 
