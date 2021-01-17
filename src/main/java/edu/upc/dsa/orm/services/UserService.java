@@ -185,7 +185,7 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUserSettings() {
 
-        return Response.status(200).entity(new UserSettings()).build();
+        return Response.status(200).entity(userDAO.readSettings()).build();
 
     }
 

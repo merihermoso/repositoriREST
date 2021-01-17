@@ -2,6 +2,7 @@ package edu.upc.dsa.orm.dao.user;
 import java.util.List;
 import edu.upc.dsa.orm.models.API.RegisterCredentials;
 import edu.upc.dsa.orm.models.API.UserRanking;
+import edu.upc.dsa.orm.models.API.UserSettings;
 import edu.upc.dsa.orm.models.User;
 
 public interface UserDAO {
@@ -16,6 +17,7 @@ public interface UserDAO {
     List<User> readAll();
     User readByParameter(String byParameter, Object byParameterValue);
     Object readParameterByParameter(String parameter, String byParameter, Object byParameterValue);
+    UserSettings readSettings();
 
     boolean exists(String username);
     boolean existsId(int id);
