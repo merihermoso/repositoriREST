@@ -1,7 +1,7 @@
 package edu.upc.dsa.orm.models;
 
 
-public class Enemy {                         //classe per objectes DINS del joc
+public class Entity {                         //classe per objectes DINS del joc
 
     private int id; //Asignamos un id al name creado
     private String name;
@@ -9,11 +9,11 @@ public class Enemy {                         //classe per objectes DINS del joc
     private int reward;
     private int damage;
 
-    public Enemy() {
+    public Entity() {
 
     }
 
-    public Enemy(int id, String name, int max_health, int reward, int damage) {
+    public Entity(int id, String name, int max_health, int reward, int damage) {
         this.id = id;
         this.name = name;
         this.max_health = max_health;
