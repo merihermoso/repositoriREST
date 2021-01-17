@@ -549,6 +549,7 @@ public class UserService {
             @ApiResponse(code = 604, message = "You must enter a new parameter value")
     })
     @Path("/{username}/{parameter}")
+    @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateParameterByUsername(@PathParam("username") String username,
                                               @PathParam("parameter") String parameter,
