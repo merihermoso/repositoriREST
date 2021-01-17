@@ -9,6 +9,8 @@ public class Game {
     private String timeStart;
     private String dateEnd;
     private String timeEnd;
+    private String dateLast;
+    private String timeLast;
 
     private int score;
     private int coins;
@@ -24,8 +26,9 @@ public class Game {
 
     }
 
-    public Game(int id, int id_user, int id_map, String dateStart, String timeStart, String dateEnd, String timeEnd,
-                int score, int coins, int speed, int defense, int healing, int damage, int health, int x, int y) {
+    public Game(int id, int id_user, int id_map, String dateStart, String timeStart, String dateEnd, String timeEnd
+            , String dateLast, String timeLast, int score, int coins
+            , int speed, int defense, int healing, int damage, int health, int x, int y) {
 
         this.id = id;
         this.id_user = id_user;
@@ -34,6 +37,8 @@ public class Game {
         this.timeStart = timeStart;
         this.dateEnd = dateEnd;
         this.timeEnd = timeEnd;
+        this.dateLast = dateLast;
+        this.timeLast = timeLast;
         this.score = score;
         this.coins = coins;
         this.speed = speed;
@@ -100,6 +105,22 @@ public class Game {
 
     public void setTimeEnd(String timeEnd) {
         this.timeEnd = timeEnd;
+    }
+
+    public String getDateLast() {
+        return dateLast;
+    }
+
+    public void setDateLast(String dateLast) {
+        this.dateLast = dateLast;
+    }
+
+    public String getTimeLast() {
+        return timeLast;
+    }
+
+    public void setTimeLast(String timeLast) {
+        this.timeLast = timeLast;
     }
 
     public int getScore() {
