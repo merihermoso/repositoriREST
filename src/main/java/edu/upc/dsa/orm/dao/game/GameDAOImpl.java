@@ -2,6 +2,8 @@ package edu.upc.dsa.orm.dao.game;
 
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
+import edu.upc.dsa.orm.models.API.GameSettings;
+import edu.upc.dsa.orm.models.API.UserSettings;
 import edu.upc.dsa.orm.models.Game;
 import edu.upc.dsa.orm.models.User;
 
@@ -90,6 +92,12 @@ public class GameDAOImpl implements GameDAO {
     public Object readParameterByParameter(String parameter, String byParameter, Object byParameterValue) {
 
        return session.readParameterByParameter(Game.class, parameter, byParameter, byParameterValue);
+
+    }
+
+    public GameSettings readSettings() {
+
+        return ((GameSettings) session.readByParameter(GameSettings.class, "id", 1));
 
     }
 

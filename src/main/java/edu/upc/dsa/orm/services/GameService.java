@@ -6,6 +6,7 @@ import edu.upc.dsa.orm.dao.game.GameDAO;
 import edu.upc.dsa.orm.dao.game.GameDAOImpl;
 import edu.upc.dsa.orm.dao.inventory.InventoryDAO;
 import edu.upc.dsa.orm.dao.inventory.InventoryDAOImpl;
+import edu.upc.dsa.orm.models.API.UserSettings;
 import edu.upc.dsa.orm.models.Entity;
 import edu.upc.dsa.orm.models.Game;
 import edu.upc.dsa.orm.models.Inventory;
@@ -70,6 +71,20 @@ public class GameService {
 
         GenericEntity<List<Game>> entity = new GenericEntity<List<Game>>(games) {};
         return Response.status(200).entity(entity).build();
+
+    }
+
+
+    @GET
+    @ApiOperation(value = "Get game settings")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful", response = UserSettings.class),
+    })
+    @Path("/settings")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getGameSettings() {
+
+        return Response.status(200).entity(gameDAO.readSettings()).build();
 
     }
 

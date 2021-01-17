@@ -1,5 +1,6 @@
 package edu.upc.dsa.orm.dao.game;
 
+import edu.upc.dsa.orm.models.API.GameSettings;
 import edu.upc.dsa.orm.models.Game;
 import java.util.List;
 
@@ -15,6 +16,8 @@ public interface GameDAO {
       List<Game> readAllByParameter(String byParameter, Object byParameterValue);
       Game readByParameter(String byParameter, Object byParameterValue);
       Object readParameterByParameter(String parameter, String byParameter, Object byParameterValue);
+
+      GameSettings readSettings();
 
 
       boolean existsId(int id);
