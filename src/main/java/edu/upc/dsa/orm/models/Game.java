@@ -17,7 +17,7 @@ public class Game {
     private int speed;
     private int defense;
     private int healing;
-    private int damage;
+    private int attack;
     private int health;
     private int x;
     private int y;
@@ -28,7 +28,7 @@ public class Game {
 
     public Game(int id, int id_user, int id_map, String dateStart, String timeStart, String dateEnd, String timeEnd
             , String dateLast, String timeLast, int score, int coins
-            , int speed, int defense, int healing, int damage, int health, int x, int y) {
+            , int speed, int defense, int healing, int attack, int health, int x, int y) {
 
         this.id = id;
         this.id_user = id_user;
@@ -44,7 +44,7 @@ public class Game {
         this.speed = speed;
         this.defense = defense;
         this.healing = healing;
-        this.damage = damage;
+        this.attack = attack;
         this.health = health;
         this.x = x;
         this.y = y;
@@ -163,12 +163,12 @@ public class Game {
         this.healing = healing;
     }
 
-    public int getDamage() {
-        return damage;
+    public int getAttack() {
+        return attack;
     }
 
-    public void setDamage(int damage) {
-        this.damage = damage;
+    public void setAttack(int attack) {
+        this.attack = attack;
     }
 
     public int getHealth() {

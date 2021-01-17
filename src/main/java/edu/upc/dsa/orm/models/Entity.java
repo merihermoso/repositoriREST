@@ -7,18 +7,18 @@ public class Entity {                         //classe per objectes DINS del joc
     private String name;
     private int max_health;
     private int reward;
-    private int damage;
+    private int attack;
 
     public Entity() {
 
     }
 
-    public Entity(int id, String name, int max_health, int reward, int damage) {
+    public Entity(int id, String name, int max_health, int reward, int attack) {
         this.id = id;
         this.name = name;
         this.max_health = max_health;
         this.reward = reward;
-        this.damage = damage;
+        this.attack = attack;
     }
 
     public int getId() {
@@ -53,11 +53,11 @@ public class Entity {                         //classe per objectes DINS del joc
         this.reward = reward;
     }
 
-    public int getDamage() {
-        return damage;
+    public int getAttack() {
+        return attack;
     }
 
-    public void setDamage(int damage) {
-        this.damage = damage;
+    public void setAttack(int attack) {
+        this.attack = attack;
     }
 }
