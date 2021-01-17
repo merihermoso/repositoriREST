@@ -545,7 +545,8 @@ public class UserService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful"),
             @ApiResponse(code = 404, message = "User not found"),
-            @ApiResponse(code = 603, message = "Parameter not found")
+            @ApiResponse(code = 603, message = "Parameter not found"),
+            @ApiResponse(code = 604, message = "You must enter a new parameter value")
     })
     @Path("/{username}/{parameter}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -555,22 +556,29 @@ public class UserService {
 
         if (userDAO.exists(username)) {
 
-            try {
+            if (parameterValue.equals("")) {
 
-                if (User.class.getDeclaredField(parameter).getType().isAssignableFrom(Integer.class)) {
-                    userDAO.updateParameterByParameter(parameter, Integer.parseInt(parameterValue)
-                            , "username", username);
+                try {
 
-                } else {
-                    userDAO.updateParameterByParameter(parameter, parameterValue, "username", username);
+                    if (User.class.getDeclaredField(parameter).getType().isAssignableFrom(Integer.class)) {
+                        userDAO.updateParameterByParameter(parameter, Integer.parseInt(parameterValue)
+                                , "username", username);
+
+                    } else {
+                        userDAO.updateParameterByParameter(parameter, parameterValue, "username", username);
+                    }
+
+                    return Response.status(200).build();
+
+                } catch (NoSuchFieldException noSuchFieldException) {
+
+                    return Response.status(603).build();
+
                 }
 
-                return Response.status(200).build();
+            } else {
 
-            } catch (NoSuchFieldException noSuchFieldException) {
-
-                return Response.status(603).build();
-
+                return Response.status(604).build();
             }
 
         } else {
