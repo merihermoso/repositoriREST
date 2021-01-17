@@ -6,6 +6,7 @@ import edu.upc.dsa.orm.dao.game.GameDAO;
 import edu.upc.dsa.orm.dao.game.GameDAOImpl;
 import edu.upc.dsa.orm.dao.inventory.InventoryDAO;
 import edu.upc.dsa.orm.dao.inventory.InventoryDAOImpl;
+import edu.upc.dsa.orm.models.API.GameSettings;
 import edu.upc.dsa.orm.models.API.UserSettings;
 import edu.upc.dsa.orm.models.Entity;
 import edu.upc.dsa.orm.models.Game;
@@ -78,7 +79,7 @@ public class GameService {
     @GET
     @ApiOperation(value = "Get game settings")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successful", response = UserSettings.class),
+            @ApiResponse(code = 200, message = "Successful", response = GameSettings.class),
     })
     @Path("/settings")
     @Produces(MediaType.APPLICATION_JSON)

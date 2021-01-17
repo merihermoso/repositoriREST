@@ -3,31 +3,28 @@ package edu.upc.dsa.orm.models.API;
 public class GameSettings {
 
     private int id;
-    private int username_min_length;
-    private int username_max_length;
-    private int password_min_length;
-    private int password_max_length;
-    private int email_min_length;
-    private int email_max_length;
-    private int min_age;
+    private int min_health;
+    private int max_health;
+    private int max_damage;
+    private int max_defense;
+    private int max_healing;
+    private int max_speed;
 
     public GameSettings() {
 
 
     }
 
-    public GameSettings(int id, int username_min_length, int username_max_length
-            , int password_min_length, int password_max_length, int email_min_length, int email_max_length
-            , int min_age) {
+    public GameSettings(int id, int min_health, int max_health, int max_damage, int max_defense, int max_healing
+            , int max_speed) {
 
         this.id = id;
-        this.username_min_length = username_min_length;
-        this.username_max_length = username_max_length;
-        this.password_min_length = password_min_length;
-        this.password_max_length = password_max_length;
-        this.email_min_length = email_min_length;
-        this.email_max_length = email_max_length;
-        this.min_age = min_age;
+        this.min_health = min_health;
+        this.max_health = max_health;
+        this.max_damage = max_damage;
+        this.max_defense = max_defense;
+        this.max_healing = max_healing;
+        this.max_speed = max_speed;
 
     }
 
@@ -39,60 +36,51 @@ public class GameSettings {
         this.id = id;
     }
 
-    public int getUsername_min_length() {
-        return username_min_length;
+    public int getMin_health() {
+        return min_health;
     }
 
-    public void setUsername_min_length(int username_min_length) {
-        this.username_min_length = username_min_length;
+    public void setMin_health(int min_health) {
+        this.min_health = min_health;
     }
 
-    public int getUsername_max_length() {
-        return username_max_length;
+    public int getMax_health() {
+        return max_health;
     }
 
-    public void setUsername_max_length(int username_max_length) {
-        this.username_max_length = username_max_length;
+    public void setMax_health(int max_health) {
+        this.max_health = max_health;
     }
 
-    public int getPassword_min_length() {
-        return password_min_length;
+    public int getMax_damage() {
+        return max_damage;
     }
 
-    public void setPassword_min_length(int password_min_length) {
-        this.password_min_length = password_min_length;
+    public void setMax_damage(int max_damage) {
+        this.max_damage = max_damage;
     }
 
-    public int getPassword_max_length() {
-        return password_max_length;
+    public int getMax_defense() {
+        return max_defense;
     }
 
-    public void setPassword_max_length(int password_max_length) {
-        this.password_max_length = password_max_length;
+    public void setMax_defense(int max_defense) {
+        this.max_defense = max_defense;
     }
 
-    public int getEmail_min_length() {
-        return email_min_length;
+    public int getMax_healing() {
+        return max_healing;
     }
 
-    public void setEmail_min_length(int email_min_length) {
-        this.email_min_length = email_min_length;
+    public void setMax_healing(int max_healing) {
+        this.max_healing = max_healing;
     }
 
-    public int getEmail_max_length() {
-        return email_max_length;
+    public int getMax_speed() {
+        return max_speed;
     }
 
-    public void setEmail_max_length(int email_max_length) {
-        this.email_max_length = email_max_length;
+    public void setMax_speed(int max_speed) {
+        this.max_speed = max_speed;
     }
-
-    public int getMin_age() {
-        return min_age;
-    }
-
-    public void setMin_age(int min_age) {
-        this.min_age = min_age;
-    }
-
 }
