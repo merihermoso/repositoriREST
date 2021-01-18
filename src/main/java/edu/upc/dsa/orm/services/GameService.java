@@ -6,12 +6,14 @@ import edu.upc.dsa.orm.dao.game.GameDAO;
 import edu.upc.dsa.orm.dao.game.GameDAOImpl;
 import edu.upc.dsa.orm.dao.inventory.InventoryDAO;
 import edu.upc.dsa.orm.dao.inventory.InventoryDAOImpl;
+import edu.upc.dsa.orm.dao.map.MapDAO;
+import edu.upc.dsa.orm.dao.map.MapDAOImpl;
 import edu.upc.dsa.orm.models.API.GameSettings;
-import edu.upc.dsa.orm.models.API.UserSettings;
 import edu.upc.dsa.orm.models.Entity;
 import edu.upc.dsa.orm.models.Game;
 import edu.upc.dsa.orm.models.Inventory;
 
+import edu.upc.dsa.orm.models.Map;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -29,12 +31,14 @@ import java.util.List;
 public class GameService {
 
     private final GameDAO gameDAO;
+    private final MapDAO mapDAO;
     private final EntityDAO entityDAO;
     private final InventoryDAO inventoryDAO;
 
     public GameService() {
 
         gameDAO = GameDAOImpl.getInstance();
+        mapDAO = MapDAOImpl.getInstance();
         entityDAO = EntityDAOImpl.getInstance();
         inventoryDAO = InventoryDAOImpl.getInstance();
 
@@ -71,6 +75,24 @@ public class GameService {
         List<Game> games = gameDAO.readAll();
 
         GenericEntity<List<Game>> entity = new GenericEntity<List<Game>>(games) {};
+        return Response.status(200).entity(entity).build();
+
+    }
+
+
+
+    @GET
+    @ApiOperation(value = "Get all game maps")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful", response = Map.class, responseContainer="List"),
+    })
+    @Path("/map")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllMaps() {
+
+        List<Map> maps = mapDAO.readAll();
+
+        GenericEntity<List<Map>> entity = new GenericEntity<List<Map>>(maps) {};
         return Response.status(200).entity(entity).build();
 
     }
