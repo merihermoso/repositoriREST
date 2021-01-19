@@ -490,8 +490,6 @@ public class UserService {
 
     }
 
-
-
     //UPDATE
 
     @PUT

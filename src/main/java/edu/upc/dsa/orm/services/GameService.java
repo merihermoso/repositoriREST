@@ -118,7 +118,7 @@ public class GameService {
             @ApiResponse(code = 200, message = "Succesful", response = Game.class),
             @ApiResponse(code = 404, message = "Item not found")
     })
-    @Path("/id/{id}")
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response getGameById(@PathParam("id") int id) {
 
@@ -144,7 +144,7 @@ public class GameService {
             @ApiResponse(code = 200, message = "Successful"),
             @ApiResponse(code = 404, message = "Not found"),
     })
-    @Path("/id/{id}/{parameter}")
+    @Path("/{id}/{parameter}")
     @Produces(MediaType.TEXT_PLAIN)
     public Response readParameterById(@PathParam("id") int id,
                                              @PathParam("parameter") String parameter) {
@@ -171,7 +171,7 @@ public class GameService {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 404, message = "Game not found")
     })
-    @Path("/id/{id}")
+    @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateGameById(@PathParam("id") int id, Game game) {
 
@@ -195,7 +195,7 @@ public class GameService {
             @ApiResponse(code = 404, message = "Game not found"),
             @ApiResponse(code = 603, message = "Parameter not found")
     })
-    @Path("/id/{id}/{parameter}")
+    @Path("/{id}/{parameter}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateParameterById(@PathParam("id") int id,
                                               @PathParam("parameter") String parameter,
@@ -239,7 +239,7 @@ public class GameService {
             @ApiResponse(code = 200, message = "Successful"),
             @ApiResponse(code = 404, message = "Game not found"),
     })
-    @Path("/id/{id}")
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteById(@PathParam("id") int id) {
 
@@ -454,7 +454,7 @@ public class GameService {
         @ApiResponse(code = 200, message = "Successful", response = Inventory.class, responseContainer="List"),
         @ApiResponse(code = 404, message = "Game not found")
 })
-@Path("/id/{id}/inventory")
+@Path("/{id}/inventory")
 @Produces(MediaType.APPLICATION_JSON)
 public Response getGameInventory(@PathParam("id") int id) {
 
@@ -481,7 +481,7 @@ public Response getGameInventory(@PathParam("id") int id) {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 404, message = "Inventory not found")
     })
-    @Path("/id/{id}/inventory")
+    @Path("/{id}/inventory")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateInventoryById(@PathParam("id") int gameID, Inventory inventory) {
 
@@ -499,7 +499,7 @@ public Response getGameInventory(@PathParam("id") int id) {
             @ApiResponse(code = 404, message = "Inventory not found"),
             @ApiResponse(code = 603, message = "Parameter not found")
     })
-    @Path("/id/{id}/{parameter}/inventory")
+    @Path("/{id}/{parameter}/inventory")
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateInventoryParameterById(@PathParam("id") int gameID,
                                              @PathParam("parameter") String parameter,
@@ -543,7 +543,7 @@ public Response getGameInventory(@PathParam("id") int id) {
             @ApiResponse(code = 200, message = "Successful"),
             @ApiResponse(code = 404, message = "Inventory not found"),
     })
-    @Path("/id/{id}/inventory")
+    @Path("/{id}/inventory")
     @Produces(MediaType.APPLICATION_JSON)
     public Response deleteOrderById(@PathParam("id") int gameID) {
 
