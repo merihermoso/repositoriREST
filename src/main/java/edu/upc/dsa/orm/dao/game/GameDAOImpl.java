@@ -3,9 +3,7 @@ package edu.upc.dsa.orm.dao.game;
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
 import edu.upc.dsa.orm.models.API.GameSettings;
-import edu.upc.dsa.orm.models.API.UserSettings;
 import edu.upc.dsa.orm.models.Game;
-import edu.upc.dsa.orm.models.User;
 
 import java.util.*;
 
@@ -34,7 +32,7 @@ public class GameDAOImpl implements GameDAO {
 
     public boolean existsId(int id) {
 
-        return (session.readByParameter(User.class, "id", id) != null);
+        return (session.readByParameter(Game.class, "id", id) != null);
 
     }
 
