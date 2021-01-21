@@ -1,34 +1,34 @@
-package edu.upc.dsa.orm.dao.enemy;
+package edu.upc.dsa.orm.dao.entity;
 
-import edu.upc.dsa.orm.models.Enemy;
+import edu.upc.dsa.orm.models.Entity;
 
 import java.util.List;
 
-public interface EnemyDAO {
+public interface EntityDAO {
 
 
     // CRUD Functions (Create, Read, Update and Delete)
 
     // CREATE
-    boolean create(Enemy enemy);
+    boolean create(Entity entity);
 
     // READ
-    List<Enemy> readAll();
-    Enemy readByParameter(String byParameter, Object byParameterValue);
+    List<Entity> readAll();
+    Entity readByParameter(String byParameter, Object byParameterValue);
     Object readParameterByParameter(String parameter, String byParameter, Object byParameterValue);
 
     boolean existsId(int id);
     boolean exists(String name);
 
     // UPDATE
-    boolean update(Enemy enemy);
-    boolean updateByParameter(Enemy enemy, String byParameter, Object byParameterValue);
+    boolean update(Entity entity);
+    boolean updateByParameter(Entity entity, String byParameter, Object byParameterValue);
     boolean updateParameterByParameter(String parameter, Object parameterValue
             , String byParameter, Object byParameterValue);
 
 
     // DELETE
-    boolean delete(Enemy enemy);
+    boolean delete(Entity entity);
     boolean deleteByParameter(String byParameter, Object byParameterValue);
 
 

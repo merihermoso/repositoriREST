@@ -59,6 +59,27 @@ public class InventoryDAOImpl implements InventoryDAO {
         return inventoryList;
     }
 
+    public List<Inventory> readAllByParameter(String byParameter, Object byParameterValue){
+
+        Session session;
+        List<Inventory> inventoryList;
+
+        HashMap<Integer, Object> result;
+
+        session = FactorySession.openSession();
+        result = session.readAllByParameter(Inventory.class, byParameter, byParameterValue);
+
+        inventoryList = new ArrayList<>();
+
+        for (Object object : result.values()) {
+            inventoryList.add((Inventory) object);
+        }
+
+        session.close();
+
+        return inventoryList;
+    }
+
 
     public Inventory readByParameter(String byParameter, Object byParameterValue) {
 

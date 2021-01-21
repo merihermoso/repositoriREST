@@ -1,8 +1,12 @@
 package edu.upc.dsa.orm.services;
 
+import edu.upc.dsa.orm.dao.game.GameDAO;
+import edu.upc.dsa.orm.dao.game.GameDAOImpl;
 import edu.upc.dsa.orm.dao.user.UserDAO;
 import edu.upc.dsa.orm.dao.user.UserDAOImpl;
 import edu.upc.dsa.orm.models.API.*;
+import edu.upc.dsa.orm.models.Game;
+import edu.upc.dsa.orm.models.Inventory;
 import edu.upc.dsa.orm.models.User;
 import io.swagger.annotations.*;
 
@@ -22,10 +26,12 @@ import java.util.List;
 public class UserService {
 
     private final UserDAO userDAO;
+    private final GameDAO gameDAO;
 
     public UserService() {
 
         userDAO = UserDAOImpl.getInstance();
+        gameDAO = GameDAOImpl.getInstance();
 
     }
 
@@ -39,7 +45,7 @@ public class UserService {
     })
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response createUserById(User user) {
+    public Response createUser(User user) {
 
         if (!userDAO.exists(user.getUsername()) && !userDAO.existsEmail(user.getEmail())) {
 
@@ -161,7 +167,6 @@ public class UserService {
                     user.getEmail(),
                     user.getBirthdate(),
                     user.getScore(),
-                    user.getLevel(),
                     userDAO.readRankingPositionByParameter("username", user.getUsername())));
         }
         GenericEntity<List<UserProfile>> entity = new GenericEntity<List<UserProfile>>(userProfileResponse) {};
@@ -180,7 +185,7 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getUserSettings() {
 
-        return Response.status(200).entity(new UserSettings()).build();
+        return Response.status(200).entity(userDAO.readSettings()).build();
 
     }
 
@@ -204,7 +209,6 @@ public class UserService {
                     user.getEmail(),
                     user.getBirthdate(),
                     user.getScore(),
-                    user.getLevel(),
                     userDAO.readRankingPositionByParameter("username", username));
 
             return Response.status(200).entity(userProfile).build();
@@ -360,7 +364,6 @@ public class UserService {
                     user.getEmail(),
                     user.getBirthdate(),
                     user.getScore(),
-                    user.getLevel(),
                     userDAO.readRankingPositionByParameter("username", user.getUsername()));
 
             return Response.status(200).entity(userProfile).build();
@@ -436,6 +439,57 @@ public class UserService {
     }
 
 
+    @GET
+    @ApiOperation(value = "Get a User games list given its id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful", response = Game.class, responseContainer="List"),
+            @ApiResponse(code = 404, message = "User not found")
+    })
+    @Path("/id/{id}/game")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUserGamesById(@PathParam("id") int id) {
+
+        if (userDAO.existsId(id)) {
+
+            List<Game> games = gameDAO.readAllByParameter("id_user", id);
+
+            GenericEntity<List<Game>> entity = new GenericEntity<List<Game>>(games) {
+            };
+            return Response.status(200).entity(entity).build();
+
+        } else {
+            return Response.status(404).build();
+        }
+
+    }
+
+
+    @GET
+    @ApiOperation(value = "Get a User games list given its username")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful", response = Game.class, responseContainer="List"),
+            @ApiResponse(code = 404, message = "User not found")
+    })
+    @Path("/{username}/game")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUserGamesByUsername(@PathParam("username") String username) {
+
+        if (userDAO.exists(username)) {
+
+            int id = (int) userDAO.readParameterByParameter("id", "username", username);
+
+            List<Game> games = gameDAO.readAllByParameter("id_user", id);
+
+            GenericEntity<List<Game>> entity = new GenericEntity<List<Game>>(games) {
+            };
+            return Response.status(200).entity(entity).build();
+
+        } else {
+            return Response.status(404).build();
+        }
+
+    }
+
     //UPDATE
 
     @PUT
@@ -489,32 +543,42 @@ public class UserService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful"),
             @ApiResponse(code = 404, message = "User not found"),
-            @ApiResponse(code = 603, message = "Parameter not found")
+            @ApiResponse(code = 603, message = "Parameter not found"),
+            @ApiResponse(code = 604, message = "You must enter a new parameter value")
     })
     @Path("/{username}/{parameter}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateParameterByUsername(@PathParam("username") String username,
                                               @PathParam("parameter") String parameter,
-                                              String parameterValue) {
+                                              UpdateParameterRequest updateParameterRequest) {
+
+        String parameterValue = updateParameterRequest.getParameterValue();
 
         if (userDAO.exists(username)) {
 
-            try {
+            if (!parameterValue.equals("")) {
 
-                if (User.class.getDeclaredField(parameter).getType().isAssignableFrom(Integer.class)) {
-                    userDAO.updateParameterByParameter(parameter, Integer.parseInt(parameterValue)
-                            , "username", username);
+                try {
 
-                } else {
-                    userDAO.updateParameterByParameter(parameter, parameterValue, "username", username);
+                    if (User.class.getDeclaredField(parameter).getType().isAssignableFrom(Integer.class)) {
+                        userDAO.updateParameterByParameter(parameter, Integer.parseInt(parameterValue)
+                                , "username", username);
+
+                    } else {
+                        userDAO.updateParameterByParameter(parameter, parameterValue, "username", username);
+                    }
+
+                    return Response.status(200).build();
+
+                } catch (NoSuchFieldException noSuchFieldException) {
+
+                    return Response.status(603).build();
+
                 }
 
-                return Response.status(200).build();
+            } else {
 
-            } catch (NoSuchFieldException noSuchFieldException) {
-
-                return Response.status(603).build();
-
+                return Response.status(604).build();
             }
 
         } else {
@@ -537,7 +601,9 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response updateParameterById(@PathParam("id") int id,
                                               @PathParam("parameter") String parameter,
-                                              String parameterValue) {
+                                              UpdateParameterRequest updateParameterRequest) {
+
+        String parameterValue = updateParameterRequest.getParameterValue();
 
         if (userDAO.existsId(id)) {
 
@@ -577,7 +643,9 @@ public class UserService {
     @Path("/{username}/password")
     @Produces(MediaType.APPLICATION_JSON)
     public Response updatePasswordByUsername(@PathParam("username") String username,
-                                              String newPassword) {
+                                              UpdateParameterRequest updateParameterRequest) {
+
+        String newPassword = updateParameterRequest.getParameterValue();
 
         if (userDAO.exists(username)) {
 
@@ -604,7 +672,9 @@ public class UserService {
     @Path("/id/{id}/password")
     @Produces(MediaType.APPLICATION_JSON)
     public Response updatePasswordById(@PathParam("id") int id,
-                                             String newPassword) {
+                                             UpdateParameterRequest updateParameterRequest) {
+
+        String newPassword = updateParameterRequest.getParameterValue();
 
         if (userDAO.existsId(id)) {
 
@@ -672,5 +742,7 @@ public class UserService {
         }
 
     }
+
+
 
 }

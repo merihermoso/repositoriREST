@@ -2,6 +2,7 @@ package edu.upc.dsa.orm.models.API;
 
 public class UserSettings {
 
+    private int id;
     private int username_min_length;
     private int username_max_length;
     private int password_min_length;
@@ -12,14 +13,27 @@ public class UserSettings {
 
     public UserSettings() {
 
-        this.username_min_length = 4;
-        this.username_max_length = 20;
-        this.password_min_length = 4;
-        this.password_max_length = 20;
-        this.email_min_length = 4;
-        this.email_max_length = 30;
-        this.min_age = 15;
 
+    }
+
+    public UserSettings(int id, int username_min_length, int username_max_length, int password_min_length,
+                        int password_max_length, int email_min_length, int email_max_length, int min_age) {
+        this.id = id;
+        this.username_min_length = username_min_length;
+        this.username_max_length = username_max_length;
+        this.password_min_length = password_min_length;
+        this.password_max_length = password_max_length;
+        this.email_min_length = email_min_length;
+        this.email_max_length = email_max_length;
+        this.min_age = min_age;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getUsername_min_length() {
@@ -77,5 +91,4 @@ public class UserSettings {
     public void setMin_age(int min_age) {
         this.min_age = min_age;
     }
-
 }

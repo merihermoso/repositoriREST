@@ -2,8 +2,8 @@ package edu.upc.dsa.orm.dao.game;
 
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
+import edu.upc.dsa.orm.models.API.GameSettings;
 import edu.upc.dsa.orm.models.Game;
-import edu.upc.dsa.orm.models.User;
 
 import java.util.*;
 
@@ -32,7 +32,7 @@ public class GameDAOImpl implements GameDAO {
 
     public boolean existsId(int id) {
 
-        return (session.readByParameter(User.class, "id", id) != null);
+        return (session.readByParameter(Game.class, "id", id) != null);
 
     }
 
@@ -59,6 +59,28 @@ public class GameDAOImpl implements GameDAO {
     }
 
 
+    public List<Game> readAllByParameter(String byParameter, Object byParameterValue){
+
+        Session session;
+        List<Game> gameList;
+
+        HashMap<Integer, Object> result;
+
+        session = FactorySession.openSession();
+        result = session.readAllByParameter(Game.class, byParameter, byParameterValue);
+
+        gameList = new ArrayList<>();
+
+        for (Object object : result.values()) {
+            gameList.add((Game) object);
+        }
+
+        session.close();
+
+        return gameList;
+    }
+
+
     public Game readByParameter(String byParameter, Object byParameterValue) {
 
         return ((Game) session.readByParameter(Game.class, byParameter, byParameterValue));
@@ -68,6 +90,12 @@ public class GameDAOImpl implements GameDAO {
     public Object readParameterByParameter(String parameter, String byParameter, Object byParameterValue) {
 
        return session.readParameterByParameter(Game.class, parameter, byParameter, byParameterValue);
+
+    }
+
+    public GameSettings readSettings() {
+
+        return ((GameSettings) session.readByParameter(GameSettings.class, "id", 1));
 
     }
 

@@ -1,12 +1,12 @@
 CONSULTAS QUE FALTAN (Backend)
--> Arreglar función getItemsUser    (fa la consulta però només et reotrna la quantitat del primer objecte que troba a Inventory amb el id_user)
+-> Arreglar función getItemsUser    (fa la consulta però només et reotrna la quantitat del primer objecte que troba a Inventory amb el userID)
 -> Arreglar funció getGames (només retorna la primera partida que troba...)
 -> Fer funció update Inventory      (per aumentar/reduir quantitat de item)
 -> Funció modificar atributs player
       -> Afegir que quan health=0         -> fin partida
       -> Funció per marcar l'estat dels jugadors al inici de la partida
 -> ¿Todos los objetos que se encuentra en el mapa se pueden cojer?
--> Clase itemsComprados? i guardar ahi id_user, id_item, quantity (seria como Inventory, pero sin que se modifique cuando se gastan los objetos mientras juegas)
+-> Clase itemsComprados? i guardar ahi userID, itemID, quantity (seria como Inventory, pero sin que se modifique cuando se gastan los objetos mientras juegas)
 -> Posición Partida en el ranking
 -> Update object (generalizado, para poder poner el objecto, atributo y nuevo valor) y que sirva para todas
 -> Delete ...

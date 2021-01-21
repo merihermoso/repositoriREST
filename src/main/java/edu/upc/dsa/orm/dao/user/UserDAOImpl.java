@@ -3,6 +3,7 @@ import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
 import edu.upc.dsa.orm.models.API.RegisterCredentials;
 import edu.upc.dsa.orm.models.API.UserRanking;
+import edu.upc.dsa.orm.models.API.UserSettings;
 import edu.upc.dsa.orm.models.User;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -86,6 +87,12 @@ public class UserDAOImpl implements UserDAO {
     public Object readParameterByParameter(String parameter, String byParameter, Object byParameterValue) {
 
         return session.readParameterByParameter(User.class, parameter, byParameter, byParameterValue);
+
+    }
+
+    public UserSettings readSettings() {
+
+        return ((UserSettings) session.readByParameter(UserSettings.class, "id", 1));
 
     }
 

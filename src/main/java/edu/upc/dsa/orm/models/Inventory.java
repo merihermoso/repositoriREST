@@ -2,38 +2,51 @@ package edu.upc.dsa.orm.models;
 
 public class Inventory {
 
-
-
-    private int userID;
-    private int itemID;
+    private int id;
+    private int id_game;
+    private int id_item;
     private int quantity;
-    private int quantityShop;
-
 
     public Inventory() {
 
     }
 
-    public Inventory(int userID, int itemID, int quantity, int quantityShop) {
-
-        this();
-        setUserID(userID);
-        setItemID(itemID);
-        setQuantity(quantity);
-        setQuantityShop(quantityShop);
-
+    public Inventory(int id, int id_game, int id_item, int quantity) {
+        this.id = id;
+        this.id_game = id_game;
+        this.id_item = id_item;
+        this.quantity = quantity;
     }
 
-    public int getUserID() {        return userID;    }
-    public void setUserID(int userID) {        this.userID = userID;    }
+    public int getId() {
+        return id;
+    }
 
-    public int getItemID() {        return itemID;    }
-    public void setItemID(int itemID) {        this.itemID = itemID;    }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public int getQuantity() {        return quantity;    }
-    public void setQuantity(int quantity) {        this.quantity = quantity;    }
+    public int getId_game() {
+        return id_game;
+    }
 
-    public int getQuantityShop() {        return quantityShop;    }
-    public void setQuantityShop(int quantityShop) {        this.quantityShop = quantityShop;    }
+    public void setId_game(int id_game) {
+        this.id_game = id_game;
+    }
 
+    public int getId_item() {
+        return id_item;
+    }
+
+    public void setId_item(int id_item) {
+        this.id_item = id_item;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 }
