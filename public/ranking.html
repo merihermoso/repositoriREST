@@ -60,26 +60,69 @@
 <!---------------------------->
 <!-- Cartas de los productos -->
 <section class="products text-center">
-    <div class="container p-3">
+    <div class="container p-3" style="">
         <h1 class="text-white">Firefighter ranking</h1>
         <p class="text-white">¡Las mejores puntuaciones de Firefighter!</p>
         <div class="row">
             <!-- Miembros-->
             <div class="col-lg-4">
+                <div class="accordion" id="accordion1">
                 <div class="card">
                     <div class="card-body">
                         <img src="Media/trofeo1.png" class="img-fluid rounded-circle w-50"   alt="PlayersRanking">
-                        <h3>Top 10 players</h3>
+                        <h3>Top 5 players</h3>
                         <p>Ranking of players<br> <i class="fas fa-gem"></i></p>
                         <div class="d-flex flex row justify-content-center">
                             <div class="p-4">
-                                <button type="button" style="margin-left: 5px" name="button" id="getPlayersbtn" class="btn btn-danger">Get</button>
+                                <button class="btn btn-danger collapsed" id="getPlayersbtn" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">Get</button>
                             </div>
                         </div>
                     </div>
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion1">
+                        <div class="card-body">
+                            <table class="table">
+                                <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Score</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>Mark</td>
+                                    <td>500</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">2</th>
+                                    <td>Jacob</td>
+                                    <td>451</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">3</th>
+                                    <td>Jacob</td>
+                                    <td>332</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">4</th>
+                                    <td>Jacob</td>
+                                    <td>300</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">5</th>
+                                    <td>Jacob</td>
+                                    <td>250</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
                 </div>
             </div>
             <div class="col-lg-4">
+                <div class="accordion" id="accordion2">
                 <div class="card">
                     <div class="card-body">
                         <img src="Media/trofeo3.png" class="img-fluid rounded-circle w-50"   alt="myPosition">
@@ -87,9 +130,23 @@
                         <p>Get my ranking position<br>  <i class="fas fa-gem"></i> </p>
                         <div class="d-flex flex row justify-content-center">
                             <div class="p-4">
-                                <button type="button" style="margin-left: 15px" name="button" id="getPositionbtn" class="btn btn-danger">Get</button>                            </div>
+                                <button class="btn btn-danger collapsed" id="getPositionbtn" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Get</button>
+                            </div>
                         </div>
                     </div>
+                    <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordion2">
+                        <div class="card-body">
+                            <table class="table">
+                                <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">My ranking position:</th>
+                                    <th scope="col">1</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
                 </div>
             </div>
         </div>
