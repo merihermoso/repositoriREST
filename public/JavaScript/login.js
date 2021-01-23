@@ -19,7 +19,7 @@ $(document).ready(function() {
                 200: function() {
                     alert("Has iniciado sesión correctamente\n");
                     window.localStorage.setItem("username", username);
-                    var url = "shop.html";
+                    var url = "home.html";
                     window.open(url, "_self");
                 },
                 601: function() {

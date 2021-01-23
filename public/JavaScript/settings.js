@@ -19,6 +19,15 @@ $(document).ready(function() {
         console.log(username);
         window.open("login.html", "_self");
     })
+
+    $('#eliminar_usuario').click(function () {
+        $.ajax({
+            url: BASE_URI.concat("/user/"username),
+            success: function(respuesta) {
+
+            }
+        }
+    })
 })
 
 

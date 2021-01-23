@@ -163,16 +163,30 @@ $(document).ready(function() {
 
 
 
-    $('#aloevera').click(function () {
-        var inventario = {"idObjeto": 2, "cantidad": cantidad2, "idJugador": idJugador};
+    /*$('#aloevera').click(function () {
+
+        url: BASE_URI.concat("/shop/"username),
+        success: function(respuesta) {
+            console.log(respuesta);
+            var id_username = respuesta;
+        }
+
+        url: BASE_URI.concat("/shop/"),
+        success: function(respuesta) {
+            console.log(respuesta);
+            var price = respuesta[0];
+        }
+
+        var inventario = {"id:": 1, "id_user:": respuesta, "id_item": 0, "quantity": cantidad1, "orderDate": 0, "OrderTime": 0};
+
         console.log(inventario);
-        compraObjeto(inventario);
-        diamantes = diamantes - 150 * cantidad2;
+
+        diamantes = diamantes - price * cantidad2;
         window.sessionStorage.setItem("diamantes", diamantes);
         $("#m").text(diamantes);
         $("#numero2").text(1);
         cantidad2 = 1;
-    });
+    });*/
 
     $('#venda').click(function () {
         var inventario = {"idObjeto": 2, "cantidad": cantidad2, "idJugador": idJugador};
