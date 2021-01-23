@@ -1,11 +1,13 @@
-var username = localStorage.getItem("username")
+
 
 
 $(document).ready(function() {
-    /*if (username == "null"){
+var username = localStorage.getItem("username");
+console.log(username);
+    if (username == "null"){
         var url = "index.html";
         window.open(url, "_self");
-    }*/
+    }
     
     console.log(username);
 
