@@ -25,7 +25,7 @@ $(document).ready(function() {
 
 
     $.ajax({
-        url: BASE_URI.concat("/shop/item"),
+        url: BASE_URI.concat("/shop"),
 
         success: function(respuesta) {
             console.log(respuesta);

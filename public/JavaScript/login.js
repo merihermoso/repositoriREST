@@ -8,6 +8,7 @@ $(document).ready(function() {
 
         var user = {"username": username, "password": password};
 
+        console.log(user);
         $.ajax({
             type: 'POST',
             url: BASE_URI.concat("/user/login"),
@@ -18,7 +19,7 @@ $(document).ready(function() {
                 200: function() {
                     alert("Has iniciado sesión correctamente\n");
                     window.localStorage.setItem("username", username);
-                    var url = "index.html";
+                    var url = "shop.html";
                     window.open(url, "_self");
                 },
                 601: function() {
@@ -67,7 +68,7 @@ $(document).ready(function() {
                     200: function() {
                         alert("Te has registrado correctamente\n");
                         window.localStorage.setItem("username", username);
-                        var url = "index.html";
+                        var url = "home.html";
                         window.open(url, "_self");
                     },
                     600: function() {
