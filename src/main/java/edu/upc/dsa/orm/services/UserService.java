@@ -163,7 +163,8 @@ public class UserService {
 
         List<UserProfile> userProfileResponse = new ArrayList<>();
         for(User user : users) {
-            userProfileResponse.add(new UserProfile(user.getUsername(),
+            userProfileResponse.add(new UserProfile(
+                    user.getUsername(),
                     user.getEmail(),
                     user.getBirthdate(),
                     user.getScore(),
