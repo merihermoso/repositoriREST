@@ -3,6 +3,9 @@ var username = localStorage.getItem("username");
 
 $(document).ready(function() {
 
+    $("#nav_username").text(username);
+
+    
     $('#getPlayersbtn').click(function () {
 
 
