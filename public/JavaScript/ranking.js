@@ -99,12 +99,12 @@ $(document).ready(function() {
 })
 
     $('#getPositionbtn').click(function () {
-            var username = $("#loginName").val();
+            //var username = $("#loginName").val();
 
-            var user = {"username": username};
+            //var user = {"username": username};
 
             $.ajax({
-            url: BASE_URI.concat("/user/asdf/ranking"),
+            url: BASE_URI.concat("/user/"+username+"/ranking"),
                 success: function(respuesta) {
                 console.log(respuesta);
                 $("#pos").text(respuesta.position).toString();
