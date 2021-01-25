@@ -2,11 +2,13 @@ package edu.upc.dsa.orm.services;
 
 import edu.upc.dsa.orm.dao.game.GameDAO;
 import edu.upc.dsa.orm.dao.game.GameDAOImpl;
+import edu.upc.dsa.orm.dao.orders.OrdersDAO;
+import edu.upc.dsa.orm.dao.orders.OrdersDAOImpl;
 import edu.upc.dsa.orm.dao.user.UserDAO;
 import edu.upc.dsa.orm.dao.user.UserDAOImpl;
 import edu.upc.dsa.orm.models.API.*;
 import edu.upc.dsa.orm.models.Game;
-import edu.upc.dsa.orm.models.Inventory;
+import edu.upc.dsa.orm.models.Orders;
 import edu.upc.dsa.orm.models.User;
 import io.swagger.annotations.*;
 
@@ -27,11 +29,13 @@ public class UserService {
 
     private final UserDAO userDAO;
     private final GameDAO gameDAO;
+    private final OrdersDAO ordersDAO;
 
     public UserService() {
 
         userDAO = UserDAOImpl.getInstance();
         gameDAO = GameDAOImpl.getInstance();
+        ordersDAO = OrdersDAOImpl.getInstance();
 
     }
 
@@ -482,6 +486,61 @@ public class UserService {
             List<Game> games = gameDAO.readAllByParameter("id_user", id);
 
             GenericEntity<List<Game>> entity = new GenericEntity<List<Game>>(games) {
+            };
+            return Response.status(200).entity(entity).build();
+
+        } else {
+            return Response.status(404).build();
+        }
+
+    }
+
+
+    ///
+
+
+    @GET
+    @ApiOperation(value = "Get a User orders list given its id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful", response = Orders.class, responseContainer="List"),
+            @ApiResponse(code = 404, message = "User not found")
+    })
+    @Path("/id/{id}/orders")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUserOrdersById(@PathParam("id") int id) {
+
+        if (userDAO.existsId(id)) {
+
+            List<Orders> orders = ordersDAO.readAllByParameter("id_user", id);
+
+            GenericEntity<List<Orders>> entity = new GenericEntity<List<Orders>>(orders) {
+            };
+            return Response.status(200).entity(entity).build();
+
+        } else {
+            return Response.status(404).build();
+        }
+
+    }
+
+
+    @GET
+    @ApiOperation(value = "Get a User orders list given its username")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful", response = Orders.class, responseContainer="List"),
+            @ApiResponse(code = 404, message = "User not found")
+    })
+    @Path("/{username}/orders")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getUserOrdersByUsername(@PathParam("username") String username) {
+
+        if (userDAO.exists(username)) {
+
+            int id = (int) userDAO.readParameterByParameter("id", "username", username);
+
+            List<Orders> orders = ordersDAO.readAllByParameter("id_user", id);
+
+            GenericEntity<List<Orders>> entity = new GenericEntity<List<Orders>>(orders) {
             };
             return Response.status(200).entity(entity).build();
 
