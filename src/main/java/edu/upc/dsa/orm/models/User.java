@@ -22,7 +22,7 @@ public class User {
         setPassword(password);
         setBirthdate(birthdate);
         setScore(0);
-        setProfile_photo("/Media/profile.png");
+        setProfile_photo("http://147.83.7.207:8080/Media/profile.png");
 
     }
 
