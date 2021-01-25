@@ -41,7 +41,6 @@
                 <li class="nav-item mr-">
                     <a class="nav-link mr-3" href="ranking.html">Ranking</a>
                 </li>
-
                 <!-- Logo -->
                 <li class="nav-item ">
                     <a href="settings.html">
@@ -63,9 +62,114 @@
 <section class="products text-center">
     <div class="container p-3">
         <h1 class="text-white">Firefighter store</h1>
+        <p class="text-white">Primero elige en que partida quieres añadir los objetos que compres.</p>
+        <div id="accordion">
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                        <button class="btn btn-outline-danger" id="getInfoPartida" style="width:50%" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Despliega para ver la información de: Partida 1
+                        </button>
+                    </h5>
+                </div>
+
+                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-body">
+                        <table class="table">
+                            <thead class="thead-light">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Last access</th>
+                                <th scope="col">Creation date</th>
+                                <th scope="col">Score</th>
+                                <th scope="col">Coins</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th scope="row">Information</th>
+                                <td>12/12/21</td>
+                                <td>14/09/20</td>
+                                <td>9000</td>
+                                <td>150</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <button type="button" class="btn btn-danger" id="seleccionarPartida">Seleccionar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                        <button class="btn btn-outline-danger collapsed" id="getInfoPartida" style="width:50%" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Despliega para ver la información de: Partida 2
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                    <div class="card-body">
+                        <table class="table">
+                            <thead class="thead-light">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Last access</th>
+                                <th scope="col">Creation date</th>
+                                <th scope="col">Score</th>
+                                <th scope="col">Coins</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th scope="row">Information</th>
+                                <td>12/12/21</td>
+                                <td>14/09/20</td>
+                                <td>9000</td>
+                                <td>150</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <button type="button" class="btn btn-danger" id="seleccionarPartida">Seleccionar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingThree">
+                    <h5 class="mb-0">
+                        <button class="btn btn-outline-danger collapsed" id="getInfoPartida" style="width:50%" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            Despliega para ver la información de: Partida 3
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                    <div class="card-body">
+                        <table class="table">
+                            <thead class="thead-light">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Last access</th>
+                                <th scope="col">Creation date</th>
+                                <th scope="col">Score</th>
+                                <th scope="col">Coins</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th scope="row">Information</th>
+                                <td>12/12/21</td>
+                                <td>14/09/20</td>
+                                <td>9000</td>
+                                <td>150</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <button type="button" class="btn btn-danger" id="seleccionarPartida">Seleccionar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <p class="text-white">¡Obtén estos productos para avanzar de una manera más divertida en el juego!</p>
         <p class="text-white">¡Puedes comprarlos ahora mismo con tus diamantes actuales: <label id="m"></label> !</p>
-
         <!-- Primera fila -->
         <div class="row">
             <!-- Miembros-->
@@ -292,5 +396,11 @@
 
     </div>
 </footer>
+<!---------------------------->
+<!-- Boostrap JS. Lo ponemos aqui para no cargar tanto el contenido de la pagina-->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<script type="text/javascript" src="JavaScript/home.js"></script>
 </body>
 </html>
