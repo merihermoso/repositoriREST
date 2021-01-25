@@ -171,6 +171,7 @@ public class UserService {
                     user.getUsername(),
                     user.getEmail(),
                     user.getBirthdate(),
+                    user.getProfile_photo(),
                     user.getScore(),
                     userDAO.readRankingPositionByParameter("username", user.getUsername())));
         }
@@ -213,6 +214,7 @@ public class UserService {
             UserProfile userProfile = new UserProfile(user.getUsername(),
                     user.getEmail(),
                     user.getBirthdate(),
+                    user.getProfile_photo(),
                     user.getScore(),
                     userDAO.readRankingPositionByParameter("username", username));
 
@@ -368,6 +370,7 @@ public class UserService {
             UserProfile userProfile = new UserProfile(user.getUsername(),
                     user.getEmail(),
                     user.getBirthdate(),
+                    user.getProfile_photo(),
                     user.getScore(),
                     userDAO.readRankingPositionByParameter("username", user.getUsername()));
 
