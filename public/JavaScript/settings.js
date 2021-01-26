@@ -21,11 +21,10 @@ $(document).ready(function() {
 
     $('#eliminar_usuario').click(function () {
         $.ajax({
-            url: BASE_URI.concat("/user/"username),
+            url: BASE_URI.concat("/user/"+username),
             success: function(respuesta) {
-
             }
-        }
+        })
     })
 
     $('#updatePasswordbtn').click(function () {
@@ -37,16 +36,13 @@ $(document).ready(function() {
             console.log(user);
             $.ajax({
                 type: 'POST',
-                url: BASE_URI.concat("/user/{username}/{parameter}"),
+                url: BASE_URI.concat("/user/{username}/{parameter}"),  //Acabar de completar
                 data: JSON.stringify(user),
                 dataType: 'json',
                 headers: {'content-type': 'application/json'},
                 statusCode: {
                     200: function() {
                         alert("Has modificado la contraseña correctamente\n");
-                        window.localStorage.setItem("username", username);
-                        var url = "settings.html";
-                        window.open(url, "_self");
                     },
                     404: function() {
                         alert("Usuario no encontrado\n");
@@ -58,8 +54,8 @@ $(document).ready(function() {
                         alert("No has introducido un nuevo valor\n");
                     }
                 }
-            });
-        });
+            })
+    });
 
     $('#updateEmailbtn').click(function () {
             var username = $("#loginName").val();
@@ -77,9 +73,6 @@ $(document).ready(function() {
                 statusCode: {
                     200: function() {
                         alert("Has modificado el correo correctamente\n");
-                        window.localStorage.setItem("username", username);
-                        var url = "settings.html";
-                        window.open(url, "_self");
                     },
                     404: function() {
                         alert("Usuario no encontrado\n");
@@ -91,11 +84,11 @@ $(document).ready(function() {
                         alert("No has introducido un nuevo valor\n");
                     }
                 }
-            });
-        });
+            })
+    });
 
 
- $('#getUserProfilebtn').click(function () {
+    $('#getUserProfilebtn').click(function () {
         $.ajax({
             url: BASE_URI.concat("/user/"+username+"/profile"),
                 success: function(respuesta) {
@@ -107,10 +100,12 @@ $(document).ready(function() {
                     $("#birthdate").text(respuesta[0].birthdate).toString();
 
                     alert("quiero obtener el perfil");
-    });
+                }
+        })
+    })
 })
 
-})
+
 
 
 
