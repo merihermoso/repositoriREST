@@ -86,7 +86,7 @@ public class UserService {
         if (userDAO.exists(registerCredentials.getUsername())) return Response.status(250).build();
         if (userDAO.existsEmail(registerCredentials.getEmail())) return Response.status(608).build();
 
-        UserSettings userSettings = new UserSettings();
+        UserSettings userSettings = userDAO.readSettings();
 
         if (registerCredentials.getUsername().length() < userSettings.getUsername_min_length()
                 || registerCredentials.getUsername().length() > userSettings.getUsername_max_length())

@@ -152,7 +152,7 @@ public class ShopService {
             @ApiResponse(code = 700, message = "User not found"),
             @ApiResponse(code = 701, message = "Not enough coins")
     })
-    @Path("/id/{id}")
+    @Path("/id/{id}/buy")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response buyItemById(@PathParam("id") int id, @QueryParam("id_game") int id_game,
                                 @QueryParam("quantity") int quantity) {
@@ -214,7 +214,7 @@ public class ShopService {
             @ApiResponse(code = 700, message = "User not found"),
             @ApiResponse(code = 701, message = "Not enough coins")
     })
-    @Path("/{name}")
+    @Path("/{name}/buy")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response buyItemByName(@PathParam("name") String name, @QueryParam("id_game") int id_game,
                                   @QueryParam("quantity") int quantity) {
