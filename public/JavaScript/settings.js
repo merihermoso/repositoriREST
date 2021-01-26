@@ -98,8 +98,10 @@ $(document).ready(function() {
 
     $('#updateEmailbtn').click(function () {
 
-        var mail_val = $("#newEmail").val();
+        var mail_val = $("#newEmail").val().ToString();
         var parameter = {"parameterValue": mail_val};
+        console.log(mail_val);
+        console.log(parameter);
 
             $.ajax({
                 type: 'PUT',
