@@ -429,13 +429,11 @@ public class UserService {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful"),
     })
-    @Path("/sendemail")
+    @Path("/generatemap")
     @Produces(MediaType.TEXT_PLAIN)
     public Response sendEmail() {
 
         MazeGenerator mazeGenerator = new MazeGenerator(400, 400);
-
-        SendingMailSSL sendingMailSSL = new SendingMailSSL();
 
         return Response.status(200).build();
 

@@ -1,5 +1,6 @@
 package edu.upc.dsa.orm.util;
 
+/*
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -8,9 +9,9 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-
+*/
 public class SendingMailSSL {
-
+/*
     public static void main(String[] args) {
 
         Properties props = new Properties();
@@ -41,6 +42,6 @@ public class SendingMailSSL {
             throw new RuntimeException(e);
         }
 
-    }
+    }*/
 
 }
