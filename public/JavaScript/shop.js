@@ -10,6 +10,15 @@ if (username == "null"){
 $(document).ready(function() {
     console.log(username);
     console.log(diamantes);
+
+    var date = new Date();
+    var day = date.getDay();
+    var month = date.getMonth();
+    var year = date.getFullYear();
+    var sec = date.getSeconds();
+    var min = date.getMinutes();
+    var hour = date.getHours();
+
     $("#m").text(diamantes);
     $("#nav_username").text(username);
 
@@ -25,49 +34,61 @@ $(document).ready(function() {
 
 
     $.ajax({
-        url: BASE_URI.concat("/shop"),
+            url: BASE_URI.concat("/shop"),
 
-        success: function(respuesta) {
-            console.log(respuesta);
-            //Obtenemos y colocamos el nombre de cada objeto
-            $("#item_1_name").text(respuesta[0].name);
-            $("#item_2_name").text(respuesta[1].name);
-            $("#item_3_name").text(respuesta[2].name);
-            $("#item_4_name").text(respuesta[3].name);
-            $("#item_5_name").text(respuesta[4].name);
-            $("#item_6_name").text(respuesta[5].name);
-            $("#item_7_name").text(respuesta[6].name);
-            $("#item_8_name").text(respuesta[7].name);
-            $("#item_9_name").text(respuesta[8].name);
+            success: function(respuesta) {
+                console.log(respuesta);
+                //Obtenemos y colocamos el nombre de cada objeto
+                $("#item_1_name").text(respuesta[0].name);
+                $("#item_2_name").text(respuesta[1].name);
+                $("#item_3_name").text(respuesta[2].name);
+                $("#item_4_name").text(respuesta[3].name);
+                $("#item_5_name").text(respuesta[4].name);
+                $("#item_6_name").text(respuesta[5].name);
+                $("#item_7_name").text(respuesta[6].name);
+                $("#item_8_name").text(respuesta[7].name);
+                $("#item_9_name").text(respuesta[8].name);
 
-            //Obtenemos y colocamos la descripcion de cada objeto
-            $("#item_1_description").text(respuesta[0].description);
-            $("#item_2_description").text(respuesta[1].description);
-            $("#item_3_description").text(respuesta[2].description);
-            $("#item_4_description").text(respuesta[3].description);
-            $("#item_5_description").text(respuesta[4].description);
-            $("#item_6_description").text(respuesta[5].description);
-            $("#item_7_description").text(respuesta[6].description);
-            $("#item_8_description").text(respuesta[7].description);
-            $("#item_9_description").text(respuesta[8].description);
+                //Obtenemos y colocamos la descripcion de cada objeto
+                $("#item_1_description").text(respuesta[0].description);
+                $("#item_2_description").text(respuesta[1].description);
+                $("#item_3_description").text(respuesta[2].description);
+                $("#item_4_description").text(respuesta[3].description);
+                $("#item_5_description").text(respuesta[4].description);
+                $("#item_6_description").text(respuesta[5].description);
+                $("#item_7_description").text(respuesta[6].description);
+                $("#item_8_description").text(respuesta[7].description);
+                $("#item_9_description").text(respuesta[8].description);
 
-            //Obtenemos y colocamos el precio de cada objeto
-            $("#precio_1").text("precio: ".concat(respuesta[0].price.toString()));
-            $("#precio_2").text("precio: ".concat(respuesta[1].price.toString()));
-            $("#precio_3").text("precio: ".concat(respuesta[2].price.toString()));
-            $("#precio_4").text("precio: ".concat(respuesta[3].price.toString()));
-            $("#precio_5").text("precio: ".concat(respuesta[4].price.toString()));
-            $("#precio_6").text("precio: ".concat(respuesta[5].price.toString()));
-            $("#precio_7").text("precio: ".concat(respuesta[6].price.toString()));
-            $("#precio_8").text("precio: ".concat(respuesta[7].price.toString()));
-            $("#precio_9").text("precio: ".concat(respuesta[8].price.toString()));
-            
-        }, 
-        
-        error: function() {
-            console.log("No se ha podido obtener la información");
-        }
-    });
+                //Obtenemos y colocamos el precio de cada objeto
+                $("#precio_1").text("precio: ".concat(respuesta[0].price.toString()));
+                $("#precio_2").text("precio: ".concat(respuesta[1].price.toString()));
+                $("#precio_3").text("precio: ".concat(respuesta[2].price.toString()));
+                $("#precio_4").text("precio: ".concat(respuesta[3].price.toString()));
+                $("#precio_5").text("precio: ".concat(respuesta[4].price.toString()));
+                $("#precio_6").text("precio: ".concat(respuesta[5].price.toString()));
+                $("#precio_7").text("precio: ".concat(respuesta[6].price.toString()));
+                $("#precio_8").text("precio: ".concat(respuesta[7].price.toString()));
+                $("#precio_9").text("precio: ".concat(respuesta[8].price.toString()));
+
+            },
+
+            error: function() {
+                console.log("No se ha podido obtener la información");
+            }
+        });
+
+
+    $('#m').click(function () {
+
+        $.ajax({
+            url: BASE_URI.concat("/shop/"),
+            success: function(respuesta) {
+                console.log(respuesta);
+                var id_username = respuesta;
+            }
+        })
+    })
 
 
     $('#s1').click(function (){
@@ -76,7 +97,6 @@ $(document).ready(function() {
     })
     $('#r1').click(function () {
         if(cantidad1 != 1) cantidad1 = cantidad1 - 1;
-        else alert("Noo");
         $("#numero1").text(cantidad1);
     })
 
@@ -120,7 +140,7 @@ $(document).ready(function() {
         $("#numero5").text(cantidad5);
     })
 
-    
+
     $('#s6').click(function (){
         cantidad6= cantidad6 + 1;
         $("#numero6").text(cantidad6);
@@ -163,30 +183,51 @@ $(document).ready(function() {
 
 
 
-    /*$('#aloevera').click(function () {
+    $('#aloevera').click(function () {
 
-        url: BASE_URI.concat("/shop/"username),
-        success: function(respuesta) {
-            console.log(respuesta);
-            var id_username = respuesta;
-        }
+        //Recogemos el id del usuario
+        $.ajax({
 
-        url: BASE_URI.concat("/shop/"),
-        success: function(respuesta) {
-            console.log(respuesta);
-            var price = respuesta[0];
-        }
+            url: BASE_URI.concat("/user/"+username),
+            success: function(respuesta) {
+                var id_username = respuesta[2];
+                console.log(id_username);
+            },
 
-        var inventario = {"id:": 1, "id_user:": respuesta, "id_item": 0, "quantity": cantidad1, "orderDate": 0, "OrderTime": 0};
+            //Recogemos el id del objeto
+            url: BASE_URI.concat("/shop/Aloe%20vera/id"),
+                success: function(respuesta)
+                {
+                    var id_product = respuesta
+                    console.log(respuesta);
+                }
+        })
+
+        /*Recogemos el id del objeto y el precio
+        $.ajax({
+            url: BASE_URI.concat("/shop/Aloe%20vera"),
+            success: function(respuesta) 
+            {
+                console.log(respuesta);
+                var id_product = respuesta[1];
+                console.log(id_product);
+                var price = respuesta[4];
+                console.log(price);
+            }
+        })*/
+
+        var inventario = {"id:": 1, "id_user:": username, "id_item": 1, "quantity": cantidad1,
+        "orderDate": day+'/'+month+'/'+year, "OrderTime": hour+':'+min+':'+sec};
 
         console.log(inventario);
 
-        diamantes = diamantes - price * cantidad2;
+        /*diamantes = diamantes - price * cantidad2;
         window.sessionStorage.setItem("diamantes", diamantes);
         $("#m").text(diamantes);
         $("#numero2").text(1);
-        cantidad2 = 1;
-    });*/
+        cantidad2 = 1;*/
+
+    });
 
     $('#venda').click(function () {
         var inventario = {"idObjeto": 2, "cantidad": cantidad2, "idJugador": idJugador};
@@ -276,43 +317,6 @@ $(document).ready(function() {
     });
 
 
-    $('#cerrar_sesion').click(function () {
-        window.localStorage.setItem("", username);
-    });
 
+})
 
-    compraObjeto(inventario) 
-    {
-        console.log("comprando objeto", inventario);
-        $.ajax({
-            type: 'POST',
-            url: BASE_URI.concat("/user/register"), //Modificar antes de copiar en cada funcion
-            headers: {'content-type': 'application/json'},
-            data: JSON.stringify(inventario),
-            dataType: 'json',
-            statusCode: {
-                201: function() {
-                    alert("Comprado correctamente\n");
-                    //window.localStorage.setItem("username", username);
-                }
-            }
-        })
-    }
-    
-    /*function compraObjeto(inventario) {
-        console.log("comprando objeto",inventario);
-        $.ajax({
-            type: 'POST',
-            url: BASE_URI.concat("/compra"),
-            headers: {'content-type': 'application/json', "x-kii-appid": "XXXXX", "x-kii-appkey": "XXXXX"},
-            data: JSON.stringify(inventario),
-            //dataType: 'json',
-            success: function () {
-                alert("Objeto comprado con exito")
-            },
-            error: function (e) {
-                console.log(e.message);
-            }
-        });
-    }*/
-});

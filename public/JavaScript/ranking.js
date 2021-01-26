@@ -1,57 +1,18 @@
 var BASE_URI="/api";
-var username = localStorage.getItem("username");
+
 
 $(document).ready(function() {
-
+    var username = localStorage.getItem("username");
     $("#nav_username").text(username);
-
     
-    $('#getPlayersbtn').click(function () {
-
-
-        /*$.ajax({
-            type: 'GET',
-            url: BASE_URI.concat("/user/ranking"),
-            data: JSON.stringify(user),
-            dataType: 'json',
-            headers: {'content-type': 'application/json'},
-            statusCode: {
-                200: function() {
-                    alert(user);
-
-                    window.localStorage.setItem("username", username);
-                    window.open(url, "_self");
-
-                            var Json = JSON.parse(JSON.stringify(json));
-                            //console.log(Json.user.length);
-                            $("#Table").append(
-                            '<tr><td>username</td>'+
-                            '<td>score</td>' +
-                            '<td>position</td>');
-
-                            for (i = 0; i < Json.user.length; i++){
-
-                         $("#Table").append('<tr>' +
-                            '<td align="center" style="display: none;">' + Json.user[i].username + '</td>'+
-                            '<td align="center" style="display: none;">' + Json.user[i].score + '</td>'+
-                            '<td align="center" style="display: none;">' + Json.user[i].position + '</td>'+
-                            '</tr>');
-                         }
-
-                         $("#excel").append(
-                         '<tr><td>username</td>'+
-                         '<td>score</td>' +
-                         '<td>position</td></tr>');
-                }
-            }
-        });*/
+    $('#getPlayersbtn').click(function () { 
 
         $.ajax({
             url: BASE_URI.concat("/user/ranking"),
                 success: function(respuesta) {
                     console.log(respuesta);
 
-                    $("#nam1").text(respuesta[0].username);
+                    $("#nam1").text(d);
                     $("#nam2").text(respuesta[1].username);
                     $("#nam3").text(respuesta[2].username);
                     $("#nam4").text(respuesta[3].username);
@@ -93,25 +54,22 @@ $(document).ready(function() {
                     $("#scr19").text(respuesta[18].score);
                     $("#scr20").text(respuesta[19].score);
                 }
-
-                /*for (var i=0; i<=10; i++){
-                    var text = '<tr><th scope="row">'+respuesta.position[i].toString()+'</th><td>'+respuesto.username[i]+'</td><td>'+respuesta.score[i].toString()+'</td></tr>';
-                    $('#excel').html(text);
-                }*/
+            })
     });
-})
 
     $('#getPositionbtn').click(function () {
-            //var username = $("#loginName").val();
 
-            //var user = {"username": username};
-
-            $.ajax({
-            url: BASE_URI.concat("/user/"+username+"/ranking"),
-                success: function(respuesta) {
-                console.log(respuesta);
-                $("#pos").text(respuesta.position).toString();
+        $.ajax({
+        url: BASE_URI.concat("/user/"+username+"/ranking"),
+            success: function(respuesta) 
+            {
+            console.log(respuesta);
+            $("#pos")
             }
         });
+    })
+
+    $('#cerrar_sesion').click(function () {
+        window.localStorage.setItem("", username);
     });
-});
+})
