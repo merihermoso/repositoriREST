@@ -1,5 +1,7 @@
 package edu.upc.dsa.orm.services;
 
+import edu.upc.dsa.orm.dao.game.GameDAO;
+import edu.upc.dsa.orm.dao.game.GameDAOImpl;
 import edu.upc.dsa.orm.dao.inventory.InventoryDAO;
 import edu.upc.dsa.orm.dao.inventory.InventoryDAOImpl;
 import edu.upc.dsa.orm.dao.item.ItemDAO;
@@ -8,15 +10,13 @@ import edu.upc.dsa.orm.dao.orders.OrdersDAO;
 import edu.upc.dsa.orm.dao.orders.OrdersDAOImpl;
 import edu.upc.dsa.orm.dao.user.UserDAO;
 import edu.upc.dsa.orm.dao.user.UserDAOImpl;
+import edu.upc.dsa.orm.models.*;
 import edu.upc.dsa.orm.models.API.*;
-import edu.upc.dsa.orm.models.Inventory;
-import edu.upc.dsa.orm.models.Item;
-import edu.upc.dsa.orm.models.Orders;
-import edu.upc.dsa.orm.models.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import io.swagger.models.auth.In;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
@@ -36,6 +36,7 @@ public class ShopService {
     private final ItemDAO itemDAO;
     private final InventoryDAO inventoryDAO;
     private final OrdersDAO ordersDAO;
+    private final GameDAO gameDAO;
 
 
     public ShopService() {
@@ -43,6 +44,7 @@ public class ShopService {
         itemDAO = ItemDAOImpl.getInstance();
         inventoryDAO = InventoryDAOImpl.getInstance();
         ordersDAO = OrdersDAOImpl.getInstance();
+        gameDAO = GameDAOImpl.getInstance();
 
     }
 
@@ -135,6 +137,109 @@ public class ShopService {
 
             Item item = itemDAO.readByParameter("id", id);
             return Response.status(200).entity(item).build();
+
+        } else {
+
+            return Response.status(404).build();
+
+        }
+
+    }
+
+
+    @POST
+    @ApiOperation(value = "Buy a Item given its id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Succesful"),
+            @ApiResponse(code = 404, message = "Item not found"),
+            @ApiResponse(code = 700, message = "User not found"),
+            @ApiResponse(code = 701, message = "Not enough coins")
+    })
+    @Path("/id/{id}")
+    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
+    public Response buyItemById(@PathParam("id") int id, @QueryParam("id_game") int id_game) {
+
+        if (itemDAO.existsId(id)) {
+
+            if (gameDAO.existsId(id_game)) {
+
+                Game game = gameDAO.readByParameter("id", id_game);
+                Item item = itemDAO.readByParameter("id", id);
+
+                if (item.getPrice() > game.getCoins()) {
+
+                    return Response.status(701).entity(item).build();
+
+                } else {
+
+                    gameDAO.updateParameterByParameter("coins", game.getCoins() -
+                                    item.getPrice(), "id", id_game);
+
+                    Inventory inventory = new Inventory(0, id_game, item.getId());
+                    inventoryDAO.create(inventory);
+
+                    return Response.status(200).entity(item).build();
+
+                }
+
+            } else {
+
+                return Response.status(700).build();
+
+            }
+
+        } else {
+
+            return Response.status(404).build();
+
+        }
+
+    }
+
+
+
+    @POST
+    @ApiOperation(value = "Buy a Item given its id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Succesful"),
+            @ApiResponse(code = 404, message = "Item not found"),
+            @ApiResponse(code = 700, message = "User not found"),
+            @ApiResponse(code = 701, message = "Not enough coins")
+    })
+    @Path("/{name}")
+    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
+    public Response buyItemByName(@PathParam("name") String name, @QueryParam("id_game") int id_game) {
+
+        if (itemDAO.exists(name)) {
+
+            if (gameDAO.existsId(id_game)) {
+
+                int id = (int) itemDAO.readParameterByParameter("id", "name", name);
+
+                Game game = gameDAO.readByParameter("id", id_game);
+                Item item = itemDAO.readByParameter("id", id);
+
+                if (item.getPrice() > game.getCoins()) {
+
+                    return Response.status(701).entity(item).build();
+
+                } else {
+
+                    gameDAO.updateParameterByParameter("coins", game.getCoins() -
+                            item.getPrice(), "id", id_game);
+
+                    Inventory inventory = new Inventory(0, id_game, item.getId());
+                    inventoryDAO.create(inventory);
+
+                    return Response.status(200).entity(item).build();
+
+                }
+
+            } else {
+
+                return Response.status(700).build();
+
+            }
 
         } else {
 

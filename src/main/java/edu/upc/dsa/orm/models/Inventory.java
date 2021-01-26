@@ -5,17 +5,15 @@ public class Inventory {
     private int id;
     private int id_game;
     private int id_item;
-    private int quantity;
 
     public Inventory() {
 
     }
 
-    public Inventory(int id, int id_game, int id_item, int quantity) {
+    public Inventory(int id, int id_game, int id_item) {
         this.id = id;
         this.id_game = id_game;
         this.id_item = id_item;
-        this.quantity = quantity;
     }
 
     public int getId() {
@@ -42,11 +40,4 @@ public class Inventory {
         this.id_item = id_item;
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
 }
