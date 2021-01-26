@@ -48,7 +48,7 @@ public class GameDAOImpl implements GameDAO {
         String timeLast = timeStart;
 
         int score = 0;
-        int coins = 0;
+        int coins = 10;
         int speed = 0;
         int defense = 0;
         int healing = 0;
