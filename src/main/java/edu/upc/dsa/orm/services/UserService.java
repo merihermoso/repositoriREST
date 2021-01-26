@@ -286,7 +286,7 @@ public class UserService {
             User user = userDAO.readByParameter("username", username);
 
             UserRanking userRanking =
-                    new UserRanking(user.getUsername(), user.getScore(),
+                    new UserRanking(user.getUsername(), user.getScore(), user.getProfile_photo(),
                             userDAO.readRankingPositionByParameter("username", username));
 
             return Response.status(200).entity(userRanking).build();
@@ -316,7 +316,7 @@ public class UserService {
             User user = userDAO.readByParameter("id", id);
 
             UserRanking userRanking =
-                    new UserRanking(user.getUsername(), user.getScore(),
+                    new UserRanking(user.getUsername(), user.getScore(), user.getProfile_photo(),
                             userDAO.readRankingPositionByParameter("id", id));
 
             return Response.status(200).entity(userRanking).build();

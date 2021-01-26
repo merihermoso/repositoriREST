@@ -4,6 +4,7 @@ public class UserRanking {
 
     private String username;
     private int score;
+    private String profile_photo;
     private int position;
 
     public UserRanking() {
@@ -11,10 +12,11 @@ public class UserRanking {
 
     }
 
-    public UserRanking(String username, int score, int position) {
+    public UserRanking(String username, int score, String profile_photo, int position) {
 
         this.username = username;
         this.score = score;
+        this.profile_photo = profile_photo;
         this.position = position;
 
     }
@@ -43,4 +45,11 @@ public class UserRanking {
         this.score = score;
     }
 
+    public String getProfile_photo() {
+        return profile_photo;
+    }
+
+    public void setProfile_photo(String profile_photo) {
+        this.profile_photo = profile_photo;
+    }
 }
