@@ -12,6 +12,51 @@ $(document).ready(function() {
     console.log(diamantes);
 
     $("#nav_username").text(username);
+
+    //Rellenamos la tabla del user
+    $.ajax({
+        //Colocamso el username
+        url: BASE_URI.concat("/user/"+username+"/username"),
+            success: function(respuesta) {
+                $("#table_username").text(respuesta);
+            }
+    });
+
+    $.ajax({
+        //Colocamso el email
+        url: BASE_URI.concat("/user/"+username+"/email"),
+            success: function(respuesta) {
+                console.log(respuesta);
+                $("#table_email").text(respuesta);
+            },
+    });
+
+    $.ajax({
+        //Colocamso el ranking
+        url: BASE_URI.concat("/user/"+username+"/ranking"),
+            success: function(respuesta) {
+                console.log(respuesta);
+                $("#table_ranking").text(respuesta);
+            },
+    });
+
+    $.ajax({
+        //Colocamso el score
+        url: BASE_URI.concat("/user/"+username+"/score"),
+            success: function(respuesta) {
+                console.log(respuesta);
+                $("#table_score").text(respuesta);
+            },
+    });
+
+    $.ajax({
+        //Colocamso el birthdate
+        url: BASE_URI.concat("/user/"+username+"/birthdate"),
+            success: function(respuesta) {
+                console.log(respuesta);
+                $("#table_birthdate").text(respuesta).toString();
+            }
+    });
     
     $('#cerrar_session').click(function () {
         window.localStorage.setItem("username", "null");
@@ -86,23 +131,6 @@ $(document).ready(function() {
                 }
             })
     });
-
-
-    $('#getUserProfilebtn').click(function () {
-        $.ajax({
-            url: BASE_URI.concat("/user/"+username+"/profile"),
-                success: function(respuesta) {
-                    console.log(respuesta);
-
-                    $("#username").text(respuesta[0].username);
-                    $("#email").text(respuesta[0].email);
-                    $("#score").text(respuesta[0].score).toString();
-                    $("#birthdate").text(respuesta[0].birthdate).toString();
-
-                    alert("quiero obtener el perfil");
-                }
-        })
-    })
 })
 
 

@@ -69,7 +69,4 @@ $(document).ready(function() {
         });
     })
 
-    $('#cerrar_sesion').click(function () {
-        window.localStorage.setItem("", username);
-    });
 })
