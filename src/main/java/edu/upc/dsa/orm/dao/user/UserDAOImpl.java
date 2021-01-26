@@ -124,7 +124,7 @@ public class UserDAOImpl implements UserDAO {
 
         for(User user : result.values()) {
             userRankingResponse.add(new UserRanking(user.getUsername(),
-                    user.getScore(),
+                    user.getScore(), user.getProfile_photo(),
                     i));
             i++;
         }
