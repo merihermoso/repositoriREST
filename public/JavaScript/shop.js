@@ -15,6 +15,8 @@ $(document).ready(function() {
     $("#m").text(diamantes);
     $("#nav_username").text(username);
 
+    var partida = "NULL";
+
     var cantidad1 = parseInt($("#numero1").text());
     var cantidad2 = parseInt($("#numero2").text());
     var cantidad3 = parseInt($("#numero3").text());
@@ -38,13 +40,28 @@ $(document).ready(function() {
                 $("#CD2").text(respuesta[1].dateStart);
                 $("#scr2").text(respuesta[1].score);
                 $("#cns2").text(respuesta[1].coins);
+                var partida2 = respuesta[1].id;
 
                 $("#LA3").text(respuesta[2].dateLast);
                 $("#CD3").text(respuesta[2].dateStart);
                 $("#scr3").text(respuesta[2].score);
                 $("#cns3").text(respuesta[2].coins);
+                var partida3 = respuesta[2].id;
             }
     });
+
+
+    $.ajax({
+                url: BASE_URI.concat("/game/"+2+"/inventory"),
+                success: function(respuesta) {
+                    console.log(respuesta);
+                    $("#idItem").text(respuesta[0].id_item);
+                    $("#cant1").text(respuesta[0].quantity);
+
+
+                }
+        });
+
 
 
     $.ajax({
@@ -192,98 +209,209 @@ $(document).ready(function() {
     })
 
 
-    var partida = "NULL";
 
     //Seleccionamos Partida
     $('#seleccionarPartida1').click(function (){
-        partida = "1";
-        console.log("hola");
-    })
+        $.ajax({
+            url: BASE_URI.concat("/user/"+username+"/game"),
+            success: function(respuesta) {
+                partida = respuesta[0].id;
+                console.log(partida);
+            }
+        })
+    });
+
     $('#seleccionarPartida2').click(function (){
-        partida = "2";
+        $.ajax({
+            url: BASE_URI.concat("/user/"+username+"/game"),
+            success: function(respuesta) {
+                partida = respuesta[1].id;
+                console.log(partida);
+            }
+        })
     })
+
     $('#seleccionarPartida3').click(function (){
-        partida = "3";
+        $.ajax({
+            url: BASE_URI.concat("/user/"+username+"/game"),
+            success: function(respuesta) {
+                partida = respuesta[2].id;
+                console.log(partida);
+            }
+        })
     })
 
 
 
     $('#aloevera').click(function () {
 
-        $.ajax({
-            type: 'POST',
-            url: BASE_URI.concat("/shop/Aloe%20vera/buy?id_game=" + partida + "&quantity=" + cantidad1),
-            success: function(respuesta) {
-                    alert("Has realizado la compra correctamente\n");
-                    var url = "shop.html";
-                    window.open(url, "_self");
-            }
-        });
+        if (partida == "NULL")
+        {
+            alert("Primero selecciona una partida")
+        }
+        else
+        {
+            $.ajax({
+                type: 'POST',
+                url: BASE_URI.concat("/shop/Aloe%20vera/buy?id_game=" + partida + "&quantity=" + cantidad1),
+                success: function(respuesta) {
+                        alert("Has realizado la compra correctamente\n");
+                        var url = "shop.html";
+                        window.open(url, "_self");
+                }
+            });
+        }
     });
 
     $('#venda').click(function () {
-        var inventario = {"idObjeto": 2, "cantidad": cantidad2, "idJugador": idJugador};
-        console.log(inventario);
-        compraObjeto(inventario);
-        diamantes = diamantes - 150*cantidad2;
-        window.sessionStorage.setItem("diamantes", diamantes);
-        $("#m").text(diamantes);
-        $("#numero2").text(1);
-        cantidad2 = 1;
+         if (partida == "NULL")
+         {
+             alert("Primero selecciona una partida")
+         }
+         else
+         {
+             $.ajax({
+                 type: 'POST',
+                 url: BASE_URI.concat("/shop/venda/buy?id_game=" + partida + "&quantity=" + cantidad2),
+                 success: function(respuesta) {
+                         alert("Has realizado la compra correctamente\n");
+                         var url = "shop.html";
+                         window.open(url, "_self");
+                 }
+             });
+         }
     });
 
     $('#agua').click(function () {
-        var inventario = {"idObjeto": 3, "cantidad": cantidad3, "idJugador": idJugador};
-        console.log(inventario);
-        compraObjeto(inventario);
-        diamantes = diamantes - 10*cantidad3;
-        window.sessionStorage.setItem("diamantes", diamantes);
-        $("#m").text(diamantes);
-        $("#numero3").text(1);
-        cantidad3 = 1;
+        if (partida == "NULL")
+        {
+            alert("Primero selecciona una partida")
+        }
+        else
+        {
+            $.ajax({
+                type: 'POST',
+                url: BASE_URI.concat("/shop/agua/buy?id_game=" + partida + "&quantity=" + cantidad3),
+                success: function(respuesta) {
+                        alert("Has realizado la compra correctamente\n");
+                        var url = "shop.html";
+                        window.open(url, "_self");
+                }
+            });
+        }
     });
 
     $('#escudo').click(function () {
-        var inventario = {"idObjeto": 4, "cantidad": cantidad4, "idJugador": idJugador};
-        console.log(inventario);
-        compraObjeto(inventario);
-        diamantes = diamantes - 20*cantidad4;
-        window.sessionStorage.setItem("diamantes", diamantes);
-        $("#m").text(diamantes);
-        $("#numero4").text(1);
-        cantidad4 = 1;
+        if (partida == "NULL")
+        {
+            alert("Primero selecciona una partida")
+        }
+        else
+        {
+            $.ajax({
+                type: 'POST',
+                url: BASE_URI.concat("/shop/escudo/buy?id_game=" + partida + "&quantity=" + cantidad4),
+                success: function(respuesta) {
+                        alert("Has realizado la compra correctamente\n");
+                        var url = "shop.html";
+                        window.open(url, "_self");
+                }
+            });
+        }
     });
 
     $('#mascara').click(function () {
-        var inventario = {"idObjeto": 5, "cantidad": cantidad5, "idJugador": idJugador};
-        console.log(inventario);
-        compraObjeto(inventario);
-        diamantes = diamantes - 100*cantidad5;
-        window.sessionStorage.setItem("diamantes", diamantes);
-        $("#m").text(diamantes);
-        $("#numero5").text(1);
-        cantidad5 = 1;
+        if (partida == "NULL")
+        {
+            alert("Primero selecciona una partida")
+        }
+        else
+        {
+            $.ajax({
+                type: 'POST',
+                url: BASE_URI.concat("/shop/mascara/buy?id_game=" + partida + "&quantity=" + cantidad5),
+                success: function(respuesta) {
+                        alert("Has realizado la compra correctamente\n");
+                        var url = "shop.html";
+                        window.open(url, "_self");
+                }
+            });
+        }
     });
 
     $('#pastilla').click(function () {
-        var inventario = {"idObjeto": 6, "cantidad": cantidad6, "idJugador": idJugador};
-        console.log(inventario);
-        compraObjeto(inventario);
-        diamantes = diamantes - 25 * cantidad6;
-        window.sessionStorage.setItem("diamantes", diamantes);
-        $("#m").text(diamantes);
-        $("#numero6").text(1)
-        cantidad6 = 1;
+        if (partida == "NULL")
+        {
+            alert("Primero selecciona una partida")
+        }
+        else
+        {
+            $.ajax({
+                type: 'POST',
+                url: BASE_URI.concat("/shop/pastilla%20magica/buy?id_game=" + partida + "&quantity=" + cantidad6),
+                success: function(respuesta) {
+                        alert("Has realizado la compra correctamente\n");
+                        var url = "shop.html";
+                        window.open(url, "_self");
+                }
+            });
+        }
     });
 
     $('#extintor').click(function () {
-        var inventario = {"idObjeto": 4, "cantidad": cantidad4, "idJugador": idJugador};
-        console.log(inventario);
-        compraObjeto(inventario);
-        diamantes = diamantes - 20*cantidad4;
-        window.sessionStorage.setItem("diamantes", diamantes);
-        $("#m").text(diamantes);
-        $("#numero4").text(1);
-        cantidad4 = 1;
+        if (partida == "NULL")
+        {
+            alert("Primero selecciona una partida")
+        }
+        else
+        {
+            $.ajax({
+                type: 'POST',
+                url: BASE_URI.concat("/shop/extintor/buy?id_game=" + partida + "&quantity=" + cantidad7),
+                success: function(respuesta) {
+                        alert("Has realizado la compra correctamente\n");
+                        var url = "shop.html";
+                        window.open(url, "_self");
+                }
+            });
+        }
+    });
+
+    $('#manguera').click(function () {
+        if (partida == "NULL")
+        {
+            alert("Primero selecciona una partida")
+        }
+        else
+        {
+            $.ajax({
+                type: 'POST',
+                url: BASE_URI.concat("/shop/manguera/buy?id_game=" + partida + "&quantity=" + cantidad8),
+                success: function(respuesta) {
+                        alert("Has realizado la compra correctamente\n");
+                        var url = "shop.html";
+                        window.open(url, "_self");
+                }
+            });
+        }
+    });
+
+    $('#hacha').click(function () {
+        if (partida == "NULL")
+        {
+            alert("Primero selecciona una partida")
+        }
+        else
+        {
+            $.ajax({
+                type: 'POST',
+                url: BASE_URI.concat("/shop/hacha/buy?id_game=" + partida + "&quantity=" + cantidad9),
+                success: function(respuesta) {
+                        alert("Has realizado la compra correctamente\n");
+                        var url = "shop.html";
+                        window.open(url, "_self");
+                }
+            });
+        }
     });
 })
