@@ -290,7 +290,7 @@ public class ShopService {
 
                 Field field = Item.class.getDeclaredField(parameter);
 
-                Object res = itemDAO.readParameterByParameter(parameter, "username", name);
+                Object res = itemDAO.readParameterByParameter(parameter, "name", name);
                 return Response.status(200).entity(res).build();
 
             } catch (NoSuchFieldException noSuchFieldException) {
