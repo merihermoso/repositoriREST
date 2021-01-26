@@ -10,6 +10,8 @@ import edu.upc.dsa.orm.models.API.*;
 import edu.upc.dsa.orm.models.Game;
 import edu.upc.dsa.orm.models.Orders;
 import edu.upc.dsa.orm.models.User;
+import edu.upc.dsa.orm.util.MazeGenerator;
+import edu.upc.dsa.orm.util.SendingMailSSL;
 import io.swagger.annotations.*;
 
 import javax.ws.rs.*;
@@ -418,6 +420,24 @@ public class UserService {
             return Response.status(404).build();
 
         }
+
+    }
+
+
+    @GET
+    @ApiOperation(value = "Send email")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful"),
+    })
+    @Path("/sendemail")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response sendEmail() {
+
+        MazeGenerator mazeGenerator = new MazeGenerator(400, 400);
+
+        SendingMailSSL sendingMailSSL = new SendingMailSSL();
+
+        Response.status(200).build();
 
     }
 

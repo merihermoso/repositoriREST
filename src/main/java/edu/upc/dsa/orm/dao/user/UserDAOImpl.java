@@ -5,6 +5,9 @@ import edu.upc.dsa.orm.models.API.RegisterCredentials;
 import edu.upc.dsa.orm.models.API.UserRanking;
 import edu.upc.dsa.orm.models.API.UserSettings;
 import edu.upc.dsa.orm.models.User;
+import org.jvnet.mimepull.MIMEMessage;
+import sun.plugin2.message.Message;
+
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -111,6 +114,8 @@ public class UserDAOImpl implements UserDAO {
 
         return userList;
     }
+
+
 
 
     public List<UserRanking> readRanking(){
