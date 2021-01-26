@@ -243,6 +243,17 @@ public class ShopService {
                     Inventory inventory = new Inventory(0, id_game, item.getId());
                     inventoryDAO.create(inventory);
 
+
+                    DateTimeFormatter date = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    DateTimeFormatter time = DateTimeFormatter.ofPattern("HH:mm");
+                    LocalDateTime now = LocalDateTime.now();
+
+                    String dateOrder = date.format(now);
+                    String timeOrder = time.format(now);
+
+                    Orders order = new Orders(0, game.getId_user(), item.getId(), dateOrder, timeOrder);
+                    ordersDAO.create(order);
+
                     return Response.status(200).entity(item).build();
 
                 }
