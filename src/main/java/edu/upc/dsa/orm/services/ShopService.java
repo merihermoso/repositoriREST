@@ -120,11 +120,6 @@ public class ShopService {
 
 
 
-
-
-
-
-
     @GET
     @ApiOperation(value = "Get a Item given its id")
     @ApiResponses(value = {
@@ -159,7 +154,8 @@ public class ShopService {
     })
     @Path("/id/{id}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response buyItemById(@PathParam("id") int id, @QueryParam("id_game") int id_game) {
+    public Response buyItemById(@PathParam("id") int id, @QueryParam("id_game") int id_game,
+                                @PathParam("quantity") int quantity) {
 
         if (itemDAO.existsId(id)) {
 
@@ -168,16 +164,16 @@ public class ShopService {
                 Game game = gameDAO.readByParameter("id", id_game);
                 Item item = itemDAO.readByParameter("id", id);
 
-                if (item.getPrice() > game.getCoins()) {
+                if ((item.getPrice() * quantity) > game.getCoins()) {
 
                     return Response.status(701).entity(item).build();
 
                 } else {
 
                     gameDAO.updateParameterByParameter("coins", game.getCoins() -
-                                    item.getPrice(), "id", id_game);
+                                    (item.getPrice() * quantity), "id", id_game);
 
-                    Inventory inventory = new Inventory(0, id_game, item.getId());
+                    Inventory inventory = new Inventory(0, id_game, item.getId(), quantity);
                     inventoryDAO.create(inventory);
 
                     DateTimeFormatter date = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -187,7 +183,7 @@ public class ShopService {
                     String dateOrder = date.format(now);
                     String timeOrder = time.format(now);
 
-                    Orders order = new Orders(0, game.getId_user(), item.getId(), dateOrder, timeOrder);
+                    Orders order = new Orders(0, game.getId_user(), item.getId(), dateOrder, timeOrder, quantity);
                     ordersDAO.create(order);
 
                     return Response.status(200).entity(item).build();
@@ -220,7 +216,8 @@ public class ShopService {
     })
     @Path("/{name}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
-    public Response buyItemByName(@PathParam("name") String name, @QueryParam("id_game") int id_game) {
+    public Response buyItemByName(@PathParam("name") String name, @QueryParam("id_game") int id_game,
+                                  @QueryParam("quantity") int quantity) {
 
         if (itemDAO.exists(name)) {
 
@@ -231,16 +228,16 @@ public class ShopService {
                 Game game = gameDAO.readByParameter("id", id_game);
                 Item item = itemDAO.readByParameter("id", id);
 
-                if (item.getPrice() > game.getCoins()) {
+                if ((item.getPrice() * quantity) > game.getCoins()) {
 
                     return Response.status(701).entity(item).build();
 
                 } else {
 
                     gameDAO.updateParameterByParameter("coins", game.getCoins() -
-                            item.getPrice(), "id", id_game);
+                            (item.getPrice() * quantity), "id", id_game);
 
-                    Inventory inventory = new Inventory(0, id_game, item.getId());
+                    Inventory inventory = new Inventory(0, id_game, item.getId(), quantity);
                     inventoryDAO.create(inventory);
 
 
@@ -251,7 +248,7 @@ public class ShopService {
                     String dateOrder = date.format(now);
                     String timeOrder = time.format(now);
 
-                    Orders order = new Orders(0, game.getId_user(), item.getId(), dateOrder, timeOrder);
+                    Orders order = new Orders(0, game.getId_user(), item.getId(), dateOrder, timeOrder, quantity);
                     ordersDAO.create(order);
 
                     return Response.status(200).entity(item).build();
