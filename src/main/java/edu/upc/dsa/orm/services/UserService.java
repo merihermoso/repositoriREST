@@ -499,8 +499,53 @@ public class UserService {
     }
 
 
-    ///
+    @POST
+    @ApiOperation(value = "Create Game for a given username")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = Game.class, responseContainer="List"),
+            @ApiResponse(code = 404, message = "User not exists")
+    })
+    @Path("/{username}/game")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createGameByUsername(@PathParam("username") String username) {
 
+        if (userDAO.exists(username)) {
+
+            int id = (int) userDAO.readParameterByParameter("id", "username", username);
+
+            gameDAO.generate(id);
+            return Response.status(201).build();
+
+        } else {
+            return Response.status(404).build();
+        }
+
+    }
+
+
+
+    @POST
+    @ApiOperation(value = "Create Game for a given username")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful", response = Game.class, responseContainer="List"),
+            @ApiResponse(code = 404, message = "User not exists")
+    })
+    @Path("/{id}/id/game")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createGameById(@PathParam("id") int id) {
+
+        if (userDAO.existsId(id)) {
+
+            gameDAO.generate(id);
+            return Response.status(201).build();
+
+        } else {
+            return Response.status(404).build();
+        }
+
+    }
+
+    ///
 
     @GET
     @ApiOperation(value = "Get a User orders list given its id")
