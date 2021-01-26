@@ -155,7 +155,7 @@ public class ShopService {
     @Path("/id/{id}")
     @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
     public Response buyItemById(@PathParam("id") int id, @QueryParam("id_game") int id_game,
-                                @PathParam("quantity") int quantity) {
+                                @QueryParam("quantity") int quantity) {
 
         if (itemDAO.existsId(id)) {
 
