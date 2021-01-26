@@ -7,17 +7,19 @@ public class Orders {
     private int id_item;
     private String orderDate;
     private String orderTime;
+    private int quantity;
 
     public Orders() {
 
     }
 
-    public Orders(int id, int id_user, int id_item, String orderDate, String orderTime) {
+    public Orders(int id, int id_user, int id_item, String orderDate, String orderTime, int quantity) {
         this.id = id;
         this.id_user = id_user;
         this.id_item = id_item;
         this.orderDate = orderDate;
         this.orderTime = orderTime;
+        this.quantity = quantity;
     }
 
     public int getId() {
@@ -60,4 +62,11 @@ public class Orders {
         this.orderTime = orderTime;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 }
