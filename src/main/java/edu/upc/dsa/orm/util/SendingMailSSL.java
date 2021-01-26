@@ -12,7 +12,7 @@ import javax.mail.internet.MimeMessage;
 
 public class SendingMailSSL {
 
-    public SendingMailSSL() {
+    public SendingMailSSL(String destination_address, String subject, String text) {
 
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
@@ -31,12 +31,10 @@ public class SendingMailSSL {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("firefighteradventure@gmail.com"));
             message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse("xluisog30x@gmail.com"));
-            message.setSubject("Testing Subject");
-            message.setText("Estimado cliente," +
-                    "\n\n Le damos la bienvenida mediante SSL!");
+                    InternetAddress.parse(destination_address));
+            message.setSubject(subject);
+            message.setText(text);
             Transport.send(message);
-            System.out.println("Correcto!");
 
         } catch (MessagingException e) {
             throw new RuntimeException(e);

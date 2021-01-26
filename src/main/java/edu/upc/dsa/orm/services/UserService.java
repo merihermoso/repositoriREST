@@ -11,6 +11,7 @@ import edu.upc.dsa.orm.models.Game;
 import edu.upc.dsa.orm.models.Orders;
 import edu.upc.dsa.orm.models.User;
 import edu.upc.dsa.orm.util.MazeGenerator;
+import edu.upc.dsa.orm.util.RandomString;
 import edu.upc.dsa.orm.util.SendingMailSSL;
 import io.swagger.annotations.*;
 
@@ -196,6 +197,24 @@ public class UserService {
         return Response.status(200).entity(userDAO.readSettings()).build();
 
     }
+
+
+    @GET
+    @ApiOperation(value = "Generate random maze")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful", response = UserSettings.class),
+    })
+    @Path("/maze")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getMaze() {
+
+        MazeGenerator mazeGenerator = new MazeGenerator(400, 400);
+        mazeGenerator.display();
+
+        return Response.status(200).entity(userDAO.readSettings()).build();
+
+    }
+
 
 
     @GET
@@ -423,24 +442,37 @@ public class UserService {
 
     }
 
-
-    @GET
-    @ApiOperation(value = "Send email")
+    @POST
+    @ApiOperation(value = "Send email with new password by username")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 404, message = "User not exist")
     })
-    @Path("/generatemap")
+    @Path("/{username}/password/new")
     @Produces(MediaType.TEXT_PLAIN)
-    public Response sendEmail() {
+    public Response forgottenPasswordByUsername(@PathParam("username") String username) {
 
-        SendingMailSSL sendingMailSSL = new SendingMailSSL();
+        if (userDAO.exists(username)) {
 
-        MazeGenerator mazeGenerator = new MazeGenerator(400, 400);
-        mazeGenerator.display();
+            User user = userDAO.readByParameter("username", username);
 
-        return Response.status(200).build();
+            RandomString randomString = new RandomString();
+            String newPassword = randomString.randomString(6);
+
+            String newPasswordHash = userDAO.getHashString(newPassword, "SHA-256");
+            userDAO.updateParameterByParameter("password", newPasswordHash, "username", username);
+
+            SendingMailSSL sendingMailSSL = new SendingMailSSL(user.getEmail(), "Forgotten password",
+                    "Your new password is " + newPassword);
+
+            return Response.status(200).build();
+
+        } else {
+            return Response.status(404).build();
+        }
 
     }
+
 
     @GET
     @ApiOperation(value = "Get a user parameter by its id")
