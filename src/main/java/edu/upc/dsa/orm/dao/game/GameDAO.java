@@ -10,6 +10,7 @@ public interface GameDAO {
 
       // CREATE
       boolean create(Game game);
+      boolean generate(int id_user);
 
       // READ
       List<Game> readAll();

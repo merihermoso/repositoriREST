@@ -5,6 +5,8 @@ import edu.upc.dsa.orm.Session;
 import edu.upc.dsa.orm.models.API.GameSettings;
 import edu.upc.dsa.orm.models.Game;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class GameDAOImpl implements GameDAO {
@@ -25,6 +27,38 @@ public class GameDAOImpl implements GameDAO {
 
 
     public boolean create(Game game) {
+
+        return session.create(game);
+
+    }
+
+    public boolean generate(int id_user) {
+
+        DateTimeFormatter date = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter time = DateTimeFormatter.ofPattern("HH:mm");
+        LocalDateTime now = LocalDateTime.now();
+
+        int id = 0;
+        int id_map = 1;
+        String dateStart = date.format(now);
+        String timeStart = time.format(now);
+        String dateEnd = "";
+        String timeEnd = "";
+        String dateLast = dateStart;
+        String timeLast = timeStart;
+
+        int score = 0;
+        int coins = 10;
+        int speed = 0;
+        int defense = 0;
+        int healing = 0;
+        int attack = 0;
+        int health = 1000;
+        int x = 0;
+        int y = 0;
+
+        Game game = new Game(id, id_user, id_map, dateStart, timeStart, dateEnd, timeEnd, dateLast, timeLast,
+                score, coins, speed, defense, healing, attack, health, x, y);
 
         return session.create(game);
 
