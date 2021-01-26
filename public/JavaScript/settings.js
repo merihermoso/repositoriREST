@@ -60,6 +60,12 @@ $(document).ready(function() {
         window.open("login.html", "_self");
     })
 
+    $('#cerrar_session1').click(function () {
+            window.localStorage.setItem("username", "null");
+            console.log(username);
+            window.open("login.html", "_self");
+    })
+
     $('#eliminar_usuario').click(function () {
         $.ajax({
             url: BASE_URI.concat("/user/"+username),
