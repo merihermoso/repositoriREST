@@ -12,6 +12,47 @@ $(document).ready(function() {
     console.log(diamantes);
 
     $("#nav_username").text(username);
+
+    //Rellenamos la tabla del user
+    $.ajax({
+        //Colocamso el username
+        url: BASE_URI.concat("/user/"+username+"/username"),
+            success: function(respuesta) {
+                $("#table_username").text(respuesta);
+            }
+    });
+
+    $.ajax({
+        //Colocamso el email
+        url: BASE_URI.concat("/user/"+username+"/email"),
+            success: function(respuesta) {
+                $("#table_email").text(respuesta);
+            }
+    });
+
+    $.ajax({
+        //Colocamso el ranking
+        url: BASE_URI.concat("/user/"+username+"/ranking"),
+            success: function(respuesta) {
+                $("#table_ranking").text(respuesta.position);
+            }
+    });
+
+    $.ajax({
+        //Colocamso el score
+        url: BASE_URI.concat("/user/"+username+"/score"),
+            success: function(respuesta) {
+                $("#table_score").text(respuesta);
+            }
+    });
+
+    $.ajax({
+        //Colocamso el birthdate
+        url: BASE_URI.concat("/user/"+username+"/birthdate"),
+            success: function(respuesta) {
+                $("#table_birthdate").text(respuesta).toString();
+            }
+    });
     
     $('#cerrar_session').click(function () {
         window.localStorage.setItem("username", "null");
@@ -28,16 +69,14 @@ $(document).ready(function() {
     })
 
     $('#updatePasswordbtn').click(function () {
-            var username = $("#loginName").val();
-            var password = $("#newPassword").val();
 
-            var user = {"username": username, "password": password};
+        var password_val = $("#newPassword").val();
+        var parameter = {"parameterValue": password_val};
 
-            console.log(user);
             $.ajax({
-                type: 'POST',
-                url: BASE_URI.concat("/user/{username}/{parameter}"),  //Acabar de completar
-                data: JSON.stringify(user),
+                type: 'PUT',
+                url: BASE_URI.concat("/user/"+username+"/password"),  //Acabar de completar
+                data: JSON.stringify(parameter),
                 dataType: 'json',
                 headers: {'content-type': 'application/json'},
                 statusCode: {
@@ -48,26 +87,26 @@ $(document).ready(function() {
                         alert("Usuario no encontrado\n");
                     },
                     603: function() {
-                        alert("Parámetro no encontrado\n");
+                        alert("Parameter not found")
                     },
                     604: function() {
-                        alert("No has introducido un nuevo valor\n");
+                        alert("You must enter a new parameter value\n");
                     }
                 }
             })
     });
 
     $('#updateEmailbtn').click(function () {
-            var username = $("#loginName").val();
-            var password = $("#newEmail").val();
 
-            var user = {"username": username, "newEmail": newEmail};
+        var mail_val = $("#newEmail").val().ToString();
+        var parameter = {"parameterValue": mail_val};
+        console.log(mail_val);
+        console.log(parameter);
 
-            console.log(user);
             $.ajax({
-                type: 'POST',
-                url: BASE_URI.concat("/user/{username}/{parameter}"),
-                data: JSON.stringify(user),
+                type: 'PUT',
+                url: BASE_URI.concat("/user/"+username+"/email"),  //Acabar de completar
+                data: JSON.stringify(parameter),
                 dataType: 'json',
                 headers: {'content-type': 'application/json'},
                 statusCode: {
@@ -78,31 +117,14 @@ $(document).ready(function() {
                         alert("Usuario no encontrado\n");
                     },
                     603: function() {
-                        alert("Parámetro no encontrado\n");
+                        alert("Parameter not found")
                     },
                     604: function() {
-                        alert("No has introducido un nuevo valor\n");
+                        alert("You must enter a new parameter value\n");
                     }
                 }
             })
     });
-
-
-    $('#getUserProfilebtn').click(function () {
-        $.ajax({
-            url: BASE_URI.concat("/user/"+username+"/profile"),
-                success: function(respuesta) {
-                    console.log(respuesta);
-
-                    $("#username").text(respuesta[0].username);
-                    $("#email").text(respuesta[0].email);
-                    $("#score").text(respuesta[0].score).toString();
-                    $("#birthdate").text(respuesta[0].birthdate).toString();
-
-                    alert("quiero obtener el perfil");
-                }
-        })
-    })
 })
 
 
