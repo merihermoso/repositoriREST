@@ -12,7 +12,7 @@ public class Orders {
 
     }
 
-    public Orders(int id, int id_user, int id_item, int quantity, String orderDate, String orderTime) {
+    public Orders(int id, int id_user, int id_item, String orderDate, String orderTime) {
         this.id = id;
         this.id_user = id_user;
         this.id_item = id_item;
