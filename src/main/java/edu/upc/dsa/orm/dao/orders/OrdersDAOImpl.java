@@ -4,6 +4,7 @@ package edu.upc.dsa.orm.dao.orders;
 import edu.upc.dsa.orm.FactorySession;
 import edu.upc.dsa.orm.Session;
 import edu.upc.dsa.orm.models.Item;
+import edu.upc.dsa.orm.models.Map;
 import edu.upc.dsa.orm.models.Orders;
 
 import java.util.ArrayList;
@@ -60,13 +61,6 @@ public class OrdersDAOImpl implements OrdersDAO {
         return ordersList;
     }
 
-
-    @Override
-    public List<Orders> readAllByParameter(String id_user, int id) {
-        System.out.println("función incorrecta... OrdersDAOImp linea 66");
-        return null;
-    }
-
     public List<Orders> readAllByParameter(String byParameter, Object byParameterValue){
 
         Session session;
@@ -77,7 +71,7 @@ public class OrdersDAOImpl implements OrdersDAO {
         session = FactorySession.openSession();
         result = session.readAllByParameter(Orders.class, byParameter, byParameterValue);
 
-        ordersList = new ArrayList<>();
+       ordersList = new ArrayList<>();
 
         for (Object object : result.values()) {
             ordersList.add((Orders) object);
