@@ -433,6 +433,8 @@ public class UserService {
     @Produces(MediaType.TEXT_PLAIN)
     public Response sendEmail() {
 
+        SendingMailSSL sendingMailSSL = new SendingMailSSL();
+
         MazeGenerator mazeGenerator = new MazeGenerator(400, 400);
         mazeGenerator.display();
 
