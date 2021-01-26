@@ -559,9 +559,9 @@ public class UserService {
 
         if (userDAO.existsId(id)) {
 
-            List<Orders> orders = ordersDAO.readAllByParameter("id_user", id);
+            List<Orders> ordersList = ordersDAO.readAllByParameter("id_user", id);
 
-            GenericEntity<List<Orders>> entity = new GenericEntity<List<Orders>>(orders) {
+            GenericEntity<List<Orders>> entity = new GenericEntity<List<Orders>>(ordersList) {
             };
             return Response.status(200).entity(entity).build();
 
@@ -586,9 +586,9 @@ public class UserService {
 
             int id = (int) userDAO.readParameterByParameter("id", "username", username);
 
-            List<Orders> orders = ordersDAO.readAllByParameter("id_user", id);
+            List<Orders> ordersList = ordersDAO.readAllByParameter("id_user", id);
 
-            GenericEntity<List<Orders>> entity = new GenericEntity<List<Orders>>(orders) {
+            GenericEntity<List<Orders>> entity = new GenericEntity<List<Orders>>(ordersList) {
             };
             return Response.status(200).entity(entity).build();
 

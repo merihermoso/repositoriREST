@@ -5,7 +5,6 @@ public class Orders {
     private int id;
     private int id_user;
     private int id_item;
-    private int quantity;
     private String orderDate;
     private String orderTime;
 
@@ -17,7 +16,6 @@ public class Orders {
         this.id = id;
         this.id_user = id_user;
         this.id_item = id_item;
-        this.quantity = quantity;
         this.orderDate = orderDate;
         this.orderTime = orderTime;
     }
@@ -46,14 +44,6 @@ public class Orders {
         this.id_item = id_item;
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
     public String getOrderDate() {
         return orderDate;
     }
@@ -69,4 +59,5 @@ public class Orders {
     public void setOrderTime(String orderTime) {
         this.orderTime = orderTime;
     }
+
 }
