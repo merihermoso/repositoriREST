@@ -15,6 +15,8 @@ $(document).ready(function() {
     $("#m").text(diamantes);
     $("#nav_username").text(username);
 
+    var partida = "NULL";
+
     var cantidad1 = parseInt($("#numero1").text());
     var cantidad2 = parseInt($("#numero2").text());
     var cantidad3 = parseInt($("#numero3").text());
@@ -38,11 +40,13 @@ $(document).ready(function() {
                 $("#CD2").text(respuesta[1].dateStart);
                 $("#scr2").text(respuesta[1].score);
                 $("#cns2").text(respuesta[1].coins);
+                var partida2 = respuesta[1].id;
 
                 $("#LA3").text(respuesta[2].dateLast);
                 $("#CD3").text(respuesta[2].dateStart);
                 $("#scr3").text(respuesta[2].score);
                 $("#cns3").text(respuesta[2].coins);
+                var partida3 = respuesta[2].id;
             }
     });
 
@@ -192,23 +196,42 @@ $(document).ready(function() {
     })
 
 
-    var partida = "NULL";
 
     //Seleccionamos Partida
     $('#seleccionarPartida1').click(function (){
-        partida = "1";
-        console.log("hola");
-    })
+        $.ajax({
+            url: BASE_URI.concat("/user/"+username+"/game"),
+            success: function(respuesta) {
+                partida = respuesta[0].id;
+                console.log(partida);
+            }
+        })
+    });
+
     $('#seleccionarPartida2').click(function (){
-        partida = "2";
+        $.ajax({
+            url: BASE_URI.concat("/user/"+username+"/game"),
+            success: function(respuesta) {
+                partida = respuesta[1].id;
+                console.log(partida);
+            }
+        })
     })
+
     $('#seleccionarPartida3').click(function (){
-        partida = "3";
+        $.ajax({
+            url: BASE_URI.concat("/user/"+username+"/game"),
+            success: function(respuesta) {
+                partida = respuesta[2].id;
+                console.log(partida);
+            }
+        })
     })
 
 
 
     $('#aloevera').click(function () {
+
 
         $.ajax({
             type: 'POST',
