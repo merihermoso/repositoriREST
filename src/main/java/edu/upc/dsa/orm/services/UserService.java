@@ -437,10 +437,9 @@ public class UserService {
 
         SendingMailSSL sendingMailSSL = new SendingMailSSL();
 
-        Response.status(200).build();
+        return Response.status(200).build();
 
     }
-
 
     @GET
     @ApiOperation(value = "Get a user parameter by its id")
