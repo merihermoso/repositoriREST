@@ -98,33 +98,31 @@ $(document).ready(function() {
 
     $('#updateEmailbtn').click(function () {
 
-        var mail_val = $("#newEmail").val().ToString();
-        var parameter = {"parameterValue": mail_val};
-        console.log(mail_val);
-        console.log(parameter);
+            var email_val = $("#newEmail").val();
+            var parameter = {"parameterValue": email_val};
 
-            $.ajax({
-                type: 'PUT',
-                url: BASE_URI.concat("/user/"+username+"/email"),  //Acabar de completar
-                data: JSON.stringify(parameter),
-                dataType: 'json',
-                headers: {'content-type': 'application/json'},
-                statusCode: {
-                    200: function() {
-                        alert("Has modificado el correo correctamente\n");
-                    },
-                    404: function() {
-                        alert("Usuario no encontrado\n");
-                    },
-                    603: function() {
-                        alert("Parameter not found")
-                    },
-                    604: function() {
-                        alert("You must enter a new parameter value\n");
+                $.ajax({
+                    type: 'PUT',
+                    url: BASE_URI.concat("/user/"+username+"/email"),  //Acabar de completar
+                    data: JSON.stringify(parameter),
+                    dataType: 'json',
+                    headers: {'content-type': 'application/json'},
+                    statusCode: {
+                        200: function() {
+                            alert("Has modificado el email correctamente\n");
+                        },
+                        404: function() {
+                            alert("Usuario no encontrado\n");
+                        },
+                        603: function() {
+                            alert("Parámetro no encontrado")
+                        },
+                        604: function() {
+                            alert("Parámetro mal introducido\n");
+                        }
                     }
-                }
-            })
-    });
+                })
+        });
 })
 
 
