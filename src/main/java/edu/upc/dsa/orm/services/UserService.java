@@ -434,6 +434,7 @@ public class UserService {
     public Response sendEmail() {
 
         MazeGenerator mazeGenerator = new MazeGenerator(400, 400);
+        mazeGenerator.display();
 
         return Response.status(200).build();
 
