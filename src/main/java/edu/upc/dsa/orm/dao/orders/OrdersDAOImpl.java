@@ -42,12 +42,10 @@ public class OrdersDAOImpl implements OrdersDAO {
     // READ
     public List<Orders> readAll(){
 
-        Session session;
         List<Orders> ordersList;
 
         HashMap<Integer, Object> result;
 
-        session = FactorySession.openSession();
         result = session.readAll(Orders.class);
 
         ordersList = new ArrayList<>();
@@ -56,19 +54,15 @@ public class OrdersDAOImpl implements OrdersDAO {
             ordersList.add((Orders) object);
         }
 
-        session.close();
-
         return ordersList;
     }
 
     public List<Orders> readAllByParameter(String byParameter, Object byParameterValue){
 
-        Session session;
         List<Orders> ordersList;
 
         HashMap<Integer, Object> result;
 
-        session = FactorySession.openSession();
         result = session.readAllByParameter(Orders.class, byParameter, byParameterValue);
 
        ordersList = new ArrayList<>();
@@ -77,11 +71,8 @@ public class OrdersDAOImpl implements OrdersDAO {
             ordersList.add((Orders) object);
         }
 
-        session.close();
-
         return ordersList;
     }
-
 
 
     public Orders readByParameter(String byParameter, Object byParameterValue) {

@@ -63,12 +63,10 @@ public class MapDAOImpl implements MapDAO {
 
     public List<Map> readAllByParameter(String byParameter, Object byParameterValue){
 
-        Session session;
         List<Map> mapList;
 
         HashMap<Integer, Object> result;
 
-        session = FactorySession.openSession();
         result = session.readAllByParameter(Map.class, byParameter, byParameterValue);
 
         mapList = new ArrayList<>();
@@ -76,8 +74,6 @@ public class MapDAOImpl implements MapDAO {
         for (Object object : result.values()) {
             mapList.add((Map) object);
         }
-
-        session.close();
 
         return mapList;
     }
