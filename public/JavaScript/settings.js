@@ -28,7 +28,7 @@ $(document).ready(function() {
             success: function(respuesta) {
                 console.log(respuesta);
                 $("#table_email").text(respuesta);
-            },
+            }
     });
 
     $.ajax({
@@ -36,8 +36,8 @@ $(document).ready(function() {
         url: BASE_URI.concat("/user/"+username+"/ranking"),
             success: function(respuesta) {
                 console.log(respuesta);
-                $("#table_ranking").text(respuesta);
-            },
+                $("#table_ranking").text(respuesta.position);
+            }
     });
 
     $.ajax({
@@ -46,7 +46,7 @@ $(document).ready(function() {
             success: function(respuesta) {
                 console.log(respuesta);
                 $("#table_score").text(respuesta);
-            },
+            }
     });
 
     $.ajax({
