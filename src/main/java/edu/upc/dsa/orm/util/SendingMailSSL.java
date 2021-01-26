@@ -12,7 +12,7 @@ import javax.mail.internet.MimeMessage;
 
 public class SendingMailSSL {
 
-    public static void main(String[] args) {
+    public SendingMailSSL() {
 
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
