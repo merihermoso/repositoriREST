@@ -11,13 +11,6 @@ $(document).ready(function() {
     console.log(username);
     console.log(diamantes);
 
-    var date = new Date();
-    var day = date.getDay();
-    var month = date.getMonth();
-    var year = date.getFullYear();
-    var sec = date.getSeconds();
-    var min = date.getMinutes();
-    var hour = date.getHours();
 
     $("#m").text(diamantes);
     $("#nav_username").text(username);
@@ -32,12 +25,32 @@ $(document).ready(function() {
     var cantidad8 = parseInt($("#numero8").text());
     var cantidad9 = parseInt($("#numero9").text());
 
+    $.ajax({
+            url: BASE_URI.concat("/user/"+username+"/game"),
+            success: function(respuesta) {
+                console.log(respuesta);
+                $("#LA1").text(respuesta[0].dateLast);
+                $("#CD1").text(respuesta[0].dateStart);
+                $("#scr1").text(respuesta[0].score);
+                $("#cns1").text(respuesta[0].coins);
+
+                $("#LA2").text(respuesta[1].dateLast);
+                $("#CD2").text(respuesta[1].dateStart);
+                $("#scr2").text(respuesta[1].score);
+                $("#cns2").text(respuesta[1].coins);
+
+                $("#LA3").text(respuesta[2].dateLast);
+                $("#CD3").text(respuesta[2].dateStart);
+                $("#scr3").text(respuesta[2].score);
+                $("#cns3").text(respuesta[2].coins);
+            }
+    });
+
 
     $.ajax({
             url: BASE_URI.concat("/shop"),
 
             success: function(respuesta) {
-                console.log(respuesta);
                 //Obtenemos y colocamos el nombre de cada objeto
                 $("#item_1_name").text(respuesta[0].name);
                 $("#item_2_name").text(respuesta[1].name);
@@ -70,17 +83,15 @@ $(document).ready(function() {
                 $("#precio_7").text("precio: ".concat(respuesta[6].price.toString()));
                 $("#precio_8").text("precio: ".concat(respuesta[7].price.toString()));
                 $("#precio_9").text("precio: ".concat(respuesta[8].price.toString()));
-
             },
 
             error: function() {
                 console.log("No se ha podido obtener la información");
             }
-        });
+    });
 
 
     $('#m').click(function () {
-
         $.ajax({
             url: BASE_URI.concat("/shop/"),
             success: function(respuesta) {
@@ -181,52 +192,33 @@ $(document).ready(function() {
     })
 
 
+    var partida = "NULL";
+
+    //Seleccionamos Partida
+    $('#seleccionarPartida1').click(function (){
+        partida = "1";
+        console.log("hola");
+    })
+    $('#seleccionarPartida2').click(function (){
+        partida = "2";
+    })
+    $('#seleccionarPartida3').click(function (){
+        partida = "3";
+    })
+
 
 
     $('#aloevera').click(function () {
 
-        //Recogemos el id del usuario
         $.ajax({
-
-            url: BASE_URI.concat("/user/"+username),
+            type: 'POST',
+            url: BASE_URI.concat("/shop/Aloe%20vera/buy?id_game=" + partida + "&quantity=" + cantidad1),
             success: function(respuesta) {
-                var id_username = respuesta[2];
-                console.log(id_username);
-            },
-
-            //Recogemos el id del objeto
-            url: BASE_URI.concat("/shop/Aloe%20vera/id"),
-                success: function(respuesta)
-                {
-                    var id_product = respuesta
-                    console.log(respuesta);
-                }
-        })
-
-        /*Recogemos el id del objeto y el precio
-        $.ajax({
-            url: BASE_URI.concat("/shop/Aloe%20vera"),
-            success: function(respuesta) 
-            {
-                console.log(respuesta);
-                var id_product = respuesta[1];
-                console.log(id_product);
-                var price = respuesta[4];
-                console.log(price);
+                    alert("Has realizado la compra correctamente\n");
+                    var url = "shop.html";
+                    window.open(url, "_self");
             }
-        })*/
-
-        var inventario = {"id:": 1, "id_user:": username, "id_item": 1, "quantity": cantidad1,
-        "orderDate": day+'/'+month+'/'+year, "OrderTime": hour+':'+min+':'+sec};
-
-        console.log(inventario);
-
-        /*diamantes = diamantes - price * cantidad2;
-        window.sessionStorage.setItem("diamantes", diamantes);
-        $("#m").text(diamantes);
-        $("#numero2").text(1);
-        cantidad2 = 1;*/
-
+        });
     });
 
     $('#venda').click(function () {
@@ -294,29 +286,4 @@ $(document).ready(function() {
         $("#numero4").text(1);
         cantidad4 = 1;
     });
-
-    $('#mangera').click(function () {
-        var inventario = {"idObjeto": 5, "cantidad": cantidad5, "idJugador": idJugador};
-        console.log(inventario);
-        compraObjeto(inventario);
-        diamantes = diamantes - 100*cantidad5;
-        window.sessionStorage.setItem("diamantes", diamantes);
-        $("#m").text(diamantes);
-        $("#numero5").text(1);
-        cantidad5 = 1;
-    });
-
-    $('#hacha').click(function () {
-        var inventario = {"idObjeto": 6, "cantidad": cantidad6, "idJugador": idJugador};
-        compraObjeto(inventario);
-        //diamantes = diamantes - 25 * cantidad6;
-        //window.sessionStorage.setItem("diamantes", diamantes);
-        //$("#m").text(diamantes);
-        $("#numero6").text("1");
-        cantidad6 = 1;
-    });
-
-
-
 })
-
