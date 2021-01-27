@@ -212,6 +212,7 @@ public class UserService {
         myMaze.solve();
         myMaze.draw();
 
+
         return Response.status(200).build();
 
     }
