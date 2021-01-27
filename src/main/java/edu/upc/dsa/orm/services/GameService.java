@@ -8,12 +8,10 @@ import edu.upc.dsa.orm.dao.inventory.InventoryDAO;
 import edu.upc.dsa.orm.dao.inventory.InventoryDAOImpl;
 import edu.upc.dsa.orm.dao.map.MapDAO;
 import edu.upc.dsa.orm.dao.map.MapDAOImpl;
+import edu.upc.dsa.orm.models.*;
 import edu.upc.dsa.orm.models.API.GameSettings;
-import edu.upc.dsa.orm.models.Entity;
-import edu.upc.dsa.orm.models.Game;
-import edu.upc.dsa.orm.models.Inventory;
+import edu.upc.dsa.orm.models.API.UpdateParameterRequest;
 
-import edu.upc.dsa.orm.models.Map;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;

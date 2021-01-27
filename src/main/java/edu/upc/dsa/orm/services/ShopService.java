@@ -205,9 +205,50 @@ public class ShopService {
     }
 
 
-
     @POST
     @ApiOperation(value = "Buy a Item given its id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Succesful"),
+            @ApiResponse(code = 700, message = "Game not found"),
+            @ApiResponse(code = 701, message = "Not enough coins")
+    })
+    @Path("/upgrades/{name}")
+    @Produces(MediaType.APPLICATION_JSON)// nos devuelve JSON con forma class user
+    public Response buyItemById(@PathParam("name") String name, @QueryParam("id_game") int id_game) {
+
+        if (gameDAO.existsId(id_game)) {
+
+            Game game = gameDAO.readByParameter("id", id_game);
+
+            if (game.getCoins() == 0) {
+
+                return Response.status(701).build();
+
+            } else {
+
+                gameDAO.updateParameterByParameter("coins", game.getCoins() -
+                        1, "id", id_game);
+
+                int val = (int) gameDAO.readParameterByParameter(name, "id", id_game);
+
+                gameDAO.updateParameterByParameter(name, val + 1, "id", id_game);
+
+                return Response.status(200).build();
+
+            }
+
+        } else {
+
+            return Response.status(404).build();
+
+        }
+
+    }
+
+
+
+    @POST
+    @ApiOperation(value = "Buy a Item given its name")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Succesful"),
             @ApiResponse(code = 404, message = "Item not found"),
