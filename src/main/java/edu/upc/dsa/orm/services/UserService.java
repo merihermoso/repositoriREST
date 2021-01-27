@@ -208,7 +208,8 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMaze() {
 
-        MyMaze myMaze = new MyMaze(40, 40);
+        MyMaze myMaze = new MyMaze(20);
+        myMaze.solve();
         myMaze.draw();
 
         return Response.status(200).build();
