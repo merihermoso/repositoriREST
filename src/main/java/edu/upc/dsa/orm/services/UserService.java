@@ -202,7 +202,7 @@ public class UserService {
     @GET
     @ApiOperation(value = "Generate random maze")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Successful", response = UserSettings.class),
+            @ApiResponse(code = 200, message = "Successful"),
     })
     @Path("/maze")
     @Produces(MediaType.APPLICATION_JSON)
