@@ -209,12 +209,17 @@ public class UserService {
     public Response getMaze() {
 
         MazeGenerator mazeGenerator = new MazeGenerator(400, 400);
-        mazeGenerator.display();
+
+        for (int i = 0; i < 400; i++) {
+            // draw the north edge
+            for (int j = 0; j < 400; j++) {
+                System.out.print(mazeGenerator.maze[j][i]);
+            }
+        }
 
         return Response.status(200).entity(userDAO.readSettings()).build();
 
     }
-
 
 
     @GET

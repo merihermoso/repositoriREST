@@ -7,13 +7,15 @@ public class MazeGenerator {
 
     private final int x;
     private final int y;
-    private final int[][] maze;
+    public final int[][] maze;
 
     public MazeGenerator(int x, int y) {
+
         this.x = x;
         this.y = y;
         maze = new int[this.x][this.y];
         generateMaze(0, 0);
+
     }
 
     public void display() {
