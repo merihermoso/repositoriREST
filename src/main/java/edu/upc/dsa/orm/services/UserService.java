@@ -212,7 +212,7 @@ public class UserService {
         myMaze.solve();
         myMaze.draw();
 
-
+        System.out.println("fsg");
         return Response.status(200).build();
 
     }
