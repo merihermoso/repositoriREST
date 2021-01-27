@@ -52,6 +52,19 @@ $(document).ready(function() {
 
 
     $.ajax({
+                url: BASE_URI.concat("/game/"+2+"/inventory"),
+                success: function(respuesta) {
+                    console.log(respuesta);
+                    $("#idItem").text(respuesta[0].id_item);
+                    $("#cant1").text(respuesta[0].quantity);
+
+
+                }
+        });
+
+
+
+    $.ajax({
             url: BASE_URI.concat("/shop"),
 
             success: function(respuesta) {

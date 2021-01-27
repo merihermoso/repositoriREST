@@ -10,6 +10,9 @@ import edu.upc.dsa.orm.models.API.*;
 import edu.upc.dsa.orm.models.Game;
 import edu.upc.dsa.orm.models.Orders;
 import edu.upc.dsa.orm.models.User;
+import edu.upc.dsa.orm.util.MyMaze;
+import edu.upc.dsa.orm.util.RandomString;
+import edu.upc.dsa.orm.util.SendingMailSSL;
 import io.swagger.annotations.*;
 
 import javax.ws.rs.*;
@@ -192,6 +195,25 @@ public class UserService {
     public Response getUserSettings() {
 
         return Response.status(200).entity(userDAO.readSettings()).build();
+
+    }
+
+
+    @GET
+    @ApiOperation(value = "Generate random maze")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful"),
+    })
+    @Path("/maze")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getMaze() {
+
+        MyMaze myMaze = new MyMaze(20);
+        myMaze.solve();
+        myMaze.draw();
+
+        System.out.println("fsg");
+        return Response.status(200).build();
 
     }
 
@@ -417,6 +439,37 @@ public class UserService {
 
             return Response.status(404).build();
 
+        }
+
+    }
+
+    @POST
+    @ApiOperation(value = "Send email with new password by username")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful"),
+            @ApiResponse(code = 404, message = "User not exist")
+    })
+    @Path("/{username}/password/new")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response forgottenPasswordByUsername(@PathParam("username") String username) {
+
+        if (userDAO.exists(username)) {
+
+            User user = userDAO.readByParameter("username", username);
+
+            RandomString randomString = new RandomString();
+            String newPassword = randomString.randomString(6);
+
+            String newPasswordHash = userDAO.getHashString(newPassword, "SHA-256");
+            userDAO.updateParameterByParameter("password", newPasswordHash, "username", username);
+
+            SendingMailSSL sendingMailSSL = new SendingMailSSL(user.getEmail(), "Forgotten password",
+                    "Your new password is " + newPassword);
+
+            return Response.status(200).build();
+
+        } else {
+            return Response.status(404).build();
         }
 
     }
