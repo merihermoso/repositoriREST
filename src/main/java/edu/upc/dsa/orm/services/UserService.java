@@ -10,7 +10,7 @@ import edu.upc.dsa.orm.models.API.*;
 import edu.upc.dsa.orm.models.Game;
 import edu.upc.dsa.orm.models.Orders;
 import edu.upc.dsa.orm.models.User;
-import edu.upc.dsa.orm.util.MazeGenerator;
+import edu.upc.dsa.orm.util.MyMaze;
 import edu.upc.dsa.orm.util.RandomString;
 import edu.upc.dsa.orm.util.SendingMailSSL;
 import io.swagger.annotations.*;
@@ -208,14 +208,8 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMaze() {
 
-        MazeGenerator mazeGenerator = new MazeGenerator(400, 400);
-
-        for (int i = 0; i < 400; i++) {
-            // draw the north edge
-            for (int j = 0; j < 400; j++) {
-                System.out.print(mazeGenerator.maze[j][i]);
-            }
-        }
+        MyMaze myMaze = new MyMaze(40, 40);
+        myMaze.draw();
 
         return Response.status(200).entity(userDAO.readSettings()).build();
 
