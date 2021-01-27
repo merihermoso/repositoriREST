@@ -211,7 +211,7 @@ public class UserService {
         MyMaze myMaze = new MyMaze(40, 40);
         myMaze.draw();
 
-        return Response.status(200).entity(userDAO.readSettings()).build();
+        return Response.status(200).build();
 
     }
 
