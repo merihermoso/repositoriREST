@@ -88,7 +88,41 @@
         <p class="text-white">¡Configura tus datos!</p>
         <p class="text-white" id="set_username"></p>
 
-        <!-- Primera fila -->
+        <div class="row">
+            <!-- Miembros-->
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table">
+                            <thead class="thead-light">
+                            <tr>
+                                <th scope="col">#PERFIL USUARIO#</th>
+                                <th scope="col">Username</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Ranking Position</th>
+                                <th scope="col">Score</th>
+                                <th scope="col">Birthdate</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th scope="row">DATOS</th>
+                                <td id="table_username" ></td>
+                                <td id="table_email" ></td>
+                                <td id="table_ranking" ></td>
+                                <td id="table_score" ></td>
+                                <td id="table_birthdate" ></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <!-- /Primera fila -->
+        <!-- Segunda fila -->
         <div class="row">
             <!-- Miembros-->
             <div class="col-lg-4">
@@ -127,30 +161,6 @@
             </div>
             <div class="col-lg-4">
                 <div class="card">
-                    <div class="card-body">
-                        <h3> Perfil usuario </h3>
-                        <p> Username: </p>
-                        <p id="table_username"> </p>
-                        <p> Email: </p>
-                        <p id="table_email"> </p>
-                        <p> RankingPosition: </p>
-                        <p id="table_ranking"> </p>
-                        <p> Score: </p>
-                        <p id="table_score"> </p>
-                        <p> Birthdate: </p>
-                        <p id="table_birthdate"> </p>
-
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
-        <!-- /Primera fila -->
-        <!-- Segunda fila -->
-        <div class="row">
-            <div class="col-lg-4">
-                <div class="card">
 
                     <div class="card-body">
                         <h3> Eliminar usuario </h3>
@@ -164,12 +174,18 @@
 
                 </div>
             </div>
-            <div class="col-lg-4">
-                <div class="card">
+                </div>
+            </div>
 
+        </div>
+        <!-- Segunda fila -->
+        <!-- Tercera fila -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card" style="background-color: #1D2B51">
                     <div class="card-body">
-                        <h3> Cerrar sessión </h3>
-                        <p> ¿Estas seguro que quieres cerrar sessión? </p>
+                        <h3 class="text-white"> Cerrar sessión </h3>
+                        <p class="text-white"> ¿Estas seguro que quieres cerrar sessión? </p>
 
                         <div class="d-flex flex row justify-content-center">
                             <div class="p-4">
@@ -181,64 +197,7 @@
                 </div>
             </div>
         </div>
-        <!-- /Segunda fila -->
-        <!--<div class="row">
-            <div class="container">
-
-                <div class="row justify-content-start">
-
-                    <div class="col-lg-12 rounded-lg" id="container-login">
-                        <div class="accordion" id="accordionExample">
-
-                            <div class="card">
-                                <div class="card-header" id="headingTwo">
-                                    <h2 class="mb-0">
-                                        <button class="btn btn-block text-left collapsed" id="fuente-mod" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                            MODIFICAR O CONSULTAR
-                                        </button>
-                                    </h2>
-                                </div>
-                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                                    <div class="card-body">
-                                        <div class="alert alert-info" role="alert">
-                                            <form action="@{findAllPartidasByUser()}" method="get">
-                                                <button type="submit" class="btn btn-info boton-consulta">Consulta lista de partidas</button>
-                                            </form>
-                                            <br>
-                                            <form action="@{findAllPedidosByUser()}" method="get">
-                                                <button type="submit" class="btn btn-info boton-consulta">Consulta lista de pedidos</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class='col-4'></div>
-                            <div class='col-4'>
-                                <div class="row mt-5 ml-5">
-                                    <button id="cerrar_session" onclick="return false" class="btn btn-danger">
-                                        Cerrrar Sesion
-                                    </button>
-                                </div>    
-
-                                <div class="row mt-3 ml-5">
-                                    <button id="eliminar_usuario" class="btn btn-danger">
-                                        Eliminar Usuario
-                                    </button>
-                                </div>
-                            </div>
-                            <div class='col-4'></div>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>-->
+        <!-- Tercera fila -->
     </div>
 
 </section>
